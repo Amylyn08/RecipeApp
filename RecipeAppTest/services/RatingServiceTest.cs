@@ -1,7 +1,6 @@
-namespace recipetest.services;
+namespace RecipeAppTest.Services;
 
 [TestClass]
-
-public class RatingServiceTest{
+public class RatingServiceTest {
 
 }

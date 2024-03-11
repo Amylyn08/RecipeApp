@@ -1,1 +1,5 @@
-namespace recipeapp.services;
+namespace RecipeApp.Services;
+
+public class Tag {
+    
+}

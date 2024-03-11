@@ -1,7 +1,6 @@
-namespace recipetest.services;
+namespace RecipeAppTest.Services;
 
 [TestClass]
-
-public class TagServiceTest{
+public class TagServiceTest {
     
 }

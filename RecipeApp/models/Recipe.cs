@@ -1,7 +1,5 @@
-namespace recipeapp.models;
+namespace RecipeApp.Models;
 
-public class Recipe{
-    public class Recipe(){
-        
-    }
+public class Recipe {
+
 }

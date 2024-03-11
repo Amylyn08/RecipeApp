@@ -1,31 +1,5 @@
-namespace recipeapp.models;
+namespace RecipeApp.Models;
 
-public class Rating{
-
-public Rating(){
-
-}
-private int __stars;
-private string __comments;
-
-public int Stars{
-    get => __stars;
-    set{
-        //validator
-    }
-}
-
-public string Comments{
-    get => __comments;
-    set{
-        //max 512 letters
-    }
-}
-
-public void AddRating(){
-
-
-}
-
+public class Rating {
 
 }

@@ -1,7 +1,5 @@
-namespace recipeapp.models;
+namespace RecipeApp.Models;
 
-public class Tag{
-    public Tag(){
-        
-    }
+public class Tag {
+
 }

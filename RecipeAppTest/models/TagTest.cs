@@ -1,6 +1,6 @@
-namespace recipetest.models;
+namespace RecipeAppTest.Models;
 
 [TestClass]
-public class TagTest{
+public class TagTest {
     
 }
