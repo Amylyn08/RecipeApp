@@ -14,11 +14,13 @@ public class User {
         if(name.Length == 0) throw new ArgumentException("Name cannot be empty!");
         if(pass == null) throw new ArgumentException("Password cannot be null!");
         if(pass.Length == 0) throw new ArgumentException("Password cannot be empty!");
-        if(desc == null) throw new ArgumentException("Description cannot be null!");
+        if(desc == null) {
+            Description = "";
+        }
 
-        this.Name = name;
-        this.Description = desc;
-        this.Password = pass;
-        this.Favorites = favorites;
+        Name = name;
+        Description = desc;
+        Password = pass;
+        Favorites = favorites;
     }
 }
