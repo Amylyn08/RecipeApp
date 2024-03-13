@@ -1,4 +1,6 @@
 namespace RecipeApp.Models;
+using Constants;
+
 /// <summary>
 /// Represents a user
 /// </summary>
@@ -24,8 +26,9 @@ public class User {
         if(pass == null) throw new ArgumentException("Password cannot be null!");
         if(pass.Length < MIN_PASS_LENGTH) throw new ArgumentException("Password needs to be atleast 8 characters!");
         if(description == null) {
-            Description = "";
+            description = "";
         }
+        if(description.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Description passed the limit character of " + Constants.MAX_DESCRIPTION_LENGTH);
         Name = name;
         Description = description;
         Password = pass;
