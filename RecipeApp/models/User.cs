@@ -21,13 +21,11 @@ public class User {
     /// <exception cref="ArgumentException">If any field is null or does not respect the specific constraints, it throws an exception</exception>
     public User(string name, string description, string pass, List<Recipe> favorites) {
         if(name == null) throw new ArgumentException("Name cannot be null!");
+        if(pass == null) throw new ArgumentException("Password cannot be null!");
+        if(description == null) description = "";
         if(name.Length < MIN_NAME_LENGTH) throw new ArgumentException("Name cannot be less than 2 characters!");
         if(name.Length > MAX_NAME_LENGTH) throw new ArgumentException("Name cannot be more than 15 characters!");
-        if(pass == null) throw new ArgumentException("Password cannot be null!");
         if(pass.Length < MIN_PASS_LENGTH) throw new ArgumentException("Password needs to be atleast 8 characters!");
-        if(description == null) {
-            description = "";
-        }
         if(description.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Description passed the limit character of " + Constants.MAX_DESCRIPTION_LENGTH);
         Name = name;
         Description = description;
