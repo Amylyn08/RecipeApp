@@ -4,5 +4,5 @@ namespace RecipeAppTest.Models;
 public class UserTest {
 
 
-    
+
 }
