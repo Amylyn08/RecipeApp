@@ -7,5 +7,6 @@ public enum UnitOfMeasurement {
     SPOONS, 
     GRAMS, 
     CUPS, 
-    TEASPOONS
+    TEASPOONS,
+    AMOUNT
 }
