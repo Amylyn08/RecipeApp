@@ -12,6 +12,9 @@ public class User {
     public User(string name, string desc, string pass, List<Recipe> favorites) {
         if(name == null) throw new ArgumentException("Name cannot be null!");
         if(name.Length == 0) throw new ArgumentException("Name cannot be empty!");
+        if(pass == null) throw new ArgumentException("Password cannot be null!");
+        if(pass.Length == 0) throw new ArgumentException("Password cannot be empty!");
+        if(desc == null) throw new ArgumentException("Description cannot be null!");
 
         this.Name = name;
         this.Description = desc;
