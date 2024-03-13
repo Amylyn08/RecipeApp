@@ -21,8 +21,8 @@ public class Rating {
     public Rating(int stars, string desc, User user){
         if (stars > 5 || stars < 0) throw new ArgumentException("Stars must be between 0 to 5");
         if(user == null) throw new ArgumentException("User cannot be null");
-        if(desc.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Max description length exceeded!");
         if(desc == null) desc = "";
+        if(desc.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Max description length exceeded!");
 
         __stars = stars;
         __description = desc;
