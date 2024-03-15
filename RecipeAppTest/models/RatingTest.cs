@@ -46,7 +46,7 @@ public class RatingTest {
         //Arrange
         string desc = null;
         //Act
-        Rating r = new(5, null, new User("name", "mama","passsssssss",new List<Recipe>()));
+        Rating r = new(5, desc, new User("name", "mama","passsssssss",new List<Recipe>()));
         //Assert
         StringAssert.Equals(r.__description, "");
     }

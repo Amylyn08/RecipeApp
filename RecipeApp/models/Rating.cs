@@ -24,7 +24,6 @@ public class Rating {
         if(desc == null) desc = "";
         if(desc.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Max description length exceeded!");
 
-
         __stars = stars;
         __description = desc;
         __user = user;
