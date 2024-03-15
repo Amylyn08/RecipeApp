@@ -51,4 +51,14 @@ public class RatingTest {
         StringAssert.Equals(r.__description, "");
     }
 
+    [TestMethod]
+    public void DescriptionIsValid(){
+        //Arrange
+        string desc = "This is a description";
+        //Act
+        Rating r = new(5, desc, new User("name", "mama","passsssssss",new List<Recipe>()));
+        //Assert 
+        StringAssert.Equals(r.__description, "This is a description");
+    }
+
 }   
