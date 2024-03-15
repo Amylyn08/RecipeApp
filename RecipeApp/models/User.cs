@@ -35,4 +35,10 @@ public class User {
     const int MAX_NAME_LENGTH = 15;
     const int MIN_NAME_LENGTH = 2;
     const int MIN_PASS_LENGTH = 8;
+
+    public override bool Equals(object? obj) {
+        if (obj.GetType() != typeof(User)) return false;
+        User other = (User) obj;
+        return this.Name == other.Name;
+    }
 }

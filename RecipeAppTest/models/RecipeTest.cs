@@ -68,6 +68,8 @@ public class RecipeTest {
         Assert.AreEqual("", recipe.Description);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
     public void Description_Above_Limit_Throws_ArgumentException() {
         int servings = 3;
         string description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
