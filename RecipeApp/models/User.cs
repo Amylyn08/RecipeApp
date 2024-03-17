@@ -8,7 +8,7 @@ public class User {
     public string Name { get; private set;}
     //Profile pic --> will implement when teacher shows us
     public string Description {get; private set;}
-    public string Password;
+    public string Password{get; set;}
     public List<Recipe> Favorites{get; private set;}
 
     /// <summary>
