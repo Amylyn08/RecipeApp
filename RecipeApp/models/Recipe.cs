@@ -41,14 +41,14 @@ public class Recipe {
         if (description.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Description exceeds maximum of " + Constants.MAX_DESCRIPTION_LENGTH);
         if (servings < MIN_SERVINGS) throw new ArgumentException("Serving(s) must be greater than 0");
         if (ingredients == null) throw new ArgumentException("Ingredients cannot be null");
+        if (ingredients.Count == 0) throw new ArgumentException("Ingredients cannot be empty");
         if (steps == null) throw new ArgumentException("Steps cannot be null");
+        if (steps.Count == 0) throw new ArgumentException("Steps cannot be empty");
         if (ratings == null) throw new ArgumentException("Ratings cannot be null");
         if (tags == null) throw new ArgumentException("Tags cannot be null");
         if (tags.Count > MAX_TAGS) throw new ArgumentException("Recipe can have a maximum of 3 tags"); 
-        if (ingredients.Count == 0) throw new ArgumentException("Ingredients cannot be empty");
-        if (steps.Count == 0) throw new ArgumentException("Steps cannot be empty");
 
-        this.User = user;
+        this.User = new User(user.Name, user.Description, user.Password, user.Favorites);
         this.Description = description;
         this.Servings = servings;
         this.Ingredients = new List<Ingredient>();
