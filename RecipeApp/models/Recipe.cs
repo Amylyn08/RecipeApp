@@ -10,7 +10,7 @@ public class Recipe {
     public string Description { get; private set; }
     public int Servings { get; private set; }
     public List<Ingredient> Ingredients { get; private set; }
-    public List<string> Steps { get; private set; }
+    public List<Step> Steps { get; private set; }
     public List<Rating> Ratings { get; private set; }
     public List<Tag> Tags { get; private set; }
 
@@ -29,7 +29,7 @@ public class Recipe {
                     string description, 
                     int servings, 
                     List<Ingredient> ingredients, 
-                    List<string> steps, 
+                    List<Step> steps, 
                     List<Rating> ratings, 
                     List<Tag> tags) {
 
@@ -46,20 +46,23 @@ public class Recipe {
         if (steps.Count == 0) throw new ArgumentException("Steps cannot be empty");
         if (ratings == null) throw new ArgumentException("Ratings cannot be null");
         if (tags == null) throw new ArgumentException("Tags cannot be null");
-        if (tags.Count > MAX_TAGS) throw new ArgumentException("Recipe can have a maximum of 3 tags"); 
+        if (tags.Count > MAX_TAGS) throw new ArgumentException("Recipe can have a maximum of 3 tags");
+        if (steps == null) throw new ArgumentException("Steps cannot be null");
+        if (steps.Count == 0) throw new ArgumentException("Steps cannot be empty"); 
 
         this.User = new User(user.Name, user.Description, user.Password, user.Favorites);
         this.Description = description;
         this.Servings = servings;
         this.Ingredients = new List<Ingredient>();
-        this.Steps = new List<string>();
+        this.Steps = new List<Step>();
         this.Ratings = new List<Rating>();
         this.Tags = new List<Tag>();
+        this.Steps = new List<Step>();
 
         this.PopulateIngredients(ingredients);
-        this.PopulateSteps(steps);
         this.PopulateRatings(ratings);
         this.PopulateTags(tags);
+        this.PopulateSteps(steps);
     }
     
     /// <summary>
@@ -76,8 +79,8 @@ public class Recipe {
     /// Makes a deep copy for Steps
     /// </summary>
     /// <param name="steps">Reference to constructor param</param>
-    private void PopulateSteps(List<string> steps) {
-        foreach (string step in steps) {
+    private void PopulateSteps(List<Step> steps) {
+        foreach (Step step in steps) {
             this.Steps.Add(step);
         }
     }
@@ -102,5 +105,15 @@ public class Recipe {
         }
     }
 
-
+    /// <summary>
+    /// Gets the total time to cook for a recipe 
+    /// </summary>
+    /// <returns>Total time to complete all steps</returns>
+    public int GetTimeToCook() {
+        int timeToCook = 0;
+        foreach (Step step in this.Steps) {
+            timeToCook += step.TimeInMinutes;
+        }
+        return timeToCook;
+    }
 }
