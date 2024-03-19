@@ -147,7 +147,9 @@ public class MainDummy {
         string name = GetInput();
         Console.WriteLine("Enter the amount of serving your recipe has");
         int servings = GetIntInput();
-        return new Recipe(user, name, servings)
+        Console.WriteLine("Create your ingredients:");
+        List<Ingredient> ingredients = CreateListIngredients();
+        return new Recipe(user, name, servings, ingredients)
     }
 
     private static int GetIntInput() {
@@ -173,5 +175,23 @@ public class MainDummy {
         Console.WriteLine("Enter the price:");
         int price = GetIntInput();
         return new Ingredient(name, quantity, UnitOfMeasurement.AMOUNT, price);
+    }
+
+    private static List<Ingredient> CreateListIngredients() {
+        List<Ingredient> ingredients = new List<Ingredient>();
+
+        bool createIng = true;
+
+        while(createIng) {
+            Ingredient ingredient = CreateIngredient();
+            ingredients.Add(ingredient);
+
+            Console.WriteLine("Add ingredient? (Y/N):");
+            string choice = GetInput();
+            if(choice.ToUpper() == "Y") {
+                createIng = false;
+            }
+        }
+        return ingredients;
     }
 }
