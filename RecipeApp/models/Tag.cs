@@ -14,6 +14,6 @@ public class Tag {
     public Tag(string tagName) {
         if (tagName == null) throw new ArgumentException("Tag cannot be null");
         if (tagName.Length == 0) throw new ArgumentException("Tag cannot be empty");
-        this.TagName = tagName;
+        TagName = tagName;
     }
 }
