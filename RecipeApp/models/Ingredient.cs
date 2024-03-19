@@ -21,9 +21,9 @@ public class Ingredient {
         if (name.Length == 0) throw new ArgumentException("Name cannot be empty");
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than 0");
         if (price < 0) throw new ArgumentException("Price cannot be negative");
-        this.Name = name;
-        this.Quantity = quantity;
-        this.UnitOfMeasurement = unitOfMeasurement;
-        this.Price = price;
+        Name = name;
+        Quantity = quantity;
+        UnitOfMeasurement = unitOfMeasurement;
+        Price = price;
     }
 }
