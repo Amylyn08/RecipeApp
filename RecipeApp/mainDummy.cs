@@ -147,7 +147,7 @@ public class MainDummy {
         string name = GetInput();
         Console.WriteLine("Enter the amount of serving your recipe has");
         int servings = GetIntInput();
-        return new Recipe(user, name,)
+        return new Recipe(user, name, servings)
     }
 
     private static int GetIntInput() {
@@ -163,5 +163,15 @@ public class MainDummy {
             }
         } while (input <= 0);
         return input;
+    }
+
+    private static Ingredient CreateIngredient() {
+        Console.WriteLine("Enter ingredient name:");
+        string name = GetInput();
+        Console.WriteLine("Enter the amount:");
+        int quantity = GetIntInput();
+        Console.WriteLine("Enter the price:");
+        int price = GetIntInput();
+        return new Ingredient(name, quantity, UnitOfMeasurement.AMOUNT, price);
     }
 }
