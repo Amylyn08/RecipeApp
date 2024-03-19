@@ -4,7 +4,7 @@ namespace RecipeApp.Models;
 
 public class SearchByIngredients: ISearcher{
 
-    private string __criteria;
+    private readonly string __criteria;
 
     /// <summary>
     /// Constructor contains the criteria, corresponding to the crtieria specified.
@@ -31,6 +31,12 @@ public class SearchByIngredients: ISearcher{
         return filteredRecipes;
     }
 
+
+    /// <summary>
+    /// Getss list of ingredients from a recipe
+    /// </summary>
+    /// <param name="r">The recipe being used</param>
+    /// <returns>The list of ingredients of recipe.</returns>
     private static List<Ingredient> ingredientsOfRecipe(Recipe r){
         return r.Ingredients;
     }

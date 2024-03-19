@@ -29,6 +29,11 @@ public class SearchByRating{
         return filteredRecipes;
     }
 
+    /// <summary>
+    /// Gets list of ratings for a recipe
+    /// </summary>
+    /// <param name="r">The recipe specified</param>
+    /// <returns>List of ratings of recipe.</returns>
     private static List<Rating> ratingsOfRecipe(Recipe r){
         return r.Ratings;
     }
