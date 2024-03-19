@@ -1,5 +1,8 @@
+
 namespace RecipeApp.Services;
 
-public class Tag {
-    
+public class Tag : ITagService {
+    public List<Tag> GetAvailableTags() {
+        throw new NotImplementedException();
+    }
 }
