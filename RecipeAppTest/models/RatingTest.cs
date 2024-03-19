@@ -29,7 +29,7 @@ public class RatingTest {
         //Act
         Rating r = new(rating, "mama", new User("name", "mama","passsssssss",new List<Recipe>()));
         //Assert
-        Assert.AreEqual(2, r.__stars);
+        Assert.AreEqual(2, r.Stars);
     }
 
     [TestMethod]
@@ -48,7 +48,7 @@ public class RatingTest {
         //Act
         Rating r = new(5, desc, new User("name", "mama","passsssssss",new List<Recipe>()));
         //Assert
-        StringAssert.Equals(r.__description, "");
+        Assert.AreEqual(r.Description, "");
     }
 
     [TestMethod]
@@ -58,7 +58,7 @@ public class RatingTest {
         //Act
         Rating r = new(5, desc, new User("name", "mama","passsssssss",new List<Recipe>()));
         //Assert 
-        StringAssert.Equals(r.__description, "This is a description");
+        Assert.AreEqual(r.Description, "This is a description");
     }
 
 }   

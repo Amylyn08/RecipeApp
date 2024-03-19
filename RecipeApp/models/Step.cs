@@ -17,7 +17,7 @@ public class Step {
         if (instruction == null) throw new ArgumentException("Instruction cannot be null");
         if (instruction.Length == 0) throw new ArgumentException("Instruction cannot be empty");
 
-        this.TimeInMinutes = timeInMinutes;
-        this.Instruction = instruction;
+        TimeInMinutes = timeInMinutes;
+        Instruction = instruction;
     }
 }
