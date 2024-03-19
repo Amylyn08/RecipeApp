@@ -20,4 +20,8 @@ public class Step {
         TimeInMinutes = timeInMinutes;
         Instruction = instruction;
     }
+
+    public override string ToString() {
+        return "Time: " + TimeInMinutes + ", " + Instruction;
+    }
 }

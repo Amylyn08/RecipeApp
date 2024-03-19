@@ -1,5 +1,6 @@
 namespace RecipeApp.Models;
 
+using System.Text;
 using RecipeApp.Constants;
 
 /// <summary>
@@ -142,5 +143,28 @@ public class Recipe {
             timeToCook += step.TimeInMinutes;
         }
         return timeToCook;
+    }
+
+    public override string ToString() {
+        StringBuilder builder = new();
+        builder.Append("Username: " + User.Name + "\n");
+        builder.Append("Description: " + Description + "\n");
+        builder.Append("Ingredients: \n");
+        foreach (Ingredient ingredient in Ingredients) {
+            builder.Append(ingredient.ToString() + "\n");
+        }
+        builder.Append("Steps: \n");
+        foreach (Step step in Steps) {
+            builder.Append(step.ToString() + "\n");
+        }
+        builder.Append("Tags: \n");
+        foreach (Tag tag in Tags) {
+            builder.Append(tag.ToString() + "\n");
+        }
+        builder.Append("Reviews: \n");
+        foreach (Rating rating in Ratings) {
+            builder.Append(rating.ToString() + "\n");
+        }
+        return builder.ToString();
     }
 }
