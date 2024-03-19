@@ -140,4 +140,28 @@ public class MainDummy {
         } while (input == null);
         return input;
     }
+
+    private static Recipe createRecipe(User user) {
+
+        Console.WriteLine("Enter the name of your recipe");
+        string name = GetInput();
+        Console.WriteLine("Enter the amount of serving your recipe has");
+        int servings = GetIntInput();
+        return new Recipe(user, name,)
+    }
+
+    private static int GetIntInput() {
+        int input = 0;
+        do {
+            try {
+                input = int.Parse(Console.ReadLine());
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            }
+            if (input <= 0) {
+                Console.WriteLine("Please enter an amount greater than 0");
+            }
+        } while (input <= 0);
+        return input;
+    }
 }
