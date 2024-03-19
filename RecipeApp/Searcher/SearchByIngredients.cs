@@ -19,7 +19,7 @@ public class SearchByIngredients: ISearcher{
     /// </summary>
     /// <param name="recipes">The list of recipes passed through</param>
     /// <returns>Returned a filtered list of recipes containing the ingredient.</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
+    public List<Recipe> FilteredRecipes(List<Recipe> recipes){
         List<Recipe> filteredRecipes = new List<Recipe>();
         foreach(Recipe r in recipes){
             foreach(Ingredient ing in ingredientsOfRecipe(r)){
@@ -40,5 +40,4 @@ public class SearchByIngredients: ISearcher{
     private static List<Ingredient> ingredientsOfRecipe(Recipe r){
         return r.Ingredients;
     }
-
 }
