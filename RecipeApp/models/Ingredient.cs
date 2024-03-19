@@ -26,4 +26,8 @@ public class Ingredient {
         UnitOfMeasurement = unitOfMeasurement;
         Price = price;
     }
+
+    public override string ToString() {
+        return Name + ", Q: " + Quantity + " " + UnitOfMeasurement + ", Price: " + Price;  
+    }
 }

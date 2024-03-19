@@ -40,5 +40,4 @@ public class SearchByIngredients: ISearcher{
     private static List<Ingredient> ingredientsOfRecipe(Recipe r){
         return r.Ingredients;
     }
-
 }
