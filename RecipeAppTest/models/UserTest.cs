@@ -11,8 +11,9 @@ public class UserTest {
     public void NullName_Throws_ArugumentException() {
         //Arrange
         List<Recipe> favorites = new List<Recipe>();
+        List<Recipe> recipes = new List<Recipe>();
         //Act
-        User Rida = new User(null, "rida was here", "PrabBoss123", favorites);
+        User Rida = new User(null, "rida was here", "PrabBoss123", favorites, recipes);
     }
 
     [TestMethod]
@@ -20,8 +21,9 @@ public class UserTest {
     public void NameNotEnoughCharacters_Throws_ArugumentException() {
         //Arrange
         List<Recipe> favorites = new List<Recipe>();
+        List<Recipe> recipes = new List<Recipe>();
         //Act
-        User Rida = new User("", "rida was here", "PrabBoss123", favorites);
+        User Rida = new User("", "rida was here", "PrabBoss123", favorites, recipes);
     }
 
     [TestMethod]
@@ -29,8 +31,9 @@ public class UserTest {
     public void NameExceedsCharacters_Throws_ArugumentException() {
         //Arrange
         List<Recipe> favorites = new List<Recipe>();
+        List<Recipe> recipes = new List<Recipe>();
         //Act
-        User Rida = new User("Riiiiiiiiiiiiida", "rida was here", "PrabBoss123", favorites);
+        User Rida = new User("Riiiiiiiiiiiiida", "rida was here", "PrabBoss123", favorites, recipes);
     }
 
     [TestMethod]
@@ -38,8 +41,9 @@ public class UserTest {
     public void NullPassword_Throws_ArugumentException() {
         //Arrange
         List<Recipe> favorites = new List<Recipe>();
+        List<Recipe> recipes = new List<Recipe>();
         //Act
-        User Rida = new User("Rida", "rida was here", null, favorites);
+        User Rida = new User("Rida", "rida was here", null, favorites, recipes);
     }
 
     [TestMethod]
@@ -47,8 +51,9 @@ public class UserTest {
     public void PasswordNotEnoughCharacters_Throws_ArugumentException() {
         //Arrange
         List<Recipe> favorites = new List<Recipe>();
+        List<Recipe> recipes = new List<Recipe>();
         //Act
-        User Rida = new User("Rida", "rida was here", "Prab", favorites);
+        User Rida = new User("Rida", "rida was here", "Prab", favorites, recipes);
     }
 
     [TestMethod]
