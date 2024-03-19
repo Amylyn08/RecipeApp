@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using RecipeApp.Models;
@@ -34,12 +33,6 @@ public class mainDummy{
         // List<Recipe> includingBanana = searcher.FilterRecipes(recipes);
         // Console.WriteLine(includingBanana.Count);
         
-
-=======
-namespace RecipeApp;
-
-public class MainDummy {
-    public static void Main(string[] args) {
         Console.WriteLine("Enter 1 to login or 2 to register");
         int decision = GetDecision();
 
@@ -71,6 +64,5 @@ public class MainDummy {
             input = Console.ReadLine();
         } while (input == null);
         return input;
->>>>>>> d22f3ad9cab6e3eb134e4e20e0a54867125d474c
     }
 }
