@@ -10,6 +10,7 @@ public class User {
     public string Description {get; private set;}
     public string Password{get; set;}
     public List<Recipe> Favorites{get; private set;}
+    public List<Recipe> MadeRecipes{get; private set;}
     /// <summary>
     /// Constructor to create a User
     /// </summary>
@@ -17,8 +18,9 @@ public class User {
     /// <param name="description">Description of the user, can be empty</param>
     /// <param name="pass">Password of the user</param>
     /// <param name="favorites">List of recipes that the user favorited</param>
+    /// <param name="madeRecipes">List of recipes that the user made</param>
     /// <exception cref="ArgumentException">If any field is null or does not respect the specific constraints, it throws an exception</exception>
-    public User(string name, string description, string pass, List<Recipe> favorites) {
+    public User(string name, string description, string pass, List<Recipe> favorites, List<Recipe> madeRecipes) {
         if(name == null) throw new ArgumentException("Name cannot be null!");
         if(pass == null) throw new ArgumentException("Password cannot be null!");
         description ??= "";
@@ -30,6 +32,7 @@ public class User {
         Description = description;
         Password = pass;
         Favorites = favorites;
+        MadeRecipes = madeRecipes;
     }
 
     public override bool Equals(object? obj) {
