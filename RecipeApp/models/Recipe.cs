@@ -42,7 +42,7 @@ public class Recipe {
         CheckTags(tags);
         CheckSteps(steps);
         
-        User = new(user.Name, user.Description, user.Password, user.Favorites);
+        User = new(user.Name, user.Description, user.Password, user.Favorites, user.MadeRecipes);
         Description = description;
         Servings = servings;
         
