@@ -7,5 +7,5 @@ public interface ISearcher{
     /// </summary>
     /// <param name="recipes"></param>
     /// <returns></returns>
-    List<Recipe> FilteredRecipes(List<Recipe> recipes);
+    List<Recipe> FilterRecipes(List<Recipe> recipes);
 }
