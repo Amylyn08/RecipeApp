@@ -1,6 +1,9 @@
-namespace RecipeApp.Models;
+namespace RecipeAppTest.searcher;
 
-public class SearchByTags{
+using RecipeApp.Models;
+using RecipeApp.Searcher;
+
+public class SearchByTags :ISearcher{
 
     private readonly string __criteria;
 

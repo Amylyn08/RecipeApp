@@ -1,6 +1,6 @@
-using RecipeApp.Models;
-
 namespace RecipeApp.Searcher;
+
+using RecipeApp.Models;
 
 public class SearchByIngredients: ISearcher{
 
@@ -20,7 +20,7 @@ public class SearchByIngredients: ISearcher{
     /// <param name="recipes">The list of recipes passed through</param>
     /// <returns>Returned a filtered list of recipes containing the ingredient.</returns>
     public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new List<Recipe>();
+        List<Recipe> filteredRecipes =new ();
         foreach(Recipe r in recipes){
             foreach(Ingredient ing in ingredientsOfRecipe(r)){
                 if(ing.Name.ToLower().Contains(__criteria.ToLower())){

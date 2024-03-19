@@ -1,6 +1,6 @@
-using RecipeApp.Models;
-
 namespace RecipeApp.Searcher;
+
+using RecipeApp.Models;
 
 public class SearchByRating : ISearcher{
 
