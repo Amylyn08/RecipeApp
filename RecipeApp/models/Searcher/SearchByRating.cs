@@ -8,8 +8,8 @@ public class SearchByRating{
     /// Constructor taking assigning the criteria, corresponding to the num ratings specified.
     /// </summary>
     /// <param name="criteria">Rating/stars</param>
-    public SearchByRating(int criteria){
-        __criteria = criteria;
+    public SearchByRating(int rating){
+        __criteria = rating;
     }
 
     /// <summary>

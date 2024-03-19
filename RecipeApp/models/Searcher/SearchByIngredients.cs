@@ -10,8 +10,8 @@ public class SearchByIngredients: ISearcher{
     /// Constructor contains the criteria, corresponding to the crtieria specified.
     /// </summary>
     /// <param name="criteria">Ingredient name  </param>
-    public SearchByIngredients(string criteria){
-        __criteria = criteria;
+    public SearchByIngredients(string ingredientName){
+        __criteria = ingredientName;
     }
 
     /// <summary>
