@@ -149,7 +149,9 @@ public class MainDummy {
         int servings = GetIntInput();
         Console.WriteLine("Create your ingredients:");
         List<Ingredient> ingredients = CreateListIngredients();
-        return new Recipe(user, name, servings, ingredients)
+        Console.WriteLine("Add your steps:");
+        List<Step> steps = CreateListStep();
+        return new Recipe(user, name, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
     }
 
     private static int GetIntInput() {
@@ -193,5 +195,31 @@ public class MainDummy {
             }
         }
         return ingredients;
+    }
+
+    private static Step CreateSteps() {
+        Console.WriteLine("Enter instruction details:");
+        string instruction = GetInput();
+        Console.WriteLine("Enter the amount of time in minutes:");
+        int time = GetIntInput();
+        return new Step(time, instruction);
+    }
+
+    private static List<Step> CreateListStep() {
+        List<Step> steps = new List<Step>();
+
+        bool createStep = true;
+
+        while(createStep) {
+            Step step = CreateSteps();
+            steps.Add(step);
+
+            Console.WriteLine("Add Step? (Y/N):");
+            string choice = GetInput();
+            if(choice.ToUpper() == "Y") {
+                createStep = false;
+            }
+        }
+        return steps;
     }
 }
