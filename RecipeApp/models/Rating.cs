@@ -11,6 +11,8 @@ public class Rating {
      public string Description{get; private set;}
      public User User{get; private set;}
 
+     
+
     /// <summary>
     /// Constructor of Rating.
     /// </summary>
