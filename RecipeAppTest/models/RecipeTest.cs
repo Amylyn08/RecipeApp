@@ -187,4 +187,21 @@ public class RecipeTest {
         Recipe recipe = new(user, description, servings, ingredients, steps, ratings, tags);
         Assert.AreEqual(15, recipe.GetTimeToCook());
     }  
+
+    [TestMethod]
+    public void TotalPrice_Returns_15() {
+        int servings = 1;
+        string description = "A salty potato";
+        User user = new("PotatoLover32", "I love potatoes", "PotatoPotatoPotatp", new List<Recipe>(), new List<Recipe>());
+        List<Ingredient> ingredients = new() { 
+            new Ingredient("Potato", 5, UnitOfMeasurement.AMOUNT, 5),
+            new Ingredient("Potato", 5, UnitOfMeasurement.AMOUNT, 5),
+            new Ingredient("Potato", 5, UnitOfMeasurement.AMOUNT, 5)
+        };
+        List<Step> steps = new() { new Step(5, "Peel potatoes") };
+        List<Rating> ratings = new();
+        List<Tag> tags = new() { new Tag("Potato"),};
+        Recipe recipe = new(user, description, servings, ingredients, steps, ratings, tags);
+        Assert.AreEqual(15, recipe.GetTotalPrice());
+    }
 }
