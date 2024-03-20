@@ -1,5 +1,4 @@
 namespace RecipeApp.Models;
-using Constants;
 
 /// <summary>
 /// Represents a user

@@ -113,9 +113,24 @@ public class MainDummy {
 
         Console.Clear();
         // currentUser.MadeRecipes.Add(createRecipe(currentUser));
-        Console.WriteLine("Here are your recipes !");
-        foreach (Recipe recipe in currentUser.MadeRecipes) {
-            Console.WriteLine(recipe);
+        int input = 0;
+        while (true) {
+            Console.WriteLine("Press 1 to view all your recipes");
+            Console.WriteLine("Press 2 to create a recipe");
+            Console.WriteLine("Here are your options");
+            try {
+                input = int.Parse(Console.ReadLine());
+                if (input == 1) {
+                    foreach (Recipe recipe in currentUser.MadeRecipes) {
+                        System.Console.WriteLine(recipe);
+                    }
+                } else if (input == 2) {
+                    Recipe newRecipe = CreateRecipe();
+                    currentUser.MadeRecipes.Add(newRecipe);
+                }
+            } catch (FormatException) {
+                System.Console.WriteLine("Please enter a valid number");
+            }
         }
     }
 
@@ -147,7 +162,7 @@ public class MainDummy {
     /// </summary>
     /// <param name="user">The current user</param>
     /// <returns>The Recipe object that the user made</returns>
-    private static Recipe createRecipe(User user) {
+    private static Recipe CreateRecipe() {
 
         Console.WriteLine("Enter the name of your recipe");
         string name = GetInput();
@@ -157,7 +172,9 @@ public class MainDummy {
         List<Ingredient> ingredients = CreateListIngredients();
         Console.WriteLine("Add your steps:");
         List<Step> steps = CreateListStep();
-        return new Recipe(user, name, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
+        Console.WriteLine("Add your tags: ");
+        List<Tag> tags = CreateListTags();
+        return new Recipe(currentUser, name, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
     }
     /// <summary>
     /// Gets an integer input from a user
@@ -184,11 +201,32 @@ public class MainDummy {
     private static Ingredient CreateIngredient() {
         Console.WriteLine("Enter ingredient name:");
         string name = GetInput();
+
+        Console.WriteLine("Enter unit of measurement: ");
+        Console.WriteLine("1 (Spoons)");
+        Console.WriteLine("2 (Grams)");
+        Console.WriteLine("3 (Cups)");
+        Console.WriteLine("4 (Teaspoons)");
+        Console.WriteLine("5 (Amount)");
+        
+        int unit = 0;
+        do { unit = GetIntInput(); } 
+        while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
+        
         Console.WriteLine("Enter the amount:");
         int quantity = GetIntInput();
+
         Console.WriteLine("Enter the price:");
-        int price = GetIntInput();
-        return new Ingredient(name, quantity, UnitOfMeasurement.AMOUNT, price);
+        double price = GetIntInput();
+
+        UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+        if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
+        else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
+        else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
+        else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
+        else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+
+        return new Ingredient(name, quantity, unitOfMeasurement, price);
     }
     /// <summary>
     /// Creates a list of ingredients chosen by the user
@@ -243,5 +281,19 @@ public class MainDummy {
             }
         }
         return steps;
+    }
+
+    public static List<Tag> CreateListTags() {
+        List<Tag> tags = new();
+        for (int i = 0; i < Constants.MAX_TAGS; i++) {
+            System.Console.WriteLine("Please enter a tag, or nothing to exit");
+            string input = GetInput();
+            if (input.Length == 0) {
+                return tags;
+            }
+            Tag tag = new Tag(input);
+            tags.Add(tag);
+        }
+        return tags;
     }
 }
