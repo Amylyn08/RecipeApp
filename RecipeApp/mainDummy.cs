@@ -111,8 +111,8 @@ public class MainDummy {
             } 
         }
 
-        // Console.Clear();
-        currentUser.MadeRecipes.Add(createRecipe(currentUser));
+        Console.Clear();
+        // currentUser.MadeRecipes.Add(createRecipe(currentUser));
         Console.WriteLine("Here are your recipes !");
         foreach (Recipe recipe in currentUser.MadeRecipes) {
             Console.WriteLine(recipe);
@@ -142,6 +142,11 @@ public class MainDummy {
         return input;
     }
 
+    /// <summary>
+    /// Allows the user to create a recipe
+    /// </summary>
+    /// <param name="user">The current user</param>
+    /// <returns>The Recipe object that the user made</returns>
     private static Recipe createRecipe(User user) {
 
         Console.WriteLine("Enter the name of your recipe");
@@ -154,7 +159,10 @@ public class MainDummy {
         List<Step> steps = CreateListStep();
         return new Recipe(user, name, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
     }
-
+    /// <summary>
+    /// Gets an integer input from a user
+    /// </summary>
+    /// <returns>The integer input</returns>
     private static int GetIntInput() {
         int input = 0;
         do {
@@ -169,7 +177,10 @@ public class MainDummy {
         } while (input <= 0);
         return input;
     }
-
+    /// <summary>
+    /// Asks the user to create an ingredient object
+    /// </summary>
+    /// <returns>An ingredient object</returns>
     private static Ingredient CreateIngredient() {
         Console.WriteLine("Enter ingredient name:");
         string name = GetInput();
@@ -179,7 +190,10 @@ public class MainDummy {
         int price = GetIntInput();
         return new Ingredient(name, quantity, UnitOfMeasurement.AMOUNT, price);
     }
-
+    /// <summary>
+    /// Creates a list of ingredients chosen by the user
+    /// </summary>
+    /// <returns>A list of ingredients</returns>
     private static List<Ingredient> CreateListIngredients() {
         List<Ingredient> ingredients = new List<Ingredient>();
 
@@ -197,7 +211,10 @@ public class MainDummy {
         }
         return ingredients;
     }
-
+    /// <summary>
+    /// Asks the user to create a step
+    /// </summary>
+    /// <returns>The user made step</returns>
     private static Step CreateSteps() {
         Console.WriteLine("Enter instruction details:");
         string instruction = GetInput();
