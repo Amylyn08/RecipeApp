@@ -111,7 +111,8 @@ public class MainDummy {
             } 
         }
 
-        Console.Clear();
+        // Console.Clear();
+        currentUser.MadeRecipes.Add(createRecipe(currentUser));
         Console.WriteLine("Here are your recipes !");
         foreach (Recipe recipe in currentUser.MadeRecipes) {
             Console.WriteLine(recipe);
@@ -190,7 +191,7 @@ public class MainDummy {
 
             Console.WriteLine("Add ingredient? (Y/N):");
             string choice = GetInput();
-            if(choice.ToUpper() == "Y") {
+            if(choice.ToUpper() == "N") {
                 createIng = false;
             }
         }
@@ -205,6 +206,10 @@ public class MainDummy {
         return new Step(time, instruction);
     }
 
+    /// <summary>
+    /// Using the CreateSteps() method, the user creates a list of steps
+    /// </summary>
+    /// <returns>A list of custom made steps</returns>
     private static List<Step> CreateListStep() {
         List<Step> steps = new List<Step>();
 
@@ -216,7 +221,7 @@ public class MainDummy {
 
             Console.WriteLine("Add Step? (Y/N):");
             string choice = GetInput();
-            if(choice.ToUpper() == "Y") {
+            if(choice.ToUpper() == "N") {
                 createStep = false;
             }
         }
