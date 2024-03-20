@@ -4,14 +4,16 @@ using RecipeApp.Models;
 using RecipeApp.Searcher;
 
 public class SearchByTime : ISearcher{
-    private int  __criteria;
+    private int minTime;
+    private int maxTime;
 
     /// <summary>
     /// Constructor for SearchByTime using time in minutes specified.
     /// </summary>
     /// <param name="timeInMinutes">The time in minutes specified.</param>
-    public SearchByTime(int timeInMinutes){
-        __criteria = timeInMinutes;
+    public SearchByTime(int min, int max){
+        minTime = min;
+        maxTime = max;
     }
 
     /// <summary>
@@ -23,11 +25,11 @@ public class SearchByTime : ISearcher{
         List<Recipe> filteredRecipes = new();
         foreach(Recipe r in recipes){
             foreach(Step step in StepsInRecipe(r)){
-                if(step.TimeInMinutes == __criteria){
-                    filteredRecipes.Add(r);
+                    if(step.TimeInMinutes >= minTime && step.TimeInMinutes <=maxTime){
+                        filteredRecipes.Add(r);
+                    }
                 }
             }
-        }
         return filteredRecipes;
     }
 
