@@ -16,4 +16,9 @@ public class Tag {
         if (tagName.Length == 0) throw new ArgumentException("Tag cannot be empty");
         TagName = tagName;
     }
+
+    public override string ToString()
+    {
+        return TagName;
+    }
 }

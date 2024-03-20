@@ -25,4 +25,9 @@ public class Rating {
         Description = desc;
         User = user;
     }
+
+    public override string ToString()
+    {
+        return "User: " + User.Name + "\n" + "Stars: " + Stars + "\n" + "Description: " + Description;
+    }
 }

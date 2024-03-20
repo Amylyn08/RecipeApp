@@ -157,6 +157,7 @@ public class Recipe {
         builder.Append("Username: " + User.Name + "\n");
         builder.Append("Description: " + Description + "\n");
         builder.Append("Ingredients: \n");
+        builder.Append("Servinsg: " + Servings + "\n"); 
         foreach (Ingredient ingredient in Ingredients) {
             builder.Append(ingredient.ToString() + "\n");
         }
