@@ -145,6 +145,14 @@ public class Recipe {
         return timeToCook;
     }
 
+    public int GetTotalPrice() {
+        int price = 0;
+        foreach (Ingredient ingredient in Ingredients) {
+            price += ingredient.Price;
+        }
+        return price;
+    }
+
     public override string ToString() {
         StringBuilder builder = new();
         builder.Append("Username: " + User.Name + "\n");
