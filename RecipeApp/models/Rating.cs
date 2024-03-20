@@ -1,7 +1,4 @@
-using System.Dynamic;
-
 namespace RecipeApp.Models;
-using RecipeApp.Constants;
 
 /// <summary>
 /// For rating of recipes, contains stars, description, and user/author of the rating.
@@ -27,5 +24,10 @@ public class Rating {
         Stars = stars;
         Description = desc;
         User = user;
+    }
+
+    public override string ToString()
+    {
+        return "User: " + User.Name + "\n" + "Stars: " + Stars + "\n" + "Description: " + Description;
     }
 }

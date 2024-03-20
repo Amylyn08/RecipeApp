@@ -1,4 +1,4 @@
-namespace RecipeApp.Constants;
+namespace RecipeApp;
 
 public class Constants {
     public const int MAX_DESCRIPTION_LENGTH = 256;

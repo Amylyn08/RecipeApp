@@ -1,7 +1,6 @@
 namespace RecipeApp.Models;
 
 using System.Text;
-using RecipeApp.Constants;
 
 /// <summary>
 /// Recipe schema
@@ -145,8 +144,8 @@ public class Recipe {
         return timeToCook;
     }
 
-    public int GetTotalPrice() {
-        int price = 0;
+    public double GetTotalPrice() {
+        double price = 0;
         foreach (Ingredient ingredient in Ingredients) {
             price += ingredient.Price;
         }
@@ -158,6 +157,7 @@ public class Recipe {
         builder.Append("Username: " + User.Name + "\n");
         builder.Append("Description: " + Description + "\n");
         builder.Append("Ingredients: \n");
+        builder.Append("Servinsg: " + Servings + "\n"); 
         foreach (Ingredient ingredient in Ingredients) {
             builder.Append(ingredient.ToString() + "\n");
         }

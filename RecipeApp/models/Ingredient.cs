@@ -7,7 +7,7 @@ public class Ingredient {
     public string Name { get; private set; }
     public int Quantity { get; private set; }
     public UnitOfMeasurement UnitOfMeasurement { get; private set; }
-    public int Price { get; private set; }
+    public double Price { get; private set; }
     
     /// <summary>
     /// Constructor with name, quantity and unit of measurement
@@ -16,7 +16,7 @@ public class Ingredient {
     /// <param name="quantity">Quantity like 0.5 or 1</param>
     /// <param name="unitOfMeasurement">Grams, teaspoons, etc</param>
     /// <exception cref="ArgumentException">If name is null, empty or if quantity is <= 0</exception>
-    public Ingredient(string name, int quantity, UnitOfMeasurement unitOfMeasurement, int price) {
+    public Ingredient(string name, int quantity, UnitOfMeasurement unitOfMeasurement, double price) {
         if (name == null) throw new ArgumentException("Name cannot be null");
         if (name.Length == 0) throw new ArgumentException("Name cannot be empty");
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than 0");
