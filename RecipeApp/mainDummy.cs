@@ -112,6 +112,7 @@ public class MainDummy {
         }
 
         Console.Clear();
+        // currentUser.MadeRecipes.Add(createRecipe(currentUser));
         Console.WriteLine("Here are your recipes !");
         foreach (Recipe recipe in currentUser.MadeRecipes) {
             Console.WriteLine(recipe);
@@ -139,5 +140,108 @@ public class MainDummy {
             input = Console.ReadLine();
         } while (input == null);
         return input;
+    }
+
+    /// <summary>
+    /// Allows the user to create a recipe
+    /// </summary>
+    /// <param name="user">The current user</param>
+    /// <returns>The Recipe object that the user made</returns>
+    private static Recipe createRecipe(User user) {
+
+        Console.WriteLine("Enter the name of your recipe");
+        string name = GetInput();
+        Console.WriteLine("Enter the amount of serving your recipe has");
+        int servings = GetIntInput();
+        Console.WriteLine("Create your ingredients:");
+        List<Ingredient> ingredients = CreateListIngredients();
+        Console.WriteLine("Add your steps:");
+        List<Step> steps = CreateListStep();
+        return new Recipe(user, name, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
+    }
+    /// <summary>
+    /// Gets an integer input from a user
+    /// </summary>
+    /// <returns>The integer input</returns>
+    private static int GetIntInput() {
+        int input = 0;
+        do {
+            try {
+                input = int.Parse(Console.ReadLine());
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            }
+            if (input <= 0) {
+                Console.WriteLine("Please enter an amount greater than 0");
+            }
+        } while (input <= 0);
+        return input;
+    }
+    /// <summary>
+    /// Asks the user to create an ingredient object
+    /// </summary>
+    /// <returns>An ingredient object</returns>
+    private static Ingredient CreateIngredient() {
+        Console.WriteLine("Enter ingredient name:");
+        string name = GetInput();
+        Console.WriteLine("Enter the amount:");
+        int quantity = GetIntInput();
+        Console.WriteLine("Enter the price:");
+        int price = GetIntInput();
+        return new Ingredient(name, quantity, UnitOfMeasurement.AMOUNT, price);
+    }
+    /// <summary>
+    /// Creates a list of ingredients chosen by the user
+    /// </summary>
+    /// <returns>A list of ingredients</returns>
+    private static List<Ingredient> CreateListIngredients() {
+        List<Ingredient> ingredients = new List<Ingredient>();
+
+        bool createIng = true;
+
+        while(createIng) {
+            Ingredient ingredient = CreateIngredient();
+            ingredients.Add(ingredient);
+
+            Console.WriteLine("Add ingredient? (Y/N):");
+            string choice = GetInput();
+            if(choice.ToUpper() == "N") {
+                createIng = false;
+            }
+        }
+        return ingredients;
+    }
+    /// <summary>
+    /// Asks the user to create a step
+    /// </summary>
+    /// <returns>The user made step</returns>
+    private static Step CreateSteps() {
+        Console.WriteLine("Enter instruction details:");
+        string instruction = GetInput();
+        Console.WriteLine("Enter the amount of time in minutes:");
+        int time = GetIntInput();
+        return new Step(time, instruction);
+    }
+
+    /// <summary>
+    /// Using the CreateSteps() method, the user creates a list of steps
+    /// </summary>
+    /// <returns>A list of custom made steps</returns>
+    private static List<Step> CreateListStep() {
+        List<Step> steps = new List<Step>();
+
+        bool createStep = true;
+
+        while(createStep) {
+            Step step = CreateSteps();
+            steps.Add(step);
+
+            Console.WriteLine("Add Step? (Y/N):");
+            string choice = GetInput();
+            if(choice.ToUpper() == "N") {
+                createStep = false;
+            }
+        }
+        return steps;
     }
 }

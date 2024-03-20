@@ -23,7 +23,7 @@ public class SearchByRating : ISearcher{
         List<Recipe> filteredRecipes = new List<Recipe>();
         foreach(Recipe r in recipes){
             foreach(Rating rating in ratingsOfRecipe(r)){
-                if(rating.__stars == __criteria){
+                if(rating.Stars == __criteria){
                     filteredRecipes.Add(r);
                 }
             }
