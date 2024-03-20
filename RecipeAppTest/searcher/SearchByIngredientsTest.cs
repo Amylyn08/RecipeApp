@@ -1,6 +1,7 @@
 namespace RecipeAppTest.searcher;
 
 using RecipeApp.Models;
+using RecipeApp.Searcher;
 
 [TestClass]
 

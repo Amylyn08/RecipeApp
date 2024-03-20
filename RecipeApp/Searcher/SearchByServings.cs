@@ -1,6 +1,8 @@
+using RecipeApp.Searcher;
+
 namespace RecipeApp.Models;
 
-public class SearchByServings{
+public class SearchByServings : ISearcher{
 
     private int __criteria;
 
