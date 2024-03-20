@@ -1,4 +1,6 @@
-namespace RecipeApp.Models;
+namespace RecipeApp.Searcher;
+
+using RecipeApp.Models;
 
 public interface ISearcher{
 
