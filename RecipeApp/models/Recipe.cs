@@ -6,6 +6,7 @@ using System.Text;
 /// Recipe schema
 /// </summary>
 public class Recipe {
+    public string Name { get; private set; }
     public User User { get; private set; }
     public string Description { get; private set; }
     public int Servings { get; private set; }
@@ -25,8 +26,12 @@ public class Recipe {
     /// <param name="ratings">Recipe ratings</param>
     /// <param name="tags">List of tags</param>
     /// <exception cref="ArgumentException">If any fields are null, empty or doesn't respect certain constraints</exception>
-    public Recipe(User user, string description, int servings, List<Ingredient> ingredients, 
+    public Recipe(string name, User user, string description, int servings, List<Ingredient> ingredients, 
             List<Step> steps, List<Rating> ratings, List<Tag> tags) {
+        if (name == null) 
+            throw new ArgumentException("Name cannot be null");
+        if (name.Length == 0) 
+            throw new ArgumentException("Name cannot be empty");
         if (user == null) 
             throw new ArgumentException("User cannot be null");
         if (servings < Constants.MIN_SERVINGS) 
@@ -42,6 +47,7 @@ public class Recipe {
         CheckTags(tags);
         CheckSteps(steps);
         
+        Name = name;
         User = new(user.Name, user.Description, user.Password, user.Favorites, user.MadeRecipes);
         Description = description;
         Servings = servings;
