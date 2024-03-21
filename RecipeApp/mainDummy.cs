@@ -352,4 +352,8 @@ public class MainDummy {
             return recipeToUpdate;
         }
     }
+
+    private static void RatingRecipe(Recipe recipeToRate, Rating star) {
+        recipeToRate.Ratings.Add(star);
+    }
 }
