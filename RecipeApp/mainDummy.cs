@@ -1,4 +1,5 @@
 using RecipeApp.Models;
+using RecipeApp.Searcher;
 
 namespace RecipeApp;
 
@@ -355,5 +356,28 @@ public class MainDummy {
 
     private static void RatingRecipe(Recipe recipeToRate, Rating star) {
         recipeToRate.Ratings.Add(star);
+    }
+
+    public static List<Recipe> SearchRecipe() {
+        List<Recipe> results = new List<Recipe>();
+        ISearcher search = null;
+        Console.WriteLine("Enter 1 to Search By Keyword");
+        Console.WriteLine("Enter 2 to Search By Ingredient name");
+        Console.WriteLine("Enter 1 to Search By Price range");
+        int input = GetIntInput();
+        if(input == 1){
+            string keyword = GetInput();
+            search = new SearchKeyWord(keyword);
+        } else if(input == 2) {
+            string ingredientName = GetInput();
+            search = new SearchByIngredients(ingredientName);
+        } else if(input == 3) {
+
+        }
+        foreach(User user in users) {
+            List<Recipe> userRecipes = search.FilterRecipes(user.MadeRecipes);
+            results.AddRange(userRecipes);
+        }
+
     }
 }
