@@ -68,9 +68,9 @@ public class MainDummy {
         List<Step> steps2 = new() { step4, step5, step6 };
         List<Step> steps3 = new() { step7, step8, step9 };
 
-        Recipe recipe1 = new(users[0], "Potato recipe", 1, ingredients1, steps1, new(), new());
-        Recipe recipe2 = new(users[1], "Potato recipe", 1, ingredients2, steps2, new(), new());
-        Recipe recipe3 = new(users[2], "Potato recipe", 1, ingredients3, steps3, new(), new());
+        Recipe recipe1 = new("Easy Recipe", users[0], "Potato recipe", 1, ingredients1, steps1, new(), new());
+        Recipe recipe2 = new("Fast Recipe", users[1], "Potato recipe", 1, ingredients2, steps2, new(), new());
+        Recipe recipe3 = new("Cool Recipe", users[2], "Potato recipe", 1, ingredients3, steps3, new(), new());
 
         users[0].MadeRecipes.Add(recipe1);
         users[1].MadeRecipes.Add(recipe2);
@@ -166,9 +166,10 @@ public class MainDummy {
     /// <param name="user">The current user</param>
     /// <returns>The Recipe object that the user made</returns>
     private static Recipe CreateRecipe() {
-
-        Console.WriteLine("Enter the name of your recipe");
+        Console.WriteLine("Enter the name of your recipe: ");
         string name = GetInput();
+        Console.WriteLine("Enter the description of your recipe");
+        string description = GetInput();
         Console.WriteLine("Enter the amount of serving your recipe has");
         int servings = GetIntInput();
         Console.WriteLine("Create your ingredients:");
@@ -177,7 +178,7 @@ public class MainDummy {
         List<Step> steps = CreateListStep();
         Console.WriteLine("Add your tags: ");
         List<Tag> tags = CreateListTags();
-        return new Recipe(currentUser, name, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
+        return new Recipe(name, currentUser, description, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
     }
     /// <summary>
     /// Gets an integer input from a user
@@ -326,28 +327,39 @@ public class MainDummy {
         System.Console.WriteLine("Enter 3 to change ingredients");
         System.Console.WriteLine("Enter 4 to change steps");
         System.Console.WriteLine("Enter 5 to change tags");
+        System.Console.WriteLine("Enter 6 to change name");
         System.Console.WriteLine("Enter anything else to cancel");
         int input = GetIntInput();
         if (input == 1) {
             System.Console.WriteLine("Enter new description");
             string desc = GetInput();
-            return new(recipeToUpdate.User, desc, recipeToUpdate.Servings, recipeToUpdate.Ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
+            return new(recipeToUpdate.Name, recipeToUpdate.User, desc, recipeToUpdate.Servings, 
+                recipeToUpdate.Ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
         } else if (input == 2) {
             System.Console.WriteLine("Enter new servings");
             int servings = GetIntInput();
-            return new(recipeToUpdate.User, recipeToUpdate.Description, servings, recipeToUpdate.Ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
+            return new(recipeToUpdate.Name, recipeToUpdate.User, recipeToUpdate.Description, servings, 
+                recipeToUpdate.Ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
         } else if (input == 3) {
             System.Console.WriteLine("Enter new ingredients");
             List<Ingredient> ingredients = CreateListIngredients();
-            return new(recipeToUpdate.User, recipeToUpdate.Description, recipeToUpdate.Servings, ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
+            return new(recipeToUpdate.Name, recipeToUpdate.User, recipeToUpdate.Description, recipeToUpdate.Servings, 
+                ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
         } else if (input == 4) {
             System.Console.WriteLine("Enter new steps");
             List<Step> steps = CreateListStep();
-            return new(recipeToUpdate.User, recipeToUpdate.Description, recipeToUpdate.Servings, recipeToUpdate.Ingredients, steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
+            return new(recipeToUpdate.Name, recipeToUpdate.User, recipeToUpdate.Description, recipeToUpdate.Servings, 
+                recipeToUpdate.Ingredients, steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
         } else if (input == 5) {
             System.Console.WriteLine("Enter new tags");
             List<Tag> tags = CreateListTags();
-            return new(recipeToUpdate.User, recipeToUpdate.Description, recipeToUpdate.Servings, recipeToUpdate.Ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, tags);
+            return new(recipeToUpdate.Name, recipeToUpdate.User, recipeToUpdate.Description, recipeToUpdate.Servings, 
+                recipeToUpdate.Ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, tags);
+        } else if (input == 6) {
+            System.Console.WriteLine("Enter new name");
+            string name = GetInput();
+            return new(name, recipeToUpdate.User, recipeToUpdate.Description, recipeToUpdate.Servings, 
+                recipeToUpdate.Ingredients, recipeToUpdate.Steps, recipeToUpdate.Ratings, recipeToUpdate.Tags);
         } else {
             return recipeToUpdate;
         }
