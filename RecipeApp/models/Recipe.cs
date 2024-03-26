@@ -6,7 +6,17 @@ using System.Text;
 /// Recipe schema
 /// </summary>
 public class Recipe {
-    public string Name { get; private set; }
+    private string _name;
+
+    public string Name { 
+        get => _name;  
+        set {
+            if (value == null) throw new ArgumentException("Name cannot be null");
+            if (value.Length == 0) throw new ArgumentException("Name cannot be empty");
+            _name = value;
+        } 
+    }
+    
     public User User { get; private set; }
     public string Description { get; private set; }
     public int Servings { get; private set; }
