@@ -269,23 +269,23 @@ public class Recipe {
     /// <returns>String format of recipe</returns>
     public override string ToString() {
         StringBuilder builder = new();
-        builder.Append("Username: " + User.Name + "\n");
-        builder.Append("Description: " + Description + "\n");
+        builder.Append("Name: " + _name + "\n");
+        builder.Append("Description: " + _description + "\n");
         builder.Append("Ingredients: \n");
-        builder.Append("Servinsg: " + Servings + "\n"); 
-        foreach (Ingredient ingredient in Ingredients) {
+        builder.Append("Servinsg: " + _servings + "\n"); 
+        foreach (Ingredient ingredient in _ingredients) {
             builder.Append(ingredient.ToString() + "\n");
         }
         builder.Append("Steps: \n");
-        foreach (Step step in Steps) {
+        foreach (Step step in _steps) {
             builder.Append(step.ToString() + "\n");
         }
         builder.Append("Tags: \n");
-        foreach (Tag tag in Tags) {
+        foreach (Tag tag in _tags) {
             builder.Append(tag.ToString() + "\n");
         }
         builder.Append("Reviews: \n");
-        foreach (Rating rating in Ratings) {
+        foreach (Rating rating in _ratings) {
             builder.Append(rating.ToString() + "\n");
         }
         return builder.ToString();
