@@ -114,7 +114,6 @@ public class MainDummy {
         }
 
         Console.Clear();
-        // currentUser.MadeRecipes.Add(createRecipe(currentUser));
         int input = 0;
         while (true) {
             Console.WriteLine("Press 1 to view all your recipes");
@@ -359,12 +358,17 @@ public class MainDummy {
         recipeToRate.Ratings.Add(star);
     }
 
-    public static List<Recipe> SearchRecipe() {
+    private static List<Recipe> SearchRecipe() {
         List<Recipe> results = new List<Recipe>();
         ISearcher search = null;
         Console.WriteLine("Enter 1 to Search By Keyword");
         Console.WriteLine("Enter 2 to Search By Ingredient name");
         Console.WriteLine("Enter 3 to Search By Price range");
+        Console.WriteLine("Enter 4 to Search By Rating");
+        Console.WriteLine("Enter 5 to Search By Serving");
+        Console.WriteLine("Enter 6 to Search By Tag name");
+        Console.WriteLine("Enter 7 to Search By Prepare Time range");
+        Console.WriteLine("Enter 8 to Search By Username");
         int input = GetIntInput();
         if(input == 1){
             string keyword = GetInput();
