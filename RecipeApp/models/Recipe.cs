@@ -7,23 +7,79 @@ using System.Text;
 /// </summary>
 public class Recipe {
     private string _name;
+    private string _description;
+    private int _servings;
+    private List<Ingredient> _ingredients;
+    private List<Step> _steps;
+    private List<Rating> _ratings;
+    private List<Tag> _tags;
 
     public string Name { 
         get => _name;  
         set {
-            if (value == null) throw new ArgumentException("Name cannot be null");
-            if (value.Length == 0) throw new ArgumentException("Name cannot be empty");
+            if (value == null) 
+                throw new ArgumentException("Name cannot be null");
+            if (value.Length == 0) 
+                throw new ArgumentException("Name cannot be empty");
             _name = value;
         } 
     }
+
+    public string Description { 
+        get => _description; 
+        set {
+            value ??= "";
+            if (value.Length > Constants.MAX_DESCRIPTION_LENGTH) 
+                throw new ArgumentException("Recipe description cannot exceed " + Constants.MAX_DESCRIPTION_LENGTH + " characters");
+            _description = value;
+        } 
+    }
+
+    public int Servings { 
+        get => _servings; 
+        set {
+            if (value < Constants.MIN_SERVINGS) 
+                throw new ArgumentException("Serving(s) must be greater than 0");
+            _servings = value;
+        }
+    }
+
+    public List<Ingredient> Ingredients { 
+        get => _ingredients; 
+        set {
+            CheckIngredients(value);
+            PopulateIngredients(value);
+            _ingredients = value;
+        } 
+    }
+
+    public List<Step> Steps { 
+        get => _steps; 
+        set {
+            CheckSteps(value);
+            PopulateSteps(value);
+            _steps = value;
+        } 
+    }
+    public List<Rating> Ratings { 
+        get => _ratings; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("Ratings cannot be null");
+            PopulateRatings(value);
+        }
+    }
+
+    public List<Tag> Tags { 
+        get => _tags; 
+        set {
+            CheckTags(value);
+            PopulateTags(value);
+
+        }
+    }
     
     public User User { get; private set; }
-    public string Description { get; private set; }
-    public int Servings { get; private set; }
-    public List<Ingredient> Ingredients { get; private set; }
-    public List<Step> Steps { get; private set; }
-    public List<Rating> Ratings { get; private set; }
-    public List<Tag> Tags { get; private set; }
 
     /// <summary>
     /// Constructor with user, ingredients, steps and ratings
