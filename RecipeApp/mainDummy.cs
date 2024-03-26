@@ -126,6 +126,7 @@ public class MainDummy {
             Console.WriteLine("Press 1 to view all your recipes");
             Console.WriteLine("Press 2 to create a recipe");
             Console.WriteLine("Press 3 to update a recipe");
+            Console.WriteLine("Press 4 to search for recipes");
             Console.WriteLine("Here are your options");
             try {
                 input = int.Parse(Console.ReadLine());
@@ -138,6 +139,12 @@ public class MainDummy {
                     currentUser.MadeRecipes.Add(newRecipe);
                 } else if (input == 3) {
                     UpdateRecipe();
+                } else if (input == 4) {
+                    List<Recipe> foundRecipes = SearchRecipe();
+                    Console.WriteLine("FOUND RECIPES");
+                    foreach (Recipe recipe in foundRecipes) {
+                        Console.WriteLine(recipe);
+                    }
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
