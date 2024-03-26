@@ -17,10 +17,7 @@ public class Recipe {
     public string Name { 
         get => _name;  
         set {
-            if (value == null) 
-                throw new ArgumentException("Name cannot be null");
-            if (value.Length == 0) 
-                throw new ArgumentException("Name cannot be empty");
+            CheckName(value);
             _name = value;
         } 
     }
@@ -28,9 +25,7 @@ public class Recipe {
     public string Description { 
         get => _description; 
         set {
-            value ??= "";
-            if (value.Length > Constants.MAX_DESCRIPTION_LENGTH) 
-                throw new ArgumentException("Recipe description cannot exceed " + Constants.MAX_DESCRIPTION_LENGTH + " characters");
+            CheckDescription(value);
             _description = value;
         } 
     }
@@ -38,8 +33,7 @@ public class Recipe {
     public int Servings { 
         get => _servings; 
         set {
-            if (value < Constants.MIN_SERVINGS) 
-                throw new ArgumentException("Serving(s) must be greater than 0");
+            CheckServings(value);
             _servings = value;
         }
     }
@@ -78,7 +72,7 @@ public class Recipe {
 
         }
     }
-    
+
     public User User { get; private set; }
 
     /// <summary>
@@ -124,6 +118,25 @@ public class Recipe {
         PopulateSteps(steps);
     }
 
+    private static void CheckName(string name) {
+        if (name == null) 
+            throw new ArgumentException("Name cannot be null");
+        if (name.Length == 0) 
+            throw new ArgumentException("Name cannot be empty");
+    }
+
+    private static void CheckDescription(string description) {
+        if (description == null) 
+            throw new ArgumentException("Recipe description cannot be null");
+        if (description.Length > Constants.MAX_DESCRIPTION_LENGTH)
+            throw new ArgumentException($"Recipe description cannot exceed {Constants.MAX_DESCRIPTION_LENGTH} characters");
+    }
+
+    private static void CheckServings(int servings) {
+        if (servings < Constants.MIN_SERVINGS) 
+            throw new ArgumentException($"Serving(s) must be greater than {Constants.MIN_SERVINGS}");
+    }
+
     /// <summary>
     /// Validates the list of ingredients
     /// </summary>
@@ -165,9 +178,9 @@ public class Recipe {
     /// </summary>
     /// <param name="ingredients">Reference to constructor param</param>
     private void PopulateIngredients(List<Ingredient> ingredients) {
-        Ingredients = new();
+        _ingredients = new();
         foreach (Ingredient ingredient in ingredients) {
-            Ingredients.Add(ingredient);
+            _ingredients.Add(ingredient);
         }
     }
 
