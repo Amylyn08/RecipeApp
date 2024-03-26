@@ -11,6 +11,8 @@ public class MainDummy {
         new User("Rida3", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>())
     };
 
+    private static readonly List<Recipe> _allRecipes = new();
+
     private static User? currentUser = null;
 
     public static void Main(string[] args) {
@@ -77,6 +79,10 @@ public class MainDummy {
         users[0].MadeRecipes.Add(recipe1);
         users[1].MadeRecipes.Add(recipe2);
         users[2].MadeRecipes.Add(recipe3);
+
+        _allRecipes.Add(recipe1);
+        _allRecipes.Add(recipe2);
+        _allRecipes.Add(recipe3);
 
         Console.WriteLine("Enter 1 to login or 2 to register");
         int decision = GetDecision();
@@ -365,7 +371,6 @@ public class MainDummy {
     }
 
     private static List<Recipe> SearchRecipe() {
-        List<Recipe> results = new List<Recipe>();
         ISearcher search = null;
         Console.WriteLine("Enter 1 to Search By Keyword");
         Console.WriteLine("Enter 2 to Search By Ingredient name");
@@ -412,12 +417,9 @@ public class MainDummy {
             search = new SearchByUsername(username);
         } else {
             Console.WriteLine("Invalid input");
-            return results;
+            return null;
         }
-        foreach(User user in users) {
-            List<Recipe> userRecipes = search.FilterRecipes(user.MadeRecipes);
-            results.AddRange(userRecipes);
-        }
-    return results;
+        List<Recipe> results = search.FilterRecipes(_allRecipes);
+        return results;
     }
 }
