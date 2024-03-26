@@ -367,6 +367,12 @@ public class MainDummy {
         } else {
             return;
         }
+        for (int i = 0; i < _allRecipes.Count; i++) {
+            if (_allRecipes[i].Equals(recipeToUpdate)) {
+                _allRecipes[i] = recipeToUpdate;
+                break;
+            }
+        }
     }
 
     private static void RatingRecipe(Recipe recipeToRate, Rating star) {
