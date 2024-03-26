@@ -4,14 +4,16 @@ using RecipeApp.Models;
 
 public class SearchByRating : ISearcher{
 
-    private int __criteria;
+    private readonly int _criteria;
 
     /// <summary>
     /// Constructor taking assigning the criteria, corresponding to the num ratings specified.
     /// </summary>
     /// <param name="criteria">Rating/stars</param>
     public SearchByRating(int rating){
-        __criteria = rating;
+        if (rating < 0 || rating > 5) 
+            throw new ArgumentException("Rating must be between 1 and 5");
+        _criteria = rating;
     }
 
     /// <summary>
@@ -22,8 +24,8 @@ public class SearchByRating : ISearcher{
     public List<Recipe> FilterRecipes(List<Recipe> recipes){
         List<Recipe> filteredRecipes = new List<Recipe>();
         foreach(Recipe r in recipes){
-            foreach(Rating rating in ratingsOfRecipe(r)){
-                if(rating.Stars == __criteria){
+            foreach(Rating rating in RatingsOfRecipe(r)){
+                if(rating.Stars == _criteria){
                     filteredRecipes.Add(r);
                 }
             }
@@ -36,7 +38,7 @@ public class SearchByRating : ISearcher{
     /// </summary>
     /// <param name="r">The recipe specified</param>
     /// <returns>List of ratings of recipe.</returns>
-    private static List<Rating> ratingsOfRecipe(Recipe r){
+    private static List<Rating> RatingsOfRecipe(Recipe r){
         return r.Ratings;
     }
 

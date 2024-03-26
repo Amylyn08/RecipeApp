@@ -5,14 +5,18 @@ using RecipeApp.Models;
 
 public class SearchByUsername : ISearcher{
 
-    private string __criteria;
+    private readonly string _criteria;
 
     /// <summary>
     /// Constructor for SearchByUsername takes in username
     /// </summary>
     /// <param name="username">Name of user</param>
-    public SearchByUsername(string username){
-        __criteria  = username;
+    public SearchByUsername(string username) {
+        if (username == null)
+            throw new ArgumentException("Username cannot be null");
+        if (username.Length == 0)
+            throw new ArgumentException("Username cannot be empty");
+        _criteria = username;
     }
 
     /// <summary>
@@ -23,7 +27,7 @@ public class SearchByUsername : ISearcher{
     public List<Recipe> FilterRecipes(List<Recipe> recipes){
         List<Recipe> filteredRecipes = new();
         foreach(Recipe r in recipes){
-            if(r.User.Name.ToLower().Contains(__criteria.ToLower())){
+            if(r.User.Name.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
                 filteredRecipes.Add(r);
             }
         }

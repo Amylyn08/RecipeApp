@@ -1,18 +1,21 @@
 namespace RecipeApp.Searcher;
 
-using System.Diagnostics;
 using RecipeApp.Models;
 
 public class SearchKeyWord : ISearcher{
     
-    private string __criteria;
+    private readonly string _criteria;
 
     /// <summary>
     /// Constructor for SearchKeyword, takes keyword.
     /// </summary>
     /// <param name="keyword">keyword wanna look for in desc.</param>
     public SearchKeyWord(string keyword){
-        __criteria = keyword;
+        if (keyword == null)
+            throw new ArgumentException("Keyword cannot be null");
+        if (keyword.Length == 0) 
+            throw new ArgumentException("Key cannot be empty");
+        _criteria = keyword;
     }
 
 
@@ -24,7 +27,7 @@ public class SearchKeyWord : ISearcher{
     public List<Recipe> FilterRecipes(List<Recipe> recipes){
         List<Recipe> filteredRecipes = new();
         foreach(Recipe r in recipes){
-            if(r.Description.ToLower().Contains(__criteria.ToLower())){
+            if(r.Description.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
                 filteredRecipes.Add(r);
             }
         }
