@@ -245,20 +245,28 @@ public class Recipe {
     /// <returns>Total time to complete all steps</returns>
     public int GetTimeToCook() {
         int timeToCook = 0;
-        foreach (Step step in this.Steps) {
+        foreach (Step step in _steps) {
             timeToCook += step.TimeInMinutes;
         }
         return timeToCook;
     }
 
+    /// <summary>
+    /// Gets the total price of a recipe
+    /// </summary>
+    /// <returns>Price of the recipe</returns>
     public double GetTotalPrice() {
         double price = 0;
-        foreach (Ingredient ingredient in Ingredients) {
+        foreach (Ingredient ingredient in _ingredients) {
             price += ingredient.Price;
         }
         return price;
     }
 
+    /// <summary>
+    /// Returns string representation of a recipe
+    /// </summary>
+    /// <returns>String format of recipe</returns>
     public override string ToString() {
         StringBuilder builder = new();
         builder.Append("Username: " + User.Name + "\n");
