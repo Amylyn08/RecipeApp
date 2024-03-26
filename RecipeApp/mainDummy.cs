@@ -192,7 +192,10 @@ public class MainDummy {
         Console.WriteLine("Add your tags: ");
         List<Tag> tags = CreateListTags();
         
-        return new Recipe(name, currentUser, description, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
+        Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
+        _allRecipes.Add(recipe);
+
+        return recipe;
     }
     /// <summary>
     /// Gets an integer input from a user
