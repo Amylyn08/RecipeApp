@@ -142,7 +142,9 @@ public class MainDummy {
                 } else if (input == 4) {
                     List<Recipe> foundRecipes = SearchRecipe();
                     Console.WriteLine("FOUND RECIPES");
-                    ChooseRecipe(foundRecipes);
+                    foreach(Recipe recipe in foundRecipes) {
+                        Console.WriteLine(recipe);
+                    }
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
@@ -380,11 +382,19 @@ public class MainDummy {
         }
     }
 
+    /// <summary>
+    /// Rates a recipe
+    /// </summary>
+    /// <param name="recipeToRate">Recipe thats getting rated</param>
     private static void RatingRecipe(Recipe recipeToRate) {
         Rating newRating = CreateRating();
         recipeToRate.Ratings.Add(newRating);
     }
 
+    /// <summary>
+    /// Creates a rating
+    /// </summary>
+    /// <returns>A Rating made by the user</returns>
     private static Rating CreateRating() {
         Console.WriteLine("How many stars would you like to rate this recipe:");
         int stars = int.Parse(Console.ReadLine());
@@ -393,6 +403,10 @@ public class MainDummy {
         return new Rating(stars, description, currentUser);
     }
 
+    /// <summary>
+    /// Filters the list of recipes to a certain criteria
+    /// </summary>
+    /// <returns>A filtered list of recipes</returns>
     private static List<Recipe> SearchRecipe() {
         ISearcher search = null;
         Console.WriteLine("Enter 1 to Search By Keyword");
@@ -448,6 +462,10 @@ public class MainDummy {
         return results;
     }
 
+    /// <summary>
+    /// Prints the list of recipes
+    /// </summary>
+    /// <param name="recipes">The list of recipes thats gonna be printed</param>
     private static void PrintRecipes(List<Recipe> recipes) {
         int count =1;
         foreach(Recipe recipe in recipes) {
@@ -456,6 +474,12 @@ public class MainDummy {
             count++;
         }
     }
+
+    /// <summary>
+    /// Chooses a recipe from the list of recipes
+    /// </summary>
+    /// <param name="recipes">The list of recipe the user is choosing from</param>
+    /// <returns>The specific recipe the user chooses</returns>
     private static Recipe ChooseRecipe(List<Recipe> recipes) {
         PrintRecipes(recipes);
         Console.WriteLine("Choose a recipe by entering its number: ");
