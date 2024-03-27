@@ -4,17 +4,21 @@ using RecipeApp.Models;
 using RecipeApp.Searcher;
 
 public class SearchByTime : ISearcher{
-    private readonly int  minTime;
-    private readonly int maxTime;
+    private readonly int  _minTime;
+    private readonly int _maxTime;
 
     /// <summary>
     /// Constructor for SearchByTime, takes in a min time and max time, sets them.
     /// </summary>
     /// <param name="min">The min time.</param>
     /// <param name="max">The max time</param>
-    public SearchByTime(int min, int max){
-        minTime = min;
-        maxTime = max;
+    public SearchByTime(int min, int max) {
+        if (min < 0 || max < 0)
+            throw new ArgumentException("Min or max cannot be negative");
+        if (min > max) 
+            throw new ArgumentException("Min cannot be greater than max");
+        _minTime = min;
+        _maxTime = max;
     }
 
     /// <summary>
@@ -25,12 +29,10 @@ public class SearchByTime : ISearcher{
     public List<Recipe> FilterRecipes(List<Recipe> recipes){
         List<Recipe> filteredRecipes = new();
         foreach(Recipe r in recipes){
-            foreach(Step step in StepsInRecipe(r)){
-                    if(step.TimeInMinutes >= minTime && step.TimeInMinutes <=maxTime){
-                        filteredRecipes.Add(r);
-                    }
-                }
+            if (r.GetTimeToCook() >= _minTime && r.GetTimeToCook() <= _maxTime) {
+                filteredRecipes.Add(r);
             }
+        }
         return filteredRecipes;
     }
 

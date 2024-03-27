@@ -5,14 +5,18 @@ using RecipeApp.Searcher;
 
 public class SearchByTags :ISearcher{
 
-    private readonly string __criteria;
+    private readonly string _criteria;
 
     /// <summary>
     /// Contructor for SearchByTags taking in tagName specified.
     /// </summary>
     /// <param name="tagName">The tag name specified.</param>
-    public SearchByTags(string tagName){
-        __criteria = tagName;
+    public SearchByTags(string tagName) {
+        if (tagName == null)
+            throw new ArgumentException("Tag name cannot be null");
+        if (tagName.Length == 0)
+            throw new ArgumentException("Tag name cannot be empty");
+        _criteria = tagName;
     }
 
     /// <summary>
@@ -24,7 +28,7 @@ public class SearchByTags :ISearcher{
         List<Recipe> filteredRecipes = new();
         foreach(Recipe r in recipes){
             foreach(Tag t in TagsOfRecipe(r)){
-                if(t.TagName.ToLower().Contains(__criteria.ToLower())){
+                if(t.TagName.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
                     filteredRecipes.Add(r);
                 }
             }

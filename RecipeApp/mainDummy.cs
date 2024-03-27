@@ -11,6 +11,8 @@ public class MainDummy {
         new User("Rida3", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>())
     };
 
+    private static readonly List<Recipe> _allRecipes = new();
+
     private static User? currentUser = null;
 
     public static void Main(string[] args) {
@@ -78,6 +80,10 @@ public class MainDummy {
         users[1].MadeRecipes.Add(recipe2);
         users[2].MadeRecipes.Add(recipe3);
 
+        _allRecipes.Add(recipe1);
+        _allRecipes.Add(recipe2);
+        _allRecipes.Add(recipe3);
+
         Console.WriteLine("Enter 1 to login or 2 to register");
         int decision = GetDecision();
 
@@ -120,6 +126,7 @@ public class MainDummy {
             Console.WriteLine("Press 1 to view all your recipes");
             Console.WriteLine("Press 2 to create a recipe");
             Console.WriteLine("Press 3 to update a recipe");
+            Console.WriteLine("Press 4 to search for recipes");
             Console.WriteLine("Here are your options");
             try {
                 input = int.Parse(Console.ReadLine());
@@ -132,6 +139,12 @@ public class MainDummy {
                     currentUser.MadeRecipes.Add(newRecipe);
                 } else if (input == 3) {
                     UpdateRecipe();
+                } else if (input == 4) {
+                    List<Recipe> foundRecipes = SearchRecipe();
+                    Console.WriteLine("FOUND RECIPES");
+                    foreach (Recipe recipe in foundRecipes) {
+                        Console.WriteLine(recipe);
+                    }
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
@@ -186,7 +199,10 @@ public class MainDummy {
         Console.WriteLine("Add your tags: ");
         List<Tag> tags = CreateListTags();
         
-        return new Recipe(name, currentUser, description, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
+        Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
+        _allRecipes.Add(recipe);
+
+        return recipe;
     }
     /// <summary>
     /// Gets an integer input from a user
@@ -358,6 +374,12 @@ public class MainDummy {
         } else {
             return;
         }
+        for (int i = 0; i < _allRecipes.Count; i++) {
+            if (_allRecipes[i].Equals(recipeToUpdate)) {
+                _allRecipes[i] = recipeToUpdate;
+                break;
+            }
+        }
     }
 
     private static void RatingRecipe(Recipe recipeToRate, Rating star) {
@@ -365,7 +387,6 @@ public class MainDummy {
     }
 
     private static List<Recipe> SearchRecipe() {
-        List<Recipe> results = new List<Recipe>();
         ISearcher search = null;
         Console.WriteLine("Enter 1 to Search By Keyword");
         Console.WriteLine("Enter 2 to Search By Ingredient name");
@@ -412,12 +433,9 @@ public class MainDummy {
             search = new SearchByUsername(username);
         } else {
             Console.WriteLine("Invalid input");
-            return results;
+            return null;
         }
-        foreach(User user in users) {
-            List<Recipe> userRecipes = search.FilterRecipes(user.MadeRecipes);
-            results.AddRange(userRecipes);
-        }
-    return results;
+        List<Recipe> results = search.FilterRecipes(_allRecipes);
+        return results;
     }
 }

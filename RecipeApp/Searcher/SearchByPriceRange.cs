@@ -4,8 +4,8 @@ using RecipeApp.Models;
 
 public class SearchByPriceRange: ISearcher{
 
-    private double minPrice;
-    private double maxPrice;
+    private readonly double _minPrice;
+    private readonly double _maxPrice;
 
     /// <summary>
     /// Constructor for SearchByPriceRange, takes in a min price and max price and sets them.
@@ -13,8 +13,12 @@ public class SearchByPriceRange: ISearcher{
     /// <param name="min">The min price.</param>
     /// <param name="max">The max price.</param>
     public SearchByPriceRange(double min, double max){
-         minPrice = min;
-         maxPrice = max;
+        if (min < 0 || max < 0)
+            throw new ArgumentException("Min or max cannot be negative");
+        if (min > max) 
+            throw new ArgumentException("Min cannot be greater than max");
+        _minPrice = min;
+        _maxPrice = max;
     }
 
     /// <summary>
@@ -25,21 +29,10 @@ public class SearchByPriceRange: ISearcher{
     public List<Recipe> FilterRecipes(List<Recipe> recipes){
         List<Recipe> filteredRecipes = new();
         foreach(Recipe r in recipes){
-            foreach(Ingredient ing in ingredientsOfRecipe(r)){
-                if(ing.Price >= minPrice && ing.Price <= maxPrice){
-                    filteredRecipes.Add(r);
-                }
+            if (r.GetTotalPrice() >= _minPrice && r.GetTotalPrice() <= _maxPrice) {
+                filteredRecipes.Add(r);
             }
         }
         return filteredRecipes;
-    }
-
-    /// <summary>
-    /// Getss list of ingredients from a recipe
-    /// </summary>
-    /// <param name="r">The recipe being used</param>
-    /// <returns>The list of ingredients of recipe.</returns>
-    private static List<Ingredient> ingredientsOfRecipe(Recipe r){
-        return r.Ingredients;
     }
 }
