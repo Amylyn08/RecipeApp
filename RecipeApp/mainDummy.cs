@@ -59,6 +59,7 @@ public class MainDummy {
                 }
             } while (currentUser == null);
         }
+        Console.Clear();
         int input = 0;
         while (true) {
             Console.WriteLine("Here are your options");
@@ -69,14 +70,18 @@ public class MainDummy {
             try {
                 input = GetIntInput();
                 if (input == 1) {
+                    Console.Clear();
                     foreach (Recipe recipe in currentUser.MadeRecipes) 
                         Console.WriteLine(recipe);
                 } else if (input == 2) {
+                    Console.Clear();
                     CreateRecipe();
                 } else if (input == 3) {
+                    Console.Clear();
                     UpdateRecipe();
                 } else if (input == 4) {
                     List<Recipe> foundRecipes = SearchRecipe();
+                    Console.Clear();
                     Console.WriteLine("FOUND RECIPES");
                     foreach(Recipe recipe in foundRecipes) {
                         Console.WriteLine(recipe);
@@ -118,22 +123,24 @@ public class MainDummy {
     /// <returns>The Recipe object that the user made</returns>
     private static void CreateRecipe() {
         while (true) {
-            Console.WriteLine("Enter the name of your recipe: ");
-            string name = GetInput();
-            Console.WriteLine("Enter the description of your recipe");
-            string description = GetInput();
-            Console.WriteLine("Enter the amount of serving your recipe has");
-            int servings = GetIntInput();
-            Console.WriteLine("Create your ingredients:");
-            List<Ingredient> ingredients = CreateListIngredients();
-            Console.WriteLine("Add your steps:");
-            List<Step> steps = CreateListStep();
-            Console.WriteLine("Add your tags: ");
-            List<Tag> tags = CreateListTags();
             try {
+                Console.WriteLine("Enter the name of your recipe: ");
+                string name = GetInput();
+                Console.WriteLine("Enter the description of your recipe");
+                string description = GetInput();
+                Console.WriteLine("Enter the amount of serving your recipe has");
+                int servings = GetIntInput();
+                Console.WriteLine("Create your ingredients:");
+                List<Ingredient> ingredients = CreateListIngredients();
+                Console.WriteLine("Add your steps:");
+                List<Step> steps = CreateListStep();
+                Console.WriteLine("Add your tags: ");
+                List<Tag> tags = CreateListTags();
                 Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new(), tags);
                 _recipeService.CreateRecipe(recipe, currentUser);
+                break;
             } catch (ArgumentException e) {
+                Console.Clear();
                 Console.WriteLine(e.Message);
             }
         }
@@ -189,7 +196,6 @@ public class MainDummy {
         else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
         else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
         else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
-
         return new Ingredient(name, quantity, unitOfMeasurement, price);
     }
 
@@ -278,6 +284,8 @@ public class MainDummy {
                 Console.WriteLine("Please enter a valid number");
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
             }
         }
     }
