@@ -16,6 +16,8 @@ public class RecipeService {
     }
 
     public void DeleteRecipe(Recipe recipeToDelete, User user) {
+        if (recipeToDelete == null || user == null)
+            throw new ArgumentException("Recipe to delete is null or user is null");
         MockDatabase.AllRecipes.Remove(recipeToDelete);
         user.MadeRecipes.Remove(recipeToDelete);
     }
