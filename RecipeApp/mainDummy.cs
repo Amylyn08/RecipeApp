@@ -119,7 +119,7 @@ public class MainDummy {
             } 
         }
 
-        Console.Clear();
+        // Console.Clear();
 
         int input = 0;
         while (true) {
@@ -142,7 +142,7 @@ public class MainDummy {
                 } else if (input == 4) {
                     List<Recipe> foundRecipes = SearchRecipe();
                     Console.WriteLine("FOUND RECIPES");
-                    foreach (Recipe recipe in foundRecipes) {
+                    foreach(Recipe recipe in foundRecipes) {
                         Console.WriteLine(recipe);
                     }
                 }
@@ -382,10 +382,31 @@ public class MainDummy {
         }
     }
 
-    private static void RatingRecipe(Recipe recipeToRate, Rating star) {
-        recipeToRate.Ratings.Add(star);
+    /// <summary>
+    /// Rates a recipe
+    /// </summary>
+    /// <param name="recipeToRate">Recipe thats getting rated</param>
+    private static void RatingRecipe(Recipe recipeToRate) {
+        Rating newRating = CreateRating();
+        recipeToRate.Ratings.Add(newRating);
     }
 
+    /// <summary>
+    /// Creates a rating
+    /// </summary>
+    /// <returns>A Rating made by the user</returns>
+    private static Rating CreateRating() {
+        Console.WriteLine("How many stars would you like to rate this recipe:");
+        int stars = int.Parse(Console.ReadLine());
+        Console.WriteLine("Write a review!");
+        string description = GetInput();
+        return new Rating(stars, description, currentUser);
+    }
+
+    /// <summary>
+    /// Filters the list of recipes to a certain criteria
+    /// </summary>
+    /// <returns>A filtered list of recipes</returns>
     private static List<Recipe> SearchRecipe() {
         ISearcher search = null;
         Console.WriteLine("Enter 1 to Search By Keyword");
@@ -398,9 +419,11 @@ public class MainDummy {
         Console.WriteLine("Enter 8 to Search By Username");
         int input = GetIntInput();
         if(input == 1){
+            Console.WriteLine("Enter a keyword: ");
             string keyword = GetInput();
             search = new SearchKeyWord(keyword);
         } else if(input == 2) {
+            Console.WriteLine("Enter an ingredient:");
             string ingredientName = GetInput();
             search = new SearchByIngredients(ingredientName);
         } else if(input == 3) {
@@ -437,5 +460,36 @@ public class MainDummy {
         }
         List<Recipe> results = search.FilterRecipes(_allRecipes);
         return results;
+    }
+
+    /// <summary>
+    /// Prints the list of recipes
+    /// </summary>
+    /// <param name="recipes">The list of recipes thats gonna be printed</param>
+    private static void PrintRecipes(List<Recipe> recipes) {
+        int count =1;
+        foreach(Recipe recipe in recipes) {
+            Console.WriteLine(count + ":");
+            Console.WriteLine(recipe);
+            count++;
+        }
+    }
+
+    /// <summary>
+    /// Chooses a recipe from the list of recipes
+    /// </summary>
+    /// <param name="recipes">The list of recipe the user is choosing from</param>
+    /// <returns>The specific recipe the user chooses</returns>
+    private static Recipe ChooseRecipe(List<Recipe> recipes) {
+        PrintRecipes(recipes);
+        Console.WriteLine("Choose a recipe by entering its number: ");
+        int choice = GetIntInput();
+        while(choice > recipes.Count) {
+            Console.WriteLine("Invalid choice. Please enter a valid number.");
+            Console.WriteLine("Choose a recipe by entering its number: ");
+            choice = GetIntInput();
+        }
+        return recipes[choice - 1];
+        
     }
 }
