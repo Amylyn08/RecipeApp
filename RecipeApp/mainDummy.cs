@@ -81,6 +81,7 @@ public class MainDummy {
                     Console.Clear();
                     UpdateRecipe();
                 } else if (input == 4) {
+                    Console.Clear();
                     List<Recipe> foundRecipes = SearchRecipe();
                     Console.Clear();
                     Console.WriteLine("FOUND RECIPES");
@@ -419,7 +420,7 @@ public class MainDummy {
             Console.WriteLine("Invalid input");
             return null;
         }
-        return null;
+        return _recipeService.SearchRecipes(search);
     }
 
     /// <summary>

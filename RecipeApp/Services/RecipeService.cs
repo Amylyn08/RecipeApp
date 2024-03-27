@@ -1,4 +1,5 @@
 using RecipeApp.Models;
+using RecipeApp.Searcher;
 
 namespace RecipeApp.Services;
 
@@ -19,12 +20,10 @@ public class RecipeService {
         user.MadeRecipes.Remove(recipeToDelete);
     }
 
-    public Recipe GetRecipeById(int recipeId) {
-        throw new NotImplementedException();
-    }
-
-    public List<Recipe> GetRecipesByUserId(int userId) {
-        throw new NotImplementedException();
+    public List<Recipe> SearchRecipes(ISearcher searcher) {
+        if (searcher == null) 
+            throw new ArgumentException("Searcher cannot be null");
+        return searcher.FilterRecipes(MockDatabase.AllRecipes);
     }
 
     public void UpdateRecipe(Recipe updatedRecipe, User user) {
