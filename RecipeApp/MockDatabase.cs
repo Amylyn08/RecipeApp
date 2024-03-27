@@ -3,8 +3,8 @@ namespace RecipeApp;
 using RecipeApp.Models;
 
 public class MockDatabase {
-    public static List<User> Users { get; private set; }
-    public static List<Recipe> AllRecipes { get; private set; }
+    public List<User> Users { get; private set; }
+    public List<Recipe> AllRecipes { get; private set; }
 
     public MockDatabase() {
         Users = new() {
