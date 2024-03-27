@@ -67,6 +67,7 @@ public class MainDummy {
             Console.WriteLine("Press 2 to create a recipe");
             Console.WriteLine("Press 3 to update a recipe");
             Console.WriteLine("Press 4 to search for recipes");
+            Console.WriteLine("Press 5 to delete a recipe");
             try {
                 input = GetIntInput();
                 if (input == 1) {
@@ -86,9 +87,31 @@ public class MainDummy {
                     foreach(Recipe recipe in foundRecipes) {
                         Console.WriteLine(recipe);
                     }
+                } else if (input == 5) {
+                    DeleteRecipe();
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
+            }
+        }
+    }
+
+    private static void DeleteRecipe() {
+        for (int i = 0; i < currentUser.MadeRecipes.Count; i++) {
+            int recipeNum = i + 1;
+            Console.WriteLine(recipeNum + ": " + currentUser.MadeRecipes[i].Name);
+        }
+        while (true) {
+            Console.WriteLine("Please choose recipe number to delete");
+            try {
+                _recipeService.DeleteRecipe(currentUser.MadeRecipes[GetIntInput() - 1], currentUser);
+                break;
+            } catch (ArgumentOutOfRangeException) {
+                Console.WriteLine("Please enter a valid number");
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
             }
         }
     }

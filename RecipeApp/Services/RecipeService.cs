@@ -14,8 +14,9 @@ public class RecipeService {
         }
     }
 
-    public void DeleteRecipe(int recipeId) {
-        throw new NotImplementedException();
+    public void DeleteRecipe(Recipe recipeToDelete, User user) {
+        MockDatabase.AllRecipes.Remove(recipeToDelete);
+        user.MadeRecipes.Remove(recipeToDelete);
     }
 
     public Recipe GetRecipeById(int recipeId) {
