@@ -381,6 +381,7 @@ public class MainDummy {
     }
 
     private static void RatingRecipe(Recipe recipeToRate) {
+        Rating newRating = CreateRating();
         recipeToRate.Ratings.Add(newRating);
     }
 
