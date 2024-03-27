@@ -271,23 +271,31 @@ public class Recipe {
         StringBuilder builder = new();
         builder.Append("Name: " + _name + "\n");
         builder.Append("Description: " + _description + "\n");
-        builder.Append("Ingredients: \n");
         builder.Append("Servinsg: " + _servings + "\n"); 
+        builder.Append("Ingredients: \n");
+        builder.Append("-------------- \n");
         foreach (Ingredient ingredient in _ingredients) {
             builder.Append(ingredient.ToString() + "\n");
         }
+        builder.Append("-------------- \n");
         builder.Append("Steps: \n");
+        builder.Append("-------------- \n");
         foreach (Step step in _steps) {
             builder.Append(step.ToString() + "\n");
         }
+        builder.Append("-------------- \n");
         builder.Append("Tags: \n");
+        builder.Append("-------------- \n");
         foreach (Tag tag in _tags) {
             builder.Append(tag.ToString() + "\n");
         }
+        builder.Append("-------------- \n");
         builder.Append("Reviews: \n");
+        builder.Append("-------------- \n");
         foreach (Rating rating in _ratings) {
             builder.Append(rating.ToString() + "\n");
         }
+        builder.Append("--------------");
         return builder.ToString();
     }
 }
