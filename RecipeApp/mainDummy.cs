@@ -438,4 +438,13 @@ public class MainDummy {
         List<Recipe> results = search.FilterRecipes(_allRecipes);
         return results;
     }
+
+    private static void PrintRecipes(List<Recipe> recipes) {
+        foreach(Recipe recipe in recipes) {
+            Console.WriteLine(recipe);
+        }
+    }
+    private static Recipe ChooseRecipe(List<Recipe> recipes) {
+
+    }
 }
