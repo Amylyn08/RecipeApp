@@ -119,7 +119,7 @@ public class MainDummy {
             } 
         }
 
-        Console.Clear();
+        // Console.Clear();
 
         int input = 0;
         while (true) {
@@ -142,9 +142,7 @@ public class MainDummy {
                 } else if (input == 4) {
                     List<Recipe> foundRecipes = SearchRecipe();
                     Console.WriteLine("FOUND RECIPES");
-                    foreach (Recipe recipe in foundRecipes) {
-                        Console.WriteLine(recipe);
-                    }
+                    ChooseRecipe(foundRecipes);
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
@@ -382,8 +380,8 @@ public class MainDummy {
         }
     }
 
-    private static void RatingRecipe(Recipe recipeToRate, Rating star) {
-        recipeToRate.Ratings.Add(star);
+    private static void RatingRecipe(Recipe recipeToRate) {
+        // recipeToRate.Ratings.Add(star);
     }
 
     private static List<Recipe> SearchRecipe() {
@@ -398,9 +396,11 @@ public class MainDummy {
         Console.WriteLine("Enter 8 to Search By Username");
         int input = GetIntInput();
         if(input == 1){
+            Console.WriteLine("Enter a keyword: ");
             string keyword = GetInput();
             search = new SearchKeyWord(keyword);
         } else if(input == 2) {
+            Console.WriteLine("Enter an ingredient:");
             string ingredientName = GetInput();
             search = new SearchByIngredients(ingredientName);
         } else if(input == 3) {
@@ -451,9 +451,10 @@ public class MainDummy {
         PrintRecipes(recipes);
         Console.WriteLine("Choose a recipe by entering its number: ");
         int choice = GetIntInput();
-        while(choice >= recipes.Count) {
+        while(choice > recipes.Count) {
             Console.WriteLine("Invalid choice. Please enter a valid number.");
             Console.WriteLine("Choose a recipe by entering its number: ");
+            choice = GetIntInput();
         }
         return recipes[choice - 1];
         
