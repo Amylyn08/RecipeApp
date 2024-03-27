@@ -440,11 +440,22 @@ public class MainDummy {
     }
 
     private static void PrintRecipes(List<Recipe> recipes) {
+        int count =1;
         foreach(Recipe recipe in recipes) {
+            Console.WriteLine(count + ":");
             Console.WriteLine(recipe);
+            count++;
         }
     }
     private static Recipe ChooseRecipe(List<Recipe> recipes) {
-
+        PrintRecipes(recipes);
+        Console.WriteLine("Choose a recipe by entering its number: ");
+        int choice = GetIntInput();
+        while(choice >= recipes.Count) {
+            Console.WriteLine("Invalid choice. Please enter a valid number.");
+            Console.WriteLine("Choose a recipe by entering its number: ");
+        }
+        return recipes[choice - 1];
+        
     }
 }
