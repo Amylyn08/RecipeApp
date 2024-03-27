@@ -381,7 +381,15 @@ public class MainDummy {
     }
 
     private static void RatingRecipe(Recipe recipeToRate) {
-        // recipeToRate.Ratings.Add(star);
+        recipeToRate.Ratings.Add(newRating);
+    }
+
+    private static Rating CreateRating() {
+        Console.WriteLine("How many stars would you like to rate this recipe:");
+        int stars = int.Parse(Console.ReadLine());
+        Console.WriteLine("Write a review!");
+        string description = GetInput();
+        return new Rating(stars, description, currentUser);
     }
 
     private static List<Recipe> SearchRecipe() {
