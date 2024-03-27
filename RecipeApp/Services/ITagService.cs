@@ -1,3 +1,5 @@
+using RecipeApp.Models;
+
 namespace RecipeApp.Services;
 
 public interface ITagService {
