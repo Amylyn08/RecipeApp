@@ -69,6 +69,7 @@ public class MainDummy {
             Console.WriteLine("Press 4 to search for recipes");
             Console.WriteLine("Press 5 to delete a recipe");
             Console.WriteLine("Press 6 to change your password");
+            Console.WriteLine("Press 7 to delete your account");
             try {
                 input = GetIntInput();
                 if (input == 1) {
@@ -95,6 +96,10 @@ public class MainDummy {
                 } else if (input == 6) {
                     Console.Clear();
                     ChangePassword();
+                } else if (input == 7) {
+                    Console.Clear();
+                    DeleteAccount();
+                    return;
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
@@ -119,6 +124,22 @@ public class MainDummy {
             } catch (ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
+        }
+    }
+
+    private static void DeleteAccount() {
+        Console.WriteLine("Enter username");
+        string username = GetInput();
+        Console.WriteLine("Enter password");
+        string password = GetInput();
+        _currentUser = _userService.Login(username, password);
+        if (_currentUser != null) {
+            _userService.DeleteAccount(_currentUser);
+            Console.WriteLine("Successfully deleted account");
+            _currentUser = null;
+        }
+        else {
+            Console.WriteLine("Failed to authenticate and delete account");
         }
     }
 
@@ -269,7 +290,7 @@ public class MainDummy {
             Ingredient ingredient = CreateIngredient();
             ingredients.Add(ingredient);
 
-            Console.WriteLine("Add ingredient? (Y/N):");
+            Console.WriteLine("Add another ingredient? (Y/N):");
             string choice = GetInput();
             if(choice.ToUpper() == "N") {
                 createIng = false;

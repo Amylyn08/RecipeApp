@@ -39,4 +39,10 @@ public class UserService {
             }
         }
     }
+
+    public void DeleteAccount(User user) {
+        if (user is null) 
+            throw new ArgumentException("User cannot be null");
+        MockDatabase.Users.Remove(user);
+    }
 }       
