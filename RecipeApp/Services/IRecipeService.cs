@@ -8,4 +8,4 @@ public interface IRecipeService {
     public void CreateRecipe(Recipe recipe);
     public void DeleteRecipe(int recipeId); 
     public void UpdateRecipe(int recipeId, Recipe updatedRecipe);
-}
+} 

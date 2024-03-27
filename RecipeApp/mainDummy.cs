@@ -129,7 +129,7 @@ public class MainDummy {
             Console.WriteLine("Press 4 to search for recipes");
             Console.WriteLine("Here are your options");
             try {
-                input = int.Parse(Console.ReadLine());
+                input = Convert.ToInt32(GetInput());
                 if (input == 1) {
                     foreach (Recipe recipe in currentUser.MadeRecipes) {
                         Console.WriteLine(recipe);
@@ -156,7 +156,7 @@ public class MainDummy {
         int decision = 0;
         do {
             try {
-                decision = int.Parse(Console.ReadLine());
+                decision = Convert.ToInt32(GetInput());
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
             }
@@ -212,7 +212,7 @@ public class MainDummy {
         int input = 0;
         do {
             try {
-                input = int.Parse(Console.ReadLine());
+                input = Convert.ToInt32(GetInput());
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
             }
@@ -380,27 +380,6 @@ public class MainDummy {
                 break;
             }
         }
-    }
-
-    /// <summary>
-    /// Rates a recipe
-    /// </summary>
-    /// <param name="recipeToRate">Recipe thats getting rated</param>
-    private static void RatingRecipe(Recipe recipeToRate) {
-        Rating newRating = CreateRating();
-        recipeToRate.Ratings.Add(newRating);
-    }
-
-    /// <summary>
-    /// Creates a rating
-    /// </summary>
-    /// <returns>A Rating made by the user</returns>
-    private static Rating CreateRating() {
-        Console.WriteLine("How many stars would you like to rate this recipe:");
-        int stars = int.Parse(Console.ReadLine());
-        Console.WriteLine("Write a review!");
-        string description = GetInput();
-        return new Rating(stars, description, currentUser);
     }
 
     /// <summary>
