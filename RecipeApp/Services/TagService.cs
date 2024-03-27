@@ -1,7 +1,9 @@
 
+using RecipeApp.Models;
+
 namespace RecipeApp.Services;
 
-public class Tag : ITagService {
+public class TagService : ITagService {
     public List<Tag> GetAvailableTags() {
         throw new NotImplementedException();
         
