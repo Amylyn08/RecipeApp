@@ -3,16 +3,10 @@ namespace RecipeApp;
 using RecipeApp.Models;
 
 public class MockDatabase {
-    public List<User> Users { get; private set; }
-    public List<Recipe> AllRecipes { get; private set; }
+    public readonly static List<User> Users = new();
+    public readonly static List<Recipe> AllRecipes = new();
 
-    public MockDatabase() {
-        Users = new() {
-            new User("Rida1", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>()),
-            new User("Rida2", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>()),
-            new User("Rida3", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>())
-        };
-
+    public static void Init() {
         Ingredient ingredient1 = new("Normal Potato", 1, UnitOfMeasurement.AMOUNT, 10);
         Ingredient ingredient2 = new("Sweet Potato", 1, UnitOfMeasurement.AMOUNT, 10);
         Ingredient ingredient3 = new("Sour Potato", 1, UnitOfMeasurement.AMOUNT, 10);
@@ -41,6 +35,10 @@ public class MockDatabase {
         List<Step> steps2 = new() { step4, step5, step6 };
         List<Step> steps3 = new() { step7, step8, step9 };
 
+        Users.Add(new User("Rida1", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>()));
+        Users.Add(new User("Rida2", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>()));
+        Users.Add(new User("Rida3", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>()));
+        
         Recipe recipe1 = new("Easy Recipe", Users[0], "Potato recipe", 1, ingredients1, steps1, new(), new());
         Recipe recipe2 = new("Fast Recipe", Users[1], "Potato recipe", 1, ingredients2, steps2, new(), new());
         Recipe recipe3 = new("Cool Recipe", Users[2], "Potato recipe", 1, ingredients3, steps3, new(), new());

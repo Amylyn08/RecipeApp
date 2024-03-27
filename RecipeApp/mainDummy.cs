@@ -1,123 +1,73 @@
 using RecipeApp.Models;
 using RecipeApp.Searcher;
+using RecipeApp.Services;
 using RecipeAppTest.searcher;
 
 namespace RecipeApp;
 
 public class MainDummy {
-    private static readonly List<User> users = new() {
-        new User("Rida1", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>()),
-        new User("Rida2", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>()),
-        new User("Rida3", "Real rida", "RidaPassword", new List<Recipe>(), new List<Recipe>())
-    };
-
-    private static readonly List<Recipe> _allRecipes = new();
-
     private static User? currentUser = null;
+    private static readonly UserService _userService = new();
 
     public static void Main(string[] args) {
-        // List<Recipe> recipes = new List<Recipe>();
-        // User user1 = new User("bob", "blash", "123bosdfsdfsdfb", new List<Recipe>());
-        // string desc = "I am nothing..";
-        // int servings = 10;
-        // Ingredient ingredient1 = new Ingredient("banana", 1, UnitOfMeasurement.AMOUNT, 100);
-        // Ingredient ingredient2 = new Ingredient("chocolate", 1, UnitOfMeasurement.AMOUNT, 100);
-        // Ingredient ingredient3 = new Ingredient("raspberries", 1, UnitOfMeasurement.AMOUNT, 100);
-
-        // List<Ingredient> ingredientsIncludeBanana = new List<Ingredient>{ingredient1, ingredient2};
-        // List<Ingredient> ingredientsNoInclude = new List<Ingredient>{ingredient2, ingredient3};
-        // Step step = new (10, "blah");
-        // Rating rating = new(4, "nice", user1);
-        // List<Step> steps = new List<Step>();
-        // steps.Add(step);
-        // List<Rating> ratings = new List<Rating>();
-        // ratings.Add(rating);
-        // List<Tag> tags = new List<Tag>();
-        // Tag tag = new("vegan");
-        // recipes.Add(new Recipe(user1, desc, servings, ingredientsIncludeBanana, steps, ratings, tags));
-        // recipes.Add(new Recipe(user1, desc, servings, ingredientsNoInclude, steps, ratings, tags));
-        // recipes.Add(new Recipe(user1, desc, servings, ingredientsNoInclude, steps, ratings, tags));
-        // recipes.Add(new Recipe(user1, desc, servings, ingredientsIncludeBanana, steps, ratings, tags));
-        // recipes.Add(new Recipe(user1, desc, servings, ingredientsNoInclude, steps, ratings, tags));
-
-        // ISearcher searcher = new SearchByIngredients("Banana");
-        // List<Recipe> includingBanana = searcher.FilterRecipes(recipes);
-        // Console.WriteLine(includingBanana.Count);
-
-        Ingredient ingredient1 = new("Normal Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient2 = new("Sweet Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient3 = new("Sour Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient4 = new("Spicy Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient5 = new("Creamy Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient6 = new("Meat Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient7 = new("Peeled Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient8 = new("Awesome Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient9 = new("Boring Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-
-        Step step1 = new(10, "Do potato stuff");
-        Step step2 = new(10, "Do more potato stuff");
-        Step step3 = new(10, "Do lot's of potato stuff");
-        Step step4 = new(10, "Do potatoey potato stuff");
-        Step step5 = new(10, "Do I like potato stuff");
-        Step step6 = new(10, "POTATOOOOO");
-        Step step7 = new(10, "Insert potato step here");
-        Step step8 = new(10, "Cut potatoes and put in water");
-        Step step9 = new(10, "Become one with the potato");
-
-        List<Ingredient> ingredients1 = new() { ingredient1, ingredient2, ingredient3 };
-        List<Ingredient> ingredients2 = new() { ingredient4, ingredient5, ingredient6 };
-        List<Ingredient> ingredients3 = new() { ingredient7, ingredient8, ingredient9 };
-
-        List<Step> steps1 = new() { step1, step2, step3 };
-        List<Step> steps2 = new() { step4, step5, step6 };
-        List<Step> steps3 = new() { step7, step8, step9 };
-
-        Recipe recipe1 = new("Easy Recipe", users[0], "Potato recipe", 1, ingredients1, steps1, new(), new());
-        Recipe recipe2 = new("Fast Recipe", users[1], "Potato recipe", 1, ingredients2, steps2, new(), new());
-        Recipe recipe3 = new("Cool Recipe", users[2], "Potato recipe", 1, ingredients3, steps3, new(), new());
-
-        users[0].MadeRecipes.Add(recipe1);
-        users[1].MadeRecipes.Add(recipe2);
-        users[2].MadeRecipes.Add(recipe3);
-
-        _allRecipes.Add(recipe1);
-        _allRecipes.Add(recipe2);
-        _allRecipes.Add(recipe3);
+        MockDatabase.Init();
 
         Console.WriteLine("Enter 1 to login or 2 to register");
         int decision = GetDecision();
 
-        Console.WriteLine("Enter username");
-        string username = GetInput();
-
-        Console.WriteLine("Enter password");
-        string password = GetInput();
-
-        string description = "Default";
-        if (decision == 2) {
-            foreach (User user in users) {
-                if (user.Name == username) {
-                    Console.WriteLine("Username already taken");
-                    return;
+        if (decision == 1) {
+            int tries = 0;
+            do {
+                try {
+                    Console.WriteLine("Enter username");
+                    string username = GetInput();
+                    
+                    Console.WriteLine("Enter password");
+                    string password = GetInput();
+                    
+                    currentUser = _userService.Login(username, password);
+                    
+                    if (currentUser == null) {
+                        Console.WriteLine("Login failed !");
+                        tries++;
+                        if (tries == 3) {
+                            Console.WriteLine("You are locked out");
+                            return;
+                        }
+                    } else {
+                        break;
+                    }
+                    
+                } catch (ArgumentException e) {
+                    Console.WriteLine(e.Message);
                 }
-            }
-            Console.WriteLine("Please enter a description of yourself");
-            description = GetInput();
-            users.Add(new(username, description, password, new(), new()));
-        } 
-        
-        else {
-            foreach (User user in users) {
-                if (user.Name.Equals(username) && user.Password.Equals(password)) {
-                    currentUser = user;
-                    break;
-                }
-            }
-            if (currentUser == null) {
-                Console.WriteLine("Login failed !");
-                return;
-            } 
+            } while (currentUser == null);
         }
+
+        else if (decision == 2) {
+            do {
+                try {
+                    Console.WriteLine("Enter username");
+                    string username = GetInput();
+
+                    Console.WriteLine("Enter password");
+                    string password = GetInput();
+                    
+                    Console.WriteLine("Enter description");
+                    string description = GetInput();
+
+                    currentUser = _userService.Register(username, password, description);
+
+                    break;
+                } catch (ArgumentException e) {
+                    Console.WriteLine(e.Message);
+                }
+            } while (currentUser == null);
+        }
+
+
+
+        
 
         // Console.Clear();
 
@@ -200,7 +150,6 @@ public class MainDummy {
         List<Tag> tags = CreateListTags();
         
         Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new List<Rating>(), new List<Tag>());
-        _allRecipes.Add(recipe);
 
         return recipe;
     }
@@ -374,12 +323,6 @@ public class MainDummy {
         } else {
             return;
         }
-        for (int i = 0; i < _allRecipes.Count; i++) {
-            if (_allRecipes[i].Equals(recipeToUpdate)) {
-                _allRecipes[i] = recipeToUpdate;
-                break;
-            }
-        }
     }
 
     /// <summary>
@@ -458,8 +401,7 @@ public class MainDummy {
             Console.WriteLine("Invalid input");
             return null;
         }
-        List<Recipe> results = search.FilterRecipes(_allRecipes);
-        return results;
+        return null;
     }
 
     /// <summary>

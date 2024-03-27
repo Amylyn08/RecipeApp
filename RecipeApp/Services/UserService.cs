@@ -3,13 +3,11 @@ namespace RecipeApp.Services;
 using RecipeApp.Models;
 
 public class UserService {
-    private readonly MockDatabase db;
-
     public User Login(string username, string password) {
         if (username == null || password == null)
             throw new ArgumentException("Username and passwod cannot be null");
-        foreach (User user in db.Users) {
-            if (user.Name.Equals(username) && user.Name.Equals(password)) {
+        foreach (User user in MockDatabase.Users) {
+            if (user.Name.Equals(username) && user.Password.Equals(password)) {
                 return user;
             }
         }
@@ -20,7 +18,7 @@ public class UserService {
         if (username == null || password == null || description == null)
             throw new ArgumentException("Username/password/description cannot be null");
         User user = new(username, description, password, new(), new());
-        db.Users.Add(user);
+        MockDatabase.Users.Add(user);
         return user;
     }
 }
