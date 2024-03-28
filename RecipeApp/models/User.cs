@@ -4,10 +4,16 @@ namespace RecipeApp.Models;
 /// Represents a user
 /// </summary>
 public class User {
+    private string _password;
+
     public string Name { get; private set;}
     //Profile pic --> will implement when teacher shows us
     public string Description {get; private set;}
-    public string Password{get; set;}
+    public string Password{get => _password; set {
+        if(value == null) throw new ArgumentException("Password cannot be null!");
+        if(value.Length < Constants.MIN_PASS_LENGTH) throw new ArgumentException("Password needs to be atleast 8 characters!");
+        _password = value;
+    }}
     public List<Recipe> Favorites{get; private set;}
     public List<Recipe> MadeRecipes{get; private set;}
     /// <summary>

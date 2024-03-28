@@ -6,7 +6,7 @@ using RecipeAppTest.searcher;
 namespace RecipeApp;
 
 public class MainDummy {
-    private static User? currentUser = null;
+    private static User? _currentUser = null;
     private static readonly UserService _userService = new();
     private static readonly RecipeService _recipeService = new();
 
@@ -22,8 +22,8 @@ public class MainDummy {
                     string username = GetInput();
                     Console.WriteLine("Enter password");
                     string password = GetInput();
-                    currentUser = _userService.Login(username, password);
-                    if (currentUser == null) {
+                    _currentUser = _userService.Login(username, password);
+                    if (_currentUser == null) {
                         Console.WriteLine("Login failed !");
                         tries++;
                         if (tries == 3) {
@@ -37,7 +37,7 @@ public class MainDummy {
                 } catch (ArgumentException e) {
                     Console.WriteLine(e.Message);
                 }
-            } while (currentUser == null);
+            } while (_currentUser == null);
         } else if (decision == 2) {
             do {
                 try {
@@ -47,32 +47,34 @@ public class MainDummy {
                     string password = GetInput();
                     Console.WriteLine("Enter description");
                     string description = GetInput();
-                    foreach (User user in MockDatabase.Users) {
-                        if (user.Name == username) {
-                            throw new ArgumentException("User already exists");
-                        }
+                    _currentUser = _userService.Register(username, password, description);
+                    if (_currentUser is null) {
+                        throw new ArgumentException("Username already taken");
                     }
-                    currentUser = _userService.Register(username, password, description);
-                    break;
+                    else {
+                        break;
+                    }
                 } catch (ArgumentException e) {
                     Console.WriteLine(e.Message);
                 }
-            } while (currentUser == null);
+            } while (_currentUser == null);
         }
         Console.Clear();
         int input = 0;
-        while (true) {
+        while (_currentUser != null) {
             Console.WriteLine("Here are your options");
             Console.WriteLine("Press 1 to view all your recipes");
             Console.WriteLine("Press 2 to create a recipe");
             Console.WriteLine("Press 3 to update a recipe");
             Console.WriteLine("Press 4 to search for recipes");
             Console.WriteLine("Press 5 to delete a recipe");
+            Console.WriteLine("Press 6 to change your password");
+            Console.WriteLine("Press 7 to delete your account");
             try {
                 input = GetIntInput();
                 if (input == 1) {
                     Console.Clear();
-                    foreach (Recipe recipe in currentUser.MadeRecipes) 
+                    foreach (Recipe recipe in _currentUser.MadeRecipes) 
                         Console.WriteLine(recipe);
                 } else if (input == 2) {
                     Console.Clear();
@@ -89,7 +91,15 @@ public class MainDummy {
                         Console.WriteLine(recipe);
                     }
                 } else if (input == 5) {
+                    Console.Clear();
                     DeleteRecipe();
+                } else if (input == 6) {
+                    Console.Clear();
+                    ChangePassword();
+                } else if (input == 7) {
+                    Console.Clear();
+                    DeleteAccount();
+                    return;
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
@@ -98,14 +108,14 @@ public class MainDummy {
     }
 
     private static void DeleteRecipe() {
-        for (int i = 0; i < currentUser.MadeRecipes.Count; i++) {
+        for (int i = 0; i < _currentUser.MadeRecipes.Count; i++) {
             int recipeNum = i + 1;
-            Console.WriteLine(recipeNum + ": " + currentUser.MadeRecipes[i].Name);
+            Console.WriteLine(recipeNum + ": " + _currentUser.MadeRecipes[i].Name);
         }
         while (true) {
             Console.WriteLine("Please choose recipe number to delete");
             try {
-                _recipeService.DeleteRecipe(currentUser.MadeRecipes[GetIntInput() - 1], currentUser);
+                _recipeService.DeleteRecipe(_currentUser.MadeRecipes[GetIntInput() - 1], _currentUser);
                 break;
             } catch (ArgumentOutOfRangeException) {
                 Console.WriteLine("Please enter a valid number");
@@ -116,6 +126,50 @@ public class MainDummy {
             }
         }
     }
+
+    private static void DeleteAccount() {
+        Console.WriteLine("Enter username");
+        string username = GetInput();
+        Console.WriteLine("Enter password");
+        string password = GetInput();
+        _currentUser = _userService.Login(username, password);
+        if (_currentUser != null) {
+            _userService.DeleteAccount(_currentUser);
+            Console.WriteLine("Successfully deleted account");
+            _currentUser = null;
+        }
+        else {
+            Console.WriteLine("Failed to authenticate and delete account");
+        }
+    }
+
+    private static void ChangePassword() {
+        Console.WriteLine("Enter username");
+        string username = GetInput();
+        Console.WriteLine("Enter current password");
+        string password = GetInput();
+        _currentUser = _userService.Login(username, password);
+        if (_currentUser == null) {
+            Console.WriteLine("Login failed");
+            return;
+        }
+        Console.WriteLine("Enter new password");
+        string newPassword = GetInput();
+        _userService.ChangePassword(_currentUser, newPassword);
+        Console.WriteLine("Your password has been changed");
+        Console.WriteLine("Please login once more...");
+        Console.WriteLine("Enter username");
+        username = GetInput();
+        Console.WriteLine("Enter password");
+        password = GetInput();
+        _currentUser = _userService.Login(username, password);
+        if (_currentUser is null) {
+            System.Console.WriteLine("Login failed, you have been logged out");
+            return;
+        } else {
+            System.Console.WriteLine("Welcome back !");
+        }
+    }   
 
     private static int GetDecision() {
         int decision = 0;
@@ -160,8 +214,8 @@ public class MainDummy {
                 List<Step> steps = CreateListStep();
                 Console.WriteLine("Add your tags: ");
                 List<Tag> tags = CreateListTags();
-                Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new(), tags);
-                _recipeService.CreateRecipe(recipe, currentUser);
+                Recipe recipe = new(name, _currentUser, description, servings, ingredients, steps, new(), tags);
+                _recipeService.CreateRecipe(recipe, _currentUser);
                 break;
             } catch (ArgumentException e) {
                 Console.Clear();
@@ -236,7 +290,7 @@ public class MainDummy {
             Ingredient ingredient = CreateIngredient();
             ingredients.Add(ingredient);
 
-            Console.WriteLine("Add ingredient? (Y/N):");
+            Console.WriteLine("Add another ingredient? (Y/N):");
             string choice = GetInput();
             if(choice.ToUpper() == "N") {
                 createIng = false;
@@ -294,14 +348,14 @@ public class MainDummy {
     }
 
     private static void UpdateRecipe() {
-        for (int i = 0; i < currentUser.MadeRecipes.Count; i++) {
+        for (int i = 0; i < _currentUser.MadeRecipes.Count; i++) {
             int recipeNum = i + 1;
-            Console.WriteLine(recipeNum + ": " + currentUser.MadeRecipes[i].Name);
+            Console.WriteLine(recipeNum + ": " + _currentUser.MadeRecipes[i].Name);
         }
         while (true) {
             Console.WriteLine("Please choose recipe number to update");
             try {
-                Recipe recipeToUpdate = currentUser.MadeRecipes[GetIntInput() - 1];
+                Recipe recipeToUpdate = _currentUser.MadeRecipes[GetIntInput() - 1];
                 UpdateSingleRecipe(recipeToUpdate);
                 break;
             } catch (ArgumentOutOfRangeException) {
@@ -341,7 +395,7 @@ public class MainDummy {
             Console.WriteLine("Enter new name");
             recipeToUpdate.Name = GetInput();
         }
-        _recipeService.UpdateRecipe(recipeToUpdate, currentUser);
+        _recipeService.UpdateRecipe(recipeToUpdate, _currentUser);
     }
 
     /// <summary>
@@ -362,7 +416,7 @@ public class MainDummy {
         int stars = int.Parse(Console.ReadLine());
         Console.WriteLine("Write a review!");
         string description = GetInput();
-        return new Rating(stars, description, currentUser);
+        return new Rating(stars, description, _currentUser);
     }
 
     /// <summary>
