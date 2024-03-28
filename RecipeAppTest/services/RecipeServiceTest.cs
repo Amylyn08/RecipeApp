@@ -1,4 +1,5 @@
 using RecipeApp.Models;
+using RecipeApp.Searcher;
 using RecipeApp.Services;
 
 namespace RecipeAppTest.Services;
@@ -37,8 +38,13 @@ public class RecipeServiceTest {
     }
 
     [TestMethod]
-    [ExpectedException]
-    public void
+    [ExpectedException(typeof(ArgumentException))]
+    public void SearchRecipe_NullSearcher_ThrowsException() {
+        ISearcher searcher = null;
+        RecipeService rs = new RecipeService();
+
+        rs.SearchRecipes(searcher);
+    }
 
 
 
