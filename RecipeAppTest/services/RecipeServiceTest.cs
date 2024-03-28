@@ -46,6 +46,28 @@ public class RecipeServiceTest {
         rs.SearchRecipes(searcher);
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void UpdateRecipe_NullRecipe_ThrowsException() {
+        Recipe recipe = null;
+        User user = new User("Rida", "Unit testing hell", "RidaPassword", new(), new());
+        RecipeService rs = new RecipeService();
+
+        rs.UpdateRecipe(recipe, user);
+        
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void UpdateRecipe_NullUser_ThrowsException() {
+        User user = null;
+        Recipe recipe = new Recipe("Spaghetti", user, "Yummy food", 5, new(), new(), new(), new());
+        RecipeService rs = new RecipeService();
+
+        rs.UpdateRecipe(recipe, user);
+        
+    }
+
 
 
 }
