@@ -4,7 +4,7 @@ namespace RecipeAppTest.searcher;
 
 [TestClass]
 
-public class SearchByTimeTests {
+public class SearchByTimeTest {
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
