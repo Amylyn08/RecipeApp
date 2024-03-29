@@ -45,4 +45,18 @@ public class UserService {
             throw new ArgumentException("User cannot be null");
         MockDatabase.Users.Remove(user);
     }
+
+    public void AddToFavourites(Recipe favourited, User user) {
+        if (favourited == null || user == null) 
+            throw new ArgumentException("Recipe or user cannot be null");
+        foreach (User mock in MockDatabase.Users) {
+            if (mock.Equals(user)) {
+                if (mock.Favorites.Contains(favourited)) {
+                    throw new ArgumentException("This recipe has already been favourited");
+                }
+                mock.Favorites.Add(favourited);
+                break;
+            }
+        }
+    }
 }       
