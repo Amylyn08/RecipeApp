@@ -71,6 +71,7 @@ public class MainDummy {
             Console.WriteLine("Press 6 to change your password");
             Console.WriteLine("Press 7 to delete your account");
             Console.WriteLine("Press 8 to view your favourited recipes");
+            Console.WriteLine("Press 9 to update your favourite recipes");
             try {
                 input = GetIntInput();
                 if (input == 1) {
@@ -108,10 +109,27 @@ public class MainDummy {
                     foreach (Recipe recipe in _currentUser.Favorites) {
                         Console.WriteLine(recipe);
                     }
+                } else if (input == 9) {
+                    Console.Clear();
+                    DeleteFromFavourites();
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
             }
+        }
+    }
+
+    private static void DeleteFromFavourites() {
+        for (int i = 0; i < _currentUser.Favorites.Count; i++) {
+            System.Console.WriteLine((i+1) + ": " + _currentUser.Favorites[i].Name);
+        }
+        System.Console.WriteLine("Enter recipe number to delete");
+        int recipeNum = GetIntInput();
+        try {
+            _userService.DeleteFromFavourites(_currentUser.Favorites[recipeNum - 1], _currentUser);
+        }   
+        catch (ArgumentOutOfRangeException) {
+            System.Console.WriteLine("Please enter a valid number");
         }
     }
 
@@ -128,7 +146,7 @@ public class MainDummy {
         int num = GetIntInput();
         try {
             _userService.AddToFavourites(recipes[num - 1], _currentUser);
-        } catch (IndexOutOfRangeException) {
+        } catch (ArgumentOutOfRangeException) {
             Console.WriteLine("You did not enter a valid number");
         } catch (ArgumentException e) {
             Console.WriteLine(e.Message);

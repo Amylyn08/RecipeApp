@@ -59,4 +59,14 @@ public class UserService {
             }
         }
     }
+
+    public void DeleteFromFavourites(Recipe toDelete, User user) {
+        if (toDelete == null || user == null) 
+            throw new ArgumentException("Recipe or user cannot be null");
+        foreach (User mock in MockDatabase.Users) {
+            if (mock.Equals(user)) {
+                mock.Favorites.Remove(toDelete);
+            }
+        }
+    }
 }       
