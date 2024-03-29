@@ -1,4 +1,3 @@
-using RecipeApp.Models;
 using RecipeApp.Searcher;
 
 namespace RecipeAppTest.searcher;
