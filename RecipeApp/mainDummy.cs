@@ -70,6 +70,8 @@ public class MainDummy {
             Console.WriteLine("Press 5 to delete a recipe");
             Console.WriteLine("Press 6 to change your password");
             Console.WriteLine("Press 7 to delete your account");
+            Console.WriteLine("Press 8 to view your favourited recipes");
+            Console.WriteLine("Press 9 to update your favourite recipes");
             try {
                 input = GetIntInput();
                 if (input == 1) {
@@ -90,6 +92,7 @@ public class MainDummy {
                     foreach(Recipe recipe in foundRecipes) {
                         Console.WriteLine(recipe);
                     }
+                    FavouriteRecipes(foundRecipes);
                 } else if (input == 5) {
                     Console.Clear();
                     DeleteRecipe();
@@ -100,10 +103,53 @@ public class MainDummy {
                     Console.Clear();
                     DeleteAccount();
                     return;
+                } else if (input == 8) {
+                    Console.Clear();
+                    Console.WriteLine("FAVOURITE RECIPES");
+                    foreach (Recipe recipe in _currentUser.Favorites) {
+                        Console.WriteLine(recipe);
+                    }
+                } else if (input == 9) {
+                    Console.Clear();
+                    DeleteFromFavourites();
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
             }
+        }
+    }
+
+    private static void DeleteFromFavourites() {
+        for (int i = 0; i < _currentUser.Favorites.Count; i++) {
+            System.Console.WriteLine((i+1) + ": " + _currentUser.Favorites[i].Name);
+        }
+        System.Console.WriteLine("Enter recipe number to delete");
+        int recipeNum = GetIntInput();
+        try {
+            _userService.DeleteFromFavourites(_currentUser.Favorites[recipeNum - 1], _currentUser);
+        }   
+        catch (ArgumentOutOfRangeException) {
+            System.Console.WriteLine("Please enter a valid number");
+        }
+    }
+
+    private static void FavouriteRecipes(List<Recipe> recipes) {
+        Console.WriteLine("Press f to favourite a recipe, anything else to cancel");
+        string input = GetInput();
+        if (!input.Equals("f")) {
+            return;
+        }
+        for (int i = 0; i < recipes.Count; i++) {
+            Console.WriteLine((i + 1) + ": " + recipes[i].Name);
+        }
+        Console.WriteLine("Choose a recipe number to favourite");
+        int num = GetIntInput();
+        try {
+            _userService.AddToFavourites(recipes[num - 1], _currentUser);
+        } catch (ArgumentOutOfRangeException) {
+            Console.WriteLine("You did not enter a valid number");
+        } catch (ArgumentException e) {
+            Console.WriteLine(e.Message);
         }
     }
 

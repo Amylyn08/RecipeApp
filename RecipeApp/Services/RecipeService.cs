@@ -5,8 +5,8 @@ namespace RecipeApp.Services;
 
 public class RecipeService {
     public void CreateRecipe(Recipe recipe, User user) {
-        if (recipe == null) 
-            throw new ArgumentException("Recipe cannot be null");
+        if (recipe == null || user == null) 
+            throw new ArgumentException("Recipe cannot or user cannot be null");
         MockDatabase.AllRecipes.Add(recipe);
         foreach (User mockUser in MockDatabase.Users) {
             if (mockUser.Equals(user)) {
