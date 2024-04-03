@@ -61,7 +61,12 @@ public class MainDummy {
             } while (_currentUser == null);
         }
 
-        NutritionFactFetcher.FetchForAllIngredients(_currentUser.MadeRecipes[0].Ingredients);
+        var nutFetch = new NutritionFactFetcher();
+        var nutritionFact = nutFetch.FetchNutritionFactsForRecipe(_currentUser.MadeRecipes[0]);
+
+        System.Console.WriteLine(nutritionFact.calories);
+        System.Console.WriteLine(nutritionFact.carbohydrates_total_g);
+        System.Console.WriteLine(nutritionFact.cholesterol_mg);
 
         return;
 
