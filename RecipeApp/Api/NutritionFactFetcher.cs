@@ -23,15 +23,15 @@ public class ApiResponse {
 }
 
 public class NutritionFactFetcher {
-    public static List<ApiResponse> FetchForAllIngredients(List<Ingredient> ingredients) {
+    public static async void FetchForAllIngredients(List<Ingredient> ingredients) {
         List<ApiResponse> apiResponse = new();
         foreach (Ingredient ingredient in ingredients) {
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Add("X-Api-Key", "PeQs6o8bXVEeTdvFd/eVHg==3n01cl0udTmgRJTD"); 
             var response = client.GetAsync($"https://api.calorieninjas.com/v1/nutrition?query={ingredient.Quantity} {ingredient.Name}").Result;
-            var responseStream = response.Content.ReadAsStreamAsync().Result;
-            Console.WriteLine(JsonSerializer.DeserializeAsync<ApiResponse>(responseStream).Result);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            System.Console.WriteLine(responseBody);
+            System.Console.WriteLine(responseBody.Split(":")[1]);
         }
-        return apiResponse;
     }
 }

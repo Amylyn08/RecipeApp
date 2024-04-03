@@ -61,8 +61,7 @@ public class MainDummy {
             } while (_currentUser == null);
         }
 
-        var l = NutritionFactFetcher.FetchForAllIngredients(_currentUser.MadeRecipes[0].Ingredients);
-        foreach (var i in l) System.Console.WriteLine(i.name);
+        NutritionFactFetcher.FetchForAllIngredients(_currentUser.MadeRecipes[0].Ingredients);
 
         return;
 
