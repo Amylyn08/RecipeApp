@@ -7,15 +7,15 @@ public class MockDatabase {
     public readonly static List<Recipe> AllRecipes = new();
 
     public static void Init() {
-        Ingredient ingredient1 = new("Normal Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient2 = new("Sweet Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient3 = new("Sour Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient4 = new("Spicy Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient5 = new("Creamy Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient6 = new("Meat Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient7 = new("Peeled Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient8 = new("Awesome Potato", 1, UnitOfMeasurement.AMOUNT, 10);
-        Ingredient ingredient9 = new("Boring Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient1 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient2 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient3 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient4 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient5 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient6 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient7 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient8 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
+        Ingredient ingredient9 = new("Potato", 1, UnitOfMeasurement.AMOUNT, 10);
 
         Step step1 = new(10, "Do potato stuff");
         Step step2 = new(10, "Do more potato stuff");
