@@ -1,4 +1,4 @@
-namespace RecipeAppTest.searcher;
+namespace RecipeApp.Searcher;
 
 using RecipeApp.Models;
 using RecipeApp.Searcher;

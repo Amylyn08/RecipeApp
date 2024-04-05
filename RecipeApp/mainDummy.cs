@@ -1,7 +1,8 @@
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 using RecipeApp.Services;
-using RecipeAppTest.searcher;
+using RecipeApp.Searcher;
+using RecipeApp.Api;
 
 namespace RecipeApp;
 
@@ -59,6 +60,16 @@ public class MainDummy {
                 }
             } while (_currentUser == null);
         }
+
+        var nutFetch = new NutritionFactFetcher();
+        var nutritionFact = nutFetch.FetchNutritionFactsForRecipe(_currentUser.MadeRecipes[0]);
+
+        System.Console.WriteLine(nutritionFact.calories);
+        System.Console.WriteLine(nutritionFact.carbohydrates_total_g);
+        System.Console.WriteLine(nutritionFact.cholesterol_mg);
+
+        return;
+
         Console.Clear();
         int input = 0;
         while (_currentUser != null) {
