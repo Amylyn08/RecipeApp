@@ -1,7 +1,6 @@
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 using RecipeApp.Services;
-using RecipeApp.Searcher;
 using RecipeApp.Api;
 
 namespace RecipeApp;
@@ -10,6 +9,7 @@ public class MainDummy {
     private static User? _currentUser = null;
     private static readonly UserService _userService = new();
     private static readonly RecipeService _recipeService = new();
+    private static readonly NutritionFactFetcher _nutritionFactFetcher = new(); 
 
     public static void Main(string[] args) {
         MockDatabase.Init();
@@ -61,15 +61,6 @@ public class MainDummy {
             } while (_currentUser == null);
         }
 
-        var nutFetch = new NutritionFactFetcher();
-        var nutritionFact = nutFetch.FetchNutritionFactsForRecipe(_currentUser.MadeRecipes[0]);
-
-        System.Console.WriteLine(nutritionFact.calories);
-        System.Console.WriteLine(nutritionFact.carbohydrates_total_g);
-        System.Console.WriteLine(nutritionFact.cholesterol_mg);
-
-        return;
-
         Console.Clear();
         int input = 0;
         while (_currentUser != null) {
@@ -87,8 +78,16 @@ public class MainDummy {
                 input = GetIntInput();
                 if (input == 1) {
                     Console.Clear();
-                    foreach (Recipe recipe in _currentUser.MadeRecipes) 
+                    foreach (Recipe recipe in _currentUser.MadeRecipes) {
                         Console.WriteLine(recipe);
+                        try {
+                            Console.WriteLine("Loading nutrition facts...");
+                            var nutrition = _nutritionFactFetcher.FetchNutritionFactsForRecipe(recipe);
+                            Console.WriteLine(nutrition);
+                        } catch (Exception) {
+                            Console.WriteLine("Could not fetch nutrition facts for this recipe");
+                        }
+                    }
                 } else if (input == 2) {
                     Console.Clear();
                     CreateRecipe();
@@ -102,6 +101,13 @@ public class MainDummy {
                     Console.WriteLine("FOUND RECIPES");
                     foreach(Recipe recipe in foundRecipes) {
                         Console.WriteLine(recipe);
+                        try {
+                            Console.WriteLine("Loading nutrition facts...");
+                            var nutrition = _nutritionFactFetcher.FetchNutritionFactsForRecipe(recipe);
+                            Console.WriteLine(nutrition);
+                        } catch (Exception) {
+                            Console.WriteLine("Could not fetch nutrition facts for this recipe");
+                        }
                     }
                     FavouriteRecipes(foundRecipes);
                 } else if (input == 5) {
@@ -119,6 +125,13 @@ public class MainDummy {
                     Console.WriteLine("FAVOURITE RECIPES");
                     foreach (Recipe recipe in _currentUser.Favorites) {
                         Console.WriteLine(recipe);
+                        try {
+                            Console.WriteLine("Loading nutrition facts...");
+                            var nutrition = _nutritionFactFetcher.FetchNutritionFactsForRecipe(recipe);
+                            Console.WriteLine(nutrition);
+                        } catch (Exception) {
+                            Console.WriteLine("Could not fetch nutrition facts for this recipe");
+                        }
                     }
                 } else if (input == 9) {
                     Console.Clear();
