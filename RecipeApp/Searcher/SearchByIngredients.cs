@@ -29,6 +29,7 @@ public class SearchByIngredients: ISearcher{
             foreach(Ingredient ing in IngredientsOfRecipe(r)){
                 if(ing.Name.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
                     filteredRecipes.Add(r);
+                    break;
                 }
             }
         }

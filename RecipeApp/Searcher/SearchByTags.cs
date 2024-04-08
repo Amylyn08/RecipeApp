@@ -1,7 +1,6 @@
-namespace RecipeAppTest.searcher;
+namespace RecipeApp.Searcher;
 
 using RecipeApp.Models;
-using RecipeApp.Searcher;
 
 public class SearchByTags :ISearcher{
 

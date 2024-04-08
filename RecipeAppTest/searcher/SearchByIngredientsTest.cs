@@ -1,6 +1,5 @@
 namespace RecipeAppTest.searcher;
 
-using RecipeApp.Models;
 using RecipeApp.Searcher;
 
 [TestClass]
@@ -8,16 +7,18 @@ using RecipeApp.Searcher;
 public class SearchByIngredientsTests{
 
     [TestMethod]
-    public void SearcherReturnsRightSizeofIngredients(){
-        //Arrange
-        string ingredient = "Banana";
-        ISearcher searcher = new SearchByIngredients(ingredient);
-
-        //Act
-        
+    [ExpectedException(typeof(ArgumentException))]
+    public void IngredientNameNull_ThrowsException() {
+        ISearcher searcher = new SearchByIngredients(null);
 
     }
 
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void IngredientNameEmpty_ThrowsException() {
+        ISearcher searcher = new SearchByIngredients("");
+
+    }
 }
 
 
