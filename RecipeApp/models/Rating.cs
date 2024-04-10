@@ -13,18 +13,35 @@ public class Rating {
         set; 
     }
 
-    public int Stars{
+    public int Stars {
         get => _stars; 
         set {
-            if (value > 5 || value < 0) throw new ArgumentException("Stars must be between 0 to 5");
+            if (value > 5 || value < 0) 
+                throw new ArgumentException("Stars must be between 0 to 5");
             _stars = value;
         }
     }
-    public string Description{get => _description; set {
-        if(value.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Max description length exceeded!");
-        _description = value;
-    }}
-    public User User{get => _user; set => _user = value;}
+
+    public string Description{
+        get => _description; 
+        set {
+            if (value.Length > Constants.MAX_DESCRIPTION_LENGTH) 
+                throw new ArgumentException("Max description length exceeded!");
+            if (value is null) 
+                _description = "";
+            else 
+                _description = value;
+        }
+    }
+
+    public User User {
+        get => _user; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("User cannot be null");
+            _user = value;
+        }
+    }
 
     /// <summary>
     /// Constructor of Rating.
@@ -34,11 +51,6 @@ public class Rating {
     /// <param name="user">User who created the rating</param>
     /// <exception cref="ArgumentException">Throws exceptions if user disrespects contraints</exception>
     public Rating(int stars, string description, User user){
-        if (stars > 5 || stars < 0) throw new ArgumentException("Stars must be between 0 to 5");
-        if(user == null) throw new ArgumentException("User cannot be null");
-        description ??= "";
-        if(description.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Max description length exceeded!");
-
         Stars = stars;
         Description = description;
         User = user;
@@ -47,10 +59,15 @@ public class Rating {
     /// <summary>
     /// Empty constructor for Entity framework
     /// </summary>
-    public Rating() {}
+    public Rating() {
 
-    public override string ToString()
-    {
+    }
+
+    /// <summary>
+    /// Overriden ToString()
+    /// </summary>
+    /// <returns>String representation of a rating</returns>
+    public override string ToString() {
         return "User: " + User.Name + "\n" + "Stars: " + Stars + "\n" + "Description: " + Description;
     }
 }
