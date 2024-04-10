@@ -5,10 +5,21 @@ namespace RecipeApp.Models;
 /// </summary>
 public class User {
     private string _password;
+    private string _name;
+    private string _descrition;
 
-    public string Name { get; private set;}
+    public string Name { get => _name; set{
+        if(value == null) throw new ArgumentException("Name cannot be null!");
+        if(value.Length < Constants.MIN_NAME_LENGTH) throw new ArgumentException("Name cannot be less than 2 characters!");
+        if(value.Length > Constants.MAX_NAME_LENGTH) throw new ArgumentException("Name cannot be more than 15 characters!");
+        _name = value;
+    }}
     //Profile pic --> will implement when teacher shows us
-    public string Description {get; private set;}
+    public string Description {get => _descrition; set {
+        value ??= "";
+        if(value.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Description passed the limit character of " + Constants.MAX_DESCRIPTION_LENGTH);
+        _descrition = value;
+    }}
     public string Password{get => _password; set {
         if(value == null) throw new ArgumentException("Password cannot be null!");
         if(value.Length < Constants.MIN_PASS_LENGTH) throw new ArgumentException("Password needs to be atleast 8 characters!");
@@ -33,6 +44,8 @@ public class User {
         if(name.Length > Constants.MAX_NAME_LENGTH) throw new ArgumentException("Name cannot be more than 15 characters!");
         if(pass.Length < Constants.MIN_PASS_LENGTH) throw new ArgumentException("Password needs to be atleast 8 characters!");
         if(description.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Description passed the limit character of " + Constants.MAX_DESCRIPTION_LENGTH);
+        if(favorites == null) throw new ArgumentException("List can't be null");
+        if(madeRecipes == null) throw new ArgumentException("List can't be null");
         Name = name;
         Description = description;
         Password = pass;
