@@ -20,7 +20,7 @@ public class ApiResponse {
 
     public override string ToString()
     {
-        return $"Calories: {this.calories} \n Fats: {this.fat_total_g} \n Saturated Fat: {this.fat_saturated_g} \n Protein: {this.protein_g} \n Sodium {this.sodium_mg} \n Cholestetol {this.cholesterol_mg} \n Carbs: {this.carbohydrates_total_g} \n Fiber: {this.fiber_g} \n Sugar: {this.sugar_g}";
+        return $"Calories: {Math.Round(this.calories,2)} \n Fats: {Math.Round(this.fat_total_g,2)} \n Saturated Fat: {Math.Round(this.fat_saturated_g,2)} \n Protein: {Math.Round(this.protein_g,2)} \n Sodium {Math.Round(this.sodium_mg,2)} \n Cholestetol {Math.Round(this.cholesterol_mg,2)} \n Carbs: {Math.Round(this.carbohydrates_total_g,2)} \n Fiber: {Math.Round(this.fiber_g,2)} \n Sugar: {Math.Round(this.sugar_g,2)}";
     }
 }
 
