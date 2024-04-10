@@ -82,7 +82,7 @@ public class MainDummy {
                         Console.WriteLine(recipe);
                         try {
                             Console.WriteLine("Loading nutrition facts...");
-                            var nutrition = _nutritionFactFetcher.FetchNutritionFactsForRecipe(recipe);
+                            var nutrition = _nutritionFactFetcher.Fetch(recipe);
                             Console.WriteLine(nutrition);
                         } catch (Exception) {
                             Console.WriteLine("Could not fetch nutrition facts for this recipe");
@@ -103,7 +103,7 @@ public class MainDummy {
                         Console.WriteLine(recipe);
                         try {
                             Console.WriteLine("Loading nutrition facts...");
-                            var nutrition = _nutritionFactFetcher.FetchNutritionFactsForRecipe(recipe);
+                            var nutrition = _nutritionFactFetcher.Fetch(recipe);
                             Console.WriteLine(nutrition);
                         } catch (Exception) {
                             Console.WriteLine("Could not fetch nutrition facts for this recipe");
@@ -127,7 +127,7 @@ public class MainDummy {
                         Console.WriteLine(recipe);
                         try {
                             Console.WriteLine("Loading nutrition facts...");
-                            var nutrition = _nutritionFactFetcher.FetchNutritionFactsForRecipe(recipe);
+                            var nutrition = _nutritionFactFetcher.Fetch(recipe);
                             Console.WriteLine(nutrition);
                         } catch (Exception) {
                             Console.WriteLine("Could not fetch nutrition facts for this recipe");

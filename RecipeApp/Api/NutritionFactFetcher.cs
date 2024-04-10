@@ -1,30 +1,9 @@
 using RecipeApp.Models;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace RecipeApp.Api;
 
-// maps api response
-public class ApiResponse {
-    public double calories {get; set;} 
-    public double fat_total_g {get; set;}
-    public double fat_saturated_g {get; set;}
-    public double protein_g {get; set;}
-    public double sodium_mg {get; set;}
-    public double cholesterol_mg {get; set;} 
-    public double carbohydrates_total_g {get; set;}
-    public double fiber_g {get; set;}
-    public double sugar_g {set; get;}
-
-    public override string ToString()
-    {
-        return $"Calories: {Math.Round(this.calories,2)} \n Fats: {Math.Round(this.fat_total_g,2)} \n Saturated Fat: {Math.Round(this.fat_saturated_g,2)} \n Protein: {Math.Round(this.protein_g,2)} \n Sodium {Math.Round(this.sodium_mg,2)} \n Cholestetol {Math.Round(this.cholesterol_mg,2)} \n Carbs: {Math.Round(this.carbohydrates_total_g,2)} \n Fiber: {Math.Round(this.fiber_g,2)} \n Sugar: {Math.Round(this.sugar_g,2)}";
-    }
-}
-
-public class NutritionFactFetcher {
+public class NutritionFactFetcher : IApiForIngredients {
     public string JsonAsString { get; private set; }
 
     // This may or may not work depending on the ingredients
@@ -32,7 +11,7 @@ public class NutritionFactFetcher {
     // tell the client that the nutrition facts for this recipe was not available
     // if the API call fails
     // The code is ugly, but it works
-    public ApiResponse FetchNutritionFactsForRecipe(Recipe recipe) {
+    public ApiResponse Fetch(Recipe recipe) {
         // total macros for a recipe
         var totalCalories = 0.0;
         var totalFat = 0.0;
@@ -54,7 +33,7 @@ public class NutritionFactFetcher {
 
             var halfParsedData = JsonAsString.Substring(JsonAsString.IndexOf("[{") + 1);
             var fullParsedJsonData = halfParsedData.Substring(0, halfParsedData.IndexOf("}") + 1);
-            var apiRep = JsonSerializer.Deserialize<ApiResponse>(fullParsedJsonData);
+            var apiRep = JsonSerializer.Deserialize<NutritionResponse>(fullParsedJsonData);
 
 
             totalCalories += apiRep.calories;
@@ -67,7 +46,7 @@ public class NutritionFactFetcher {
             totalFiber += apiRep.fiber_g;
             totalSugar += apiRep.sugar_g;
         }
-        return new ApiResponse() {
+        return new NutritionResponse() {
             calories = totalCalories,
             fat_total_g = totalFat,
             fat_saturated_g = totalSaturatedFat,
