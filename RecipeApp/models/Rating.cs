@@ -8,6 +8,16 @@ public class Rating {
     private string _description;
     private User _user;
 
+    public Recipe Recipe {
+        get; 
+        set;
+    }
+
+    public int RecipeId {
+        get; 
+        set;
+    }
+
     public int RatingId { 
         get; 
         set; 

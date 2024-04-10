@@ -11,6 +11,11 @@ public class Tag {
         set; 
     }
 
+    public List<Recipe> Recipes {
+        get; 
+        set;
+    }
+
     public string TagName { 
         get => _tagName; 
         set {

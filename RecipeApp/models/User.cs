@@ -24,7 +24,7 @@ public class User {
                 throw new ArgumentException("Name cannot be less than 2 characters!");
             if (value.Length > Constants.MAX_NAME_LENGTH) 
                 throw new ArgumentException("Name cannot be more than 15 characters!");
-        _name = value;
+            _name = value;
     }}
 
     public string Description {

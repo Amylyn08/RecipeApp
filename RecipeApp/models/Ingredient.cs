@@ -10,6 +10,16 @@ public class Ingredient {
     private int _quantity;
     private UnitOfMeasurement _unitOfMeasurement;
 
+    public Recipe Recipe {
+        get; 
+        set;
+    }
+
+    public int RecipeId {
+        get; 
+        set;
+    }
+
     public int IngredientId { 
         get; 
         set; 
