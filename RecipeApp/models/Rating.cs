@@ -4,9 +4,18 @@ namespace RecipeApp.Models;
 /// For rating of recipes, contains stars, description, and user/author of the rating.
 /// </summary>
 public class Rating {
-     public int Stars{get; private set;}
-     public string Description{get; private set;}
-     public User User{get; private set;}
+    private int _stars;
+    private string _description;
+
+    public int Stars{get => _stars; set {
+        if (value > 5 || value < 0) throw new ArgumentException("Stars must be between 0 to 5");
+        _stars = value;
+    }}
+    public string Description{get => _description; set {
+        if(value.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Max description length exceeded!");
+        _description = value;
+    }}
+    public User User{get; private set;}
 
     /// <summary>
     /// Constructor of Rating.
