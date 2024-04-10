@@ -75,11 +75,7 @@ public class MainDummy {
             Console.WriteLine("Press 8 to view your favourited recipes");
             Console.WriteLine("Press 9 to update your favourite recipes");
             try {
-<<<<<<< HEAD
-                input = Convert.ToInt32(GetInput());
-=======
                 input = GetIntInput();
->>>>>>> c1f82005b836be638e3d2d72af478ec6e446b2c3
                 if (input == 1) {
                     Console.Clear();
                     foreach (Recipe recipe in _currentUser.MadeRecipes) {
@@ -249,11 +245,7 @@ public class MainDummy {
         int decision = 0;
         do {
             try {
-<<<<<<< HEAD
-                decision = Convert.ToInt32(GetInput());
-=======
                 decision = GetIntInput();
->>>>>>> c1f82005b836be638e3d2d72af478ec6e446b2c3
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
             }
@@ -477,8 +469,6 @@ public class MainDummy {
     }
 
     /// <summary>
-<<<<<<< HEAD
-=======
     /// Rates a recipe
     /// </summary>
     /// <param name="recipeToRate">Recipe thats getting rated</param>
@@ -500,7 +490,6 @@ public class MainDummy {
     }
 
     /// <summary>
->>>>>>> c1f82005b836be638e3d2d72af478ec6e446b2c3
     /// Filters the list of recipes to a certain criteria
     /// </summary>
     /// <returns>A filtered list of recipes</returns>
