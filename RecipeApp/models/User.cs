@@ -4,9 +4,14 @@ namespace RecipeApp.Models;
 /// Represents a user
 /// </summary>
 public class User {
+    public int UserId {get; set;}
     private string _password;
     private string _name;
     private string _descrition;
+
+    public List<Rating> Ratings { get; set; }
+
+    public User() {}
 
     public string Name { get => _name; set{
         if(value == null) throw new ArgumentException("Name cannot be null!");

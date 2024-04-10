@@ -3,16 +3,25 @@ namespace RecipeApp.Models;
 /// <summary>
 /// An ingredient inside a recipe
 /// </summary>
+/// 
 public class Ingredient {
     private string _name;
     private double _price;
     private int _quantity;
     private UnitOfMeasurement _unitOfMeasurement;
 
+    public int IngredientId { 
+        get; 
+        set; 
+    }
+
     public string Name { 
         get => _name; 
         set {
-            CheckName(value);
+            if (value == null) 
+                throw new ArgumentException("Name cannot be null");
+            if (value.Length == 0)
+                throw new ArgumentException("Name cannot be empty");
             _name = value;
         } 
     }
@@ -20,7 +29,8 @@ public class Ingredient {
     public int Quantity { 
         get => _quantity; 
         set {
-            CheckQuantity(value);
+            if (value <= 0) 
+                throw new ArgumentException("Quantity must be greater than 0");
             _quantity = value;
         } 
     }
@@ -33,7 +43,8 @@ public class Ingredient {
     public double Price { 
         get => _price; 
         set {
-            CheckPrice(value);
+            if (value < 0)
+                throw new ArgumentException("Price cannot be negative");
             _price = value;
         } 
     }
@@ -46,48 +57,24 @@ public class Ingredient {
     /// <param name="unitOfMeasurement">Grams, teaspoons, etc</param>
     /// <exception cref="ArgumentException">If name is null, empty or if quantity is <= 0</exception>
     public Ingredient(string name, int quantity, UnitOfMeasurement unitOfMeasurement, double price) {
-        CheckName(name);
-        CheckQuantity(quantity);
-        CheckPrice(price);
-        _name = name;
-        _quantity = quantity;
-        _unitOfMeasurement = unitOfMeasurement;
-        _price = price;
+        Name = name;
+        Quantity = quantity;
+        UnitOfMeasurement = unitOfMeasurement;
+        Price = price;
     }
 
     /// <summary>
-    /// Validates the name
+    /// Empty constructor for Entity framework
     /// </summary>
-    /// <param name="name">Name of ingredient</param>
-    /// <exception cref="ArgumentException">If empty or null</exception>
-    private static void CheckName(string name) {
-        if (name == null) 
-            throw new ArgumentException("Name cannot be null");
-        if (name.Length == 0)
-            throw new ArgumentException("Name cannot be empty");
+    public Ingredient() {
+
     }
 
     /// <summary>
-    /// Validate the quantity
+    /// String representation of ingredient
     /// </summary>
-    /// <param name="quantity">If 0 or null</param>
-    /// <exception cref="ArgumentException"></exception>
-    private static void CheckQuantity(int quantity) {
-        if (quantity <= 0) 
-            throw new ArgumentException("Quantity must be greater than 0");
-    }
-
-    /// <summary>
-    /// Validate the price
-    /// </summary>
-    /// <param name="price">Price of ingredient</param>
-    /// <exception cref="ArgumentException">If price is negative</exception>
-    private static void CheckPrice(double price) {
-        if (price < 0)
-            throw new ArgumentException("Price cannot be negative");
-    }
-
+    /// <returns>String representation of ingredient</returns>
     public override string ToString() {
-        return Name + ", Q: " + Quantity + " " + UnitOfMeasurement + ", Price: " + Price;  
+        return Name + ", Quantity: " + Quantity + " Unit of measurement: " + UnitOfMeasurement + ", Price: " + Price;  
     }
 }

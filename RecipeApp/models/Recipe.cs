@@ -1,5 +1,6 @@
 namespace RecipeApp.Models;
 
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 /// <summary>
@@ -14,6 +15,8 @@ public class Recipe {
     private List<Rating> _ratings;
     private List<Tag> _tags;
     private readonly User _user;
+
+    public int RecipeId { get; set; }
 
     public string Name { 
         get => _name;  
@@ -104,6 +107,8 @@ public class Recipe {
         PopulateRatings(ratings);
         PopulateTags(tags);
     }
+
+    public Recipe() {}
 
     /// <summary>
     /// Validates the user field
