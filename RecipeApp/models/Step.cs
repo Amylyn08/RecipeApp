@@ -47,6 +47,13 @@ public class Step {
     }
 
     /// <summary>
+    /// Empty constructor for entity framework
+    /// </summary>
+    public Step() {
+
+    }
+
+    /// <summary>
     /// Overriden ToString()
     /// </summary>
     /// <returns>String representation of a step</returns>
