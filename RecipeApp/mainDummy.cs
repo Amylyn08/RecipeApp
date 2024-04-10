@@ -302,7 +302,7 @@ public class MainDummy {
         int input = 0;
         do {
             try {
-                input = int.Parse(Console.ReadLine());
+                input = Convert.ToInt32(GetInput());
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
             }

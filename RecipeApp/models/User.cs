@@ -17,7 +17,7 @@ public class User {
     public List<Recipe> Favorites{get; private set;}
     public List<Recipe> MadeRecipes{get; private set;}
     /// <summary>
-    /// Constructor to create a User
+/// Constructor to create a User
     /// </summary>
     /// <param name="name">Username of the user</param>
     /// <param name="description">Description of the user, can be empty</param>
