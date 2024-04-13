@@ -1,3 +1,7 @@
+
+
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace RecipeApp.Models;
 
 /// <summary>
@@ -48,6 +52,7 @@ public class User {
         }
     }
 
+    [NotMapped]
     public List<Recipe> Favorites {
         get => _favourites; 
         set {
@@ -59,6 +64,7 @@ public class User {
         }
     }
 
+    [InverseProperty("User")]
     public List<Recipe> MadeRecipes {
         get => _madeRecipes;
         set {

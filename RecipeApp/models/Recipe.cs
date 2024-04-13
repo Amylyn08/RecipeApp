@@ -102,11 +102,6 @@ public class Recipe {
         }
     }
 
-    public int UserId {
-        get;
-        set;
-    }
-
     public User User { 
         get => _user;
         set {

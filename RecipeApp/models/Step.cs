@@ -21,11 +21,6 @@ public class Step {
         set;
     }
 
-    public int RecipeId {
-        get; 
-        set;
-    }
-
     public int TimeInMinutes { 
         get => _timeInMinutes; 
         set {

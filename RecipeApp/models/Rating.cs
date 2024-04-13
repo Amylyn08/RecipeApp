@@ -13,11 +13,6 @@ public class Rating {
         set;
     }
 
-    public int RecipeId {
-        get; 
-        set;
-    }
-
     public int RatingId { 
         get; 
         set; 
