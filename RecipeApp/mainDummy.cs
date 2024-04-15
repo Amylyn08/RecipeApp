@@ -10,6 +10,7 @@ public class MainDummy {
     private static readonly UserService _userService = new();
     private static readonly RecipeService _recipeService = new();
     private static readonly NutritionFactFetcher _nutritionFactFetcher = new(); 
+    private static readonly RatingService _ratingService = new();
 
     public static void Main(string[] args) {
         MockDatabase.Init();
@@ -474,7 +475,7 @@ public class MainDummy {
     /// <param name="recipeToRate">Recipe thats getting rated</param>
     private static void RatingRecipe(Recipe recipeToRate) {
         Rating newRating = CreateRating();
-        recipeToRate.Ratings.Add(newRating);
+        _ratingService.RatingRecipe(recipeToRate, newRating);
     }
 
     /// <summary>
@@ -486,7 +487,7 @@ public class MainDummy {
         int stars = int.Parse(Console.ReadLine());
         Console.WriteLine("Write a review!");
         string description = GetInput();
-        return new Rating(stars, description, _currentUser);
+        return _ratingService.CreateRating(_currentUser, stars, description);
     }
 
     /// <summary>
