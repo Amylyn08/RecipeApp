@@ -1,5 +1,6 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Models;
 
 public class SearchByPriceRange: SearcherBase{
@@ -12,7 +13,7 @@ public class SearchByPriceRange: SearcherBase{
     /// </summary>
     /// <param name="min">The min price.</param>
     /// <param name="max">The max price.</param>
-    public SearchByPriceRange(double min, double max){
+    public SearchByPriceRange(DbContext context, double min, double max) : base(context) {
         if (min < 0 || max < 0)
             throw new ArgumentException("Min or max cannot be negative");
         if (min > max) 
@@ -21,18 +22,8 @@ public class SearchByPriceRange: SearcherBase{
         _maxPrice = max;
     }
 
-    /// <summary>
-    /// Gets list of recipes where the price is in between (including) the range given.
-    /// </summary>
-    /// <param name="recipes">The list of recipes being iterated through.</param>
-    /// <returns>The list of filtered recipes corresponding to the range of price.</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            if (r.GetTotalPrice() >= _minPrice && r.GetTotalPrice() <= _maxPrice) {
-                filteredRecipes.Add(r);
-            }
-        }
-        return filteredRecipes;
+    public override List<Recipe> FilterRecipes()
+    {
+        throw new NotImplementedException();
     }
 }

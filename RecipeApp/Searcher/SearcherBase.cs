@@ -1,12 +1,14 @@
 namespace RecipeApp.Searcher;
 
-using RecipeApp.Context;
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Models;
 
 public abstract class SearcherBase{
-    public Context Context { get; set; }
+    public DbContext Context { get; set; }
 
-    public ISearcher(Context context) {
+    public SearcherBase(DbContext context) {
+        if (context == null) 
+            throw new ArgumentNullException("Context is null");
         Context = context;
     }
 
@@ -15,5 +17,5 @@ public abstract class SearcherBase{
     /// </summary>
     /// <param name="recipes"></param>
     /// <returns></returns>
-    abstract List<Recipe> FilterRecipes();
+    public abstract List<Recipe> FilterRecipes();
 }
