@@ -12,7 +12,7 @@ public class SearchKeyWord : SearcherBase {
     /// Constructor for SearchKeyword, takes keyword.
     /// </summary>
     /// <param name="keyword">keyword wanna look for in desc.</param>
-    public SearchKeyWord(DbContext context, string keyword) : base(context){
+    public SearchKeyWord(string keyword) {
         if (keyword == null)
             throw new ArgumentException("Keyword cannot be null");
         if (keyword.Length == 0) 

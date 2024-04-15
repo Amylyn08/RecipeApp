@@ -1,6 +1,5 @@
 namespace RecipeApp.Searcher;
 
-using Microsoft.EntityFrameworkCore;
 using RecipeApp.Models;
 
 public class SearchByPriceRange: SearcherBase{
@@ -13,7 +12,7 @@ public class SearchByPriceRange: SearcherBase{
     /// </summary>
     /// <param name="min">The min price.</param>
     /// <param name="max">The max price.</param>
-    public SearchByPriceRange(DbContext context, double min, double max) : base(context) {
+    public SearchByPriceRange(double min, double max) {
         if (min < 0 || max < 0)
             throw new ArgumentException("Min or max cannot be negative");
         if (min > max) 

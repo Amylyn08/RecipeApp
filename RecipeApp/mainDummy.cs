@@ -2,6 +2,7 @@ using RecipeApp.Models;
 using RecipeApp.Searcher;
 using RecipeApp.Services;
 using RecipeApp.Api;
+using RecipeApp.Context;
 
 namespace RecipeApp;
 
@@ -495,7 +496,7 @@ public class MainDummy {
     /// </summary>
     /// <returns>A filtered list of recipes</returns>
     private static List<Recipe> SearchRecipe() {
-        ISearcher search = null;
+        SearcherBase search = null;
         Console.WriteLine("Enter 1 to Search By Keyword");
         Console.WriteLine("Enter 2 to Search By Ingredient name");
         Console.WriteLine("Enter 3 to Search By Price range");

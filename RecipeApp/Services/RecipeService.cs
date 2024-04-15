@@ -3,7 +3,7 @@ using RecipeApp.Searcher;
 
 namespace RecipeApp.Services;
 
-public class RecipeService {
+public class RecipeService : ServiceBase {
     public void CreateRecipe(Recipe recipe, User user) {
         if (recipe == null || user == null) 
             throw new ArgumentException("Recipe cannot or user cannot be null");
@@ -22,10 +22,10 @@ public class RecipeService {
         user.MadeRecipes.Remove(recipeToDelete);
     }
 
-    public List<Recipe> SearchRecipes(ISearcher searcher) {
+    public List<Recipe> SearchRecipes(SearcherBase searcher) {
         if (searcher == null) 
             throw new ArgumentException("Searcher cannot be null");
-        return searcher.FilterRecipes(MockDatabase.AllRecipes);
+        return searcher.FilterRecipes();
     }
 
     public void UpdateRecipe(Recipe updatedRecipe, User user) {
