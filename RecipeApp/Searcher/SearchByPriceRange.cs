@@ -2,7 +2,7 @@ namespace RecipeApp.Searcher;
 
 using RecipeApp.Models;
 
-public class SearchByPriceRange: ISearcher{
+public class SearchByPriceRange: SearcherBase{
 
     private readonly double _minPrice;
     private readonly double _maxPrice;

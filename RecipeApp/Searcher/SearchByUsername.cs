@@ -3,7 +3,7 @@ namespace RecipeApp.Searcher;
 using RecipeApp.Models;
 
 
-public class SearchByUsername : ISearcher{
+public class SearchByUsername : SearcherBase{
 
     private readonly string _criteria;
 

@@ -2,7 +2,7 @@ using RecipeApp.Searcher;
 
 namespace RecipeApp.Models;
 
-public class SearchByServings : ISearcher{
+public class SearchByServings : SearcherBase{
 
     private readonly int _criteria;
 
