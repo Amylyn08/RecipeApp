@@ -3,7 +3,7 @@ namespace RecipeApp.Searcher;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 
-public class SearchByTime : ISearcher{
+public class SearchByTime : SearcherBase{
     private readonly int  _minTime;
     private readonly int _maxTime;
 

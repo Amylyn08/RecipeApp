@@ -2,7 +2,7 @@ namespace RecipeApp.Searcher;
 
 using RecipeApp.Models;
 
-public class SearchByTags :ISearcher{
+public class SearchByTags :SearcherBase{
 
     private readonly string _criteria;
 
