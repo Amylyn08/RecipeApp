@@ -1,9 +1,10 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Models;
 
 
-public class SearchByUsername : ISearcher{
+public class SearchByUsername : SearcherBase{
 
     private readonly string _criteria;
 
@@ -11,7 +12,7 @@ public class SearchByUsername : ISearcher{
     /// Constructor for SearchByUsername takes in username
     /// </summary>
     /// <param name="username">Name of user</param>
-    public SearchByUsername(string username) {
+    public SearchByUsername(DbContext context, string username) : base(context) {
         if (username == null)
             throw new ArgumentException("Username cannot be null");
         if (username.Length == 0)
@@ -19,21 +20,9 @@ public class SearchByUsername : ISearcher{
         _criteria = username;
     }
 
-    /// <summary>
-    /// Gets filtered list of recipes containing username 
-    /// </summary>
-    /// <param name="recipes">List of recipes</param>
-    /// <returns>Filtered list of recipes containing the username/criteria</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            if(r.User.Name.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
-                filteredRecipes.Add(r);
-            }
-        }
-        return filteredRecipes;
+
+    public override List<Recipe> FilterRecipes()
+    {
+        throw new NotImplementedException();
     }
-
-
-
 }
