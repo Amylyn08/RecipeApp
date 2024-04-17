@@ -35,4 +35,17 @@ public class SearchByIngredients : SearcherBase
         return recipeList;
 
     }
+    /// <returns>List of filtered recipes</returns>
+    public override List<Recipe> FilterRecipes()
+    {
+        List<Recipe> recipeList = Context.Recipes 
+        .Where (recipe => recipe.)
+        .ToList<Recipe>();
+
+        return recipeList;
+
+    }
+
+    Context.Recipes
+    .Where()
 }
