@@ -19,9 +19,17 @@ public class SearchKeyWord : SearcherBase {
             throw new ArgumentException("Key cannot be empty");
         _criteria = keyword;
     }
-
+    /// <summary>
+    /// Searches through recipes list of context, gets the ingredients
+    ///and sees if the name of recipe matches the string in criteria/keyword.
+    /// </summary>
+    /// <returns>The filtered list of recipes</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        var filteredRecipes = Context.Recipes
+                            .Where(recipe => recipe.Name.Any(name => 
+                            name.Contains(_criteria)));
+
+        return filteredRecipes;
     }
 }
