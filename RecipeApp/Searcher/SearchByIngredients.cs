@@ -21,31 +21,18 @@ public class SearchByIngredients : SearcherBase
         _criteria = ingredientName;
     }
 
-
     /// <summary>
-    /// Searches list of recipes of context and returns those that includes the name.
-    /// Using LINQ quering
+    /// Searches through recipes list of context, gets the ingredients
+    ///and sees if the name matches the string in the criteria
     /// </summary>
-    /// <returns>List of filtered recipes</returns>
+    /// <returns>The filtered list of recipes</returns>
     public override List<Recipe> FilterRecipes()
     {
-        List<Recipe> recipeList = (from recipe in Context.Recipes
-                                   where recipe.Ingredients.Any(ing => ing.Name.Contains(_criteria))
-                                   select recipe).ToList<Recipe>();
-        return recipeList;
+        var recipes = base.Context.Recipes
+                    .Where(recipe => recipe.Ingredients.Any(ingredient =>
+                     ingredient.Name.Contains(_criteria) ))
+                    .ToList<Recipe>();
 
+        return recipes;
     }
-    /// <returns>List of filtered recipes</returns>
-    public override List<Recipe> FilterRecipes()
-    {
-        List<Recipe> recipeList = Context.Recipes 
-        .Where (recipe => recipe.)
-        .ToList<Recipe>();
-
-        return recipeList;
-
-    }
-
-    Context.Recipes
-    .Where()
 }

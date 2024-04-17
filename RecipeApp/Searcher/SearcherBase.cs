@@ -5,7 +5,7 @@ using RecipeApp.Context;
 using RecipeApp.Models;
 
 public abstract class SearcherBase{
-    public DbContext Context { get; set; } = new SplankContext();
+    public SplankContext Context { get; set; } = new SplankContext();
 
     /// <summary>
     /// Returns a list of recipes matching a filter.
