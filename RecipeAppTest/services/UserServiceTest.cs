@@ -19,7 +19,7 @@ public class UserServiceTest {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void LoginNullUsernameThrowsArgumentException() {
-         UserService userService = new UserService(new(), new PasswordEncrypter());
+        UserService userService = new UserService(new(), new PasswordEncrypter());
         userService.Login(null, "Password");
     }
 
@@ -33,9 +33,9 @@ public class UserServiceTest {
     [TestMethod]
     public void LoginSuccessfullReturnsUser() {
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", "Rida1Password", new(), new()));
-        listUser.Add(new User("Rida2", "I am rida 2", "Rida2Password", new(), new()));
-        listUser.Add(new User("Rida2", "I am rida 3", "Rida3Password", new(), new()));
+        listUser.Add(new User("Rida1", "I am rida 1", "Rida1Password", new(), new(), "salt"));
+        listUser.Add(new User("Rida2", "I am rida 2", "Rida2Password", new(), new(), "salt"));
+        listUser.Add(new User("Rida2", "I am rida 3", "Rida3Password", new(), new(), "salt"));
         
         var data = listUser.AsQueryable();
 

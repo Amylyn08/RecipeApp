@@ -51,7 +51,7 @@ public class UserService : ServiceBase {
             throw new UserDoesNotExistException($"User ${username} does not exist !");
         }
         var encryptedPasswordFromDatabase = userInDatabase.Password;
-        var encryptedPassword = Encrypter.Encrypt(password); 
+        var encryptedPassword = Encrypter.Encrypt(password + userInDatabase.Salt); 
         if (!encryptedPasswordFromDatabase.Equals(encryptedPassword)) {
             throw new InvalidCredentialsException("Invalid credentials provided !");
         }
