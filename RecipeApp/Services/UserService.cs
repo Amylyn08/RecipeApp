@@ -4,9 +4,26 @@ using RecipeApp.Exceptions;
 using RecipeApp.Models;
 using RecipeApp.Security;
 
+/// <summary>
+/// Performs user related business logiv
+/// </summary>
 public class UserService : ServiceBase {
-    public IEncrypter Encrypter { get; set; }
+    private IEncrypter _encrypter;
 
+    public IEncrypter Encrypter { 
+        get => _encrypter; 
+        set {
+            if (value == null) {
+                throw new ArgumentException("Encrypter cannot be null");
+            }
+            _encrypter = value;
+        }  
+    }
+
+    /// <summary>
+    /// Constructor with encrypter
+    /// </summary>
+    /// <param name="encrypter">Encrypter for passwords</param>
     public UserService(IEncrypter encrypter) {
         Encrypter = encrypter;
     }
@@ -42,7 +59,7 @@ public class UserService : ServiceBase {
         if (userToAdd is null) {
             throw new ArgumentException("User to add cannot be null");
         }
-        var userInDatabase = Context.Users.Where(u => u.Name.Equals(userToAdd.Name)).First();
+        var userInDatabase = Context.Users.Where(u => u.Name.Equals(userToAdd.Name)).FirstOrDefault();
         if (userInDatabase is not null) {
             throw new UserAlreadyExistsException($"User {userToAdd.Name} already exists !");
         }
@@ -50,17 +67,25 @@ public class UserService : ServiceBase {
         Context.Add(userToAdd);
     }
 
-    public void ChangePassword(User user, string newPassword) {
-        if (user is null) 
-            throw new ArgumentException("User cannot be null");
-        if (newPassword.Length < Constants.MIN_PASS_LENGTH)
-            throw new ArgumentException($"Password must be atleast {Constants.MIN_PASS_LENGTH} characters");
-        foreach (User mock in MockDatabase.Users) {
-            if (mock == user) {
-                mock.Password = newPassword;
-                break;
-            }
+    /// <summary>
+    /// Changes a users password
+    /// </summary>
+    /// <param name="userToChangePassword">User object to update</param>
+    /// <param name="newPassword">New password of user</param>
+    /// <exception cref="ArgumentException">If user is null or new password is null/empty</exception>
+    public void ChangePassword(User userToChangePassword, string newPassword) {
+        if (userToChangePassword is null) {
+            throw new ArgumentException("User cannot be null !");
         }
+        if (newPassword is null) {
+            throw new ArgumentException("New password cannot be null !");
+        }
+        if (newPassword.Length < Constants.MIN_PASS_LENGTH) {
+            throw new ArgumentException($"New password must be at least {Constants.MIN_PASS_LENGTH} characters long !");
+        }
+        var encryptedPassword = Encrypter.Encrypt(newPassword);
+        userToChangePassword.Password = encryptedPassword;
+        Context.Update(userToChangePassword);
     }
 
     public void DeleteAccount(User user) {
