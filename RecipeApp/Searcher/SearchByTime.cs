@@ -13,7 +13,7 @@ public class SearchByTime : SearcherBase{
     /// </summary>
     /// <param name="min">The min time.</param>
     /// <param name="max">The max time</param>
-    public SearchByTime(DbContext context, int min, int max) : base(context) {
+    public SearchByTime(int min, int max) {
         if (min < 0 || max < 0)
             throw new ArgumentException("Min or max cannot be negative");
         if (min > max) 

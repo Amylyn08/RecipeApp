@@ -3,7 +3,7 @@ using RecipeApp.Models;
 namespace RecipeApp.Services;
  
 
-public class RatingService {
+public class RatingService : ServiceBase {
     
     /// <summary>
     /// Adds a rating to the recipe

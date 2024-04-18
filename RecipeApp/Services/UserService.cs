@@ -2,7 +2,7 @@ namespace RecipeApp.Services;
 
 using RecipeApp.Models;
 
-public class UserService {
+public class UserService : ServiceBase {
     public User Login(string username, string password) {
         if (username == null || password == null)
             throw new ArgumentException("Username and passwod cannot be null");

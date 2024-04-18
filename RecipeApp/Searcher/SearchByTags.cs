@@ -11,7 +11,7 @@ public class SearchByTags :SearcherBase{
     /// Contructor for SearchByTags taking in tagName specified.
     /// </summary>
     /// <param name="tagName">The tag name specified.</param>
-    public SearchByTags(DbContext context ,string tagName) : base(context) {
+    public SearchByTags(string tagName) {
         if (tagName == null)
             throw new ArgumentException("Tag name cannot be null");
         if (tagName.Length == 0)

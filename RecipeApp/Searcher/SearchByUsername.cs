@@ -12,7 +12,7 @@ public class SearchByUsername : SearcherBase{
     /// Constructor for SearchByUsername takes in username
     /// </summary>
     /// <param name="username">Name of user</param>
-    public SearchByUsername(DbContext context, string username) : base(context) {
+    public SearchByUsername(string username) {
         if (username == null)
             throw new ArgumentException("Username cannot be null");
         if (username.Length == 0)
