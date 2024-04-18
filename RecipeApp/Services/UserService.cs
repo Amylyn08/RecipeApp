@@ -92,7 +92,11 @@ public class UserService : ServiceBase {
     /// Deletes a user from the database
     /// </summary>
     /// <param name="userToDelete">User to delete</param>
+    /// <exception cref="ArgumentException">If user to delete is null</exception>
     public void DeleteAccount(User userToDelete) {
+        if (userToDelete is null) {
+            throw new ArgumentException("User to delete cannot be null");
+        }
         Context.Remove(userToDelete);
     }
 
