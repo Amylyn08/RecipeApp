@@ -88,10 +88,12 @@ public class UserService : ServiceBase {
         Context.Update(userToChangePassword);
     }
 
-    public void DeleteAccount(User user) {
-        if (user is null) 
-            throw new ArgumentException("User cannot be null");
-        MockDatabase.Users.Remove(user);
+    /// <summary>
+    /// Deletes a user from the database
+    /// </summary>
+    /// <param name="userToDelete">User to delete</param>
+    public void DeleteAccount(User userToDelete) {
+        Context.Remove(userToDelete);
     }
 
     public void AddToFavourites(Recipe favourited, User user) {
