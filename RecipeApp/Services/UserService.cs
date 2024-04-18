@@ -1,8 +1,16 @@
 namespace RecipeApp.Services;
 
+using RecipeApp.Exceptions;
 using RecipeApp.Models;
+using RecipeApp.Security;
 
 public class UserService : ServiceBase {
+    public IEncrypter Encrypter { get; set; }
+
+    public UserService(IEncrypter encrypter) {
+        Encrypter = encrypter;
+    }
+
     public User Login(string username, string password) {
         if (username == null || password == null)
             throw new ArgumentException("Username and passwod cannot be null");
@@ -14,17 +22,22 @@ public class UserService : ServiceBase {
         return null;
     }
 
-    public User Register(string username, string password, string description) {
-        if (username == null || password == null || description == null)
-            throw new ArgumentException("Username/password/description cannot be null");
-        User user = new(username, description, password, new(), new());
-        foreach (User mock in MockDatabase.Users) {
-            if (mock.Name.Equals(username)) {
-                return null;
-            }
+    /// <summary>
+    /// Adds a user to the database
+    /// </summary>
+    /// <param name="userToAdd">User object to add</param>
+    /// <exception cref="UserAlreadyExistsException">If user with same username already exists</exception>
+    /// <exception cref="ArgumentException">If userToAdd is null</exception>
+    public void Register(User userToAdd) {
+        if (userToAdd is null) {
+            throw new ArgumentException("User to add cannot be null");
         }
-        MockDatabase.Users.Add(user);
-        return user;
+        var userInDatabase = base.Context.Users.Where(u => u.Name.Equals(userToAdd.Name)).First();
+        if (userInDatabase is not null) {
+            throw new UserAlreadyExistsException($"User {userToAdd.Name} already exists !");
+        }
+        userToAdd.Password = Encrypter.Encrypt(userToAdd.Password);
+        base.Context.Add(userToAdd);
     }
 
     public void ChangePassword(User user, string newPassword) {
