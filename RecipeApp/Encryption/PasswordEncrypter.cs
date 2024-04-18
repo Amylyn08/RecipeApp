@@ -1,8 +1,18 @@
 using System.Security.Cryptography;
 namespace RecipeApp.Security;
 
-public class PasswordEncrypter : IEncrypter
+public class PasswordEncrypter
 {   
+    /// <summary>
+    /// property for salt.
+    /// </summary>
+    public string salt{get; set;}
+
+    /// <summary>
+    /// Property for hashedPassword
+    /// </summary>
+    public string hashedPassword{get; set;}
+
     /// <summary>
     /// Uses two methods below to return the hased version of the password.
     /// </summary>
@@ -10,8 +20,8 @@ public class PasswordEncrypter : IEncrypter
     /// <returns>The hashed password version of plain text param.</returns>
     public string Encrypt(string plainText)
     {
-        string salt = CreateSalt();
-        string hashedPassword = CreateHash(plainText, salt);
+        salt = CreateSalt();
+        hashedPassword = CreateHash(plainText, salt);
         return hashedPassword;
     }
 
