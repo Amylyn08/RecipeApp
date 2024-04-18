@@ -8,7 +8,7 @@ using RecipeApp.Security;
 /// Performs user related business logiv
 /// </summary>
 public class UserService : ServiceBase {
-    private IEncrypter _encrypter;
+    private IEncrypter _encrypter = null!;
 
     public IEncrypter Encrypter { 
         get => _encrypter; 
