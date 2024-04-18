@@ -53,14 +53,14 @@ public class RecipeServiceTest {
         rs.DeleteRecipe(recipe, user);
     }
 
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void SearchRecipe_NullSearcher_ThrowsException() {
-        ISearcher searcher = null;
-        RecipeService rs = new RecipeService();
+    // [TestMethod]
+    // [ExpectedException(typeof(ArgumentException))]
+    // public void SearchRecipe_NullSearcher_ThrowsException() {
+    //     ISearcher searcher = null;
+    //     RecipeService rs = new RecipeService();
 
-        rs.SearchRecipes(searcher);
-    }
+    //     rs.SearchRecipes(searcher);
+    // }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]

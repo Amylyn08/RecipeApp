@@ -37,6 +37,12 @@ public class UserService : ServiceBase {
     /// <exception cref="UserDoesNotExistException">If the username provided does not correspond with an account</exception>
     /// <exception cref="InvalidCredentialsException">If the password is not valid for the given username</exception>
     public User Login(string username, string password) {
+        if (username is null) {
+            throw new ArgumentException("Username cannot be null");
+        }
+        if (password is null) {
+            throw new ArgumentException("Password cannot be null");
+        }
         var userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).First();
         if (userInDatabase is null) {
             throw new UserDoesNotExistException($"User ${username} does not exist !");
@@ -65,6 +71,7 @@ public class UserService : ServiceBase {
         }
         userToAdd.Password = Encrypter.Encrypt(userToAdd.Password);
         Context.Add(userToAdd);
+        Context.SaveChanges();
     }
 
     /// <summary>
@@ -86,6 +93,7 @@ public class UserService : ServiceBase {
         var encryptedPassword = Encrypter.Encrypt(newPassword);
         userToChangePassword.Password = encryptedPassword;
         Context.Update(userToChangePassword);
+        Context.SaveChanges();
     }
 
     /// <summary>
@@ -98,6 +106,7 @@ public class UserService : ServiceBase {
             throw new ArgumentException("User to delete cannot be null");
         }
         Context.Remove(userToDelete);
+        Context.SaveChanges();
     }
 
     /// <summary>
@@ -118,6 +127,7 @@ public class UserService : ServiceBase {
             User = user
         };
         Context.Favourites.Add(favouriteEntry);
+        Context.SaveChanges();
     }
 
     /// <summary>
@@ -130,5 +140,6 @@ public class UserService : ServiceBase {
             throw new ArgumentException("Favourite to delete cannot be null !");
         }
         Context.Remove(favouriteToDelete);
+        Context.SaveChanges();
     }
 }       
