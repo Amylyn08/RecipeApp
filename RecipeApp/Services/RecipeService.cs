@@ -1,9 +1,14 @@
+using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 
 namespace RecipeApp.Services;
 
 public class RecipeService : ServiceBase {
+    public RecipeService(SplankContext context) : base(context)
+    {
+    }
+
     public void CreateRecipe(Recipe recipe, User user) {
         // if (recipe == null || user == null) 
         //     throw new ArgumentException("Recipe cannot or user cannot be null");

@@ -9,11 +9,11 @@ using RecipeApp.Security;
 /// <summary>
 /// Performs user related business logiv
 /// </summary>
-public class UserService {
-    private IEncrypter _encrypter = null!;
+public class UserService : ServiceBase {
+    private PasswordEncrypter _encrypter = null!;
     private SplankContext _context = null!;
 
-    public IEncrypter Encrypter { 
+    public PasswordEncrypter Encrypter { 
         get => _encrypter; 
         set {
             if (value is null) {
@@ -23,22 +23,11 @@ public class UserService {
         }  
     }
 
-    public SplankContext Context {
-        get => _context;
-        set {
-            if (value is null) {
-                throw new ArgumentException("Context cannot be null");
-            }
-            _context = value;
-        }
-    }
-
     /// <summary>
     /// Constructor with encrypter
     /// </summary>
     /// <param name="encrypter">Encrypter for passwords</param>
-    public UserService(SplankContext context, IEncrypter encrypter) {
-        Context = context;
+    public UserService(SplankContext context, PasswordEncrypter encrypter) : base(context) {
         Encrypter = encrypter;
     }
 
