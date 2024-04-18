@@ -51,10 +51,12 @@ public class UserService : ServiceBase {
             throw new UserDoesNotExistException($"User ${username} does not exist !");
         }
         var encryptedPasswordFromDatabase = userInDatabase.Password;
-        var encryptedPassword = Encrypter.Encrypt(password + userInDatabase.Salt); 
+        var saltFromDatabase = userInDatabase.Salt;
+        var encryptedPassword = Encrypter.CreateHash(password, userInDatabase.Salt); 
         if (!encryptedPasswordFromDatabase.Equals(encryptedPassword)) {
             throw new InvalidCredentialsException("Invalid credentials provided !");
         }
+
         return userInDatabase;
     }
 
@@ -72,7 +74,10 @@ public class UserService : ServiceBase {
         if (userInDatabase is not null) {
             throw new UserAlreadyExistsException($"User {userToAdd.Name} already exists !");
         }
-        userToAdd.Password = Encrypter.Encrypt(userToAdd.Password);
+        var salt = Encrypter.CreateSalt();
+        var hashedPassword = Encrypter.CreateHash(userToAdd.Password, salt);
+        userToAdd.Password = hashedPassword;
+        userToAdd.Salt = salt;
         Context.Add(userToAdd);
         Context.SaveChanges();
     }
@@ -93,8 +98,10 @@ public class UserService : ServiceBase {
         if (newPassword.Length < Constants.MIN_PASS_LENGTH) {
             throw new ArgumentException($"New password must be at least {Constants.MIN_PASS_LENGTH} characters long !");
         }
-        var encryptedPassword = Encrypter.Encrypt(newPassword);
-        userToChangePassword.Password = encryptedPassword;
+        var salt = Encrypter.CreateSalt();
+        var hashedPassword = Encrypter.CreateHash(userToChangePassword.Password, salt);
+        userToChangePassword.Password = hashedPassword;
+        userToChangePassword.Salt = salt;
         Context.Update(userToChangePassword);
         Context.SaveChanges();
     }

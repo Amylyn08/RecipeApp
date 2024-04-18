@@ -32,10 +32,20 @@ public class UserServiceTest {
 
     [TestMethod]
     public void LoginSuccessfullReturnsUser() {
+        PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
+        
+        var salt1 = passwordEncrypter.CreateSalt();
+        var salt2 = passwordEncrypter.CreateSalt();
+        var salt3 = passwordEncrypter.CreateSalt();
+
+        var password1 = passwordEncrypter.CreateHash("Rida1Password", salt1);
+        var password2 = passwordEncrypter.CreateHash("Rida1Password", salt2);
+        var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
+
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", "Rida1Password", new(), new(), "salt"));
-        listUser.Add(new User("Rida2", "I am rida 2", "Rida2Password", new(), new(), "salt"));
-        listUser.Add(new User("Rida2", "I am rida 3", "Rida3Password", new(), new(), "salt"));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
+        listUser.Add(new User("Rida2", "I am rida 3", password3, new(), new(), salt3));
         
         var data = listUser.AsQueryable();
 
