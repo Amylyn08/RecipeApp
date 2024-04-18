@@ -1,18 +1,17 @@
+using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 
 namespace RecipeApp.Services;
 
 public class RecipeService : ServiceBase {
-    public void CreateRecipe(Recipe recipe, User user) {
-        if (recipe == null || user == null) 
+
+    SplankContext splank = new SplankContext();
+    public void CreateRecipe(Recipe recipe) {
+        if (recipe == null) 
             throw new ArgumentException("Recipe cannot or user cannot be null");
-        MockDatabase.AllRecipes.Add(recipe);
-        foreach (User mockUser in MockDatabase.Users) {
-            if (mockUser.Equals(user)) {
-                mockUser.MadeRecipes.Add(recipe);
-            }
-        }
+        splank.Add(recipe);
+        splank.SaveChanges();
     }
 
     public void DeleteRecipe(Recipe recipeToDelete, User user) {

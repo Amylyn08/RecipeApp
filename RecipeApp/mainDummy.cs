@@ -193,7 +193,7 @@ public class MainDummy {
         while (true) {
             Console.WriteLine("Please choose recipe number to delete");
             try {
-                _recipeService.DeleteRecipe(_currentUser.MadeRecipes[GetIntInput() - 1], _currentUser);
+                _recipeService.DeleteRecipe(_currentUser.MadeRecipes[GetIntInput() - 1]);
                 break;
             } catch (ArgumentOutOfRangeException) {
                 Console.WriteLine("Please enter a valid number");
@@ -293,7 +293,7 @@ public class MainDummy {
                 Console.WriteLine("Add your tags: ");
                 List<Tag> tags = CreateListTags();
                 Recipe recipe = new(name, _currentUser, description, servings, ingredients, steps, new(), tags);
-                _recipeService.CreateRecipe(recipe, _currentUser);
+                _recipeService.CreateRecipe(recipe);
                 break;
             } catch (ArgumentException e) {
                 Console.Clear();
