@@ -46,7 +46,7 @@ public class UserService : ServiceBase {
         if (password is null) {
             throw new ArgumentException("Password cannot be null");
         }
-        User userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).First();
+        User? userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).FirstOrDefault();
         if (userInDatabase is null) {
             throw new UserDoesNotExistException($"User ${username} does not exist !");
         }
