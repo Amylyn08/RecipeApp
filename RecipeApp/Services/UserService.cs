@@ -1,5 +1,7 @@
 namespace RecipeApp.Services;
 
+using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Models;
 using RecipeApp.Security;
@@ -7,24 +9,36 @@ using RecipeApp.Security;
 /// <summary>
 /// Performs user related business logiv
 /// </summary>
-public class UserService : ServiceBase {
+public class UserService {
     private IEncrypter _encrypter = null!;
+    private SplankContext _context = null!;
 
     public IEncrypter Encrypter { 
         get => _encrypter; 
         set {
-            if (value == null) {
+            if (value is null) {
                 throw new ArgumentException("Encrypter cannot be null");
             }
             _encrypter = value;
         }  
     }
 
+    public SplankContext Context {
+        get => _context;
+        set {
+            if (value is null) {
+                throw new ArgumentException("Context cannot be null");
+            }
+            _context = value;
+        }
+    }
+
     /// <summary>
     /// Constructor with encrypter
     /// </summary>
     /// <param name="encrypter">Encrypter for passwords</param>
-    public UserService(IEncrypter encrypter) {
+    public UserService(SplankContext context, IEncrypter encrypter) {
+        Context = context;
         Encrypter = encrypter;
     }
 
@@ -43,7 +57,7 @@ public class UserService : ServiceBase {
         if (password is null) {
             throw new ArgumentException("Password cannot be null");
         }
-        var userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).First();
+        User userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).First();
         if (userInDatabase is null) {
             throw new UserDoesNotExistException($"User ${username} does not exist !");
         }

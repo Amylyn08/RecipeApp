@@ -13,24 +13,21 @@ public class UserServiceTest {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void NullEncrypterThrowsArgumentException() {
-        IEncrypter? encrypter = null;
-        ServiceBase userService = new UserService(encrypter);
+        UserService userService = new(new(), null);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void LoginNullUsernameThrowsArgumentException() {
-        IEncrypter encrypter = new PasswordEncrypter();
-        ServiceBase userService = new UserService(encrypter);
-        ((UserService) userService).Login(null, "Password");
+         UserService userService = new UserService(new(), new PasswordEncrypter());
+        userService.Login(null, "Password");
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void LoginNullPasswordThrowsArgumentException() {
-        IEncrypter encrypter = new PasswordEncrypter();
-        ServiceBase userService = new UserService(encrypter);
-        ((UserService) userService).Login("Username123", null);
+        UserService userService = new UserService(new(), new PasswordEncrypter());
+        userService.Login("Username123", null);
     }
 
     [TestMethod]
@@ -52,7 +49,7 @@ public class UserServiceTest {
         mockContext.Setup(m => m.Users).Returns(mockSet.Object);
 
         var encrypter = new PasswordEncrypter();
-        var userService = new UserService(encrypter);
+        var userService = new UserService(mockContext.Object, encrypter);
 
         var user = userService.Login("Rida1", "Rida1Password");
 
