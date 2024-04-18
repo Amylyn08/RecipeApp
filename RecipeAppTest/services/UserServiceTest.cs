@@ -49,7 +49,7 @@ public class UserServiceTest {
         mockContext.Setup(m => m.Users).Returns(mockSet.Object);
 
         var encrypter = new PasswordEncrypter();
-        var userService = new UserService(mockContext.Object, encrypter);
+        UserService userService = new(mockContext.Object, encrypter);
 
         var user = userService.Login("Rida1", "Rida1Password");
 
