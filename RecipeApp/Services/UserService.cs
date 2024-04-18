@@ -11,15 +11,25 @@ public class UserService : ServiceBase {
         Encrypter = encrypter;
     }
 
+    /// <summary>
+    /// Logs in a user
+    /// </summary>
+    /// <param name="username">Username from client</param>
+    /// <param name="password">Raw password from client</param>
+    /// <returns>User object from database</returns>
+    /// <exception cref="UserDoesNotExistException">If the username provided does not correspond with an account</exception>
+    /// <exception cref="InvalidCredentialsException">If the password is not valid for the given username</exception>
     public User Login(string username, string password) {
-        if (username == null || password == null)
-            throw new ArgumentException("Username and passwod cannot be null");
-        foreach (User user in MockDatabase.Users) {
-            if (user.Name.Equals(username) && user.Password.Equals(password)) {
-                return user;
-            }
+        var userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).First();
+        if (userInDatabase is null) {
+            throw new UserDoesNotExistException($"User ${username} does not exist !");
         }
-        return null;
+        var encryptedPasswordFromDatabase = userInDatabase.Password;
+        var encryptedPassword = Encrypter.Encrypt(password); 
+        if (!encryptedPasswordFromDatabase.Equals(encryptedPassword)) {
+            throw new InvalidCredentialsException("Invalid credentials provided !");
+        }
+        return userInDatabase;
     }
 
     /// <summary>
@@ -32,12 +42,12 @@ public class UserService : ServiceBase {
         if (userToAdd is null) {
             throw new ArgumentException("User to add cannot be null");
         }
-        var userInDatabase = base.Context.Users.Where(u => u.Name.Equals(userToAdd.Name)).First();
+        var userInDatabase = Context.Users.Where(u => u.Name.Equals(userToAdd.Name)).First();
         if (userInDatabase is not null) {
             throw new UserAlreadyExistsException($"User {userToAdd.Name} already exists !");
         }
         userToAdd.Password = Encrypter.Encrypt(userToAdd.Password);
-        base.Context.Add(userToAdd);
+        Context.Add(userToAdd);
     }
 
     public void ChangePassword(User user, string newPassword) {
