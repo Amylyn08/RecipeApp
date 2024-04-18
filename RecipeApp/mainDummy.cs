@@ -3,6 +3,7 @@ using RecipeApp.Searcher;
 using RecipeApp.Services;
 using RecipeApp.Api;
 using RecipeApp.Context;
+using RecipeApp.Security;
 
 namespace RecipeApp;
 
@@ -76,6 +77,7 @@ public class MainDummy {
             Console.WriteLine("Press 7 to delete your account");
             Console.WriteLine("Press 8 to view your favourited recipes");
             Console.WriteLine("Press 9 to update your favourite recipes");
+            Console.WriteLine("Press 10 to try out hashing feature.");
             try {
                 input = GetIntInput();
                 if (input == 1) {
@@ -96,22 +98,22 @@ public class MainDummy {
                 } else if (input == 3) {
                     Console.Clear();
                     UpdateRecipe();
-                } else if (input == 4) {
-                    Console.Clear();
-                    List<Recipe> foundRecipes = SearchRecipe();
-                    Console.Clear();
-                    Console.WriteLine("FOUND RECIPES");
-                    foreach(Recipe recipe in foundRecipes) {
-                        Console.WriteLine(recipe);
-                        try {
-                            Console.WriteLine("Loading nutrition facts...");
-                            var nutrition = _nutritionFactFetcher.Fetch(recipe);
-                            Console.WriteLine(nutrition);
-                        } catch (Exception) {
-                            Console.WriteLine("Could not fetch nutrition facts for this recipe");
-                        }
-                    }
-                    FavouriteRecipes(foundRecipes);
+                // } else if (input == 4) {
+                //     Console.Clear();
+                //     List<Recipe> foundRecipes = SearchRecipe();
+                //     Console.Clear();
+                //     Console.WriteLine("FOUND RECIPES");
+                //     foreach(Recipe recipe in foundRecipes) {
+                //         Console.WriteLine(recipe);
+                //         try {
+                //             Console.WriteLine("Loading nutrition facts...");
+                //             var nutrition = _nutritionFactFetcher.Fetch(recipe);
+                //             Console.WriteLine(nutrition);
+                //         } catch (Exception) {
+                //             Console.WriteLine("Could not fetch nutrition facts for this recipe");
+                //         }
+                //     }
+                    // FavouriteRecipes(foundRecipes);
                 } else if (input == 5) {
                     Console.Clear();
                     DeleteRecipe();
@@ -138,6 +140,10 @@ public class MainDummy {
                 } else if (input == 9) {
                     Console.Clear();
                     DeleteFromFavourites();
+                }
+                    else if (input == 10) {
+                    Console.Clear();
+                    HashInputPassword();
                 }
             } catch (FormatException) {
                 Console.WriteLine("Please enter a valid number");
@@ -495,59 +501,59 @@ public class MainDummy {
     /// Filters the list of recipes to a certain criteria
     /// </summary>
     /// <returns>A filtered list of recipes</returns>
-    private static List<Recipe> SearchRecipe() {
-        SearcherBase search = null;
-        Console.WriteLine("Enter 1 to Search By Keyword");
-        Console.WriteLine("Enter 2 to Search By Ingredient name");
-        Console.WriteLine("Enter 3 to Search By Price range");
-        Console.WriteLine("Enter 4 to Search By Rating");
-        Console.WriteLine("Enter 5 to Search By Serving");
-        Console.WriteLine("Enter 6 to Search By Tag name");
-        Console.WriteLine("Enter 7 to Search By Prepare Time range");
-        Console.WriteLine("Enter 8 to Search By Username");
-        int input = GetIntInput();
-        if(input == 1){
-            Console.WriteLine("Enter a keyword: ");
-            string keyword = GetInput();
-            search = new SearchKeyWord(keyword);
-        } else if(input == 2) {
-            Console.WriteLine("Enter an ingredient:");
-            string ingredientName = GetInput();
-            search = new SearchByIngredients(ingredientName);
-        } else if(input == 3) {
-            Console.WriteLine("Enter the min");
-            double min = double.Parse(Console.ReadLine());
-            Console.WriteLine("Enter the max");
-            double max = double.Parse(Console.ReadLine());
-            search = new SearchByPriceRange(min, max);
-        } else if(input == 4) {
-            Console.WriteLine("Enter rating to search");
-            int rating = GetIntInput();
-            search = new SearchByRating(rating);
-        } else if(input == 5) {
-            Console.WriteLine("Enter num of servings");
-            int serving = GetIntInput();
-            search = new SearchByServings(serving);
-        } else if(input == 6) {
-            Console.WriteLine("Enter tag name");
-            string tagName = GetInput();
-            search = new SearchByTags(tagName);
-        } else if(input == 7) {
-            Console.WriteLine("Enter min time");
-            int min = GetIntInput();
-            Console.WriteLine("Enter max time");
-            int max = GetIntInput();
-            search = new SearchByTime(min, max);
-        } else if(input == 8) {
-            Console.WriteLine("Enter username:");
-            string username = GetInput();
-            search = new SearchByUsername(username);
-        } else {
-            Console.WriteLine("Invalid input");
-            return null;
-        }
-        return _recipeService.SearchRecipes(search);
-    }
+    // private static List<Recipe> SearchRecipe() {
+    //     SearcherBase search = null;
+    //     Console.WriteLine("Enter 1 to Search By Keyword");
+    //     Console.WriteLine("Enter 2 to Search By Ingredient name");
+    //     Console.WriteLine("Enter 3 to Search By Price range");
+    //     Console.WriteLine("Enter 4 to Search By Rating");
+    //     Console.WriteLine("Enter 5 to Search By Serving");
+    //     Console.WriteLine("Enter 6 to Search By Tag name");
+    //     Console.WriteLine("Enter 7 to Search By Prepare Time range");
+    //     Console.WriteLine("Enter 8 to Search By Username");
+    //     int input = GetIntInput();
+    //     if(input == 1){
+    //         Console.WriteLine("Enter a keyword: ");
+    //         string keyword = GetInput();
+    //         search = new SearchKeyWord(keyword);
+    //     } else if(input == 2) {
+    //         Console.WriteLine("Enter an ingredient:");
+    //         string ingredientName = GetInput();
+    //         search = new SearchByIngredients(ingredientName);
+    //     } else if(input == 3) {
+    //         Console.WriteLine("Enter the min");
+    //         double min = double.Parse(Console.ReadLine());
+    //         Console.WriteLine("Enter the max");
+    //         double max = double.Parse(Console.ReadLine());
+    //         search = new SearchByPriceRange(min, max);
+    //     } else if(input == 4) {
+    //         Console.WriteLine("Enter rating to search");
+    //         int rating = GetIntInput();
+    //         search = new SearchByRating(rating);
+    //     } else if(input == 5) {
+    //         Console.WriteLine("Enter num of servings");
+    //         int serving = GetIntInput();
+    //         search = new SearchByServings(serving);
+    //     } else if(input == 6) {
+    //         Console.WriteLine("Enter tag name");
+    //         string tagName = GetInput();
+    //         search = new SearchByTags(tagName);
+    //     } else if(input == 7) {
+    //         Console.WriteLine("Enter min time");
+    //         int min = GetIntInput();
+    //         Console.WriteLine("Enter max time");
+    //         int max = GetIntInput();
+    //         search = new SearchByTime(min, max);
+    //     } else if(input == 8) {
+    //         Console.WriteLine("Enter username:");
+    //         string username = GetInput();
+    //         search = new SearchByUsername(username);
+    //     } else {
+    //         Console.WriteLine("Invalid input");
+    //         return null;
+    //     }
+    //     return _recipeService.SearchRecipes(search);
+    // }
 
     /// <summary>
     /// Prints the list of recipes
@@ -578,5 +584,12 @@ public class MainDummy {
         }
         return recipes[choice - 1];
         
+    }
+
+    private static void HashInputPassword(){
+        Console.WriteLine("Please enter your desired password to view hash sample.");
+        string passwordToHash = Console.ReadLine();
+        PasswordEncrypter enc = new();
+        Console.WriteLine(enc.Encrypt(passwordToHash));
     }
 }
