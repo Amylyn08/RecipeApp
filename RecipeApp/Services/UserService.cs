@@ -96,27 +96,35 @@ public class UserService : ServiceBase {
         Context.Remove(userToDelete);
     }
 
+    /// <summary>
+    /// Adds a entry into the favourites bridging table
+    /// </summary>
+    /// <param name="favourited">Recipe that was favourited</param>
+    /// <param name="user">User who favourited that recipe</param>
+    /// <exception cref="ArgumentException">If recipe or user is null</exception>
     public void AddToFavourites(Recipe favourited, User user) {
-        if (favourited == null || user == null) 
-            throw new ArgumentException("Recipe or user cannot be null");
-        foreach (User mock in MockDatabase.Users) {
-            if (mock.Equals(user)) {
-                if (mock.Favorites.Contains(favourited)) {
-                    throw new ArgumentException("This recipe has already been favourited");
-                }
-                mock.Favorites.Add(favourited);
-                break;
-            }
+        if (favourited is null) {
+            throw new ArgumentException("Favourited recipe cannot be null !");
         }
+        if (user is null) {
+            throw new ArgumentException("User cannot be null !");
+        }
+        Favourite favouriteEntry = new() {
+            Recipe = favourited,
+            User = user
+        };
+        Context.Favourites.Add(favouriteEntry);
     }
 
-    public void DeleteFromFavourites(Recipe toDelete, User user) {
-        if (toDelete == null || user == null) 
-            throw new ArgumentException("Recipe or user cannot be null");
-        foreach (User mock in MockDatabase.Users) {
-            if (mock.Equals(user)) {
-                mock.Favorites.Remove(toDelete);
-            }
+    /// <summary>
+    /// Deletes a favourite entry
+    /// </summary>
+    /// <param name="favouriteToDelete">Entry to delete</param>
+    /// <exception cref="ArgumentException">If entry is null</exception>
+    public void DeleteFromFavourites(Favourite favouriteToDelete) {
+        if (favouriteToDelete is null) {
+            throw new ArgumentException("Favourite to delete cannot be null !");
         }
+        Context.Remove(favouriteToDelete);
     }
 }       
