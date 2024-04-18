@@ -9,7 +9,7 @@ public class RecipeService : ServiceBase {
     {
     }
 
-    public void CreateRecipe(Recipe recipe, User user) {
+    // public void CreateRecipe(Recipe recipe, User user) {
         // if (recipe == null || user == null) 
         //     throw new ArgumentException("Recipe cannot or user cannot be null");
         // MockDatabase.AllRecipes.Add(recipe);
@@ -18,8 +18,15 @@ public class RecipeService : ServiceBase {
         //         mockUser.MadeRecipes.Add(recipe);
         //     }
         // }
-    }
+    // }
 
+
+    public void CreateRecipe(Recipe recipeToAdd) {
+        if (recipeToAdd == null)
+            throw new ArgumentException("Recipe cannot be null");
+        Context.Add(recipeToAdd);
+        Context.SaveChanges();
+    }
     public void DeleteRecipe(Recipe recipeToDelete, User user) {
         // if (recipeToDelete == null || user == null)
         //     throw new ArgumentException("Recipe to delete is null or user is null");
