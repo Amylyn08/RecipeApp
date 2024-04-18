@@ -28,7 +28,7 @@ public class SearchByIngredients : SearcherBase
     /// <returns>The filtered list of recipes</returns>
     public override List<Recipe> FilterRecipes()
     {
-        var recipes = base.Context.Recipes
+        var recipes = Context.Recipes
                     .Where(recipe => recipe.Ingredients.Any(ingredient =>
                      ingredient.Name.Contains(_criteria) ))
                     .ToList<Recipe>();
