@@ -1,3 +1,4 @@
+using System.Data.Common;
 using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
@@ -14,11 +15,13 @@ public class RecipeService : ServiceBase {
         splank.SaveChanges();
     }
 
-    public void DeleteRecipe(Recipe recipeToDelete, User user) {
-        if (recipeToDelete == null || user == null)
+    public void DeleteRecipe(Recipe recipeToDelete) {
+        if (recipeToDelete == null)
             throw new ArgumentException("Recipe to delete is null or user is null");
-        MockDatabase.AllRecipes.Remove(recipeToDelete);
-        user.MadeRecipes.Remove(recipeToDelete);
+        splank.Remove(recipeToDelete);
+        splank.SaveChanges();
+
+
     }
 
     public List<Recipe> SearchRecipes(SearcherBase searcher) {
@@ -27,18 +30,34 @@ public class RecipeService : ServiceBase {
         return searcher.FilterRecipes();
     }
 
-    public void UpdateRecipe(Recipe updatedRecipe, User user) {
-        if (updatedRecipe == null || user == null) 
+    // public void UpdateRecipe(Recipe updatedRecipe, User user) {
+    //     if (updatedRecipe == null || user == null) 
+    //         throw new ArgumentException("Updated recipe or user cannot be null");
+    //     foreach (User mockUser in MockDatabase.Users) {
+    //         if (mockUser.Equals(user)) {
+    //             for (int i = 0; i < mockUser.MadeRecipes.Count; i++) {
+    //                 if (user.MadeRecipes[i] == updatedRecipe) {
+    //                     user.MadeRecipes[i] = updatedRecipe;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    public void UpdateRecipe(Recipe updatedRecipe) {
+        if (updatedRecipe == null) {
             throw new ArgumentException("Updated recipe or user cannot be null");
-        foreach (User mockUser in MockDatabase.Users) {
-            if (mockUser.Equals(user)) {
-                for (int i = 0; i < mockUser.MadeRecipes.Count; i++) {
-                    if (user.MadeRecipes[i] == updatedRecipe) {
-                        user.MadeRecipes[i] = updatedRecipe;
-                        break;
-                    }
-                }
-            }
         }
+        var currRecipe = splank.Recipes.Find(updatedRecipe.RecipeId);
+
+        currRecipe.Description = updatedRecipe.Description;
+        currRecipe.Servings = updatedRecipe.Servings;
+        currRecipe.Ingredients = updatedRecipe.Ingredients;
+        currRecipe.Steps = updatedRecipe.Steps;
+        currRecipe.Tags = updatedRecipe.Tags;
+        currRecipe.Name = updatedRecipe.Name;
+
+        splank.SaveChanges();
     }
 }

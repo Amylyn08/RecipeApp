@@ -473,7 +473,7 @@ public class MainDummy {
             Console.WriteLine("Enter new name");
             recipeToUpdate.Name = GetInput();
         }
-        _recipeService.UpdateRecipe(recipeToUpdate, _currentUser);
+        _recipeService.UpdateRecipe(recipeToUpdate);
     }
 
     /// <summary>
