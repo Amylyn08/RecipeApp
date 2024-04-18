@@ -5,14 +5,20 @@ namespace RecipeApp.Models;
 /// </summary>
 /// 
 public class Ingredient {
-    private string _name;
+    private string _name = null!;
     private double _price;
     private int _quantity;
     private UnitOfMeasurement _unitOfMeasurement;
+    private Recipe _recipe = null!;
 
     public Recipe Recipe {
-        get; 
-        set;
+        get => _recipe; 
+        set {
+            if (value is null) {
+                throw new ArgumentException("Recipe cannot be null");
+            }
+            _recipe = value;
+        }
     }
 
     public int IngredientId { 
