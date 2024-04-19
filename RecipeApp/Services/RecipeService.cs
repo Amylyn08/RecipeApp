@@ -27,11 +27,18 @@ public class RecipeService : ServiceBase {
         Context.Add(recipeToAdd);
         Context.SaveChanges();
     }
-    public void DeleteRecipe(Recipe recipeToDelete, User user) {
+    // public void DeleteRecipe(Recipe recipeToDelete, User user) {
         // if (recipeToDelete == null || user == null)
         //     throw new ArgumentException("Recipe to delete is null or user is null");
         // MockDatabase.AllRecipes.Remove(recipeToDelete);
         // user.MadeRecipes.Remove(recipeToDelete);
+    // }
+
+    public void DeleteRecipe(Recipe recipeToDelete) {
+        if (recipeToDelete == null)
+            throw new ArgumentException("Recipe cannot be null");
+        Context.Remove(recipeToDelete);
+        Context.SaveChanges();
     }
 
     public List<Recipe> SearchRecipes(SearcherBase searcher) {

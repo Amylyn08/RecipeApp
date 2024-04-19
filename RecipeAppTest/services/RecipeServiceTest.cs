@@ -51,4 +51,9 @@ public class RecipeServiceTest {
         //Act
         recipeService.CreateRecipe(recipe);
     }
+
+    [TestMethod]
+    public void DeletingRecipeSuccessful() {
+        
+    }
 }
