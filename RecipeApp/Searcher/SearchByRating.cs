@@ -17,8 +17,16 @@ public class SearchByRating : SearcherBase{
         _criteria = rating;
     }
 
+    /// <summary>
+    /// Gets list of recipes where the stars of rating matches criteria specified.
+    /// </summary>
+    /// <returns>The filtered list</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+        .Where(recipe => recipe.Ratings.Any(rating => rating.Stars == _criteria))
+        .ToList<Recipe>();
+
+        return filteredRecipes;
     }
 }
