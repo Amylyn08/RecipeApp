@@ -17,8 +17,17 @@ public class SearchByServings : SearcherBase{
         _criteria = servings;
     }
 
+    /// <summary>
+    /// Gets filtered list depending on the amount of servings matching
+    /// the criteria specified
+    /// </summary>
+    /// <returns>The filtered list of recipes.</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+                                    .Where(recipe => recipe.Servings == _criteria)
+                                    .ToList<Recipe>();
+
+        return filteredRecipes;
     }
 }
