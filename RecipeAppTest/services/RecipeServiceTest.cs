@@ -12,6 +12,7 @@ public class RecipeServiceTest {
     
     [TestMethod]
     public void InsertRecipeSuccessfull() {
+        //Arrange
         User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
@@ -27,9 +28,11 @@ public class RecipeServiceTest {
         mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
 
         RecipeService recipeService = new(mockContext.Object);
-
+        
+        //Act
         recipeService.CreateRecipe(recipe);
 
+        //Assert
         mockContext.Verify(m => m.Add(It.IsAny<Recipe>()), Times.Once());
         mockContext.Verify(m => m.SaveChanges(), Times.Once());
     }
