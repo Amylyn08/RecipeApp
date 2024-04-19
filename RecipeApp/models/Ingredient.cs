@@ -3,11 +3,56 @@ namespace RecipeApp.Models;
 /// <summary>
 /// An ingredient inside a recipe
 /// </summary>
+/// 
 public class Ingredient {
-    public string Name { get; private set; }
-    public int Quantity { get; private set; }
-    public UnitOfMeasurement UnitOfMeasurement { get; private set; }
-    public int Price { get; private set; }
+    private string _name;
+    private double _price;
+    private int _quantity;
+    private UnitOfMeasurement _unitOfMeasurement;
+
+    public Recipe Recipe {
+        get; 
+        set;
+    }
+
+    public int IngredientId { 
+        get; 
+        set; 
+    }
+
+    public string Name { 
+        get => _name; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("Name cannot be null");
+            if (value.Length == 0)
+                throw new ArgumentException("Name cannot be empty");
+            _name = value;
+        } 
+    }
+    
+    public int Quantity { 
+        get => _quantity; 
+        set {
+            if (value <= 0) 
+                throw new ArgumentException("Quantity must be greater than 0");
+            _quantity = value;
+        } 
+    }
+    
+    public UnitOfMeasurement UnitOfMeasurement { 
+        get => _unitOfMeasurement; 
+        set => _unitOfMeasurement = value;
+    }
+    
+    public double Price { 
+        get => _price; 
+        set {
+            if (value < 0)
+                throw new ArgumentException("Price cannot be negative");
+            _price = value;
+        } 
+    }
     
     /// <summary>
     /// Constructor with name, quantity and unit of measurement
@@ -16,14 +61,25 @@ public class Ingredient {
     /// <param name="quantity">Quantity like 0.5 or 1</param>
     /// <param name="unitOfMeasurement">Grams, teaspoons, etc</param>
     /// <exception cref="ArgumentException">If name is null, empty or if quantity is <= 0</exception>
-    public Ingredient(string name, int quantity, UnitOfMeasurement unitOfMeasurement, int price) {
-        if (name == null) throw new ArgumentException("Name cannot be null");
-        if (name.Length == 0) throw new ArgumentException("Name cannot be empty");
-        if (quantity <= 0) throw new ArgumentException("Quantity must be greater than 0");
-        if (price < 0) throw new ArgumentException("Price cannot be negative");
-        this.Name = name;
-        this.Quantity = quantity;
-        this.UnitOfMeasurement = unitOfMeasurement;
-        this.Price = price;
+    public Ingredient(string name, int quantity, UnitOfMeasurement unitOfMeasurement, double price) {
+        Name = name;
+        Quantity = quantity;
+        UnitOfMeasurement = unitOfMeasurement;
+        Price = price;
+    }
+
+    /// <summary>
+    /// Empty constructor for Entity framework
+    /// </summary>
+    public Ingredient() {
+
+    }
+
+    /// <summary>
+    /// String representation of ingredient
+    /// </summary>
+    /// <returns>String representation of ingredient</returns>
+    public override string ToString() {
+        return Name + ", Quantity: " + Quantity + " Unit of measurement: " + UnitOfMeasurement + ", Price: " + Price;  
     }
 }

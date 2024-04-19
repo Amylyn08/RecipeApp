@@ -1,15 +1,80 @@
+
+
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace RecipeApp.Models;
-using Constants;
 
 /// <summary>
 /// Represents a user
 /// </summary>
 public class User {
-    public string Name { get; private set;}
-    //Profile pic --> will implement when teacher shows us
-    public string Description {get; private set;}
-    public string Password{get; set;}
-    public List<Recipe> Favorites{get; private set;}
+    private string _password;
+    private string _name;
+    private string _description;
+    private List<Recipe> _favourites;
+    private List<Recipe> _madeRecipes; 
+
+    public int UserId {
+        get; 
+        set;
+    }
+
+    public string Name { 
+        get => _name; 
+        set {
+            if (value is null) 
+                throw new ArgumentException("Name cannot be null!");
+            if (value.Length < Constants.MIN_NAME_LENGTH) 
+                throw new ArgumentException("Name cannot be less than 2 characters!");
+            if (value.Length > Constants.MAX_NAME_LENGTH) 
+                throw new ArgumentException("Name cannot be more than 15 characters!");
+            _name = value;
+    }}
+
+    public string Description {
+        get => _description; 
+        set {
+            value ??= "";
+            if (value.Length > Constants.MAX_DESCRIPTION_LENGTH) 
+                throw new ArgumentException("Description passed the limit character of " + Constants.MAX_DESCRIPTION_LENGTH);
+            _description = value;
+        }
+    }
+
+    public string Password {
+        get => _password; 
+        set {
+            if (value is null) 
+                throw new ArgumentException("Password cannot be null!");
+            if (value.Length < Constants.MIN_PASS_LENGTH) 
+                throw new ArgumentException("Password needs to be atleast 8 characters!");
+            _password = value;
+        }
+    }
+
+    [NotMapped]
+    public List<Recipe> Favorites {
+        get => _favourites; 
+        set {
+            if (value is null) 
+                throw new ArgumentException("Favourites cannot be null");
+            _favourites = new();
+            foreach (var recipe in value)
+                _favourites.Add(recipe);
+        }
+    }
+
+    [InverseProperty("User")]
+    public List<Recipe> MadeRecipes {
+        get => _madeRecipes;
+        set {
+            if (value is null)
+                throw new ArgumentException("Made Recipes cannot be null !");
+            _madeRecipes = new();
+            foreach (var recipe in value)
+                _madeRecipes.Add(recipe);
+        }
+    }
 
     /// <summary>
     /// Constructor to create a User
@@ -18,22 +83,31 @@ public class User {
     /// <param name="description">Description of the user, can be empty</param>
     /// <param name="pass">Password of the user</param>
     /// <param name="favorites">List of recipes that the user favorited</param>
+    /// <param name="madeRecipes">List of recipes that the user made</param>
     /// <exception cref="ArgumentException">If any field is null or does not respect the specific constraints, it throws an exception</exception>
-    public User(string name, string description, string pass, List<Recipe> favorites) {
-        if(name == null) throw new ArgumentException("Name cannot be null!");
-        if(pass == null) throw new ArgumentException("Password cannot be null!");
-        if(description == null) description = "";
-        if(name.Length < MIN_NAME_LENGTH) throw new ArgumentException("Name cannot be less than 2 characters!");
-        if(name.Length > MAX_NAME_LENGTH) throw new ArgumentException("Name cannot be more than 15 characters!");
-        if(pass.Length < MIN_PASS_LENGTH) throw new ArgumentException("Password needs to be atleast 8 characters!");
-        if(description.Length > Constants.MAX_DESCRIPTION_LENGTH) throw new ArgumentException("Description passed the limit character of " + Constants.MAX_DESCRIPTION_LENGTH);
+    public User(string name, string description, string pass, List<Recipe> favorites, List<Recipe> madeRecipes) {
         Name = name;
         Description = description;
         Password = pass;
         Favorites = favorites;
+        MadeRecipes = madeRecipes;
     }
 
-    const int MAX_NAME_LENGTH = 15;
-    const int MIN_NAME_LENGTH = 2;
-    const int MIN_PASS_LENGTH = 8;
+    /// <summary>
+    /// Empty constructor for entity framework
+    /// </summary>
+    public User() {
+
+    }
+
+    /// <summary>
+    /// Overriden Equals()
+    /// </summary>
+    /// <param name="obj">Object to compare against</param>
+    /// <returns>If obj is a User and has the same name</returns>
+    public override bool Equals(object? obj) {
+        if (obj.GetType() != typeof(User)) return false;
+        User other = (User) obj;
+        return Name.Equals(other.Name);
+    }
 }
