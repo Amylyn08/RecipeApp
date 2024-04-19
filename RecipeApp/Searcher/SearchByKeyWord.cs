@@ -21,16 +21,14 @@ public class SearchKeyWord : SearcherBase {
     }
     /// <summary>
     /// Searches through recipes list of context, gets the ingredients
-    ///and sees if the name of recipe matches the string in criteria/keyword.
+    ///and sees if the description of recipe contains the string in criteria/keyword.
     /// </summary>
     /// <returns>The filtered list of recipes</returns>
     public override List<Recipe> FilterRecipes()
     {
-        // var filteredRecipes = Context.Recipes
-        //                     .Where(recipe => recipe.Name.Any(name => 
-        //                     name.Contains(_criteria)));
-
-        // return filteredRecipes;
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+                            .Where(recipe => recipe.Description.Contains(_criteria))
+                            .ToList<Recipe>();
+        return filteredRecipes;     
     }
 }

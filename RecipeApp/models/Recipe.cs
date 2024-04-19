@@ -15,6 +15,7 @@ public class Recipe {
     private List<Rating> _ratings;
     private List<Tag> _tags;
     private User _user;
+    private double _price;
 
     public int RecipeId { 
         get; 

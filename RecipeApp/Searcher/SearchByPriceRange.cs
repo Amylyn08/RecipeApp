@@ -23,6 +23,7 @@ public class SearchByPriceRange: SearcherBase{
 
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+                                    .Where(recipe => recipe.)
     }
 }
