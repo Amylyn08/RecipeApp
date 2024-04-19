@@ -20,9 +20,15 @@ public class SearchByUsername : SearcherBase{
         _criteria = username;
     }
 
-
+    /// <summary>
+    /// Gets list of users where recipe was made by user with specified username.
+    /// </summary>
+    /// <returns>The filtered recipes.</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+                                    .Where(recipe => recipe.User.Name.Equals(_criteria))
+                                    .ToList<Recipe>();
+        return filteredRecipes;
     }
 }
