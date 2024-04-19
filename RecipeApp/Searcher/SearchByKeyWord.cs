@@ -1,33 +1,34 @@
 namespace RecipeApp.Searcher;
 
-using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
-public class SearchKeyWord : ISearcher{
+public class SearchKeyWord : SearcherBase {
     
-    private string __criteria;
+    private readonly string _criteria;
 
     /// <summary>
     /// Constructor for SearchKeyword, takes keyword.
     /// </summary>
     /// <param name="keyword">keyword wanna look for in desc.</param>
-    public SearchKeyWord(string keyword){
-        __criteria = keyword;
+    public SearchKeyWord(string keyword) {
+        if (keyword == null)
+            throw new ArgumentException("Keyword cannot be null");
+        if (keyword.Length == 0) 
+            throw new ArgumentException("Key cannot be empty");
+        _criteria = keyword;
     }
-
-
     /// <summary>
-    /// Gets list of recipes that contains a keyword from the description.
+    /// Searches through recipes list of context, gets the ingredients
+    ///and sees if the description of recipe contains the string in criteria/keyword.
     /// </summary>
-    /// <param name="recipes">List of recipes that is being searched</param>
-    /// <returns>Filtered list of recipes that has keyuword in desc.</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            if(r.Description.ToLower().Contains(__criteria.ToLower())){
-                filteredRecipes.Add(r);
-            }
-        }
-        return filteredRecipes;
+    /// <returns>The filtered list of recipes</returns>
+    public override List<Recipe> FilterRecipes()
+    {
+        List<Recipe> filteredRecipes = Context.Recipes
+                            .Where(recipe => recipe.Description.Contains(_criteria))
+                            .ToList<Recipe>();
+        return filteredRecipes;     
     }
 }

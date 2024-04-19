@@ -1,19 +1,116 @@
 namespace RecipeApp.Models;
 
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using RecipeApp.Constants;
 
 /// <summary>
 /// Recipe schema
 /// </summary>
 public class Recipe {
-    public User User { get; private set; }
-    public string Description { get; private set; }
-    public int Servings { get; private set; }
-    public List<Ingredient> Ingredients { get; private set; }
-    public List<Step> Steps { get; private set; }
-    public List<Rating> Ratings { get; private set; }
-    public List<Tag> Tags { get; private set; }
+    private string _name;
+    private string _description;
+    private int _servings;
+    private List<Ingredient> _ingredients;
+    private List<Step> _steps;
+    private List<Rating> _ratings;
+    private List<Tag> _tags;
+    private User _user;
+    private double _price;
+
+    public int RecipeId { 
+        get; 
+        set; 
+    }
+
+    public string Name { 
+        get => _name;  
+        set {
+            if (value == null) 
+                throw new ArgumentException("Name cannot be null");
+            if (value.Length == 0) 
+                throw new ArgumentException("Name cannot be empty");
+            _name = value;
+        } 
+    }
+
+    public string Description { 
+        get => _description; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("Recipe description cannot be null");
+            if (value.Length > Constants.MAX_DESCRIPTION_LENGTH)
+                throw new ArgumentException($"Recipe description cannot exceed {Constants.MAX_DESCRIPTION_LENGTH} characters");
+            _description = value;
+        } 
+    }
+
+    public int Servings { 
+        get => _servings; 
+        set {
+            if (value < Constants.MIN_SERVINGS) 
+                throw new ArgumentException($"Serving(s) must be greater than {Constants.MIN_SERVINGS}");
+            _servings = value;
+        }
+    }
+
+    public List<Ingredient> Ingredients { 
+        get => _ingredients; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("Ingredients cannot be null");
+            if (value.Count == 0) 
+                throw new ArgumentException("Ingredients cannot be empty");
+            _ingredients = new();
+            foreach (var ingredient in value) 
+                _ingredients.Add(ingredient);
+        } 
+    }
+
+    public List<Step> Steps { 
+        get => _steps; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("Steps cannot be null");
+            if (value.Count == 0) 
+                throw new ArgumentException("Steps cannot be empty"); 
+            _steps = new();
+            foreach (var step in value) 
+                _steps.Add(step);
+        } 
+    }
+
+    public List<Rating> Ratings { 
+        get => _ratings; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("Ratings cannot be null");
+            _ratings = new();
+            foreach (var rating in value) 
+                _ratings.Add(rating);
+        }
+    }
+
+    public List<Tag> Tags { 
+        get => _tags; 
+        set {
+            if (value == null) 
+                throw new ArgumentException("Tags cannot be null");
+            if (value.Count > Constants.MAX_TAGS) 
+                throw new ArgumentException("Recipe can have a maximum of 3 tags");
+             _tags = new();
+            foreach (var tag in value) 
+                _tags.Add(tag);
+        }
+    }
+
+    public User User { 
+        get => _user;
+        set {
+            if (value == null) 
+                throw new ArgumentException("User cannot be null");
+            _user = value;
+        }
+    }
 
     /// <summary>
     /// Constructor with user, ingredients, steps and ratings
@@ -26,111 +123,22 @@ public class Recipe {
     /// <param name="ratings">Recipe ratings</param>
     /// <param name="tags">List of tags</param>
     /// <exception cref="ArgumentException">If any fields are null, empty or doesn't respect certain constraints</exception>
-    public Recipe(User user, string description, int servings, List<Ingredient> ingredients, 
-            List<Step> steps, List<Rating> ratings, List<Tag> tags) {
-        if (user == null) 
-            throw new ArgumentException("User cannot be null");
-        if (servings < Constants.MIN_SERVINGS) 
-            throw new ArgumentException("Serving(s) must be greater than 0");
-        if (ratings == null) 
-            throw new ArgumentException("Ratings cannot be null");
-        description ??= "";
-        if (description.Length > Constants.MAX_DESCRIPTION_LENGTH) {
-            throw new ArgumentException("Recipe description cannot exceed " + Constants.MAX_DESCRIPTION_LENGTH + " characters");
-        }
-
-        CheckIngredients(ingredients);
-        CheckTags(tags);
-        CheckSteps(steps);
-        
-        User = new(user.Name, user.Description, user.Password, user.Favorites, user.MadeRecipes);
+    public Recipe(string name, User user, string description, int servings, List<Ingredient> ingredients, List<Step> steps, List<Rating> ratings, List<Tag> tags) {
+        Name = name;
+        User = user;
         Description = description;
         Servings = servings;
-        
-        PopulateIngredients(ingredients);
-        PopulateRatings(ratings);
-        PopulateTags(tags);
-        PopulateSteps(steps);
+        Ingredients= ingredients;
+        Steps = steps;
+        Ratings = ratings;
+        Tags = tags;
     }
 
     /// <summary>
-    /// Validates the list of ingredients
+    /// Empty constructor for entity framework
     /// </summary>
-    /// <param name="ingredients">List of ingredients</param>
-    /// <exception cref="ArgumentException">If ingredients null or empty</exception>
-    private static void CheckIngredients(List<Ingredient> ingredients) {
-        if (ingredients == null) 
-            throw new ArgumentException("Ingredients cannot be null");
-        if (ingredients.Count == 0) 
-            throw new ArgumentException("Ingredients cannot be empty");
-    }
+    public Recipe() {
 
-    /// <summary>
-    /// Validates the list of tags
-    /// </summary>
-    /// <param name="tags">List of tags</param>
-    /// <exception cref="ArgumentException">If null or too many tags</exception>
-    private static void CheckTags(List<Tag> tags) {
-        if (tags == null) 
-            throw new ArgumentException("Tags cannot be null");
-        if (tags.Count > Constants.MAX_TAGS) 
-            throw new ArgumentException("Recipe can have a maximum of 3 tags");
-    }
-
-    /// <summary>
-    /// Validates the list of steps
-    /// </summary>
-    /// <param name="steps">List of steps</param>
-    /// <exception cref="ArgumentException">If steps null or empty</exception>
-    private static void CheckSteps(List<Step> steps) {
-        if (steps == null) 
-            throw new ArgumentException("Steps cannot be null");
-        if (steps.Count == 0) 
-            throw new ArgumentException("Steps cannot be empty"); 
-    }
-    
-    /// <summary>
-    /// Makes a deep copy for Ingredients
-    /// </summary>
-    /// <param name="ingredients">Reference to constructor param</param>
-    private void PopulateIngredients(List<Ingredient> ingredients) {
-        Ingredients = new();
-        foreach (Ingredient ingredient in ingredients) {
-            Ingredients.Add(ingredient);
-        }
-    }
-
-    /// <summary>
-    /// Makes a deep copy for Steps
-    /// </summary>
-    /// <param name="steps">Reference to constructor param</param>
-    private void PopulateSteps(List<Step> steps) {
-        Steps = new();
-        foreach (Step step in steps) {
-            Steps.Add(step);
-        }
-    }
-
-    /// <summary>
-    /// Makes a deep copy for ratings
-    /// </summary>
-    /// <param name="ratings">Reference to constructor param</param>
-    private void PopulateRatings(List<Rating> ratings) {
-        Ratings = new();
-        foreach (Rating rating in ratings) {
-            Ratings.Add(rating);
-        }
-    }
-
-    /// <summary>
-    /// Makes a deep copy for tags
-    /// </summary>
-    /// <param name="tags">Reference to constructor param</param>
-    private void PopulateTags(List<Tag> tags) {
-        Tags = new();
-        foreach (Tag tag in tags) {
-            Tags.Add(tag);
-        }
     }
 
     /// <summary>
@@ -139,32 +147,55 @@ public class Recipe {
     /// <returns>Total time to complete all steps</returns>
     public int GetTimeToCook() {
         int timeToCook = 0;
-        foreach (Step step in this.Steps) {
+        foreach (Step step in _steps) 
             timeToCook += step.TimeInMinutes;
-        }
         return timeToCook;
     }
 
+    /// <summary>
+    /// Gets the total price of a recipe
+    /// </summary>
+    /// <returns>Price of the recipe</returns>
+    public double GetTotalPrice() {
+        double price = 0;
+        foreach (Ingredient ingredient in _ingredients) 
+            price += ingredient.Price;
+        return price;
+    }
+
+    /// <summary>
+    /// Returns string representation of a recipe
+    /// </summary>
+    /// <returns>String format of recipe</returns>
     public override string ToString() {
         StringBuilder builder = new();
-        builder.Append("Username: " + User.Name + "\n");
-        builder.Append("Description: " + Description + "\n");
+        builder.Append("Name: " + _name + "\n");
+        builder.Append("Description: " + _description + "\n");
+        builder.Append("Servinsg: " + _servings + "\n"); 
         builder.Append("Ingredients: \n");
-        foreach (Ingredient ingredient in Ingredients) {
+        builder.Append("-------------- \n");
+        foreach (Ingredient ingredient in _ingredients) {
             builder.Append(ingredient.ToString() + "\n");
         }
+        builder.Append("-------------- \n");
         builder.Append("Steps: \n");
-        foreach (Step step in Steps) {
+        builder.Append("-------------- \n");
+        foreach (Step step in _steps) {
             builder.Append(step.ToString() + "\n");
         }
+        builder.Append("-------------- \n");
         builder.Append("Tags: \n");
-        foreach (Tag tag in Tags) {
+        builder.Append("-------------- \n");
+        foreach (Tag tag in _tags) {
             builder.Append(tag.ToString() + "\n");
         }
+        builder.Append("-------------- \n");
         builder.Append("Reviews: \n");
-        foreach (Rating rating in Ratings) {
+        builder.Append("-------------- \n");
+        foreach (Rating rating in _ratings) {
             builder.Append(rating.ToString() + "\n");
         }
+        builder.Append("--------------");
         return builder.ToString();
     }
 
