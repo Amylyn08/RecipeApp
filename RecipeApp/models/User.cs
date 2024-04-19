@@ -11,12 +11,23 @@ public class User {
     private string _password;
     private string _name;
     private string _description;
+    private string _salt;
     private List<Recipe> _favourites;
     private List<Recipe> _madeRecipes; 
 
     public int UserId {
         get; 
         set;
+    }
+
+    public string Salt {
+        get => _salt;
+        set {
+            if (value is null) {
+                throw new ArgumentException("Salt cannot be null");
+            }
+            _salt = value;
+        }
     }
 
     public string Name { 
@@ -85,12 +96,13 @@ public class User {
     /// <param name="favorites">List of recipes that the user favorited</param>
     /// <param name="madeRecipes">List of recipes that the user made</param>
     /// <exception cref="ArgumentException">If any field is null or does not respect the specific constraints, it throws an exception</exception>
-    public User(string name, string description, string pass, List<Recipe> favorites, List<Recipe> madeRecipes) {
+    public User(string name, string description, string pass, List<Recipe> favorites, List<Recipe> madeRecipes, string salt) {
         Name = name;
         Description = description;
         Password = pass;
         Favorites = favorites;
         MadeRecipes = madeRecipes;
+        Salt = salt;
     }
 
     /// <summary>

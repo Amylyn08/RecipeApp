@@ -1,10 +1,14 @@
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 namespace RecipeApp.Services;
  
 
 public class RatingService : ServiceBase {
-    
+    public RatingService(SplankContext context) : base(context)
+    {
+    }
+
     /// <summary>
     /// Adds a rating to the recipe
     /// </summary>

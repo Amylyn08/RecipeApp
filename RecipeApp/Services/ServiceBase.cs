@@ -1,8 +1,11 @@
-using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 
 namespace RecipeApp.Services;
 
 public abstract class ServiceBase {
-    public DbContext Context { get; set; } = new SplankContext();
+    public SplankContext Context { get; private set; }
+
+    public ServiceBase(SplankContext context) {
+        Context = context;
+    }
 }
