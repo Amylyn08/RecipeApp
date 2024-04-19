@@ -19,8 +19,16 @@ public class SearchByTags :SearcherBase{
         _criteria = tagName;
     }
 
+    /// <summary>
+    /// Gets list of recipes where tag name matches the criteria.
+    /// </summary>
+    /// <returns>Returns filtered list of recipes.</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes 
+                                    .Where(recipe => recipe.Tags.Any(tag => 
+                                    tag.TagName.Equals(_criteria)))
+                                    .ToList<Recipe>();
+        return filteredRecipes;
     }
 }
