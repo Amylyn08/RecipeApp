@@ -47,7 +47,7 @@ public class RecipeService : ServiceBase {
         return searcher.FilterRecipes();
     }
 
-    public void UpdateRecipe(Recipe updatedRecipe, User user) {
+    // public void UpdateRecipe(Recipe updatedRecipe, User user) {
         // if (updatedRecipe == null || user == null) 
         //     throw new ArgumentException("Updated recipe or user cannot be null");
         // foreach (User mockUser in MockDatabase.Users) {
@@ -60,5 +60,22 @@ public class RecipeService : ServiceBase {
         //         }
         //     }
         // }
+    // }
+
+    public void UpdateRecipe(Recipe updatedRecipe) {
+        if (updatedRecipe == null)
+            throw new ArgumentException("Updated recipe cannot be null");
+
+        var currRecipe = Context.Recipes.Find(updatedRecipe.RecipeId);
+
+        currRecipe.Description = updatedRecipe.Description;
+        currRecipe.Servings = updatedRecipe.Servings;
+        currRecipe.Ingredients = updatedRecipe.Ingredients;
+        currRecipe.Steps = updatedRecipe.Steps;
+        currRecipe.Tags = updatedRecipe.Tags;
+        currRecipe.Name = updatedRecipe.Name;
+
+        Context.SaveChanges();
+
     }
 }
