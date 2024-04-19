@@ -66,22 +66,24 @@ public class UserService : ServiceBase {
     /// <param name="userToAdd">User object to add</param>
     /// <exception cref="UserAlreadyExistsException">If user with same username already exists</exception>
     /// <exception cref="ArgumentException">If userToAdd is null</exception>
-    public void Register(User userToAdd) {
-        if (userToAdd is null) {
-            throw new ArgumentException("User to add cannot be null");
+    public void Register(string username, string password, string description) {
+        if (string.IsNullOrWhiteSpace(username)) {
+            throw new ArgumentException("Username cannot be null");
         }
-        var userInDatabase = Context.Users.Where(u => u.Name.Equals(userToAdd.Name)).FirstOrDefault();
+        if (string.IsNullOrWhiteSpace(username)) {
+            throw new ArgumentException("Password cannot be null");
+        }
+        var userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).FirstOrDefault();
         if (userInDatabase is not null) {
-            throw new UserAlreadyExistsException($"User {userToAdd.Name} already exists !");
+            throw new UserAlreadyExistsException($"User {username} already exists !");
         }
         var salt = Encrypter.CreateSalt();
-        var hashedPassword = Encrypter.CreateHash(userToAdd.Password, salt);
-        userToAdd.Password = hashedPassword;
-        userToAdd.Salt = salt;
+        var hashedPassword = Encrypter.CreateHash(password, salt);
+        var userToAdd = new User(username, description, hashedPassword, new(), new(), salt);
         Context.Add(userToAdd);
         Context.SaveChanges();
     }
-
+    
     /// <summary>
     /// Changes a users password
     /// </summary>
