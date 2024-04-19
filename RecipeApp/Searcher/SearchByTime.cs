@@ -22,8 +22,18 @@ public class SearchByTime : SearcherBase{
         _maxTime = max;
     }
 
+    /// <summary>
+    /// Gets list of recipes where time is in between min time and 
+    ///max time.
+    /// </summary>
+    /// <returns>The filtered list of recipes</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+                                    .Where(recipe => recipe.Steps.Any(step =>
+                                    step.TimeInMinutes >= _minTime && 
+                                    step.TimeInMinutes <= _maxTime))
+                                    .ToList<Recipe>();
+        return filteredRecipes;
     }
 }
