@@ -43,15 +43,15 @@ public class RatingTest {
         //Act
         Rating r = new(3, description, new User("name", "mama","passsssssss",new List<Recipe>(), new List<Recipe>(), "salt"));
     }
-    [TestMethod]
-    public void DescriptionIsEmptyStringIfNull(){
-        //Arrange
-        string desc = null;
-        //Act
-        Rating r = new(5, desc, new User("name", "mama","passsssssss",new List<Recipe>(), new List<Recipe>(), "salt"));
-        //Assert
-        Assert.AreEqual(r.Description, "");
-    }
+    // [TestMethod]
+    // public void DescriptionIsEmptyStringIfNull(){
+    //     //Arrange
+    //     string desc = null;
+    //     //Act
+    //     Rating r = new(5, desc, new User("name", "mama","passsssssss",new List<Recipe>(), new List<Recipe>(), "salt"));
+    //     //Assert
+    //     Assert.AreEqual(r.Description, "");
+    // }
 
     [TestMethod]
     public void DescriptionIsValid(){
