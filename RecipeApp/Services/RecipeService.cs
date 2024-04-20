@@ -62,19 +62,19 @@ public class RecipeService : ServiceBase {
         // }
     // }
 
-    public void UpdateRecipe(Recipe updatedRecipe) {
-        if (updatedRecipe == null)
+    public void UpdateRecipe(Recipe oldRecipe, Recipe updatedRecipe) {
+        if (updatedRecipe == null || oldRecipe == null)
             throw new ArgumentException("Updated recipe cannot be null");
 
-        var currRecipe = Context.Recipes.Find(updatedRecipe.RecipeId);
 
-        currRecipe.Description = updatedRecipe.Description;
-        currRecipe.Servings = updatedRecipe.Servings;
-        currRecipe.Ingredients = updatedRecipe.Ingredients;
-        currRecipe.Steps = updatedRecipe.Steps;
-        currRecipe.Tags = updatedRecipe.Tags;
-        currRecipe.Name = updatedRecipe.Name;
+        oldRecipe.Description = updatedRecipe.Description;
+        oldRecipe.Servings = updatedRecipe.Servings;
+        oldRecipe.Ingredients = updatedRecipe.Ingredients;
+        oldRecipe.Steps = updatedRecipe.Steps;
+        oldRecipe.Tags = updatedRecipe.Tags;
+        oldRecipe.Name = updatedRecipe.Name;
 
+        Context.Update(oldRecipe);
         Context.SaveChanges();
 
     }
