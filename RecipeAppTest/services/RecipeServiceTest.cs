@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 using RecipeApp.Services;
@@ -7,84 +10,141 @@ namespace RecipeAppTest.Services;
 [TestClass]
 public class RecipeServiceTest {
     
+    [TestMethod]
+    public void InsertRecipeSuccessfull() {
+        //Arrange
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        List<Ingredient> ings = new() {
+            new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
+        };
+        List<Step> steps = new() {
+            new Step(10, "eat")
+        };
+        Recipe recipe = new Recipe("Recipe1", user, "rida was here", 10, ings, steps, new(), new());
+
+        var mockSet = new Mock<DbSet<Recipe>>();
+
+        var mockContext = new Mock<SplankContext>();
+        mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
+
+        RecipeService recipeService = new(mockContext.Object);
+
+        //Act
+        recipeService.CreateRecipe(recipe);
+        //Assert
+        mockContext.Verify(m => m.Add(It.IsAny<Recipe>()), Times.Once());
+        mockContext.Verify(m => m.SaveChanges(), Times.Once());
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void InsertRecipeNullThrowsException() {
+        //Arrange
+        Recipe recipe = null;
+
+        var mockSet = new Mock<DbSet<Recipe>>();
+
+        var mockContext = new Mock<SplankContext>();
+        mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
+
+        RecipeService recipeService = new(mockContext.Object);
+        //Act
+        recipeService.CreateRecipe(recipe);
+    }
+
+    [TestMethod]
+    public void DeletingRecipeSuccessful() {
+        //Arrange
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        List<Ingredient> ings = new() {
+            new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
+        };
+        List<Step> steps = new() {
+            new Step(10, "eat")
+        };
+        Recipe recipe = new Recipe("Recipe1", user, "rida was here", 10, ings, steps, new(), new());
+
+        var mockSet = new Mock<DbSet<Recipe>>();
+
+        var mockContext = new Mock<SplankContext>();
+        mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
+
+        RecipeService recipeService = new(mockContext.Object);
+
+        //Act
+        recipeService.CreateRecipe(recipe);
+        recipeService.DeleteRecipe(recipe);
+        //Assert
+        mockContext.Verify(m => m.Remove(It.IsAny<Recipe>()), Times.Once());
+        mockContext.Verify(m => m.SaveChanges(), Times.Exactly(2));
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void DeleteRecipeNullThrowsException() {
+        //Arrange
+        Recipe recipe = null;
+
+        var mockSet = new Mock<DbSet<Recipe>>();
+
+        var mockContext = new Mock<SplankContext>();
+        mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
+
+        RecipeService recipeService = new(mockContext.Object);
+        //Act
+        recipeService.DeleteRecipe(recipe);
+    }
+
+    [TestMethod]
+    public void UpdateRecipeSucceful() {
+        //Arrange
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        List<Ingredient> ings = new() {
+            new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
+        };
+        List<Step> steps = new() {
+            new Step(10, "eat")
+        };
+        Recipe recipe1 = new Recipe("Recipe1", user, "rida was here", 10, ings, steps, new(), new());
+        Recipe recipe2 = new Recipe("potato", user, "rida was here", 10, ings, steps, new(), new());
+
+        var mockSet = new Mock<DbSet<Recipe>>();
+
+        var mockContext = new Mock<SplankContext>();
+        mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
+
+        RecipeService recipeService = new(mockContext.Object);
+
+        //Act
+        recipeService.UpdateRecipe(recipe1, recipe2);
+        //Assert
+        mockContext.Verify(m => m.Update(It.IsAny<Recipe>()), Times.Once());
+        mockContext.Verify(m => m.SaveChanges(), Times.Once());
+    }
+
     // [TestMethod]
     // [ExpectedException(typeof(ArgumentException))]
-    // public void CreateRecipe_NullRecipe_ThrowsException() {
-    //     Recipe recipe = null;
-    //     User user = new User("Amy", "Fanta stick person", "AmyPassword", new(), new());
-    //     RecipeService rs = new RecipeService();
+    // public void UpdateRecipeNullThrowsException() {
+    //     //Arrange
+    //     User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+    //     List<Ingredient> ings = new() {
+    //         new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
+    //     };
+    //     List<Step> steps = new() {
+    //         new Step(10, "eat")
+    //     };
+    //     Recipe recipe1 = new Recipe("Recipe1", user, "rida was here", 10, ings, steps, new(), new());
+    //     Recipe recipe2 = new Recipe("potato", user, "rida was here", 10, ings, steps, new(), new());
 
-    //     rs.CreateRecipe(recipe, user);
+    //     var mockSet = new Mock<DbSet<Recipe>>();
+
+    //     var mockContext = new Mock<SplankContext>();
+    //     mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
+
+    //     RecipeService recipeService = new(mockContext.Object);
+
+    //     //Act
+    //     recipeService.UpdateRecipe(recipe1, recipe2);
+
     // }
-
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void CreateRecipe_NullUser_ThrowsException() {
-    //     string name = "Potato esquisite";
-    //     int servings = 1;
-    //     string description = "A salty potato";
-    //     User user = new("PotatoLover32", "I love potatoes", "PotatoPotatoPotatp", new List<Recipe>(), new List<Recipe>());
-    //     List<Ingredient> ingredients = new() { new Ingredient("Potato", 1, UnitOfMeasurement.AMOUNT, 2) };
-    //     List<Step> steps = new() { new Step(5, "Boil potato") };
-    //     List<Rating> ratings = new();
-    //     List<Tag> tags = new() { new Tag("Potato"),};
-    //     Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-    //     RecipeService rs = new RecipeService();
-    //     rs.CreateRecipe(recipe, null);
-    // }
-
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void DeleteRecipe_NullRecipe_ThrowsException() {
-    //     Recipe recipe = null;
-    //     User user = new User("Amy", "Fanta stick person", "AmyPassword", new(), new());
-    //     RecipeService rs = new RecipeService();
-
-    //     rs.DeleteRecipe(recipe, user);
-    // }
-
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void DeleteRecipe_NullUser_ThrowsException() {
-    //     User user = null;
-    //     Recipe recipe = new Recipe("Spaghetti", user, "Yummy food", 5, new(), new(), new(), new());
-    //     RecipeService rs = new RecipeService();
-
-    //     rs.DeleteRecipe(recipe, user);
-    // }
-
-    // // [TestMethod]
-    // // [ExpectedException(typeof(ArgumentException))]
-    // // public void SearchRecipe_NullSearcher_ThrowsException() {
-    // //     ISearcher searcher = null;
-    // //     RecipeService rs = new RecipeService();
-
-    // //     rs.SearchRecipes(searcher);
-    // // }
-
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void UpdateRecipe_NullRecipe_ThrowsException() {
-    //     Recipe recipe = null;
-    //     User user = new User("Rida", "Unit testing hell", "RidaPassword", new(), new());
-    //     RecipeService rs = new RecipeService();
-
-    //     rs.UpdateRecipe(recipe, user);
-        
-    // }
-
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void UpdateRecipe_NullUser_ThrowsException() {
-    //     string name = "Potato esquisite";
-    //     int servings = 1;
-    //     string description = "A salty potato";
-    //     User user = new("PotatoLover32", "I love potatoes", "PotatoPotatoPotatp", new List<Recipe>(), new List<Recipe>());
-    //     List<Ingredient> ingredients = new() { new Ingredient("Potato", 1, UnitOfMeasurement.AMOUNT, 2) };
-    //     List<Step> steps = new() { new Step(5, "Boil potato") };
-    //     List<Rating> ratings = new();
-    //     List<Tag> tags = new() { new Tag("Potato"),};
-    //     Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-    //     RecipeService rs = new RecipeService();
-    //     rs.UpdateRecipe(recipe, null);
 }

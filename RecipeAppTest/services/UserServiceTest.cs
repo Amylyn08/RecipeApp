@@ -97,7 +97,7 @@ public class UserServiceTest {
         var mockContext = new Mock<SplankContext>();
         mockContext.Setup(m => m.Users).Returns(mockSet.Object);
 
-        var encrypter = new PasswordEncrypter();
+        var encrypter = new PasswordEncrypter();    
         UserService userService = new(mockContext.Object, encrypter);
 
         var user = userService.Login("Rida4", "Rida1Password");
