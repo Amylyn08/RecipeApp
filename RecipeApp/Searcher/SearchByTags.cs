@@ -1,6 +1,8 @@
 namespace RecipeApp.Searcher;
 
 using Microsoft.EntityFrameworkCore;
+using recipeapp;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 public class SearchByTags :SearcherBase{
@@ -11,7 +13,7 @@ public class SearchByTags :SearcherBase{
     /// Contructor for SearchByTags taking in tagName specified.
     /// </summary>
     /// <param name="tagName">The tag name specified.</param>
-    public SearchByTags(string tagName) {
+    public SearchByTags(SplankContext context, string tagName) : base(context){
         if (tagName == null)
             throw new ArgumentException("Tag name cannot be null");
         if (tagName.Length == 0)

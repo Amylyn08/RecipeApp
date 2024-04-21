@@ -12,13 +12,14 @@ public class SearchByIngredients : SearcherBase
     /// Constructor contains the criteria, corresponding to the crtieria specified.
     /// </summary>
     /// <param name="ingredientName">Ingredient name  </param>
-    public SearchByIngredients(string ingredientName)
+    public SearchByIngredients(SplankContext context, string ingredientName) : base(context)
     {
         if (ingredientName == null)
             throw new ArgumentException("Ingredient name cannot be null");
         if (ingredientName.Length == 0)
             throw new ArgumentException("Ingredient name cannot be empty");
         _criteria = ingredientName;
+
     }
 
     /// <summary>

@@ -7,10 +7,15 @@ using RecipeApp.Models;
 public abstract class SearcherBase{
     public SplankContext Context { get; set; } = new SplankContext();
 
+    public SearcherBase(SplankContext context){
+        Context = context;
+    }
     /// <summary>
     /// Returns a list of recipes matching a filter.
     /// </summary>
     /// <param name="recipes"></param>
     /// <returns></returns>
     public abstract List<Recipe> FilterRecipes();
+
+    
 }

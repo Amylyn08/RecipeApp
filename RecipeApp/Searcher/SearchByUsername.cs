@@ -1,6 +1,7 @@
 namespace RecipeApp.Searcher;
 
 using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 
@@ -12,7 +13,7 @@ public class SearchByUsername : SearcherBase{
     /// Constructor for SearchByUsername takes in username
     /// </summary>
     /// <param name="username">Name of user</param>
-    public SearchByUsername(string username) {
+    public SearchByUsername(SplankContext context, string username) : base(context){
         if (username == null)
             throw new ArgumentException("Username cannot be null");
         if (username.Length == 0)

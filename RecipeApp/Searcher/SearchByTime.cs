@@ -1,6 +1,7 @@
 namespace RecipeApp.Searcher;
 
 using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 
@@ -13,7 +14,7 @@ public class SearchByTime : SearcherBase{
     /// </summary>
     /// <param name="min">The min time.</param>
     /// <param name="max">The max time</param>
-    public SearchByTime(int min, int max) {
+    public SearchByTime(SplankContext context, int min, int max) :base(context) {
         if (min < 0 || max < 0)
             throw new ArgumentException("Min or max cannot be negative");
         if (min > max) 

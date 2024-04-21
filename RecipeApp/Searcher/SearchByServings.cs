@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using recipeapp;
+using RecipeApp.Context;
 using RecipeApp.Searcher;
 
 namespace RecipeApp.Models;
@@ -11,7 +13,7 @@ public class SearchByServings : SearcherBase{
     /// Constructor for class, takes in number of servings specified for search.
     /// </summary>
     /// <param name="servings">The number of servings specified</param>
-    public SearchByServings(int servings) {
+    public SearchByServings(SplankContext content, int servings) : base(content) {
         if (servings < Constants.MIN_SERVINGS) 
             throw new ArgumentException($"Servings must be atleast ${Constants.MIN_SERVINGS}");
         _criteria = servings;

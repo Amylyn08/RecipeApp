@@ -1,3 +1,4 @@
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 namespace RecipeApp.Searcher;
@@ -12,7 +13,7 @@ public class SearchByUserFavorite : SearcherBase
     /// </summary>
     /// <param name="user">The user object of this searcher close</param>
     /// <exception cref="ArgumentNullException">If the user input was null.</exception>
-    public SearchByUserFavorite(User user){
+    public SearchByUserFavorite(SplankContext context, User user) : base(context){
         if (user == null){
             throw new ArgumentNullException("user cannot be null");
         }
