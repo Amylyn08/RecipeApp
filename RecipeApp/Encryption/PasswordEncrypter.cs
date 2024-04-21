@@ -13,18 +13,7 @@ public class PasswordEncrypter
     /// </summary>
     public string hashedPassword{get; set;}
 
-    /// <summary>
-    /// Uses two methods below to return the hased version of the password.
-    /// </summary>
-    /// <param name="plainText">The plain text, can be referred to as the password input.</param>
-    /// <returns>The hashed password version of plain text param.</returns>
-    public string Encrypt(string plainText)
-    {
-        salt = CreateSalt();
-        hashedPassword = CreateHash(plainText, salt);
-        return hashedPassword;
-    }
-
+    
     /// <summary>
     ///Creates a salt using RNGCryptoServiceProvider for random crypto number generator,
     ///fills array of salt with random values.
