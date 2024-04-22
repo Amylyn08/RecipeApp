@@ -211,6 +211,13 @@ public class UserServiceTest {
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterNullUsernameThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register(null, "ValidPassword", "Valid Description");
+    }
+
+    [TestMethod]
     public void ChangePasswordSuccessfullyChangesPassword() {
         PasswordEncrypter passwordEncrypter = new();
         
