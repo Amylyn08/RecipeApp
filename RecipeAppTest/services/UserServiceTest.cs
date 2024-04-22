@@ -282,6 +282,27 @@ public class UserServiceTest {
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void ChangePasswordNullUserThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.ChangePassword(null, "Some random password");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void ChangePasswordNullPasswordThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        userService.ChangePassword(user, null);
+    }
+
+    public void ChangePasswordShortPasswordThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        userService.ChangePassword(user, "short");
+    }
+
+    [TestMethod]
     public void DeleteAccountSuccessfullyDeletesAccount() {
         PasswordEncrypter passwordEncrypter = new();
         
