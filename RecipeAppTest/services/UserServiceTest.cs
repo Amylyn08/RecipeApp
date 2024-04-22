@@ -565,4 +565,9 @@ public class UserServiceTest {
         mockContext.Verify(m => m.Remove(It.IsAny<Favourite>()), Times.Once);
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
     }
+
+    public void DeleteFromFavouritesNullFavouriteThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.DeleteFromFavourites(null);
+    }
 }
