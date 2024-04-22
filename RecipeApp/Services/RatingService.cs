@@ -18,10 +18,12 @@ public class RatingService : ServiceBase {
     //     recipeToRate.Ratings.Add(rating);
     // }
 
-    public void RatingRecipe(Rating rating) {
-        if (rating == null) 
+
+    public void RatingRecipe(Rating rating, Recipe recipe) {
+        if (rating == null || recipe == null) 
             throw new ArgumentException("Rating cannot be null");
-        Context.Add(rating);
+        recipe.Ratings.Add(rating);
+        Context.Update(recipe);
         Context.SaveChanges();
     }
 }

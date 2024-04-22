@@ -20,7 +20,11 @@ public class RecipeService : ServiceBase {
         // }
     // }
 
-
+    /// <summary>
+    /// Cre
+    /// </summary>
+    /// <param name="recipeToAdd"></param>
+    /// <exception cref="ArgumentException"></exception>
     public void CreateRecipe(Recipe recipeToAdd) {
         if (recipeToAdd == null)
             throw new ArgumentException("Recipe cannot be null");
@@ -73,6 +77,7 @@ public class RecipeService : ServiceBase {
         oldRecipe.Steps = updatedRecipe.Steps;
         oldRecipe.Tags = updatedRecipe.Tags;
         oldRecipe.Name = updatedRecipe.Name;
+        oldRecipe.Ratings = updatedRecipe.Ratings;
 
         Context.Update(oldRecipe);
         Context.SaveChanges();

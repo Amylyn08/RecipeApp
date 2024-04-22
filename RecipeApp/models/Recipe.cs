@@ -170,7 +170,7 @@ public class Recipe {
         StringBuilder builder = new();
         builder.Append("Name: " + _name + "\n");
         builder.Append("Description: " + _description + "\n");
-        builder.Append("Servinsg: " + _servings + "\n"); 
+        builder.Append("Servings: " + _servings + "\n"); 
         builder.Append("Ingredients: \n");
         builder.Append("-------------- \n");
         foreach (Ingredient ingredient in _ingredients) {
