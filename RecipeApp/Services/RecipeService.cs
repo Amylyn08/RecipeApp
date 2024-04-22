@@ -10,9 +10,9 @@ public class RecipeService : ServiceBase {
     }
 
     /// <summary>
-    /// Cre
+    /// Adds recipe to DB
     /// </summary>
-    /// <param name="recipeToAdd"></param>
+    /// <param name="recipeToAdd">The recipe being added to the DB</param>
     /// <exception cref="ArgumentException"></exception>
     public void CreateRecipe(Recipe recipeToAdd) {
         if (recipeToAdd == null)
@@ -21,6 +21,11 @@ public class RecipeService : ServiceBase {
         Context.SaveChanges();
     }
 
+    /// <summary>
+    /// Deletes a recipe from the DB
+    ///</summary>
+    ///<param name="recipeToDelete">The recipe being deleted</param>
+    /// <exception cref="ArgumentException"></exception>
     public void DeleteRecipe(Recipe recipeToDelete) {
         if (recipeToDelete == null)
             throw new ArgumentException("Recipe cannot be null");
@@ -34,6 +39,12 @@ public class RecipeService : ServiceBase {
         return searcher.FilterRecipes();
     }
 
+    /// <summary>
+    /// Updates a recipe in the DB
+    ///</summary>
+    ///<param name="oldRecipe">The recipe being updated</param>
+    ///<param name="newRecipe">The recipe that the old one is being updated to</param>
+    /// <exception cref="ArgumentException"></exception>
     public void UpdateRecipe(Recipe oldRecipe, Recipe updatedRecipe) {
         if (updatedRecipe == null || oldRecipe == null)
             throw new ArgumentException("Updated recipe cannot be null");
