@@ -14,25 +14,31 @@ public class UserServiceTest {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void NullEncrypterThrowsArgumentException() {
+        // act
         UserService userService = new(new(), null);
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void LoginNullUsernameThrowsArgumentException() {
+        // arrange
         UserService userService = new UserService(new(), new PasswordEncrypter());
+        // act
         userService.Login(null, "Password");
     }
 
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void LoginNullPasswordThrowsArgumentException() {
+        // arrange
         UserService userService = new UserService(new(), new PasswordEncrypter());
+        // act
         userService.Login("Username123", null);
     }
 
     [TestMethod]
     public void LoginSuccessfullReturnsUser() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -62,8 +68,10 @@ public class UserServiceTest {
         var encrypter = new PasswordEncrypter();
         UserService userService = new(mockContext.Object, encrypter);
 
+        // act
         var user = userService.Login("Rida1", "Rida1Password");
 
+        // assert
         Assert.AreEqual(user.Name, "Rida1");
         Assert.AreEqual(user.Description, "I am rida 1");
     }
@@ -71,6 +79,7 @@ public class UserServiceTest {
     [TestMethod]
     [ExpectedException(typeof(UserDoesNotExistException))]
     public void LoginNonExistentUserThrowsUserDoesNotException() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -100,12 +109,14 @@ public class UserServiceTest {
         var encrypter = new PasswordEncrypter();    
         UserService userService = new(mockContext.Object, encrypter);
 
+        // act
         var user = userService.Login("Rida4", "Rida1Password");
     }
 
     [TestMethod]
     [ExpectedException(typeof(InvalidCredentialsException))]
     public void LoginBadPasswordThrowsInvalidCredentialsException() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -135,11 +146,13 @@ public class UserServiceTest {
         var encrypter = new PasswordEncrypter();
         UserService userService = new(mockContext.Object, encrypter);
 
+        // act
         var user = userService.Login("Rida1", "Rida4Password");
     }
 
     [TestMethod]
     public void RegisterSucessfullyAddsUser() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -169,8 +182,10 @@ public class UserServiceTest {
         var encrypter = new PasswordEncrypter();
         UserService userService = new UserService(mockContext.Object, encrypter);
 
+        // act
         userService.Register("Rida4", "Rida4Password", "I am Rida4");
 
+        // assert
         mockContext.Verify(m => m.Add(It.IsAny<User>()), Times.Once());
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
     }
@@ -178,6 +193,7 @@ public class UserServiceTest {
     [TestMethod]
     [ExpectedException(typeof(UserAlreadyExistsException))]
     public void RegisterThrowsUserAlreadyExistsException() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -207,11 +223,45 @@ public class UserServiceTest {
         var encrypter = new PasswordEncrypter();
         UserService userService = new UserService(mockContext.Object, encrypter);
 
+        // act
         userService.Register("Rida3", "Rida4Password", "I am Rida4");
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterNullUsernameThrowsArgumentException() {
+        // arrang/act
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register(null, "ValidPassword", "Valid Description");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterEmptyUsernameThrowsArgumentException() {
+        // arrange/act
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register("", "ValidPassword", "Valid Description");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterNullPasswordThrowsArgumentException() {
+        // arrange/act
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register("ValidUsername", null, "Valid Description");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterEmptyPasswordThrowsArgumentException() {
+        // arrange/act
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register("ValidUsername", "", "Valid Description");
+    }
+
+    [TestMethod]
     public void ChangePasswordSuccessfullyChangesPassword() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -245,8 +295,10 @@ public class UserServiceTest {
         var oldPassword = userToChangePassword.Password;
         var newPassword = "Rida1New";
 
+        // act
         userService.ChangePassword(userToChangePassword, newPassword);
 
+        // assert
         mockContext.Verify(m => m.Update(It.IsAny<User>()), Times.Once);
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
 
@@ -254,7 +306,32 @@ public class UserServiceTest {
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void ChangePasswordNullUserThrowsArgumentException() {
+        // arrange/act
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.ChangePassword(null, "Some random password");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void ChangePasswordNullPasswordThrowsArgumentException() {
+        // arrange/act
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        userService.ChangePassword(user, null);
+    }
+
+    public void ChangePasswordShortPasswordThrowsArgumentException() {
+        // arrange/act
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        userService.ChangePassword(user, "short");
+    }
+
+    [TestMethod]
     public void DeleteAccountSuccessfullyDeletesAccount() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -286,14 +363,17 @@ public class UserServiceTest {
 
         var userToDelete = listUser[0];
         
+        // act
         userService.DeleteAccount(userToDelete);
 
+        // assert
         mockContext.Verify(m => m.Remove(It.IsAny<User>()), Times.Once);
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
     }
 
     [TestMethod]
     public void AddToFavouritesSuccessfullyAddsToFavourites() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -355,15 +435,44 @@ public class UserServiceTest {
         var userWhoFavourited = listUser[0];
         var favouritedRecipe = listRecipe[1];
         
+        // act
         userService.AddToFavourites(favouritedRecipe, userWhoFavourited);
 
+        // assert
         mockContext.Verify(m => m.Add(It.IsAny<Favourite>()), Times.Once);
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void AddToFavouritesNullFavouritedThrowsArgumentException() {
+        // arrange/act
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.AddToFavourites(null, user);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void AddToFavouritesNullUserhrowsArgumentException() {
+        // arrange
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        var ingredients = new List<Ingredient>() {
+            new Ingredient("Something", 1, UnitOfMeasurement.AMOUNT, 2.00)
+        };
+        var steps = new List<Step>() {
+            new Step(5, "Something")
+        };
+        Recipe recipe = new Recipe("Potato", user, "Description", 2, ingredients, steps, new(), new());
+        // act
+        userService.AddToFavourites(recipe, null);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(AlreadyFavouritedException))]
     public void AddToFavouritesThrowsAlreadyFavouritedException() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -425,11 +534,13 @@ public class UserServiceTest {
         var userWhoFavourited = listUser[0];
         var favouritedRecipe = listRecipe[0];
         
+        // act
         userService.AddToFavourites(favouritedRecipe, userWhoFavourited);
     }
 
     [TestMethod]
     public void DeleteFromFavouritesSuccessfullyDeletesFavourite() {
+        // arrange
         PasswordEncrypter passwordEncrypter = new();
         
         var salt1 = passwordEncrypter.CreateSalt();
@@ -488,9 +599,17 @@ public class UserServiceTest {
         var encrypter = new PasswordEncrypter();
         UserService userService = new(mockContext.Object, encrypter);
 
+        // act
         userService.DeleteFromFavourites(listFavourites[0]);
 
+        // assert
         mockContext.Verify(m => m.Remove(It.IsAny<Favourite>()), Times.Once);
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
+    }
+
+    public void DeleteFromFavouritesNullFavouriteThrowsArgumentException() {
+        // arrange/assert
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.DeleteFromFavourites(null);
     }
 }

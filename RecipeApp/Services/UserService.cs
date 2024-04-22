@@ -70,7 +70,7 @@ public class UserService : ServiceBase {
         if (string.IsNullOrWhiteSpace(username)) {
             throw new ArgumentException("Username cannot be null");
         }
-        if (string.IsNullOrWhiteSpace(username)) {
+        if (string.IsNullOrWhiteSpace(password)) {
             throw new ArgumentException("Password cannot be null");
         }
         var userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).FirstOrDefault();

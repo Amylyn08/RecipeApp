@@ -12,6 +12,10 @@ public class NutritionFactFetcher : IApiForIngredients {
     // if the API call fails
     // The code is ugly, but it works
     public ApiResponse Fetch(Recipe recipe) {
+        if (recipe is null) {
+            throw new ArgumentException("Recipe cannot be null");
+        }
+
         // total macros for a recipe
         var totalCalories = 0.0;
         var totalFat = 0.0;
