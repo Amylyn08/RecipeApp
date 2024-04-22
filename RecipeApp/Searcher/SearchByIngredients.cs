@@ -18,7 +18,7 @@ public class SearchByIngredients : SearcherBase
             throw new ArgumentException("Ingredient name cannot be null");
         if (ingredientName.Length == 0)
             throw new ArgumentException("Ingredient name cannot be empty");
-        _criteria = ingredientName;
+        _criteria = ingredientName.ToLower();
 
     }
 

@@ -17,7 +17,7 @@ public class SearchKeyWord : SearcherBase {
             throw new ArgumentException("Keyword cannot be null");
         if (keyword.Length == 0) 
             throw new ArgumentException("Key cannot be empty");
-        _criteria = keyword;
+        _criteria = keyword.ToLower();
     }
     /// <summary>
     /// Searches through recipes list of context, gets the ingredients
