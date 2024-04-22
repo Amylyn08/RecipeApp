@@ -218,6 +218,27 @@ public class UserServiceTest {
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterEmptyUsernameThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register("", "ValidPassword", "Valid Description");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterNullPasswordThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register("ValidUsername", null, "Valid Description");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void RegisterEmptyPasswordThrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.Register("ValidUsername", "", "Valid Description");
+    }
+
+    [TestMethod]
     public void ChangePasswordSuccessfullyChangesPassword() {
         PasswordEncrypter passwordEncrypter = new();
         
