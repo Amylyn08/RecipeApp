@@ -36,6 +36,12 @@ public class PasswordEncrypter
     /// <returns>The hashsed possword in base 64 string format.</returns>
     public string CreateHash(string input, string salt)
     {
+        if (string.IsNullOrEmpty(input)) {
+            throw new ArgumentException("Input cannot be null");
+        }
+        if (string.IsNullOrEmpty(salt)) {
+            throw new ArgumentException("Salt cannot be null");
+        }
         int numIterations = 1000;
         byte[] hash;
         using (Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(input, Convert.FromBase64String(salt), numIterations))
