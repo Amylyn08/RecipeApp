@@ -1,3 +1,5 @@
+using RecipeApp.Context;
+using Moq;
 using RecipeApp.Searcher;
 
 namespace RecipeAppTest.searcher;
@@ -6,22 +8,17 @@ namespace RecipeAppTest.searcher;
 
 public class SearchByPriceRangeTests {
 
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void MinNegative_ThrowsException() {
-    //     ISearcher searcher = new SearchByPriceRange(-1, 0);
-    // }
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void MinValueLessThan0(){
+        //Arrange
+        SplankContext context = new();
+        double min = -0.1;
+        double max = 5;
 
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void MaxNegative_ThrowsException() {
-    //     ISearcher searcher = new SearchByPriceRange(0, -1);
-    // }
-
-    // [TestMethod]
-    // [ExpectedException(typeof(ArgumentException))]
-    // public void MinBiggerThanMax_ThrowsException() {
-    //     ISearcher searcher = new SearchByPriceRange(10, 1);
-    // }
-
+        //Act
+        SearcherBase searcher = new SearchByPriceRange(context, min, max);
+    }   
 }
+
+

@@ -34,7 +34,7 @@ public class SearchByKeyWordTests {
 
     [TestMethod]
     public void KeyWordSearchCorrect(){
-        
+        //Arrange
         User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
         List<Ingredient> ings0 = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
@@ -92,7 +92,7 @@ public class SearchByKeyWordTests {
 
     [TestMethod]
     public void KeyWordSearchEmptyList(){
-        
+        //Arrange
         User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
         List<Ingredient> ings0 = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
