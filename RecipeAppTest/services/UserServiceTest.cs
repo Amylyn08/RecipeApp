@@ -411,6 +411,29 @@ public class UserServiceTest {
     }
 
     [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void AddToFavouritesNullFavouritedThrowsArgumentException() {
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        userService.AddToFavourites(null, user);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void AddToFavouritesNullUserhrowsArgumentException() {
+        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        var ingredients = new List<Ingredient>() {
+            new Ingredient("Something", 1, UnitOfMeasurement.AMOUNT, 2.00)
+        };
+        var steps = new List<Step>() {
+            new Step(5, "Something")
+        };
+        Recipe recipe = new Recipe("Potato", user, "Description", 2, ingredients, steps, new(), new());
+        userService.AddToFavourites(recipe, null);
+    }
+
+    [TestMethod]
     [ExpectedException(typeof(AlreadyFavouritedException))]
     public void AddToFavouritesThrowsAlreadyFavouritedException() {
         PasswordEncrypter passwordEncrypter = new();
