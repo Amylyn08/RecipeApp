@@ -10,15 +10,10 @@ public class RatingService : ServiceBase {
     }
 
     /// <summary>
-    /// Adds a rating to the recipe
+    /// Adds a rating to the recipe and updates the DB
     /// </summary>
-    /// <param name="recipeToRate">The recipe getting a rating</param>
-    // /// <param name="rating">The rating that the recipe gonna get</param>
-    // public void RatingRecipe(Recipe recipeToRate, Rating rating) {
-    //     recipeToRate.Ratings.Add(rating);
-    // }
-
-
+    /// <param name="rating">The new recipe rating</param>
+    /// <param name="recipe">The recipe recieving the rating</param>
     public void RatingRecipe(Rating rating, Recipe recipe) {
         if (rating == null || recipe == null) 
             throw new ArgumentException("Rating cannot be null");
@@ -26,4 +21,5 @@ public class RatingService : ServiceBase {
         Context.Update(recipe);
         Context.SaveChanges();
     }
+
 }
