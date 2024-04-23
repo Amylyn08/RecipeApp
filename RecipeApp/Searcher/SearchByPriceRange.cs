@@ -26,9 +26,10 @@ public class SearchByPriceRange: SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
-                                    .Where(recipe => recipe.Ingredients.Any(i =>
-                                    i.Price >= _minPrice && i.Price <=  _maxPrice))
+                                    .Where(recipe => recipe.GetTotalPrice() >= _minPrice
+                                    &&  recipe.GetTotalPrice() <= _maxPrice)
                                     .ToList<Recipe>();
+
         return filteredRecipes;
     }
 }
