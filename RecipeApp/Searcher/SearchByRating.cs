@@ -24,8 +24,9 @@ public class SearchByRating : SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
-        .Where(recipe => recipe.Ratings.Any(rating => rating.Stars == _criteria))
-        .ToList<Recipe>();
+        .Where(recipe => recipe.GetTotalAverageRating() >=  _criteria
+                && recipe.GetTotalAverageRating() <= _criteria +1)
+                .ToList<Recipe>();
 
         return filteredRecipes;
     }

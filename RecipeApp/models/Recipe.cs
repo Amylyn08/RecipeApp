@@ -163,6 +163,17 @@ public class Recipe {
     }
 
     /// <summary>
+    /// This method gets the avarage of ratings of a recipe.
+    /// </summary>
+    /// <returns>The ratings.</returns>
+    public double GetTotalAverageRating(){
+        double rating = 0;
+        foreach(Rating r in _ratings )
+            rating += r.Stars;
+        return rating/_ratings.Count;
+    }
+
+    /// <summary>
     /// Returns string representation of a recipe
     /// </summary>
     /// <returns>String format of recipe</returns>

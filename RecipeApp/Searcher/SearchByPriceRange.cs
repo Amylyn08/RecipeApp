@@ -29,7 +29,6 @@ public class SearchByPriceRange: SearcherBase{
                                     .Where(recipe => recipe.GetTotalPrice() >= _minPrice
                                     &&  recipe.GetTotalPrice() <= _maxPrice)
                                     .ToList<Recipe>();
-
         return filteredRecipes;
     }
 }
