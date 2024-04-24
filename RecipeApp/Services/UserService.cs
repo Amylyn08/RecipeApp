@@ -48,7 +48,7 @@ public class UserService : ServiceBase {
         }
         User? userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).FirstOrDefault();
         if (userInDatabase is null) {
-            throw new UserDoesNotExistException($"User ${username} does not exist !");
+            throw new UserDoesNotExistException($"User {username} does not exist !");
         }
         var encryptedPasswordFromDatabase = userInDatabase.Password;
         var saltFromDatabase = userInDatabase.Salt;
