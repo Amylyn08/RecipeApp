@@ -199,6 +199,64 @@ public class MainDummy {
         else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
         return new Ingredient(name, quantity, unitOfMeasurement, price);
     }
+
+        private static List<Ingredient> CreateListIngredients() {
+        List<Ingredient> ingredients = new List<Ingredient>();
+
+        bool createIng = true;
+
+        while(createIng) {
+            Ingredient ingredient = CreateIngredient();
+            ingredients.Add(ingredient);
+
+            Console.WriteLine("Add another ingredient? (Y/N):");
+            string choice = Console.ReadLine();
+            if(choice.ToUpper() == "N") {
+                createIng = false;
+            }
+        }
+        return ingredients;
+    }
+
+    private static List<Step> CreateListStep() {
+        List<Step> steps = new List<Step>();
+
+        bool createStep = true;
+
+        while(createStep) {
+            Step step = CreateSteps();
+            steps.Add(step);
+
+            Console.WriteLine("Add Step? (Y/N):");
+            string choice = Console.ReadLine();
+            if(choice.ToUpper() == "N") {
+                createStep = false;
+            }
+        }
+        return steps;
+    }
+
+    private static Step CreateSteps() {
+        Console.WriteLine("Enter instruction details:");
+        string instruction = Console.ReadLine();
+        Console.WriteLine("Enter the amount of time in minutes:");
+        int time = Convert.ToInt32(Console.ReadLine());
+        return new Step(time, instruction);
+    }
+
+    public static List<Tag> CreateListTags() {
+        List<Tag> tags = new();
+        for (int i = 0; i < Constants.MAX_TAGS; i++) {
+            Console.WriteLine("Please enter a tag, or nothing to exit");
+            string input = Console.ReadLine();
+            if (input.Length == 0) {
+                return tags;
+            }
+            Tag tag = new(input);
+            tags.Add(tag);
+        }
+        return tags;
+    }
     private static string GetInput() {
         string input = null;
         do {
@@ -250,24 +308,6 @@ public class MainDummy {
     }
 
     
-    /// <summary>
-    /// Gets an integer input from a user
-    /// </summary>
-    /// <returns>The integer input</returns>
-    private static int GetIntInput() {
-        int input = 0;
-        do {
-            try {
-                input = Convert.ToInt32(GetInput());
-            } catch (FormatException) {
-                Console.WriteLine("Please enter a valid number");
-            }
-            if (input <= 0) {
-                Console.WriteLine("Please enter an amount greater than 0");
-            }
-        } while (input <= 0);
-        return input;
-    }
 
 
     // // private static List<Recipe> SearchRecipe() {
@@ -644,23 +684,6 @@ public class MainDummy {
     // /// Creates a list of ingredients chosen by the user
     // /// </summary>
     // /// <returns>A list of ingredients</returns>
-    private static List<Ingredient> CreateListIngredients() {
-        List<Ingredient> ingredients = new List<Ingredient>();
-
-        bool createIng = true;
-
-        while(createIng) {
-            Ingredient ingredient = CreateIngredient();
-            ingredients.Add(ingredient);
-
-            Console.WriteLine("Add another ingredient? (Y/N):");
-            string choice = GetInput();
-            if(choice.ToUpper() == "N") {
-                createIng = false;
-            }
-        }
-        return ingredients;
-    }
 
     // /// <summary>
     // /// Asks the user to create a step
@@ -696,19 +719,6 @@ public class MainDummy {
     //     return steps;
     // }
 
-    // public static List<Tag> CreateListTags() {
-    //     List<Tag> tags = new();
-    //     for (int i = 0; i < Constants.MAX_TAGS; i++) {
-    //         Console.WriteLine("Please enter a tag, or nothing to exit");
-    //         string input = GetInput();
-    //         if (input.Length == 0) {
-    //             return tags;
-    //         }
-    //         Tag tag = new(input);
-    //         tags.Add(tag);
-    //     }
-    //     return tags;
-    // }
 
     // private static void UpdateRecipe() {
     //     for (int i = 0; i < _currentUser.MadeRecipes.Count; i++) {
