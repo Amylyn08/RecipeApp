@@ -20,17 +20,51 @@ public class MainDummy {
     
     public static void Main() {
         AskLoginOrRegister();
+        ShowOptions();
+    }
+
+    public static void ShowOptions() {
+        const int CHANGE_PASSWORD = 1;
+        const int DELETE_ACCOUNT = 2;
+        const int LOGOUT = 3;
+        const int SEARCH = 4;
+        while (currentUser is not null) {
+            try {
+                Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
+                Console.WriteLine($"Enter {DELETE_ACCOUNT} to delete account");
+                Console.WriteLine($"Enter {LOGOUT} to logout");
+                int input = int.Parse(Console.ReadLine());
+                switch (input) {
+                    case CHANGE_PASSWORD:
+                        ChangePassword();
+                        break;
+                    case DELETE_ACCOUNT:
+                        DeleteAccount();
+                        break;
+                    case LOGOUT:
+                        Logout();
+                        break;
+                    case SEARCH:
+                        SearchRecipe();
+                        break;
+                    default:
+                        throw new FormatException(); 
+                }
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid option");
+            }
+        }
+        Console.WriteLine("Goodbye !");
     }
 
     public static void AskLoginOrRegister() {
         const int LOGIN = 1;
         const int REGISTER = 2;
-        int input = 0;
         while (true) {
             try {
                 Console.WriteLine($"Enter {LOGIN} to login");
                 Console.WriteLine($"Enter {REGISTER} to register");
-                input = int.Parse(Console.ReadLine());
+                int input = int.Parse(Console.ReadLine());
                 if (input == LOGIN) {
                     LoginUser();
                     break;
@@ -47,14 +81,12 @@ public class MainDummy {
     }
 
     public static void LoginUser() {
-        string username = "";
-        string password = "";
         while (true) {
             try {
                 Console.WriteLine("Enter username: ");
-                username = Console.ReadLine();
+                string username = Console.ReadLine();
                 Console.WriteLine("Enter password: ");
-                password = Console.ReadLine();
+                string password = Console.ReadLine();
                 currentUser = userService.Login(username, password);
                 Console.WriteLine("Welcome ! You are now logged in !");
                 break;
@@ -67,17 +99,14 @@ public class MainDummy {
     }
 
     public static void RegisterUser() {
-        string username = "";
-        string password = "";
-        string description = "";
         while (true) {
             try {
                 Console.WriteLine("Enter username: ");
-                username = Console.ReadLine();
+                string username = Console.ReadLine();
                 Console.WriteLine("Enter password: ");
-                password = Console.ReadLine();
+                string password = Console.ReadLine();
                 Console.WriteLine("Enter description: ");
-                description = Console.ReadLine();
+                string description = Console.ReadLine();
                 userService.Register(username, password, description);
                 Console.WriteLine("You have been registered !");
                 LoginUser();
@@ -91,17 +120,29 @@ public class MainDummy {
     }
 
     public static void ChangePassword() {
-        string newPassword = "";
         while (true) {
             try {
                 Console.WriteLine("Enter new password");
-                newPassword = Console.ReadLine();
+                string newPassword = Console.ReadLine();
                 userService.ChangePassword(currentUser, newPassword);
                 Console.WriteLine("Your password has been changed !");
             } catch (ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
         }
+    }
+
+    public static void DeleteAccount() {
+        try {
+            userService.DeleteAccount(currentUser);
+        } catch (ArgumentException e) {
+            Console.WriteLine(e.Message);
+        }
+        Logout();
+    }
+
+    public static void Logout() {
+        Environment.Exit(0);
     }
 
     private static void CreateRecipe() {
@@ -235,7 +276,35 @@ public class MainDummy {
     Console.WriteLine("Enter '7' to Search by Time");
     Console.WriteLine("Enter '8' to Search by a User's Favorite.");
     Console.WriteLine("Enter '9' to Search by Username");
-    
+    int choice = GetIntInput();
+    switch (choice){
+        case 1:
+            Console.WriteLine("Enter the ingredient you would like to search by:");
+            string ingredient = GetInput();
+            searcher = new SearchByIngredients(splankContext, ingredient);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 2:
+            Console.WriteLine("Enter the keyword you would like to search by");
+            string keyword = GetInput();
+            searcher = new SearchKeyWord(splankContext, keyword);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 3:
+            Console.WriteLine("Enter the price range you would like to search for");
+            Console.WriteLine("Min");
+            int min = GetIntInput();
+            Console.WriteLine("Max");
+            int max = GetIntInput();
+            searcher = new SearchByPriceRange(splankContext, min, max);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 4:
+            Console.WriteLine("Enter the star rating you would like to search by");
+
+
+        break;
+    }
     return filteredRecipes;
     }
 
