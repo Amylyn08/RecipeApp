@@ -3,19 +3,44 @@ using RecipeApp.Services;
 using RecipeApp.Security;
 using RecipeApp.Api;
 using RecipeApp.Searcher;
+using RecipeApp.Models;
 
 namespace RecipeApp;
 
 public class MainDummy {
-        public static SplankContext splankContext = new();
-        public static  PasswordEncrypter passwordEncrypter = new();
-        public static IApiForIngredients apiForIngredients = new NutritionFactFetcher();
-        public static UserService userService = new(splankContext, passwordEncrypter);
-        public static RatingService ratingService = new(splankContext);
-        public static RecipeService recipeService = new(splankContext);
-        public static SearcherBase searcher;
+    public static SplankContext splankContext = new();
+    public static  PasswordEncrypter passwordEncrypter = new();
+    public static IApiForIngredients apiForIngredients = new NutritionFactFetcher();
+    public static UserService userService = new(splankContext, passwordEncrypter);
+    public static RatingService ratingService = new(splankContext);
+    public static RecipeService recipeService = new(splankContext);
+    public static SearcherBase searcher;
+    public User currentUser = null;
+    
     public static void Main() {
- 
+        AskLoginOrRegister();
+    }
+
+    public static void AskLoginOrRegister() {
+        const int LOGIN = 1;
+        const int REGISTER = 2;
+        int input = 0;
+        while (true) {
+            try {
+                Console.WriteLine($"Enter {LOGIN} to login");
+                Console.WriteLine($"Enter {REGISTER} to register");
+                input = int.Parse(Console.ReadLine());
+                if (input == LOGIN) {
+                    LoginUser();
+                } else if (input == REGISTER) {
+                    RegisterUser();
+                } else {
+                    throw new FormatException();
+                }
+            } catch (FormatException) {
+                Console.WriteLine($"Please enter either {LOGIN} or {REGISTER}");
+            }
+        }
     }
 }
     // public static void Main(string[] args) {
