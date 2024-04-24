@@ -1,20 +1,19 @@
 namespace RecipeApp.Models;
 
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 /// <summary>
 /// Recipe schema
 /// </summary>
 public class Recipe {
-    private string _name;
-    private string _description;
+    private string _name = null!;
+    private string _description = null!;
     private int _servings;
-    private List<Ingredient> _ingredients;
-    private List<Step> _steps;
-    private List<Rating> _ratings;
-    private List<Tag> _tags;
-    private User _user;
+    private List<Ingredient> _ingredients = null!;
+    private List<Step> _steps = null!;
+    private List<Rating> _ratings = null!;
+    private List<Tag> _tags = null!;
+    private User _user = null!;
 
     public int RecipeId { 
         get; 
@@ -210,6 +209,4 @@ public class Recipe {
         builder.Append("--------------");
         return builder.ToString();
     }
-
-    
 }
