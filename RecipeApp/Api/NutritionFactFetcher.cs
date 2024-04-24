@@ -1,10 +1,11 @@
+using RecipeApp.Exceptions;
 using RecipeApp.Models;
 using System.Text.Json;
 
 namespace RecipeApp.Api;
 
 public class NutritionFactFetcher : IApiForIngredients {
-    public string JsonAsString { get; private set; }
+    public string JsonAsString { get; private set; } = null!;
 
     // This may or may not work depending on the ingredients
     // Use try/catch in the code that is calling this method and simply 
@@ -39,6 +40,9 @@ public class NutritionFactFetcher : IApiForIngredients {
             var fullParsedJsonData = halfParsedData.Substring(0, halfParsedData.IndexOf("}") + 1);
             var apiRep = JsonSerializer.Deserialize<NutritionResponse>(fullParsedJsonData);
 
+            if (apiRep is null) {
+                throw new ApiException("Could not fetch recipe nutrition facts");
+            }
 
             totalCalories += apiRep.calories;
             totalFat += apiRep.fat_total_g;
