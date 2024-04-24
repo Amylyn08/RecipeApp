@@ -264,6 +264,78 @@ public class MainDummy {
         }
         return tags;
     }
+   private static void UpdateRecipe() {
+        for (int i = 0; i < currentUser.MadeRecipes.Count; i++) {
+            int recipeNum = i + 1;
+            Console.WriteLine(recipeNum + ": " + currentUser.MadeRecipes[i].Name);
+        }
+        while (true) {
+            Console.WriteLine("Please choose recipe number to update");
+            try {
+                Recipe recipeToUpdate = currentUser.MadeRecipes[Convert.ToInt32(Console.ReadLine()) - 1];
+                UpdateSingleRecipe(recipeToUpdate);
+                break;
+            } catch (ArgumentOutOfRangeException) {
+                Console.WriteLine("Please enter a valid number");
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+
+    private static void UpdateSingleRecipe(Recipe recipeToUpdate) {
+        Console.WriteLine("Enter 1 to change description");
+        Console.WriteLine("Enter 2 to change servings");
+        Console.WriteLine("Enter 3 to change ingredients");
+        Console.WriteLine("Enter 4 to change steps");
+        Console.WriteLine("Enter 5 to change tags");
+        Console.WriteLine("Enter 6 to change name");
+        Recipe updatedRecipe = recipeToUpdate;
+        int input = Convert.ToInt32(Console.ReadLine());
+        if (input == 1) {
+            Console.WriteLine("Enter new description");
+            updatedRecipe.Description = Console.ReadLine();
+        } else if (input == 2) {
+            Console.WriteLine("Enter new servings");
+            updatedRecipe.Servings = Convert.ToInt32(Console.ReadLine());            
+        } else if (input == 3) {
+            Console.WriteLine("Enter new ingredients");
+            updatedRecipe.Ingredients = CreateListIngredients();
+        } else if (input == 4) {
+            Console.WriteLine("Enter new steps");
+            updatedRecipe.Steps = CreateListStep();
+        } else if (input == 5) {
+            Console.WriteLine("Enter new tags");
+            updatedRecipe.Tags = CreateListTags();
+        } else if (input == 6) {
+            Console.WriteLine("Enter new name");
+            updatedRecipe.Name = Console.ReadLine();
+        }
+        recipeService.UpdateRecipe(recipeToUpdate, updatedRecipe);
+    }
+    private static void DeleteRecipe() {
+        for (int i = 0; i < currentUser.MadeRecipes.Count; i++) {
+            int recipeNum = i + 1;
+            Console.WriteLine(recipeNum + ": " + currentUser.MadeRecipes[i].Name);
+        }
+        while (true) {
+            Console.WriteLine("Please choose recipe number to delete");
+            try {
+                recipeService.DeleteRecipe(currentUser.MadeRecipes[Convert.ToInt32(Console.ReadLine()) - 1]);
+                break;
+            } catch (ArgumentOutOfRangeException) {
+                Console.WriteLine("Please enter a valid number");
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+
+
     private static string GetInput() {
         string input = null;
         do {
