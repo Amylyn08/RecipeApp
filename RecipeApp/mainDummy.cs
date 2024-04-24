@@ -177,7 +177,35 @@ public class MainDummy {
     Console.WriteLine("Enter '7' to Search by Time");
     Console.WriteLine("Enter '8' to Search by a User's Favorite.");
     Console.WriteLine("Enter '9' to Search by Username");
-    
+    int choice = GetIntInput();
+    switch (choice){
+        case 1:
+            Console.WriteLine("Enter the ingredient you would like to search by:");
+            string ingredient = GetInput();
+            searcher = new SearchByIngredients(splankContext, ingredient);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 2:
+            Console.WriteLine("Enter the keyword you would like to search by");
+            string keyword = GetInput();
+            searcher = new SearchKeyWord(splankContext, keyword);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 3:
+            Console.WriteLine("Enter the price range you would like to search for");
+            Console.WriteLine("Min");
+            int min = GetIntInput();
+            Console.WriteLine("Max");
+            int max = GetIntInput();
+            searcher = new SearchByPriceRange(splankContext, min, max);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 4:
+            Console.WriteLine("Enter the star rating you would like to search by");
+            
+
+        break;
+    }
     return filteredRecipes;
     }
 
@@ -201,13 +229,6 @@ public class MainDummy {
         return input;
     }
 
-    private static string GetInput() {
-        string? input;
-        do {
-            input = Console.ReadLine();
-        } while (input == null);
-        return input;
-    }
 
     // // private static List<Recipe> SearchRecipe() {
     // //     SearcherBase search = null;
