@@ -6,7 +6,7 @@ namespace RecipeApp.Searcher;
 public class SearchByUserFavorite : SearcherBase
 {
 
-    private User _user;
+    private readonly User _user;
 
     /// <summary>
     /// Constructor for user, checking if null first.
@@ -27,11 +27,12 @@ public class SearchByUserFavorite : SearcherBase
     /// </summary>
     /// <returns>The list of recipes from user's favorites.</returns>
     public override List<Recipe> FilterRecipes(){
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
         List<Recipe> filteredRecipes = Context.Favourites
                                     .Where(favorite => favorite.User == _user)
                                     .Select(favorite => favorite.Recipe)
-                                    .ToList<Recipe>();
-        
+                                    .ToList();
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
         return filteredRecipes;
     }
 

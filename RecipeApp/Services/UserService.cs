@@ -131,8 +131,10 @@ public class UserService : ServiceBase {
         if (user is null) {
             throw new ArgumentException("User cannot be null !");
         }
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         var alreadyFavourited = Context.Favourites
             .Where(f => f.Recipe.Equals(favourited) && f.User.Equals(user)).FirstOrDefault();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         if (alreadyFavourited is not null) {
             throw new AlreadyFavouritedException();
         }

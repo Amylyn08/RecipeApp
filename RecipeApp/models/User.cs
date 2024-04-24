@@ -8,12 +8,12 @@ namespace RecipeApp.Models;
 /// Represents a user
 /// </summary>
 public class User {
-    private string _password;
-    private string _name;
-    private string _description;
-    private string _salt;
-    private List<Recipe> _favourites;
-    private List<Recipe> _madeRecipes; 
+    private string _password = null!;
+    private string _name = null!;
+    private string _description = null!;
+    private string _salt = null!;
+    private List<Recipe> _favourites = null!;
+    private List<Recipe> _madeRecipes = null!; 
 
     public int UserId {
         get; 
@@ -118,8 +118,14 @@ public class User {
     /// <param name="obj">Object to compare against</param>
     /// <returns>If obj is a User and has the same name</returns>
     public override bool Equals(object? obj) {
+        if (obj is null) return false;
         if (obj.GetType() != typeof(User)) return false;
         User other = (User) obj;
         return Name.Equals(other.Name);
+    }
+
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException();
     }
 }
