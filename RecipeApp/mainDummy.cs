@@ -98,7 +98,7 @@ public class MainDummy {
                 Console.WriteLine("Enter the description of your recipe");
                 string description = Console.ReadLine();
                 Console.WriteLine("Enter the amount of serving your recipe has");
-                int servings = Convert.ToInt32(GetInput());
+                int servings = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Create your ingredients:");
                 List<Ingredient> ingredients = CreateListIngredients();
                 Console.WriteLine("Add your steps:");
@@ -106,13 +106,43 @@ public class MainDummy {
                 Console.WriteLine("Add your tags: ");
                 List<Tag> tags = CreateListTags();
                 Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new(), tags);
-                _recipeService.CreateRecipe(recipe);
+                recipeService.CreateRecipe(recipe);
                 break;
             } catch (ArgumentException e) {
                 Console.Clear();
                 Console.WriteLine(e.Message);
             }
         }
+    }
+
+    private static Ingredient CreateIngredient() {
+        Console.WriteLine("Enter ingredient name:");
+        string name = Console.ReadLine();
+
+        Console.WriteLine("Enter unit of measurement: ");
+        Console.WriteLine("1 (Spoons)");
+        Console.WriteLine("2 (Grams)");
+        Console.WriteLine("3 (Cups)");
+        Console.WriteLine("4 (Teaspoons)");
+        Console.WriteLine("5 (Amount)");
+        
+        int unit = 0;
+        do { unit = Convert.ToInt32(Console.ReadLine()); } 
+        while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
+        
+        Console.WriteLine("Enter the amount:");
+        int quantity = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Enter the price:");
+        double price = Convert.ToInt32(Console.ReadLine());
+
+        UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+        if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
+        else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
+        else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
+        else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
+        else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+        return new Ingredient(name, quantity, unitOfMeasurement, price);
     }
     private static string GetInput() {
         string input = null;
@@ -505,35 +535,35 @@ public class MainDummy {
     // /// Asks the user to create an ingredient object
     // /// </summary>
     // /// <returns>An ingredient object</returns>
-    private static Ingredient CreateIngredient() {
-        Console.WriteLine("Enter ingredient name:");
-        string name = GetInput();
+    // private static Ingredient CreateIngredient() {
+    //     Console.WriteLine("Enter ingredient name:");
+    //     string name = GetInput();
 
-        Console.WriteLine("Enter unit of measurement: ");
-        Console.WriteLine("1 (Spoons)");
-        Console.WriteLine("2 (Grams)");
-        Console.WriteLine("3 (Cups)");
-        Console.WriteLine("4 (Teaspoons)");
-        Console.WriteLine("5 (Amount)");
+    //     Console.WriteLine("Enter unit of measurement: ");
+    //     Console.WriteLine("1 (Spoons)");
+    //     Console.WriteLine("2 (Grams)");
+    //     Console.WriteLine("3 (Cups)");
+    //     Console.WriteLine("4 (Teaspoons)");
+    //     Console.WriteLine("5 (Amount)");
         
-        int unit = 0;
-        do { unit = GetIntInput(); } 
-        while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
+    //     int unit = 0;
+    //     do { unit = GetIntInput(); } 
+    //     while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
         
-        Console.WriteLine("Enter the amount:");
-        int quantity = GetIntInput();
+    //     Console.WriteLine("Enter the amount:");
+    //     int quantity = GetIntInput();
 
-        Console.WriteLine("Enter the price:");
-        double price = GetIntInput();
+    //     Console.WriteLine("Enter the price:");
+    //     double price = GetIntInput();
 
-        UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
-        if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
-        else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
-        else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
-        else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
-        else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
-        return new Ingredient(name, quantity, unitOfMeasurement, price);
-    }
+    //     UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+    //     if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
+    //     else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
+    //     else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
+    //     else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
+    //     else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+    //     return new Ingredient(name, quantity, unitOfMeasurement, price);
+    // }
 
     // /// <summary>
     // /// Creates a list of ingredients chosen by the user
