@@ -3,17 +3,29 @@ using RecipeApp.Models;
 
 namespace RecipeApp.Searcher;
 
-public class SearchAllUsers :SearcherBase{
+public class SearchAllUsers{
 
     private readonly string _criteria;
+    private SplankContext _context;
 
-    public SearchAll(SplankContext context, string username) : base(context){
+    /// <summary>
+    /// Constructor for searchAllUsers, validates username, assigns username
+    /// and context.
+    /// </summary>
+    /// <param name="context">The splank context</param>
+    /// <param name="username">the username of specified by input.</param>
+    /// <exception cref="ArgumentException"></exception>
+    public SearchAllUsers(SplankContext context, string username){
         if (username == null) throw new ArgumentException("Username cannot be null");
         if (username.Length == 0) throw new ArgumentException("Tag name cannot be empty");
-        
+        _criteria = username;
+        _context = context;
     }
 
-    public override List<Recipe> FilterRecipes(){
-
+    public List<User> GetUserByName(string username){
+        List<User> userFiltered = _context.Users
+                                .Where(user => user.Name.Contains(username))
+                                .ToList<User>();
+        return userFiltered;
     }
 }
