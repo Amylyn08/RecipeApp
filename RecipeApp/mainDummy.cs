@@ -4,6 +4,7 @@ using RecipeApp.Security;
 using RecipeApp.Api;
 using RecipeApp.Searcher;
 using RecipeApp.Models;
+using RecipeApp.Exceptions;
 
 namespace RecipeApp;
 
@@ -34,7 +35,7 @@ public class MainDummy {
                     LoginUser();
                     break;
                 } else if (input == REGISTER) {
-                    //RegisterUser();
+                    RegisterUser();
                     break;
                 } else {
                     throw new FormatException();
@@ -46,8 +47,8 @@ public class MainDummy {
     }
 
     public static void LoginUser() {
-        string username = null;
-        string password = null;
+        string username = "";
+        string password = "";
         while (true) {
             try {
                 Console.WriteLine("Enter username: ");
@@ -59,9 +60,34 @@ public class MainDummy {
                 break;
             } catch (ArgumentException e) {
                 Console.WriteLine(e.Message);
+            } catch (UserDoesNotExistException e) {
+                Console.WriteLine(e.Message);
             }
         }
+    }
 
+    public static void RegisterUser() {
+        string username = "";
+        string password = "";
+        string description = "";
+        while (true) {
+            try {
+                Console.WriteLine("Enter username: ");
+                username = Console.ReadLine();
+                Console.WriteLine("Enter password: ");
+                password = Console.ReadLine();
+                Console.WriteLine("Enter description: ");
+                description = Console.ReadLine();
+                userService.Register(username, password, description);
+                Console.WriteLine("You have been registered !");
+                LoginUser();
+                break;
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+            } catch (UserAlreadyExistsException e) {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }
     // public static void Main(string[] args) {
