@@ -31,6 +31,7 @@ public class MainDummy {
         const int CHANGE_PASSWORD = 1;
         const int DELETE_ACCOUNT = 2;
         const int LOGOUT = 3;
+        const int SEARCH = 4;
         while (currentUser is not null) {
             try {
                 Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
@@ -46,6 +47,9 @@ public class MainDummy {
                         break;
                     case LOGOUT:
                         Logout();
+                        break;
+                    case SEARCH:
+                        SearchRecipe();
                         break;
                     default:
                         throw new FormatException(); 
@@ -199,6 +203,64 @@ public class MainDummy {
         else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
         return new Ingredient(name, quantity, unitOfMeasurement, price);
     }
+
+        private static List<Ingredient> CreateListIngredients() {
+        List<Ingredient> ingredients = new List<Ingredient>();
+
+        bool createIng = true;
+
+        while(createIng) {
+            Ingredient ingredient = CreateIngredient();
+            ingredients.Add(ingredient);
+
+            Console.WriteLine("Add another ingredient? (Y/N):");
+            string choice = Console.ReadLine();
+            if(choice.ToUpper() == "N") {
+                createIng = false;
+            }
+        }
+        return ingredients;
+    }
+
+    private static List<Step> CreateListStep() {
+        List<Step> steps = new List<Step>();
+
+        bool createStep = true;
+
+        while(createStep) {
+            Step step = CreateSteps();
+            steps.Add(step);
+
+            Console.WriteLine("Add Step? (Y/N):");
+            string choice = Console.ReadLine();
+            if(choice.ToUpper() == "N") {
+                createStep = false;
+            }
+        }
+        return steps;
+    }
+
+    private static Step CreateSteps() {
+        Console.WriteLine("Enter instruction details:");
+        string instruction = Console.ReadLine();
+        Console.WriteLine("Enter the amount of time in minutes:");
+        int time = Convert.ToInt32(Console.ReadLine());
+        return new Step(time, instruction);
+    }
+
+    public static List<Tag> CreateListTags() {
+        List<Tag> tags = new();
+        for (int i = 0; i < Constants.MAX_TAGS; i++) {
+            Console.WriteLine("Please enter a tag, or nothing to exit");
+            string input = Console.ReadLine();
+            if (input.Length == 0) {
+                return tags;
+            }
+            Tag tag = new(input);
+            tags.Add(tag);
+        }
+        return tags;
+    }
     private static string GetInput() {
         string input = null;
         do {
@@ -218,37 +280,40 @@ public class MainDummy {
     Console.WriteLine("Enter '7' to Search by Time");
     Console.WriteLine("Enter '8' to Search by a User's Favorite.");
     Console.WriteLine("Enter '9' to Search by Username");
-    
+    int choice = GetIntInput();
+    switch (choice){
+        case 1:
+            Console.WriteLine("Enter the ingredient you would like to search by:");
+            string ingredient = GetInput();
+            searcher = new SearchByIngredients(splankContext, ingredient);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 2:
+            Console.WriteLine("Enter the keyword you would like to search by");
+            string keyword = GetInput();
+            searcher = new SearchKeyWord(splankContext, keyword);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 3:
+            Console.WriteLine("Enter the price range you would like to search for");
+            Console.WriteLine("Min");
+            int min = GetIntInput();
+            Console.WriteLine("Max");
+            int max = GetIntInput();
+            searcher = new SearchByPriceRange(splankContext, min, max);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 4:
+            Console.WriteLine("Enter the star rating you would like to search by");
+
+
+        break;
+    }
     return filteredRecipes;
     }
 
     
-    /// <summary>
-    /// Gets an integer input from a user
-    /// </summary>
-    /// <returns>The integer input</returns>
-    private static int GetIntInput() {
-        int input = 0;
-        do {
-            try {
-                input = Convert.ToInt32(GetInput());
-            } catch (FormatException) {
-                Console.WriteLine("Please enter a valid number");
-            }
-            if (input <= 0) {
-                Console.WriteLine("Please enter an amount greater than 0");
-            }
-        } while (input <= 0);
-        return input;
-    }
 
-    private static string GetInput() {
-        string? input;
-        do {
-            input = Console.ReadLine();
-        } while (input == null);
-        return input;
-    }
 
     // // private static List<Recipe> SearchRecipe() {
     // //     SearcherBase search = null;
@@ -624,23 +689,6 @@ public class MainDummy {
     // /// Creates a list of ingredients chosen by the user
     // /// </summary>
     // /// <returns>A list of ingredients</returns>
-    private static List<Ingredient> CreateListIngredients() {
-        List<Ingredient> ingredients = new List<Ingredient>();
-
-        bool createIng = true;
-
-        while(createIng) {
-            Ingredient ingredient = CreateIngredient();
-            ingredients.Add(ingredient);
-
-            Console.WriteLine("Add another ingredient? (Y/N):");
-            string choice = GetInput();
-            if(choice.ToUpper() == "N") {
-                createIng = false;
-            }
-        }
-        return ingredients;
-    }
 
     // /// <summary>
     // /// Asks the user to create a step
@@ -676,19 +724,6 @@ public class MainDummy {
     //     return steps;
     // }
 
-    // public static List<Tag> CreateListTags() {
-    //     List<Tag> tags = new();
-    //     for (int i = 0; i < Constants.MAX_TAGS; i++) {
-    //         Console.WriteLine("Please enter a tag, or nothing to exit");
-    //         string input = GetInput();
-    //         if (input.Length == 0) {
-    //             return tags;
-    //         }
-    //         Tag tag = new(input);
-    //         tags.Add(tag);
-    //     }
-    //     return tags;
-    // }
 
     // private static void UpdateRecipe() {
     //     for (int i = 0; i < _currentUser.MadeRecipes.Count; i++) {
