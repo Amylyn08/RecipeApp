@@ -265,6 +265,26 @@ public class MainDummy {
         return input;
     }
 
+    /// <summary>
+    /// Gets an integer input from a user
+    /// </summary>
+    /// <returns>The integer input</returns>
+    private static int GetIntInput() {
+        int input = 0;
+        do {
+            try {
+                input = Convert.ToInt32(GetInput());
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            }
+            if (input <= 0) {
+                Console.WriteLine("Please enter an amount greater than 0");
+            }
+        } while (input <= 0);
+        return input;
+    }
+
+
     private static List<Recipe> SearchRecipe(){
     List<Recipe> filteredRecipes = new List<Recipe>();
     Console.WriteLine("Enter '1' to Search by Ingredient");
@@ -301,7 +321,40 @@ public class MainDummy {
         break;
         case 4:
             Console.WriteLine("Enter the star rating you would like to search by");
-            int 
+            int rating = GetIntInput();
+            searcher = new SearchByRating(splankContext, rating);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 5:
+            Console.WriteLine("Enter the number of servings you would like to search by");
+            int servings = GetIntInput();
+            searcher = new SearchByServings(splankContext, servings);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 6:
+            Console.WriteLine("Enter the name of tag you would like to search by");
+            string tagName = GetInput();
+            searcher = new SearchByTags(splankContext, tagName);
+            filteredRecipes = searcher.FilterRecipes();
+        break;
+        case 7:
+            Console.WriteLine("Enter the time range of recipe to search by");
+            Console.Write("Min Time:");
+            int minTime = GetIntInput();
+            Console.Write("Max Time");
+            int maxTime = GetIntInput();
+            searcher = new SearchByTime(splankContext, minTime, maxTime);
+            filteredRecipes = searcher.FilterRecipes();
+        break;  
+        case 8:
+            Console.WriteLine("Enter a user in order to view their favorites");
+            //implement a function to retrieve all users by name.
+        break;
+        case 9:
+            Console.WriteLine("Enter a username to view all recipes made by them");
+            string username = GetInput();
+            searcher = new SearchByUsername(splankContext, username);
+            filteredRecipes = searcher.FilterRecipes();
         break;
     }
     return filteredRecipes;

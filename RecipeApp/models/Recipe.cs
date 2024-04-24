@@ -173,6 +173,8 @@ public class Recipe {
         return rating/_ratings.Count;
     }
 
+    
+
     /// <summary>
     /// Returns string representation of a recipe
     /// </summary>
