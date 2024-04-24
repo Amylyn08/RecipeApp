@@ -1,5 +1,6 @@
 namespace RecipeApp.Searcher;
 
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 public class SearchByPriceRange: SearcherBase{
@@ -12,7 +13,8 @@ public class SearchByPriceRange: SearcherBase{
     /// </summary>
     /// <param name="min">The min price.</param>
     /// <param name="max">The max price.</param>
-    public SearchByPriceRange(double min, double max) {
+    public SearchByPriceRange(SplankContext context, double min, double max) : base(context){
+
         if (min < 0 || max < 0)
             throw new ArgumentException("Min or max cannot be negative");
         if (min > max) 
@@ -23,6 +25,10 @@ public class SearchByPriceRange: SearcherBase{
 
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+                                    .Where(recipe => recipe.GetTotalPrice() >= _minPrice
+                                    &&  recipe.GetTotalPrice() <= _maxPrice)
+                                    .ToList<Recipe>();
+        return filteredRecipes;
     }
 }

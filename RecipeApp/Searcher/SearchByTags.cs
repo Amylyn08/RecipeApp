@@ -1,6 +1,8 @@
 namespace RecipeApp.Searcher;
 
 using Microsoft.EntityFrameworkCore;
+using recipeapp;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 public class SearchByTags :SearcherBase{
@@ -11,7 +13,7 @@ public class SearchByTags :SearcherBase{
     /// Contructor for SearchByTags taking in tagName specified.
     /// </summary>
     /// <param name="tagName">The tag name specified.</param>
-    public SearchByTags(string tagName) {
+    public SearchByTags(SplankContext context, string tagName) : base(context){
         if (tagName == null)
             throw new ArgumentException("Tag name cannot be null");
         if (tagName.Length == 0)
@@ -19,8 +21,16 @@ public class SearchByTags :SearcherBase{
         _criteria = tagName;
     }
 
+    /// <summary>
+    /// Gets list of recipes where tag name matches the criteria.
+    /// </summary>
+    /// <returns>Returns filtered list of recipes.</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes 
+                                    .Where(recipe => recipe.Tags.Any(tag => 
+                                    tag.TagName.Equals(_criteria)))
+                                    .ToList<Recipe>();
+        return filteredRecipes;
     }
 }

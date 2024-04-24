@@ -48,6 +48,8 @@ public class Rating {
         }
     }
 
+     
+
     /// <summary>
     /// Constructor of Rating.
     /// </summary>

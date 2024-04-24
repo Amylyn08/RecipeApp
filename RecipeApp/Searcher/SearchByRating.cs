@@ -11,14 +11,23 @@ public class SearchByRating : SearcherBase{
     /// Constructor taking assigning the criteria, corresponding to the num ratings specified.
     /// </summary>
     /// <param name="criteria">Rating/stars</param>
-    public SearchByRating(int rating)  {
+    public SearchByRating(SplankContext content, int rating) : base(content) {
         if (rating < 0 || rating > 5) 
             throw new ArgumentException("Rating must be between 1 and 5");
         _criteria = rating;
     }
 
+    /// <summary>
+    /// Gets list of recipes where the stars of rating matches criteria specified.
+    /// </summary>
+    /// <returns>The filtered list</returns>
     public override List<Recipe> FilterRecipes()
     {
-        throw new NotImplementedException();
+        List<Recipe> filteredRecipes = Context.Recipes
+        .Where(recipe => recipe.GetTotalAverageRating() >=  _criteria
+                && recipe.GetTotalAverageRating() <= _criteria +1)
+                .ToList<Recipe>();
+
+        return filteredRecipes;
     }
 }
