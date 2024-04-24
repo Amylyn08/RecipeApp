@@ -15,7 +15,7 @@ public class MainDummy {
     public static RatingService ratingService = new(splankContext);
     public static RecipeService recipeService = new(splankContext);
     public static SearcherBase searcher;
-    public User currentUser = null;
+    public static User currentUser = null;
     
     public static void Main() {
         AskLoginOrRegister();
@@ -32,8 +32,10 @@ public class MainDummy {
                 input = int.Parse(Console.ReadLine());
                 if (input == LOGIN) {
                     LoginUser();
+                    break;
                 } else if (input == REGISTER) {
-                    RegisterUser();
+                    //RegisterUser();
+                    break;
                 } else {
                     throw new FormatException();
                 }
@@ -41,6 +43,25 @@ public class MainDummy {
                 Console.WriteLine($"Please enter either {LOGIN} or {REGISTER}");
             }
         }
+    }
+
+    public static void LoginUser() {
+        string username = null;
+        string password = null;
+        while (true) {
+            try {
+                Console.WriteLine("Enter username: ");
+                username = Console.ReadLine();
+                Console.WriteLine("Enter password: ");
+                password = Console.ReadLine();
+                currentUser = userService.Login(username, password);
+                Console.WriteLine("Welcome ! You are now logged in !");
+                break;
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+            }
+        }
+
     }
 }
     // public static void Main(string[] args) {
