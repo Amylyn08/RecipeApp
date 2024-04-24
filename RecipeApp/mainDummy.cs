@@ -426,8 +426,15 @@ public class MainDummy {
             filteredRecipes = searcher.FilterRecipes();
         break;  
         case 8:
-            Console.WriteLine("Enter a user in order to view their favorites");
-            //implement a function to retrieve all users by name.
+            Console.WriteLine("Viewing a user's favourite: Enter a username to search for..:");
+            string nameUser = GetInput();
+            SearchAllUsers nameSearcher = new (splankContext, nameUser);
+            List<User> users = nameSearcher.GetUserByName();
+            PrintUsers(users);
+            Console.WriteLine("Select the number of user to view their favorites");
+            int userIndex = GetIntInput();
+            searcher = new SearchByUserFavorite(splankContext, users[userIndex]);
+            filteredRecipes = searcher.FilterRecipes();
         break;
         case 9:
             Console.WriteLine("Enter a username to view all recipes made by them");
@@ -438,6 +445,14 @@ public class MainDummy {
     }
     return filteredRecipes;
     }
+
+    public static void PrintUsers(List<User> users){
+        int index = 0;
+        foreach (User u in users){
+            Console.WriteLine($"[{index}]. Username: {u.Name}, Description: {u.Description}, Number of favorites: {u.Favorites.Count}");
+            index ++;
+        }
+    } 
 }
 
 //hi
