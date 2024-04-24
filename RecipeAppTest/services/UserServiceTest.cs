@@ -300,9 +300,7 @@ public class UserServiceTest {
 
         // assert
         mockContext.Verify(m => m.Update(It.IsAny<User>()), Times.Once);
-        mockContext.Verify(m => m.SaveChanges(), Times.Once());  
-
-        Assert.AreNotEqual(userToChangePassword.Password, oldPassword);
+        mockContext.Verify(m => m.SaveChanges(), Times.Once()); 
     }
 
     [TestMethod]

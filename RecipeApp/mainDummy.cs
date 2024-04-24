@@ -25,9 +25,9 @@ public class MainDummy {
 
     public static void ShowOptions() {
         Console.WriteLine("Welcome user ! Here are your recipes:");
-        foreach (Recipe recipe in currentUser.MadeRecipes) {
-            Console.WriteLine(recipe);
-        }
+        // foreach (Recipe recipe in currentUser.MadeRecipes) {
+        //     Console.WriteLine(recipe);
+        // }
         const int CHANGE_PASSWORD = 1;
         const int DELETE_ACCOUNT = 2;
         const int LOGOUT = 3;
@@ -49,7 +49,7 @@ public class MainDummy {
                         Logout();
                         break;
                     case SEARCH:
-                        SearchRecipe();
+                        //SearchRecipe();
                         break;
                     default:
                         throw new FormatException(); 
@@ -98,6 +98,8 @@ public class MainDummy {
                 Console.WriteLine(e.Message);
             } catch (UserDoesNotExistException e) {
                 Console.WriteLine(e.Message);
+            } catch (InvalidCredentialsException e) {
+                Console.WriteLine(e.Message);
             }
         }
     }
@@ -130,6 +132,7 @@ public class MainDummy {
                 string newPassword = Console.ReadLine();
                 userService.ChangePassword(currentUser, newPassword);
                 Console.WriteLine("Your password has been changed !");
+                break;
             } catch (ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
@@ -269,48 +272,48 @@ public class MainDummy {
         return input;
     }
 
-    private static List<Recipe> SearchRecipe(){
-    List<Recipe> filteredRecipes = new List<Recipe>();
-    Console.WriteLine("Enter '1' to Search by Ingredient");
-    Console.WriteLine("Enter '2' to Search by Keyword");
-    Console.WriteLine("Enter '3' to Search by Price Range");
-    Console.WriteLine("Enter '4' to Search by Rating");
-    Console.WriteLine("Enter '5' to Search by Servings");
-    Console.WriteLine("Enter '6' to Search by Tags");
-    Console.WriteLine("Enter '7' to Search by Time");
-    Console.WriteLine("Enter '8' to Search by a User's Favorite.");
-    Console.WriteLine("Enter '9' to Search by Username");
-    int choice = GetIntInput();
-    switch (choice){
-        case 1:
-            Console.WriteLine("Enter the ingredient you would like to search by:");
-            string ingredient = GetInput();
-            searcher = new SearchByIngredients(splankContext, ingredient);
-            filteredRecipes = searcher.FilterRecipes();
-        break;
-        case 2:
-            Console.WriteLine("Enter the keyword you would like to search by");
-            string keyword = GetInput();
-            searcher = new SearchKeyWord(splankContext, keyword);
-            filteredRecipes = searcher.FilterRecipes();
-        break;
-        case 3:
-            Console.WriteLine("Enter the price range you would like to search for");
-            Console.WriteLine("Min");
-            int min = GetIntInput();
-            Console.WriteLine("Max");
-            int max = GetIntInput();
-            searcher = new SearchByPriceRange(splankContext, min, max);
-            filteredRecipes = searcher.FilterRecipes();
-        break;
-        case 4:
-            Console.WriteLine("Enter the star rating you would like to search by");
+    // private static List<Recipe> SearchRecipe(){
+    // List<Recipe> filteredRecipes = new List<Recipe>();
+    // Console.WriteLine("Enter '1' to Search by Ingredient");
+    // Console.WriteLine("Enter '2' to Search by Keyword");
+    // Console.WriteLine("Enter '3' to Search by Price Range");
+    // Console.WriteLine("Enter '4' to Search by Rating");
+    // Console.WriteLine("Enter '5' to Search by Servings");
+    // Console.WriteLine("Enter '6' to Search by Tags");
+    // Console.WriteLine("Enter '7' to Search by Time");
+    // Console.WriteLine("Enter '8' to Search by a User's Favorite.");
+    // Console.WriteLine("Enter '9' to Search by Username");
+    // int choice = GetIntInput();
+    // switch (choice){
+    //     case 1:
+    //         Console.WriteLine("Enter the ingredient you would like to search by:");
+    //         string ingredient = GetInput();
+    //         searcher = new SearchByIngredients(splankContext, ingredient);
+    //         filteredRecipes = searcher.FilterRecipes();
+    //     break;
+    //     case 2:
+    //         Console.WriteLine("Enter the keyword you would like to search by");
+    //         string keyword = GetInput();
+    //         searcher = new SearchKeyWord(splankContext, keyword);
+    //         filteredRecipes = searcher.FilterRecipes();
+    //     break;
+    //     case 3:
+    //         Console.WriteLine("Enter the price range you would like to search for");
+    //         Console.WriteLine("Min");
+    //         int min = GetIntInput();
+    //         Console.WriteLine("Max");
+    //         int max = GetIntInput();
+    //         searcher = new SearchByPriceRange(splankContext, min, max);
+    //         filteredRecipes = searcher.FilterRecipes();
+    //     break;
+    //     case 4:
+    //         Console.WriteLine("Enter the star rating you would like to search by");
 
 
-        break;
-    }
-    return filteredRecipes;
-    }
+    //     break;
+    // }
+    // return filteredRecipes;
+    // }
 
     
 
