@@ -8,15 +8,60 @@ using RecipeApp.Models;
 namespace RecipeApp;
 
 public class MainDummy {
-        public static SplankContext splankContext = new();
-        public static  PasswordEncrypter passwordEncrypter = new();
-        public static IApiForIngredients apiForIngredients = new NutritionFactFetcher();
-        public static UserService userService = new(splankContext, passwordEncrypter);
-        public static RatingService ratingService = new(splankContext);
-        public static RecipeService recipeService = new(splankContext);
-        public static SearcherBase searcher;
+    public static SplankContext splankContext = new();
+    public static  PasswordEncrypter passwordEncrypter = new();
+    public static IApiForIngredients apiForIngredients = new NutritionFactFetcher();
+    public static UserService userService = new(splankContext, passwordEncrypter);
+    public static RatingService ratingService = new(splankContext);
+    public static RecipeService recipeService = new(splankContext);
+    public static SearcherBase searcher;
+    public static User currentUser = null;
+    
     public static void Main() {
- 
+        AskLoginOrRegister();
+    }
+
+    public static void AskLoginOrRegister() {
+        const int LOGIN = 1;
+        const int REGISTER = 2;
+        int input = 0;
+        while (true) {
+            try {
+                Console.WriteLine($"Enter {LOGIN} to login");
+                Console.WriteLine($"Enter {REGISTER} to register");
+                input = int.Parse(Console.ReadLine());
+                if (input == LOGIN) {
+                    LoginUser();
+                    break;
+                } else if (input == REGISTER) {
+                    //RegisterUser();
+                    break;
+                } else {
+                    throw new FormatException();
+                }
+            } catch (FormatException) {
+                Console.WriteLine($"Please enter either {LOGIN} or {REGISTER}");
+            }
+        }
+    }
+
+    public static void LoginUser() {
+        string username = null;
+        string password = null;
+        while (true) {
+            try {
+                Console.WriteLine("Enter username: ");
+                username = Console.ReadLine();
+                Console.WriteLine("Enter password: ");
+                password = Console.ReadLine();
+                currentUser = userService.Login(username, password);
+                Console.WriteLine("Welcome ! You are now logged in !");
+                break;
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+            }
+        }
+
     }
 
     private static List<Recipe> SearchRecipe(){
