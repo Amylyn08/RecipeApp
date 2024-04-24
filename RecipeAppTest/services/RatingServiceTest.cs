@@ -48,7 +48,7 @@ public class RatingServiceTest {
             new Step(10, "eat")
         };
         Recipe recipe = new Recipe("Recipe1", user, "rida was here", 10, ings, steps, new(), new());
-        Rating rating = null;
+        Rating rating = null!;
 
         var mockSet = new Mock<DbSet<Recipe>>();
 
@@ -72,7 +72,7 @@ public class RatingServiceTest {
         List<Step> steps = new() {
             new Step(10, "eat")
         };
-        Recipe recipe = null;
+        Recipe recipe = null!;
         Rating rating = new Rating(5, "this is amazing", user);
 
         var mockSet = new Mock<DbSet<Recipe>>();

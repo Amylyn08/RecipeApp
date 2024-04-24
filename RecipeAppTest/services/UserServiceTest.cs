@@ -626,6 +626,6 @@ public class UserServiceTest {
     public void DeleteFromFavouritesNullFavouriteThrowsArgumentException() {
         // arrange/assert
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
-        userService.DeleteFromFavourites(null);
+        userService.DeleteFromFavourites(null!);
     }
 }

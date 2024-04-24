@@ -13,7 +13,7 @@ public class SearchAllUsersTest{
     public void UserNameIsNullException(){
         //Arrange
         SplankContext context = new();
-        string username = null;
+        string username = null!;
 
         //Act
         SearchAllUsers searcher = new(context, username);

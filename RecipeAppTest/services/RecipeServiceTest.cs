@@ -40,7 +40,7 @@ public class RecipeServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void InsertRecipeNullThrowsException() {
         //Arrange
-        Recipe recipe = null;
+        Recipe recipe = null!;
 
         var mockSet = new Mock<DbSet<Recipe>>();
 
@@ -83,7 +83,7 @@ public class RecipeServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void DeleteRecipeNullThrowsException() {
         //Arrange
-        Recipe recipe = null;
+        Recipe recipe = null!;
 
         var mockSet = new Mock<DbSet<Recipe>>();
 
@@ -133,7 +133,7 @@ public class RecipeServiceTest {
         List<Step> steps = new() {
             new Step(10, "eat")
         };
-        Recipe recipe1 = null;
+        Recipe recipe1 = null!;
         Recipe recipe2 = new Recipe("potato", user, "rida was here", 10, ings, steps, new(), new());
 
         var mockSet = new Mock<DbSet<Recipe>>();
@@ -160,7 +160,7 @@ public class RecipeServiceTest {
             new Step(10, "eat")
         };
         Recipe recipe1 = new Recipe("Recipe1", user, "rida was here", 10, ings, steps, new(), new());
-        Recipe recipe2 = null;
+        Recipe recipe2 = null!;
 
         var mockSet = new Mock<DbSet<Recipe>>();
 

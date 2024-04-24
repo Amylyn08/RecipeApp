@@ -14,7 +14,7 @@ public class SearchByTagsTest {
     [ExpectedException(typeof(ArgumentException))]
     public void TagIsNullException(){
         //Arrange
-        string tagName = null;
+        string tagName = null!;
         SplankContext context = new();
         
         //Act
