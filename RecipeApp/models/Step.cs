@@ -9,14 +9,14 @@ namespace RecipeApp.Models;
 /// 
 public class Step {
     private int _timeInMinutes;
-    private string _instruction;
+    private string _instruction = null!;
 
     public int StepId {
         get; 
         set;
     }
 
-    public Recipe Recipe {
+    public Recipe? Recipe {
         get; 
         set;
     }
