@@ -94,18 +94,18 @@ public class MainDummy {
         while (true) {
             try {
                 Console.WriteLine("Enter the name of your recipe: ");
-                string name = GetInput();
+                string name = Console.ReadLine();
                 Console.WriteLine("Enter the description of your recipe");
-                string description = GetInput();
+                string description = Console.ReadLine();
                 Console.WriteLine("Enter the amount of serving your recipe has");
-                int servings = GetIntInput();
+                int servings = Convert.ToInt32(GetInput());
                 Console.WriteLine("Create your ingredients:");
                 List<Ingredient> ingredients = CreateListIngredients();
                 Console.WriteLine("Add your steps:");
                 List<Step> steps = CreateListStep();
                 Console.WriteLine("Add your tags: ");
                 List<Tag> tags = CreateListTags();
-                Recipe recipe = new(name, _currentUser, description, servings, ingredients, steps, new(), tags);
+                Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new(), tags);
                 _recipeService.CreateRecipe(recipe);
                 break;
             } catch (ArgumentException e) {
@@ -113,27 +113,6 @@ public class MainDummy {
                 Console.WriteLine(e.Message);
             }
         }
-    }
-    private static string GetInput() {
-        string input = null;
-        do {
-            input = Console.ReadLine();
-        } while (input == null);
-        return input;
-    }
-    private static int GetIntInput() {
-        int input = 0;
-        do {
-            try {
-                input = Convert.ToInt32(GetInput());
-            } catch (FormatException) {
-                Console.WriteLine("Please enter a valid number");
-            }
-            if (input <= 0) {
-                Console.WriteLine("Please enter an amount greater than 0");
-            }
-        } while (input <= 0);
-        return input;
     }
 }
     // public static void Main(string[] args) {
