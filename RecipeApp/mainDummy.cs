@@ -90,6 +90,20 @@ public class MainDummy {
         }
     }
 
+    public static void ChangePassword() {
+        string newPassword = "";
+        while (true) {
+            try {
+                Console.WriteLine("Enter new password");
+                newPassword = Console.ReadLine();
+                userService.ChangePassword(currentUser, newPassword);
+                Console.WriteLine("Your password has been changed !");
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+
     private static void CreateRecipe() {
         while (true) {
             try {
