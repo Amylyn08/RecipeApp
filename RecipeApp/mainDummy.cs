@@ -7,22 +7,17 @@ using RecipeApp.Searcher;
 namespace RecipeApp;
 
 public class MainDummy {
+        public static SplankContext splankContext = new();
+        public static  PasswordEncrypter passwordEncrypter = new();
+        public static IApiForIngredients apiForIngredients = new NutritionFactFetcher();
+        public static UserService userService = new(splankContext, passwordEncrypter);
+        public static RatingService ratingService = new(splankContext);
+        public static RecipeService recipeService = new(splankContext);
+        public static SearcherBase searcher;
     public static void Main() {
-        SplankContext splankContext = new();
-        PasswordEncrypter passwordEncrypter = new();
-        IApiForIngredients apiForIngredients = new NutritionFactFetcher();
-        UserService userService = new(splankContext, passwordEncrypter);
-        RatingService ratingService = new(splankContext);
-        RecipeService recipeService = new(splankContext);
-        SearcherBase searcherBase;
+ 
     }
 }
-    // private static User? _currentUser = null;
-    // private static readonly UserService _userService = new();
-    // private static readonly RecipeService _recipeService = new();
-    // private static readonly NutritionFactFetcher _nutritionFactFetcher = new(); 
-    // private static readonly RatingService _ratingService = new();
-
     // public static void Main(string[] args) {
     //     MockDatabase.Init();
     //     Console.WriteLine("Enter 1 to login or 2 to register");
