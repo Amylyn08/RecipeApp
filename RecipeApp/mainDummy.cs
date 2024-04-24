@@ -1,11 +1,22 @@
+using RecipeApp.Context;
+using RecipeApp.Services;
+using RecipeApp.Security;
+using RecipeApp.Api;
+using RecipeApp.Searcher;
 
 namespace RecipeApp;
 
 public class MainDummy {
     public static void Main() {
-        
+        SplankContext splankContext = new();
+        PasswordEncrypter passwordEncrypter = new();
+        IApiForIngredients apiForIngredients = new NutritionFactFetcher();
+        UserService userService = new(splankContext, passwordEncrypter);
+        RatingService ratingService = new(splankContext);
+        RecipeService recipeService = new(splankContext);
+        SearcherBase searcherBase;
     }
-
+}
     // private static User? _currentUser = null;
     // private static readonly UserService _userService = new();
     // private static readonly RecipeService _recipeService = new();
@@ -590,4 +601,3 @@ public class MainDummy {
     //     PasswordEncrypter enc = new();
     //     Console.WriteLine(enc.Encrypt(passwordToHash));
     // }
-}
