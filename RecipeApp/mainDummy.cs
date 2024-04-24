@@ -243,8 +243,7 @@ public class MainDummy {
         break;
         case 4:
             Console.WriteLine("Enter the star rating you would like to search by");
-
-
+            int 
         break;
     }
     return filteredRecipes;
