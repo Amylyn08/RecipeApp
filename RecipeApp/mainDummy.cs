@@ -24,6 +24,10 @@ public class MainDummy {
     }
 
     public static void ShowOptions() {
+        Console.WriteLine("Welcome user ! Here are your recipes:");
+        foreach (Recipe recipe in currentUser.MadeRecipes) {
+            Console.WriteLine(recipe);
+        }
         const int CHANGE_PASSWORD = 1;
         const int DELETE_ACCOUNT = 2;
         const int LOGOUT = 3;
