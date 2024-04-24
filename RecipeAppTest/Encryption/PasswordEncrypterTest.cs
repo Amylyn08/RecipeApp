@@ -46,8 +46,9 @@ public class PasswordEncrypterTest {
         // arrange
         PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
         string salt = passwordEncrypter.CreateSalt();
+        string input = null!;
         // act
-        passwordEncrypter.CreateHash(null , salt);
+        passwordEncrypter.CreateHash(input , salt);
     }
 
     [TestMethod]
@@ -65,8 +66,9 @@ public class PasswordEncrypterTest {
     public void GenerateHashNullSaltThrowsArgumentException() {
         // arrange
         PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
+        string salt = null!;
         // act
-        passwordEncrypter.CreateHash("Some password", null);
+        passwordEncrypter.CreateHash("Some password", salt);
     }
 
     [TestMethod]

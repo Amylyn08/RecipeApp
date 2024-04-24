@@ -10,8 +10,9 @@ public class NutritionFactFetcherTest {
     public void FetchNullRecipeThrowsArgumentException() {
         // Arrange
         NutritionFactFetcher nutritionFactFetcher = new NutritionFactFetcher();
+        Recipe recipe = null!;
         // Act
-        nutritionFactFetcher.Fetch(null);
+        nutritionFactFetcher.Fetch(recipe);
     }
 
     [TestMethod]

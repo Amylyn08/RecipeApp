@@ -30,7 +30,7 @@ public class RecipeTest {
         string name = "Potato esquisite";
         int servings = 3;
         string description = "Description";
-        User user = null;
+        User user = null!;
         List<Ingredient> ingredients = new() { new Ingredient("Potato", 1, UnitOfMeasurement.AMOUNT, 100) };
         List<Rating> ratings = new() { new Rating(5, "Rating", new User("name", "mama","passsssssss",new List<Recipe>(), new List<Recipe>(), "salt")) };
         List<Tag> tags = new() { new Tag("Vegan") };
@@ -43,7 +43,7 @@ public class RecipeTest {
     public void DescriptionNull_Throws_ArgumentException() {
         string name = "Potato esquisite";
         int servings = 3;
-        string description = null;
+        string description = null!;
         User user = new("Username", "Description", "Password", new List<Recipe>(), new List<Recipe>(), "salt");
         List<Ingredient> ingredients = new() { new Ingredient("Potato", 1, UnitOfMeasurement.AMOUNT, 100) };
         List<Rating> ratings = new() { new Rating(5, "Rating", new User("name", "mama","passsssssss", new List<Recipe>(), new List<Recipe>(), "salt")) };
@@ -87,7 +87,7 @@ public class RecipeTest {
         int servings = 0;
         string description = "Description";
         User user = new("Username", "Description", "Password", new List<Recipe>(), new List<Recipe>(), "salt");
-        List<Ingredient> ingredients = null;
+        List<Ingredient> ingredients = null!;
         List<Rating> ratings = new() { new Rating(5, "Rating", new User("name", "mama","passsssssss", new List<Recipe>(), new List<Recipe>(), "salt")) };
         List<Tag> tags = new() { new Tag("Vegan") };
         List<Step> steps = new() { new Step(5, "Do potato")};
@@ -144,7 +144,7 @@ public class RecipeTest {
         string description = "Description";
         User user = new("Username", "Description", "Password", new List<Recipe>(), new List<Recipe>(), "salt");
         List<Ingredient> ingredients = new() { new Ingredient("Potato", 1, UnitOfMeasurement.AMOUNT, 100) };
-        List<Rating> ratings = null;
+        List<Rating> ratings = null!;
         List<Tag> tags = new() { new Tag("Vegan") };
         List<Step> steps = new() { new Step(5, "Do potato")};
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
@@ -159,7 +159,7 @@ public class RecipeTest {
         User user = new("Username", "Description", "Password", new List<Recipe>(), new List<Recipe>(), "salt");
         List<Ingredient> ingredients = new() { new Ingredient("Potato", 1, UnitOfMeasurement.AMOUNT, 100) };
         List<Rating> ratings = new() { new Rating(5, "Rating", new User("name", "mama","passsssssss", new List<Recipe>(), new List<Recipe>(), "salt")) };
-        List<Tag> tags = null;
+        List<Tag> tags = null!;
         List<Step> steps = new() { new Step(5, "Do potato")};
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
     }
@@ -222,7 +222,7 @@ public class RecipeTest {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void NameNull_Throws_ArgumentException() {
-        string name = null;
+        string name = null!;
         int servings = 1;
         string description = "A salty potato";
         User user = new("PotatoLover32", "I love potatoes", "PotatoPotatoPotatp", new List<Recipe>(), new List<Recipe>(), "salt");
@@ -259,7 +259,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato"),};
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        recipe.Name = null;
+        recipe.Name = null!;
     }
 
     [TestMethod]
@@ -289,7 +289,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato"),};
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        recipe.Description = null;
+        recipe.Description = null!;
     }
 
     [TestMethod]
@@ -334,7 +334,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato") };
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        recipe.Ingredients = null;
+        recipe.Ingredients = null!;
     }
 
     [TestMethod]
@@ -364,7 +364,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato") };
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        recipe.Steps = null;
+        recipe.Steps = null!;
     }
 
     [TestMethod]
@@ -394,7 +394,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato") };
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        recipe.Ratings = null;
+        recipe.Ratings = null!;
     }
 
     [TestMethod]
@@ -409,7 +409,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato") };
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        recipe.Tags = null;
+        recipe.Tags = null!;
     }
 
     [TestMethod]

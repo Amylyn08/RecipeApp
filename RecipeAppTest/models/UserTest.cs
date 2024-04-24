@@ -10,7 +10,7 @@ public class UserTest {
     [ExpectedException(typeof(ArgumentException))]
     public void NullName_Throws_ArugumentException() {
         //Act
-        User Rida = new User(null, "rida was here", "PrabBoss123", new List<Recipe>(), new List<Recipe>(), "Salt");
+        User Rida = new User(null!, "rida was here", "PrabBoss123", new List<Recipe>(), new List<Recipe>(), "Salt");
     }
 
     [TestMethod]
@@ -31,7 +31,7 @@ public class UserTest {
     [ExpectedException(typeof(ArgumentException))]
     public void NullPassword_Throws_ArugumentException() {
         //Act
-        User Rida = new User("Rida", "rida was here", null, new List<Recipe>(), new List<Recipe>(), "Salt");
+        User Rida = new User("Rida", "rida was here", null!, new List<Recipe>(), new List<Recipe>(), "Salt");
     }
 
     [TestMethod]
@@ -44,7 +44,7 @@ public class UserTest {
     [TestMethod]
     public void NullDescription_BecomesEmptyString() {
         //Act
-        User Rida = new User("Rida", null, "PrabBoss123", new List<Recipe>(), new List<Recipe>(), "Salt");
+        User Rida = new User("Rida", null!, "PrabBoss123", new List<Recipe>(), new List<Recipe>(), "Salt");
         //Assert
         Assert.AreEqual("", Rida.Description);
     }
