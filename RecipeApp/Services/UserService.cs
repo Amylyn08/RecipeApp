@@ -99,10 +99,8 @@ public class UserService : ServiceBase {
         if (newPassword.Length < Constants.MIN_PASS_LENGTH) {
             throw new ArgumentException($"New password must be at least {Constants.MIN_PASS_LENGTH} characters long !");
         }
-        var salt = Encrypter.CreateSalt();
-        var hashedPassword = Encrypter.CreateHash(userToChangePassword.Password, salt);
+        var hashedPassword = Encrypter.CreateHash(newPassword, userToChangePassword.Salt);
         userToChangePassword.Password = hashedPassword;
-        userToChangePassword.Salt = salt;
         Context.Update(userToChangePassword);
         Context.SaveChanges();
     }
