@@ -20,17 +20,47 @@ public class MainDummy {
     
     public static void Main() {
         AskLoginOrRegister();
+        ShowOptions();
+    }
+
+    public static void ShowOptions() {
+        const int CHANGE_PASSWORD = 1;
+        const int DELETE_ACCOUNT = 2;
+        const int LOGOUT = 3;
+        while (currentUser is not null) {
+            try {
+                Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
+                Console.WriteLine($"Enter {DELETE_ACCOUNT} to delete account");
+                Console.WriteLine($"Enter {LOGOUT} to logout");
+                int input = int.Parse(Console.ReadLine());
+                switch (input) {
+                    case CHANGE_PASSWORD:
+                        ChangePassword();
+                        break;
+                    case DELETE_ACCOUNT:
+                        DeleteAccount();
+                        break;
+                    case LOGOUT:
+                        Logout();
+                        break;
+                    default:
+                        throw new FormatException(); 
+                }
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid option");
+            }
+        }
+        Console.WriteLine("Goodbye !");
     }
 
     public static void AskLoginOrRegister() {
         const int LOGIN = 1;
         const int REGISTER = 2;
-        int input = 0;
         while (true) {
             try {
                 Console.WriteLine($"Enter {LOGIN} to login");
                 Console.WriteLine($"Enter {REGISTER} to register");
-                input = int.Parse(Console.ReadLine());
+                int input = int.Parse(Console.ReadLine());
                 if (input == LOGIN) {
                     LoginUser();
                     break;
@@ -47,14 +77,12 @@ public class MainDummy {
     }
 
     public static void LoginUser() {
-        string username = "";
-        string password = "";
         while (true) {
             try {
                 Console.WriteLine("Enter username: ");
-                username = Console.ReadLine();
+                string username = Console.ReadLine();
                 Console.WriteLine("Enter password: ");
-                password = Console.ReadLine();
+                string password = Console.ReadLine();
                 currentUser = userService.Login(username, password);
                 Console.WriteLine("Welcome ! You are now logged in !");
                 break;
@@ -67,17 +95,14 @@ public class MainDummy {
     }
 
     public static void RegisterUser() {
-        string username = "";
-        string password = "";
-        string description = "";
         while (true) {
             try {
                 Console.WriteLine("Enter username: ");
-                username = Console.ReadLine();
+                string username = Console.ReadLine();
                 Console.WriteLine("Enter password: ");
-                password = Console.ReadLine();
+                string password = Console.ReadLine();
                 Console.WriteLine("Enter description: ");
-                description = Console.ReadLine();
+                string description = Console.ReadLine();
                 userService.Register(username, password, description);
                 Console.WriteLine("You have been registered !");
                 LoginUser();
@@ -91,17 +116,29 @@ public class MainDummy {
     }
 
     public static void ChangePassword() {
-        string newPassword = "";
         while (true) {
             try {
                 Console.WriteLine("Enter new password");
-                newPassword = Console.ReadLine();
+                string newPassword = Console.ReadLine();
                 userService.ChangePassword(currentUser, newPassword);
                 Console.WriteLine("Your password has been changed !");
             } catch (ArgumentException e) {
                 Console.WriteLine(e.Message);
             }
         }
+    }
+
+    public static void DeleteAccount() {
+        try {
+            userService.DeleteAccount(currentUser);
+        } catch (ArgumentException e) {
+            Console.WriteLine(e.Message);
+        }
+        Logout();
+    }
+
+    public static void Logout() {
+        Environment.Exit(0);
     }
 
     private static void CreateRecipe() {
