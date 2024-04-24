@@ -27,6 +27,7 @@ public class MainDummy {
         const int CHANGE_PASSWORD = 1;
         const int DELETE_ACCOUNT = 2;
         const int LOGOUT = 3;
+        const int SEARCH = 4;
         while (currentUser is not null) {
             try {
                 Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
@@ -42,6 +43,9 @@ public class MainDummy {
                         break;
                     case LOGOUT:
                         Logout();
+                        break;
+                    case SEARCH:
+                        SearchRecipe();
                         break;
                     default:
                         throw new FormatException(); 
@@ -239,7 +243,7 @@ public class MainDummy {
         break;
         case 4:
             Console.WriteLine("Enter the star rating you would like to search by");
-            
+
 
         break;
     }
