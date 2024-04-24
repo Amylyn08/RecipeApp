@@ -20,6 +20,37 @@ public class MainDummy {
     
     public static void Main() {
         AskLoginOrRegister();
+        ShowOptions();
+    }
+
+    public static void ShowOptions() {
+        const int CHANGE_PASSWORD = 1;
+        const int DELETE_ACCOUNT = 2;
+        const int LOGOUT = 3;
+        while (currentUser is not null) {
+            try {
+                Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
+                Console.WriteLine($"Enter {DELETE_ACCOUNT} to delete account");
+                Console.WriteLine($"Enter {LOGOUT} to logout");
+                int input = int.Parse(Console.ReadLine());
+                switch (input) {
+                    case CHANGE_PASSWORD:
+                        ChangePassword();
+                        break;
+                    case DELETE_ACCOUNT:
+                        DeleteAccount();
+                        break;
+                    case LOGOUT:
+                        Logout();
+                        break;
+                    default:
+                        throw new FormatException(); 
+                }
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid option");
+            }
+        }
+        Console.WriteLine("Goodbye !");
     }
 
     public static void AskLoginOrRegister() {
@@ -103,6 +134,7 @@ public class MainDummy {
         } catch (ArgumentException e) {
             Console.WriteLine(e.Message);
         }
+        Logout();
     }
 
     public static void Logout() {
