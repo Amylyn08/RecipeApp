@@ -3,6 +3,7 @@ using RecipeApp.Services;
 using RecipeApp.Security;
 using RecipeApp.Api;
 using RecipeApp.Searcher;
+using RecipeApp.Models;
 
 namespace RecipeApp;
 
@@ -17,6 +18,104 @@ public class MainDummy {
     public static void Main() {
  
     }
+
+    private static List<Recipe> SearchRecipe(){
+    List<Recipe> filteredRecipes = new List<Recipe>();
+    Console.WriteLine("Enter '1' to Search by Ingredient");
+    Console.WriteLine("Enter '2' to Search by Keyword");
+    Console.WriteLine("Enter '3' to Search by Price Range");
+    Console.WriteLine("Enter '4' to Search by Rating");
+    Console.WriteLine("Enter '5' to Search by Servings");
+    Console.WriteLine("Enter '6' to Search by Tags");
+    Console.WriteLine("Enter '7' to Search by Time");
+    Console.WriteLine("Enter '8' to Search by a User's Favorite.");
+    Console.WriteLine("Enter '9' to Search by Username");
+    
+    return filteredRecipes;
+    }
+
+    
+    /// <summary>
+    /// Gets an integer input from a user
+    /// </summary>
+    /// <returns>The integer input</returns>
+    private static int GetIntInput() {
+        int input = 0;
+        do {
+            try {
+                input = Convert.ToInt32(GetInput());
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            }
+            if (input <= 0) {
+                Console.WriteLine("Please enter an amount greater than 0");
+            }
+        } while (input <= 0);
+        return input;
+    }
+
+    private static string GetInput() {
+        string? input;
+        do {
+            input = Console.ReadLine();
+        } while (input == null);
+        return input;
+    }
+
+    // // private static List<Recipe> SearchRecipe() {
+    // //     SearcherBase search = null;
+    // //     Console.WriteLine("Enter 1 to Search By Keyword");
+    // //     Console.WriteLine("Enter 2 to Search By Ingredient name");
+    // //     Console.WriteLine("Enter 3 to Search By Price range");
+    // //     Console.WriteLine("Enter 4 to Search By Rating");
+    // //     Console.WriteLine("Enter 5 to Search By Serving");
+    // //     Console.WriteLine("Enter 6 to Search By Tag name");
+    // //     Console.WriteLine("Enter 7 to Search By Prepare Time range");
+    // //     Console.WriteLine("Enter 8 to Search By Username");
+    // //     int input = GetIntInput();
+    // //     if(input == 1){
+    // //         Console.WriteLine("Enter a keyword: ");
+    // //         string keyword = GetInput();
+    // //         search = new SearchKeyWord(keyword);
+    // //     } else if(input == 2) {
+    // //         Console.WriteLine("Enter an ingredient:");
+    // //         string ingredientName = GetInput();
+    // //         search = new SearchByIngredients(ingredientName);
+    // //     } else if(input == 3) {
+    // //         Console.WriteLine("Enter the min");
+    // //         double min = double.Parse(Console.ReadLine());
+    // //         Console.WriteLine("Enter the max");
+    // //         double max = double.Parse(Console.ReadLine());
+    // //         search = new SearchByPriceRange(min, max);
+    // //     } else if(input == 4) {
+    // //         Console.WriteLine("Enter rating to search");
+    // //         int rating = GetIntInput();
+    // //         search = new SearchByRating(rating);
+    // //     } else if(input == 5) {
+    // //         Console.WriteLine("Enter num of servings");
+    // //         int serving = GetIntInput();
+    // //         search = new SearchByServings(serving);
+    // //     } else if(input == 6) {
+    // //         Console.WriteLine("Enter tag name");
+    // //         string tagName = GetInput();
+    // //         search = new SearchByTags(tagName);
+    // //     } else if(input == 7) {
+    // //         Console.WriteLine("Enter min time");
+    // //         int min = GetIntInput();
+    // //         Console.WriteLine("Enter max time");
+    // //         int max = GetIntInput();
+    // //         search = new SearchByTime(min, max);
+    // //     } else if(input == 8) {
+    // //         Console.WriteLine("Enter username:");
+    // //         string username = GetInput();
+    // //         search = new SearchByUsername(username);
+    // //     } else {
+    // //         Console.WriteLine("Invalid input");
+    // //         return null;
+    // //     }
+    // //     return _recipeService.SearchRecipes(search);
+    // // }
+
 }
     // public static void Main(string[] args) {
     //     MockDatabase.Init();
@@ -268,14 +367,6 @@ public class MainDummy {
     //     return decision;
     // }
 
-    // private static string GetInput() {
-    //     string input = null;
-    //     do {
-    //         input = Console.ReadLine();
-    //     } while (input == null);
-    //     return input;
-    // }
-
     // /// <summary>
     // /// Allows the user to create a recipe
     // /// </summary>
@@ -306,24 +397,6 @@ public class MainDummy {
     //     }
     // }
 
-    // /// <summary>
-    // /// Gets an integer input from a user
-    // /// </summary>
-    // /// <returns>The integer input</returns>
-    // private static int GetIntInput() {
-    //     int input = 0;
-    //     do {
-    //         try {
-    //             input = Convert.ToInt32(GetInput());
-    //         } catch (FormatException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         }
-    //         if (input <= 0) {
-    //             Console.WriteLine("Please enter an amount greater than 0");
-    //         }
-    //     } while (input <= 0);
-    //     return input;
-    // }
 
     // /// <summary>
     // /// Asks the user to create an ingredient object
