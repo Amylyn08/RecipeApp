@@ -95,6 +95,20 @@ public class MainDummy {
         } while (input == null);
         return input;
     }
+    private static int GetIntInput() {
+        int input = 0;
+        do {
+            try {
+                input = Convert.ToInt32(GetInput());
+            } catch (FormatException) {
+                Console.WriteLine("Please enter a valid number");
+            }
+            if (input <= 0) {
+                Console.WriteLine("Please enter an amount greater than 0");
+            }
+        } while (input <= 0);
+        return input;
+    }
 }
     // public static void Main(string[] args) {
     //     MockDatabase.Init();
