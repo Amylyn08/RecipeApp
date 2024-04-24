@@ -89,6 +89,38 @@ public class MainDummy {
             }
         }
     }
+
+    private static void CreateRecipe() {
+        while (true) {
+            try {
+                Console.WriteLine("Enter the name of your recipe: ");
+                string name = GetInput();
+                Console.WriteLine("Enter the description of your recipe");
+                string description = GetInput();
+                Console.WriteLine("Enter the amount of serving your recipe has");
+                int servings = GetIntInput();
+                Console.WriteLine("Create your ingredients:");
+                List<Ingredient> ingredients = CreateListIngredients();
+                Console.WriteLine("Add your steps:");
+                List<Step> steps = CreateListStep();
+                Console.WriteLine("Add your tags: ");
+                List<Tag> tags = CreateListTags();
+                Recipe recipe = new(name, _currentUser, description, servings, ingredients, steps, new(), tags);
+                _recipeService.CreateRecipe(recipe);
+                break;
+            } catch (ArgumentException e) {
+                Console.Clear();
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+    private static string GetInput() {
+        string input = null;
+        do {
+            input = Console.ReadLine();
+        } while (input == null);
+        return input;
+    }
 }
     // public static void Main(string[] args) {
     //     MockDatabase.Init();
@@ -401,57 +433,57 @@ public class MainDummy {
     // /// Asks the user to create an ingredient object
     // /// </summary>
     // /// <returns>An ingredient object</returns>
-    // private static Ingredient CreateIngredient() {
-    //     Console.WriteLine("Enter ingredient name:");
-    //     string name = GetInput();
+    private static Ingredient CreateIngredient() {
+        Console.WriteLine("Enter ingredient name:");
+        string name = GetInput();
 
-    //     Console.WriteLine("Enter unit of measurement: ");
-    //     Console.WriteLine("1 (Spoons)");
-    //     Console.WriteLine("2 (Grams)");
-    //     Console.WriteLine("3 (Cups)");
-    //     Console.WriteLine("4 (Teaspoons)");
-    //     Console.WriteLine("5 (Amount)");
+        Console.WriteLine("Enter unit of measurement: ");
+        Console.WriteLine("1 (Spoons)");
+        Console.WriteLine("2 (Grams)");
+        Console.WriteLine("3 (Cups)");
+        Console.WriteLine("4 (Teaspoons)");
+        Console.WriteLine("5 (Amount)");
         
-    //     int unit = 0;
-    //     do { unit = GetIntInput(); } 
-    //     while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
+        int unit = 0;
+        do { unit = GetIntInput(); } 
+        while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
         
-    //     Console.WriteLine("Enter the amount:");
-    //     int quantity = GetIntInput();
+        Console.WriteLine("Enter the amount:");
+        int quantity = GetIntInput();
 
-    //     Console.WriteLine("Enter the price:");
-    //     double price = GetIntInput();
+        Console.WriteLine("Enter the price:");
+        double price = GetIntInput();
 
-    //     UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
-    //     if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
-    //     else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
-    //     else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
-    //     else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
-    //     else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
-    //     return new Ingredient(name, quantity, unitOfMeasurement, price);
-    // }
+        UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+        if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
+        else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
+        else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
+        else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
+        else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+        return new Ingredient(name, quantity, unitOfMeasurement, price);
+    }
 
     // /// <summary>
     // /// Creates a list of ingredients chosen by the user
     // /// </summary>
     // /// <returns>A list of ingredients</returns>
-    // private static List<Ingredient> CreateListIngredients() {
-    //     List<Ingredient> ingredients = new List<Ingredient>();
+    private static List<Ingredient> CreateListIngredients() {
+        List<Ingredient> ingredients = new List<Ingredient>();
 
-    //     bool createIng = true;
+        bool createIng = true;
 
-    //     while(createIng) {
-    //         Ingredient ingredient = CreateIngredient();
-    //         ingredients.Add(ingredient);
+        while(createIng) {
+            Ingredient ingredient = CreateIngredient();
+            ingredients.Add(ingredient);
 
-    //         Console.WriteLine("Add another ingredient? (Y/N):");
-    //         string choice = GetInput();
-    //         if(choice.ToUpper() == "N") {
-    //             createIng = false;
-    //         }
-    //     }
-    //     return ingredients;
-    // }
+            Console.WriteLine("Add another ingredient? (Y/N):");
+            string choice = GetInput();
+            if(choice.ToUpper() == "N") {
+                createIng = false;
+            }
+        }
+        return ingredients;
+    }
 
     // /// <summary>
     // /// Asks the user to create a step
