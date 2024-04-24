@@ -28,8 +28,7 @@ public class SearchByTags :SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes 
-                                    .Where(recipe => recipe.Tags.Any(tag => 
-                                    tag.TagName.Equals(_criteria)))
+                                    .Where(recipe => recipe.Tags.Any(tag => tag.TagName.Equals(_criteria)))
                                     .ToList<Recipe>();
         return filteredRecipes;
     }

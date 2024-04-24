@@ -4,19 +4,19 @@ namespace RecipeApp.Models;
 /// Represents a tag to search for
 /// </summary>
 public class Tag {
-    private string _tagName;
+    private string? _tagName = null!;
    
     public int TagId { 
         get; 
         set; 
     }
 
-    public List<Recipe> Recipes {
+    public List<Recipe>? Recipes {
         get; 
         set;
     }
 
-    public string TagName { 
+    public string? TagName { 
         get => _tagName; 
         set {
             if (value == null) 
@@ -47,7 +47,7 @@ public class Tag {
     /// Overriden ToString()
     /// </summary>
     /// <returns>String representation of a tag</returns>
-    public override string ToString() {
+    public override string? ToString() {
         return TagName;
     }
 }

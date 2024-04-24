@@ -15,8 +15,8 @@ public class MainDummy {
     public static UserService userService = new(splankContext, passwordEncrypter);
     public static RatingService ratingService = new(splankContext);
     public static RecipeService recipeService = new(splankContext);
-    public static SearcherBase searcher;
-    public static User currentUser = null;
+    public static SearcherBase? searcher;
+    public static User currentUser = null!;
     
     public static void Main() {
         AskLoginOrRegister();
@@ -37,7 +37,7 @@ public class MainDummy {
                 Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
                 Console.WriteLine($"Enter {DELETE_ACCOUNT} to delete account");
                 Console.WriteLine($"Enter {LOGOUT} to logout");
-                int input = int.Parse(Console.ReadLine());
+                int input = int.Parse(Console.ReadLine()!);
                 switch (input) {
                     case CHANGE_PASSWORD:
                         ChangePassword();
@@ -68,7 +68,7 @@ public class MainDummy {
             try {
                 Console.WriteLine($"Enter {LOGIN} to login");
                 Console.WriteLine($"Enter {REGISTER} to register");
-                int input = int.Parse(Console.ReadLine());
+                int input = int.Parse(Console.ReadLine()!);
                 if (input == LOGIN) {
                     LoginUser();
                     break;
@@ -88,9 +88,9 @@ public class MainDummy {
         while (true) {
             try {
                 Console.WriteLine("Enter username: ");
-                string username = Console.ReadLine();
+                string username = Console.ReadLine()!;
                 Console.WriteLine("Enter password: ");
-                string password = Console.ReadLine();
+                string password = Console.ReadLine()!;
                 currentUser = userService.Login(username, password);
                 Console.WriteLine("Welcome ! You are now logged in !");
                 break;
@@ -108,11 +108,11 @@ public class MainDummy {
         while (true) {
             try {
                 Console.WriteLine("Enter username: ");
-                string username = Console.ReadLine();
+                string username = Console.ReadLine()!;
                 Console.WriteLine("Enter password: ");
-                string password = Console.ReadLine();
+                string password = Console.ReadLine()!;
                 Console.WriteLine("Enter description: ");
-                string description = Console.ReadLine();
+                string description = Console.ReadLine()!;
                 userService.Register(username, password, description);
                 Console.WriteLine("You have been registered !");
                 LoginUser();
@@ -129,7 +129,7 @@ public class MainDummy {
         while (true) {
             try {
                 Console.WriteLine("Enter new password");
-                string newPassword = Console.ReadLine();
+                string newPassword = Console.ReadLine()!;
                 userService.ChangePassword(currentUser, newPassword);
                 Console.WriteLine("Your password has been changed !");
                 break;
@@ -156,9 +156,9 @@ public class MainDummy {
         while (true) {
             try {
                 Console.WriteLine("Enter the name of your recipe: ");
-                string name = Console.ReadLine();
+                string name = Console.ReadLine()!;
                 Console.WriteLine("Enter the description of your recipe");
-                string description = Console.ReadLine();
+                string description = Console.ReadLine()!;
                 Console.WriteLine("Enter the amount of serving your recipe has");
                 int servings = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Create your ingredients:");
@@ -179,7 +179,7 @@ public class MainDummy {
 
     private static Ingredient CreateIngredient() {
         Console.WriteLine("Enter ingredient name:");
-        string name = Console.ReadLine();
+        string name = Console.ReadLine()!;
 
         Console.WriteLine("Enter unit of measurement: ");
         Console.WriteLine("1 (Spoons)");
@@ -217,7 +217,7 @@ public class MainDummy {
             ingredients.Add(ingredient);
 
             Console.WriteLine("Add another ingredient? (Y/N):");
-            string choice = Console.ReadLine();
+            string choice = Console.ReadLine()!;
             if(choice.ToUpper() == "N") {
                 createIng = false;
             }
@@ -235,7 +235,7 @@ public class MainDummy {
             steps.Add(step);
 
             Console.WriteLine("Add Step? (Y/N):");
-            string choice = Console.ReadLine();
+            string choice = Console.ReadLine()!;
             if(choice.ToUpper() == "N") {
                 createStep = false;
             }
@@ -245,7 +245,7 @@ public class MainDummy {
 
     private static Step CreateSteps() {
         Console.WriteLine("Enter instruction details:");
-        string instruction = Console.ReadLine();
+        string instruction = Console.ReadLine()!;
         Console.WriteLine("Enter the amount of time in minutes:");
         int time = Convert.ToInt32(Console.ReadLine());
         return new Step(time, instruction);
@@ -255,7 +255,7 @@ public class MainDummy {
         List<Tag> tags = new();
         for (int i = 0; i < Constants.MAX_TAGS; i++) {
             Console.WriteLine("Please enter a tag, or nothing to exit");
-            string input = Console.ReadLine();
+            string input = Console.ReadLine()!;
             if (input.Length == 0) {
                 return tags;
             }
@@ -296,7 +296,7 @@ public class MainDummy {
         int input = Convert.ToInt32(Console.ReadLine());
         if (input == 1) {
             Console.WriteLine("Enter new description");
-            updatedRecipe.Description = Console.ReadLine();
+            updatedRecipe.Description = Console.ReadLine()!;
         } else if (input == 2) {
             Console.WriteLine("Enter new servings");
             updatedRecipe.Servings = Convert.ToInt32(Console.ReadLine());            
@@ -311,7 +311,7 @@ public class MainDummy {
             updatedRecipe.Tags = CreateListTags();
         } else if (input == 6) {
             Console.WriteLine("Enter new name");
-            updatedRecipe.Name = Console.ReadLine();
+            updatedRecipe.Name = Console.ReadLine()!;
         }
         recipeService.UpdateRecipe(recipeToUpdate, updatedRecipe);
     }
@@ -337,9 +337,9 @@ public class MainDummy {
 
 
     private static string GetInput() {
-        string input = null;
+        string input = null!;
         do {
-            input = Console.ReadLine();
+            input = Console.ReadLine()!;
         } while (input == null);
         return input;
     }
