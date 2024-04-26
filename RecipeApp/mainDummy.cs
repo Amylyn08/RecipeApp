@@ -51,7 +51,11 @@ public class MainDummy {
                         Logout();
                         break;
                     case SEARCH:
-                        SearchRecipe();
+                        List<Recipe> recipes = SearchRecipe();
+                        if (recipes is null || recipes.Count == 0) {
+                            throw new Exception();
+                        }
+                        PrintRecipes(recipes);
                         break;
                     case VIEW_RECIPES:
                         DisplayRecipes();
@@ -470,6 +474,14 @@ public class MainDummy {
             index ++;
         }
     } 
+
+    public static void PrintRecipes(List<Recipe> recipes){
+        int index = 0;
+        foreach(Recipe r in recipes){
+            Console.WriteLine($"[{index}]: {r}");
+            index ++;
+        }
+    }
 }
 
 //hi
