@@ -3,6 +3,7 @@ namespace RecipeApp.Services;
 using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Models;
+using RecipeApp.Searcher;
 using RecipeApp.Security;
 
 /// <summary>
@@ -54,7 +55,6 @@ public class UserService : ServiceBase {
         if (!encryptedPasswordFromDatabase.Equals(encryptedPassword)) {
             throw new InvalidCredentialsException("Invalid credentials provided !");
         }
-
         return userInDatabase;
     }
 

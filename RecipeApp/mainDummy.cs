@@ -24,19 +24,21 @@ public class MainDummy {
     }
 
     public static void ShowOptions() {
-        Console.WriteLine("Welcome user ! Here are your recipes:");
-        // foreach (Recipe recipe in currentUser.MadeRecipes) {
-        //     Console.WriteLine(recipe);
-        // }
+        Console.WriteLine($"Welcome {currentUser.Name} !");
         const int CHANGE_PASSWORD = 1;
         const int DELETE_ACCOUNT = 2;
         const int LOGOUT = 3;
         const int SEARCH = 4;
+        const int VIEW_RECIPES = 5;
+        const int CREATE_RECIPE = 6;
         while (currentUser is not null) {
             try {
                 Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
                 Console.WriteLine($"Enter {DELETE_ACCOUNT} to delete account");
                 Console.WriteLine($"Enter {LOGOUT} to logout");
+                Console.WriteLine($"Enter {SEARCH} to search for recipes");
+                Console.WriteLine($"Enter {VIEW_RECIPES} to view your recipes");
+                Console.WriteLine($"Enter {CREATE_RECIPE} to create a new recipe");
                 int input = int.Parse(Console.ReadLine()!);
                 switch (input) {
                     case CHANGE_PASSWORD:
@@ -49,7 +51,13 @@ public class MainDummy {
                         Logout();
                         break;
                     case SEARCH:
-                        //SearchRecipe();
+                        SearchRecipe();
+                        break;
+                    case VIEW_RECIPES:
+                        DisplayRecipes();
+                        break;
+                    case CREATE_RECIPE:
+                        CreateRecipe();
                         break;
                     default:
                         throw new FormatException(); 
@@ -92,7 +100,6 @@ public class MainDummy {
                 Console.WriteLine("Enter password: ");
                 string password = Console.ReadLine()!;
                 currentUser = userService.Login(username, password);
-                Console.WriteLine("Welcome ! You are now logged in !");
                 break;
             } catch (ArgumentException e) {
                 Console.WriteLine(e.Message);
@@ -150,6 +157,16 @@ public class MainDummy {
 
     public static void Logout() {
         Environment.Exit(0);
+    }
+
+    public static void DisplayRecipes() {
+        if (currentUser.MadeRecipes is null || currentUser.MadeRecipes.Count == 0) {
+            Console.WriteLine("No recipes to show !");
+            return;
+        }
+        foreach (Recipe recipe in currentUser.MadeRecipes) {
+            Console.WriteLine(recipe);
+        }
     }
 
     private static void CreateRecipe() {
