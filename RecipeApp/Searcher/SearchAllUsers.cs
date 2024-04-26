@@ -27,8 +27,8 @@ public class SearchAllUsers
     public List<User> GetUserByName()
     {
         List<User> userFiltered = _context.Users
-                                .Where(user => user.Name.ToLower()
-                                                        .Contains(_criteria.ToLower()))
+                                .Where(user => user.Name.Equals(_criteria))
+                                // .Contains(_criteria))
                                 .ToList<User>();
         return userFiltered;
     }
