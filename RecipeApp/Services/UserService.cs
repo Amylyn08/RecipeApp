@@ -55,6 +55,7 @@ public class UserService : ServiceBase {
         if (!encryptedPasswordFromDatabase.Equals(encryptedPassword)) {
             throw new InvalidCredentialsException("Invalid credentials provided !");
         }
+        userInDatabase.Favorites = new SearchByUserFavorite(Context, userInDatabase).FilterRecipes();
         return userInDatabase;
     }
 
