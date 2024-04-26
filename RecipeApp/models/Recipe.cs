@@ -110,6 +110,8 @@ public class Recipe {
         }
     }
 
+    public int UserId { get; set; }
+
     /// <summary>
     /// Constructor with user, ingredients, steps and ratings
     /// </summary>

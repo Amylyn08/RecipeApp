@@ -13,6 +13,8 @@ public class Rating {
         set;
     }
 
+    public int RecipeId { get; set; }
+
     public int RatingId { 
         get; 
         set; 
@@ -47,6 +49,8 @@ public class Rating {
             _user = value;
         }
     }
+
+    public int UserId { get; set; }
 
      
 

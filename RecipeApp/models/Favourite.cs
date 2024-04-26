@@ -18,6 +18,9 @@ public class Favourite {
             _recipe = value;
         } 
     }
+
+    public int RecipeId { get; set; }
+
     /// <summary>
     /// Getter and setter for User. Checks if user is null before assigning.
     /// </summary>
@@ -30,6 +33,8 @@ public class Favourite {
             _user = value;
         } 
     }
+
+    public int UserId { get; set; }
 
     /// <summary>
     /// Empty constructor for entity framework.
