@@ -370,6 +370,19 @@ public class MainDummy {
         }
     }
 
+    private static Rating CreateRating() {
+        System.Console.WriteLine("How many stars: ");
+        int stars = Convert.ToInt32(Console.ReadLine());
+        System.Console.WriteLine("Write a description if you want:");
+        string description = Console.ReadLine();
+        return new Rating(stars, description, currentUser);
+
+    }
+    private static void RateRecipe(Recipe recipe) {
+        Rating newRating = CreateRating();
+        ratingService.RatingRecipe(newRating, recipe);
+    }
+
 
     private static string GetInput() {
         string input = null!;
@@ -467,7 +480,7 @@ public class MainDummy {
             List<User> users = nameSearcher.GetUserByName();
             PrintUsers(users);
             Console.WriteLine("Select the number of user to view their favorites");
-            int userIndex = GetIntInput();
+            int userIndex = Convert.ToInt32(Console.ReadLine());
             searcher = new SearchByUserFavorite(splankContext, users[userIndex]);
             filteredRecipes = searcher.FilterRecipes();
         break;
@@ -484,7 +497,7 @@ public class MainDummy {
     public static void PrintUsers(List<User> users){
         int index = 0;
         foreach (User u in users){
-            Console.WriteLine($"[{index}]. Username: {u.Name}, Description: {u.Description}, Number of favorites: {u.Favorites.Count}");
+            Console.WriteLine($"[{index}]. Username: {u.Name}, Description: {u.Description}");
             index ++;
         }
     } 
@@ -503,3 +516,4 @@ public class MainDummy {
 }
 
 //hi
+//Hello!
