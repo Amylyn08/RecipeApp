@@ -353,6 +353,19 @@ public class MainDummy {
         }
     }
 
+    private static Rating CreateRating() {
+        System.Console.WriteLine("How many stars: ");
+        int stars = Convert.ToInt32(Console.ReadLine());
+        System.Console.WriteLine("Write a description if you want:");
+        string description = Console.ReadLine();
+        return new Rating(stars, description, currentUser);
+
+    }
+    private static void RateRecipe(Recipe recipe) {
+        Rating newRating = CreateRating();
+        ratingService.RatingRecipe(newRating, recipe);
+    }
+
 
     private static string GetInput() {
         string input = null!;
@@ -486,3 +499,4 @@ public class MainDummy {
 }
 
 //hi
+//Hello!
