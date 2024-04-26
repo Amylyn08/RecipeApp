@@ -52,9 +52,6 @@ public class MainDummy {
                         break;
                     case SEARCH:
                         List<Recipe> recipes = SearchRecipe();
-                        if (recipes is null || recipes.Count == 0) {
-                            throw new Exception();
-                        }
                         PrintRecipes(recipes);
                         break;
                     case VIEW_RECIPES:
@@ -476,6 +473,10 @@ public class MainDummy {
     } 
 
     public static void PrintRecipes(List<Recipe> recipes){
+        if (recipes is null || recipes.Count == 0) {
+            Console.WriteLine("No recipes to print");
+            return;
+        }
         int index = 0;
         foreach(Recipe r in recipes){
             Console.WriteLine($"[{index}]: {r}");
