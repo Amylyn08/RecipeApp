@@ -27,11 +27,20 @@ public class SearchByPriceRange: SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
+            .GroupJoin(Context.Ingredients,
+                        recipe => recipe.RecipeId,
+                        ingredient => ingredient.RecipeId,
+                        (recipe, ingredients) => new
+                        {
+                            Recipe = recipe,
+                            TotalPrice = ingredients.Sum(ing => ing.Price)
+                        })
+            .Where(recipe => recipe.TotalPrice >= _minPrice && recipe.TotalPrice <= _maxPrice)
+            .Select(recipe => recipe.Recipe)
             .Include(recipe => recipe.Ingredients)
             .Include(recipe => recipe.Steps)
-            .Include(recipe => recipe.Tags)
             .Include(recipe => recipe.Ratings)
-            .Where(recipe => recipe.GetTotalPrice() >= _minPrice && recipe.GetTotalPrice() <= _maxPrice)
+            .Include(recipe => recipe.Tags)
             .ToList();
         return filteredRecipes;
     }
