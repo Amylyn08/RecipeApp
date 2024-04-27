@@ -33,6 +33,8 @@ public class MainDummy {
         const int CREATE_RECIPE = 6;
         const int VIEW_FAVOURITES = 7;
         const int DELETE_FAVOURITES = 8;
+        const int UPDATE_RECIPE = 9;
+        const int DELETE_RECIPE = 10;
         while (currentUser is not null) {
             try {
                 Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
@@ -43,6 +45,8 @@ public class MainDummy {
                 Console.WriteLine($"Enter {CREATE_RECIPE} to create a new recipe");
                 Console.WriteLine($"Enter {VIEW_FAVOURITES} to view your favourites");
                 Console.WriteLine($"Enter {DELETE_FAVOURITES} to delete from favourites");
+                Console.WriteLine($"Enter {UPDATE_RECIPE} to update your recipes");
+                Console.WriteLine($"Enter {DELETE_RECIPE} to delete your recipes");
                 int input = int.Parse(Console.ReadLine()!);
                 switch (input) {
                     case CHANGE_PASSWORD:
@@ -56,7 +60,8 @@ public class MainDummy {
                         break;
                     case SEARCH:
                         List<Recipe> recipes = SearchRecipe();
-                        PrintRecipes(recipes);
+                        Recipe recipe = ChooseRecipe(recipes);
+                        RateOrViewOrFavorite(recipe);
                         break;
                     case VIEW_RECIPES:
                         DisplayRecipes();
@@ -66,6 +71,12 @@ public class MainDummy {
                         break;
                     case VIEW_FAVOURITES:
                         ViewFavourites();
+                        break;
+                    case UPDATE_RECIPE:
+                        UpdateRecipe();
+                        break;
+                    case DELETE_RECIPE:
+                        DeleteRecipe();
                         break;
                     default:
                         throw new FormatException(); 
@@ -180,8 +191,11 @@ public class MainDummy {
     public static void DisplayRecipes() {
         SearchByUsername searcher = new(splankContext, currentUser.Name);
         var recipes = searcher.FilterRecipes();
+        int index = 1;
         foreach (Recipe recipe in recipes) {
+            Console.WriteLine(index);
             Console.WriteLine(recipe);
+            index++;
         }
     }
 
@@ -298,10 +312,7 @@ public class MainDummy {
         return tags;
     }
    private static void UpdateRecipe() {
-        for (int i = 0; i < currentUser.MadeRecipes.Count; i++) {
-            int recipeNum = i + 1;
-            Console.WriteLine(recipeNum + ": " + currentUser.MadeRecipes[i].Name);
-        }
+        DisplayRecipes();
         while (true) {
             Console.WriteLine("Please choose recipe number to update");
             try {
@@ -316,6 +327,7 @@ public class MainDummy {
                 Console.WriteLine(e.Message);
             }
         }
+        System.Console.WriteLine("Recipe updated succesfully!");
     }
 
     private static void UpdateSingleRecipe(Recipe recipeToUpdate) {
@@ -349,10 +361,7 @@ public class MainDummy {
         recipeService.UpdateRecipe(recipeToUpdate, updatedRecipe);
     }
     private static void DeleteRecipe() {
-        for (int i = 0; i < currentUser.MadeRecipes.Count; i++) {
-            int recipeNum = i + 1;
-            Console.WriteLine(recipeNum + ": " + currentUser.MadeRecipes[i].Name);
-        }
+        DisplayRecipes();
         while (true) {
             Console.WriteLine("Please choose recipe number to delete");
             try {
@@ -366,6 +375,7 @@ public class MainDummy {
                 Console.WriteLine(e.Message);
             }
         }
+        Console.WriteLine("Recipe deleted succesfully!");
     }
 
     private static Rating CreateRating() {
@@ -381,6 +391,32 @@ public class MainDummy {
         ratingService.RatingRecipe(newRating, recipe);
     }
 
+    private static Recipe ChooseRecipe(List<Recipe> recipes) {
+        PrintRecipes(recipes);
+        Console.WriteLine("Choose a recipe or input nothing to leave");
+        int index = Convert.ToInt32(Console.ReadLine());
+        return recipes[index];
+    }
+
+    private static void RateOrViewOrFavorite(Recipe recipe) {
+        Console.WriteLine("Enter '1' to View the recipe");
+        Console.WriteLine("Enter '2' to Rate the recipe");
+        Console.WriteLine("Enter '3' to Favorite the recipe");
+        Console.WriteLine("Enter Nothing to exit");
+        int choice = Convert.ToInt32(Console.ReadLine());
+        switch(choice) {
+            case 1:
+                Console.WriteLine(recipe);
+                break;
+            case 2:
+                RateRecipe(recipe);
+                break;
+            case 3:
+                break;
+            default:
+                return;
+        }   
+    }
 
     private static string GetInput() {
         string input = null!;
