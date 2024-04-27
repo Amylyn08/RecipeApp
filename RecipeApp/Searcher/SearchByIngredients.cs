@@ -1,5 +1,6 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
@@ -30,10 +31,12 @@ public class SearchByIngredients : SearcherBase
     public override List<Recipe> FilterRecipes()
     {
         var recipes = Context.Recipes
-                    .Where(recipe => recipe.Ingredients.Any(ingredient =>
-                     ingredient.Name.Contains(_criteria) ))
-                    .ToList<Recipe>();
-
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Tags)
+            .Include(recipe => recipe.Ratings)
+            .Where(recipe => recipe.Ingredients.Any(ingredient => ingredient.Name.Contains(_criteria)))
+            .ToList();
         return recipes;
     }
 }

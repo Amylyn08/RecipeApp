@@ -28,8 +28,12 @@ public class SearchByUsername : SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
-                                    .Where(recipe => recipe.User.Name.Equals(_criteria))
-                                    .ToList<Recipe>();
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Tags)
+            .Include(recipe => recipe.Ratings)
+            .Where(recipe => recipe.User.Name.Equals(_criteria))
+            .ToList();
         return filteredRecipes;
     }
 }

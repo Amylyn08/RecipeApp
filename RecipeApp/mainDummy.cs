@@ -178,11 +178,9 @@ public class MainDummy {
     }
 
     public static void DisplayRecipes() {
-        if (currentUser.MadeRecipes is null || currentUser.MadeRecipes.Count == 0) {
-            Console.WriteLine("No recipes to show !");
-            return;
-        }
-        foreach (Recipe recipe in currentUser.MadeRecipes) {
+        SearchByUsername searcher = new(splankContext, currentUser.Name);
+        var recipes = searcher.FilterRecipes();
+        foreach (Recipe recipe in recipes) {
             Console.WriteLine(recipe);
         }
     }

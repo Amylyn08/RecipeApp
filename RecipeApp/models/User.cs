@@ -13,7 +13,7 @@ public class User {
     private string _description = null!;
     private string _salt = null!;
     private List<Recipe> _favourites = null!;
-    private List<Recipe> _madeRecipes = null!; 
+    private List<Recipe> _madeRecipes; 
 
     public int UserId {
         get; 
@@ -75,7 +75,6 @@ public class User {
         }
     }
 
-    [InverseProperty("User")]
     public List<Recipe> MadeRecipes {
         get => _madeRecipes;
         set {

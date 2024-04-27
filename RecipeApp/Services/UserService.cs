@@ -1,5 +1,6 @@
 namespace RecipeApp.Services;
 
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Models;
@@ -45,7 +46,9 @@ public class UserService : ServiceBase {
         if (password is null) {
             throw new ArgumentException("Password cannot be null");
         }
-        User? userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).FirstOrDefault();
+        User? userInDatabase = Context.Users
+            .Where(u => u.Name.Equals(username))
+            .FirstOrDefault();
         if (userInDatabase is null) {
             throw new UserDoesNotExistException($"User {username} does not exist !");
         }
