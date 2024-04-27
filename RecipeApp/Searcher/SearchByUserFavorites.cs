@@ -30,11 +30,11 @@ public class SearchByUserFavorite : SearcherBase
     public override List<Recipe> FilterRecipes(){
         List<Recipe> filteredRecipes = Context.Favourites
             .Where(favorite => favorite.User.Equals(_user))
+            .Include(fav => fav.Recipe.Ingredients)    
+            .Include(fav => fav.Recipe.Steps)
+            .Include(fav => fav.Recipe.Tags)
+            .Include(fav => fav.Recipe.Ratings)
             .Select(favorite => favorite.Recipe)
-            .Include(recipe => recipe.Ingredients)
-            .Include(recipe => recipe.Steps)
-            .Include(recipe => recipe.Tags)
-            .Include(recipe => recipe.Ratings)
             .ToList();
         return filteredRecipes;
     }
