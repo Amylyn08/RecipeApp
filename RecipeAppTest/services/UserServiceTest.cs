@@ -616,16 +616,18 @@ public class UserServiceTest {
         UserService userService = new(mockContext.Object, encrypter);
 
         // act
-        userService.DeleteFromFavourites(listFavourites[0]);
+        userService.DeleteFromFavourites(listRecipe[0], listUser[0]);
 
         // assert
         mockContext.Verify(m => m.Remove(It.IsAny<Favourite>()), Times.Once);
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
     }
 
-    public void DeleteFromFavouritesNullFavouriteThrowsArgumentException() {
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void DeleteFromFavouritesNullArgumentsThrowsArgumentException() {
         // arrange/assert
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
-        userService.DeleteFromFavourites(null!);
+        userService.DeleteFromFavourites(null!, null!);
     }
 }

@@ -151,10 +151,14 @@ public class UserService : ServiceBase {
     /// </summary>
     /// <param name="favouriteToDelete">Entry to delete</param>
     /// <exception cref="ArgumentException">If entry is null</exception>
-    public void DeleteFromFavourites(Favourite favouriteToDelete) {
-        if (favouriteToDelete is null) {
+    public void DeleteFromFavourites(Recipe recipe, User user) {
+        if (recipe is null) {
             throw new ArgumentException("Favourite to delete cannot be null !");
         }
+        if (user is null) {
+            throw new ArgumentException("User cannot be null");
+        }
+        Favourite favouriteToDelete = Context.Favourites.Where(f => f.RecipeId == recipe.RecipeId && f.UserId == user.UserId).FirstOrDefault();
         Context.Remove(favouriteToDelete);
         Context.SaveChanges();
     }

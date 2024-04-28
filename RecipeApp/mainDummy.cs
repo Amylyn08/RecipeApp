@@ -66,8 +66,16 @@ public class MainDummy
                         break;
                     case SEARCH:
                         List<Recipe> recipes = SearchRecipe();
-                        Recipe recipe = ChooseRecipe(recipes);
-                        RateOrViewOrFavorite(recipe);
+                        if (recipes is null) {
+                            continue;
+                        } else {
+                            Recipe recipe = ChooseRecipe(recipes);
+                            if (recipe == null) {
+                                continue;
+                            } else {
+                                RateOrViewOrFavorite(recipe);
+                            }
+                        }
                         break;
                     case VIEW_RECIPES:
                         DisplayRecipes();
@@ -77,6 +85,9 @@ public class MainDummy
                         break;
                     case VIEW_FAVOURITES:
                         ViewFavourites();
+                        break;
+                    case DELETE_FAVOURITES:
+                        DeleteFromFavourites();
                         break;
                     case UPDATE_RECIPE:
                         UpdateRecipe();
@@ -224,7 +235,10 @@ public class MainDummy
 
     public static void ViewFavourites()
     {
-        if (currentUser.Favorites is null || currentUser.Favorites.Count == 0)
+        SearchByUserFavorite searcher = new(splankContext, currentUser);
+        List<Recipe> favourites = searcher.FilterRecipes();
+        currentUser.Favorites = favourites;
+        if (favourites is null || favourites.Count == 0)
         {
             Console.WriteLine("No favourites to show !");
             return;
@@ -232,6 +246,35 @@ public class MainDummy
         foreach (Recipe recipe in currentUser.Favorites)
         {
             Console.WriteLine(recipe);
+        }
+    }
+
+    public static void DeleteFromFavourites() 
+    {
+        currentUser.Favorites = new SearchByUserFavorite(splankContext, currentUser).FilterRecipes();
+        if (currentUser.Favorites is not null && currentUser.Favorites.Count > 0) 
+        {
+            int index = 0;
+            foreach (Recipe recipe in currentUser.Favorites) 
+            {   
+                Console.WriteLine("Favourite #:" + index);
+                Console.WriteLine(recipe);
+            }
+            Console.WriteLine("Enter favourite number to delete");
+            try {
+                Recipe chosen = currentUser.Favorites[index];
+                Favourite favourite = new();
+                userService.DeleteFromFavourites(chosen, currentUser);
+                Console.WriteLine("Successfully delete favourite !");
+            } catch (ArgumentOutOfRangeException) {
+                return;
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+                return;
+            }
+        } else {
+            Console.WriteLine("No favourites to delete !");
+            return;
         }
     }
 
@@ -490,10 +533,14 @@ public class MainDummy
 
     private static Recipe ChooseRecipe(List<Recipe> recipes)
     {
-        PrintRecipes(recipes);
-        Console.WriteLine("Choose a recipe or input nothing to leave");
-        int index = Convert.ToInt32(Console.ReadLine());
-        return recipes[index];
+        try {
+            PrintRecipes(recipes);
+            Console.WriteLine("Choose a recipe or input nothing to leave");
+            int index = Convert.ToInt32(Console.ReadLine());
+            return recipes[index];
+        } catch (ArgumentOutOfRangeException) {
+            return null;
+        }
     }
 
     private static void RateOrViewOrFavorite(Recipe recipe)
@@ -512,7 +559,13 @@ public class MainDummy
                 RateRecipe(recipe);
                 break;
             case 3:
-                break;
+                try {
+                    userService.AddToFavourites(recipe, currentUser);
+                    Console.WriteLine("Recipe added to favourites !");
+                } catch (AlreadyFavouritedException e) {
+                    Console.WriteLine(e.Message);
+                }
+                break; 
             default:
                 return;
         }
