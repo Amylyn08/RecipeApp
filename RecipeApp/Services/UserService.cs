@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Models;
+using RecipeApp.Searcher;
 using RecipeApp.Security;
 
 /// <summary>
@@ -11,7 +12,6 @@ using RecipeApp.Security;
 /// </summary>
 public class UserService : ServiceBase {
     private PasswordEncrypter _encrypter = null!;
-    private SplankContext _context = null!;
 
     public PasswordEncrypter Encrypter { 
         get => _encrypter; 
@@ -46,9 +46,11 @@ public class UserService : ServiceBase {
         if (password is null) {
             throw new ArgumentException("Password cannot be null");
         }
-        User? userInDatabase = Context.Users.Where(u => u.Name.Equals(username)).FirstOrDefault();
+        User? userInDatabase = Context.Users
+            .Where(u => u.Name.Equals(username))
+            .FirstOrDefault();
         if (userInDatabase is null) {
-            throw new UserDoesNotExistException($"User ${username} does not exist !");
+            throw new UserDoesNotExistException($"User {username} does not exist !");
         }
         var encryptedPasswordFromDatabase = userInDatabase.Password;
         var saltFromDatabase = userInDatabase.Salt;
@@ -56,7 +58,6 @@ public class UserService : ServiceBase {
         if (!encryptedPasswordFromDatabase.Equals(encryptedPassword)) {
             throw new InvalidCredentialsException("Invalid credentials provided !");
         }
-
         return userInDatabase;
     }
 
@@ -100,10 +101,8 @@ public class UserService : ServiceBase {
         if (newPassword.Length < Constants.MIN_PASS_LENGTH) {
             throw new ArgumentException($"New password must be at least {Constants.MIN_PASS_LENGTH} characters long !");
         }
-        var salt = Encrypter.CreateSalt();
-        var hashedPassword = Encrypter.CreateHash(userToChangePassword.Password, salt);
+        var hashedPassword = Encrypter.CreateHash(newPassword, userToChangePassword.Salt);
         userToChangePassword.Password = hashedPassword;
-        userToChangePassword.Salt = salt;
         Context.Update(userToChangePassword);
         Context.SaveChanges();
     }
@@ -152,10 +151,14 @@ public class UserService : ServiceBase {
     /// </summary>
     /// <param name="favouriteToDelete">Entry to delete</param>
     /// <exception cref="ArgumentException">If entry is null</exception>
-    public void DeleteFromFavourites(Favourite favouriteToDelete) {
-        if (favouriteToDelete is null) {
+    public void DeleteFromFavourites(Recipe recipe, User user) {
+        if (recipe is null) {
             throw new ArgumentException("Favourite to delete cannot be null !");
         }
+        if (user is null) {
+            throw new ArgumentException("User cannot be null");
+        }
+        Favourite favouriteToDelete = Context.Favourites.Where(f => f.RecipeId == recipe.RecipeId && f.UserId == user.UserId).FirstOrDefault();
         Context.Remove(favouriteToDelete);
         Context.SaveChanges();
     }

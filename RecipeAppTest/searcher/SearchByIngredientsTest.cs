@@ -14,7 +14,7 @@ public class SearchByIngredientsTests{
     [ExpectedException(typeof(ArgumentException))]
     public void IngredientNameNull_ThrowsException() {
         //Arrange
-        string ingName = null;
+        string ingName = null!;
         SplankContext context = new SplankContext();
         //Act
         SearcherBase searcher = new SearchByIngredients(context, ingName);

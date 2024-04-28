@@ -31,10 +31,21 @@ public class SearchByTime : SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
-                                    .Where(recipe => recipe.Steps.Any(step =>
-                                    step.TimeInMinutes >= _minTime && 
-                                    step.TimeInMinutes <= _maxTime))
-                                    .ToList<Recipe>();
+            .GroupJoin(Context.Steps,
+                        recipe => recipe.RecipeId,
+                        step => step.RecipeId,
+                        (recipe, steps) => new
+                        {
+                            Recipe = recipe,
+                            TotalTime = steps.Sum(ing => ing.TimeInMinutes)
+                        })
+            .Where(recipe => recipe.TotalTime >= _minTime && recipe.TotalTime <= _maxTime)
+            .Select(recipe => recipe.Recipe)
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Ratings)
+            .Include(recipe => recipe.Tags)
+            .ToList();
         return filteredRecipes;
     }
 }

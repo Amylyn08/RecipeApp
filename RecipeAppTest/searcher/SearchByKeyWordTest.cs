@@ -15,7 +15,7 @@ public class SearchByKeyWordTests {
     public void keywordNullException(){
         //Arrange
         SplankContext context = new();
-        string keyword = null;
+        string keyword = null!;
 
         //Act
         SearcherBase searcher = new SearchKeyWord(context, keyword);

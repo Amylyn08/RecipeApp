@@ -1,593 +1,731 @@
+using RecipeApp.Context;
+using RecipeApp.Services;
+using RecipeApp.Security;
+using RecipeApp.Api;
+using RecipeApp.Searcher;
+using RecipeApp.Models;
+using RecipeApp.Exceptions;
 
 namespace RecipeApp;
 
-public class MainDummy {
-    public static void Main() {
-        
+public class MainDummy
+{
+    public static SplankContext splankContext = new();
+    public static PasswordEncrypter passwordEncrypter = new();
+    public static IApiForIngredients apiForIngredients = new NutritionFactFetcher();
+    public static UserService userService = new(splankContext, passwordEncrypter);
+    public static RatingService ratingService = new(splankContext);
+    public static RecipeService recipeService = new(splankContext);
+    public static SearcherBase? searcher;
+    public static User currentUser = null!;
+
+    public static void Main()
+    {
+        AskLoginOrRegister();
+        ShowOptions();
     }
 
-    // private static User? _currentUser = null;
-    // private static readonly UserService _userService = new();
-    // private static readonly RecipeService _recipeService = new();
-    // private static readonly NutritionFactFetcher _nutritionFactFetcher = new(); 
-    // private static readonly RatingService _ratingService = new();
+    public static void ShowOptions()
+    {
+        Console.WriteLine($"Welcome {currentUser.Name} !");
+        const int CHANGE_PASSWORD = 1;
+        const int DELETE_ACCOUNT = 2;
+        const int LOGOUT = 3;
+        const int SEARCH = 4;
+        const int VIEW_RECIPES = 5;
+        const int CREATE_RECIPE = 6;
+        const int VIEW_FAVOURITES = 7;
+        const int DELETE_FAVOURITES = 8;
+        const int UPDATE_RECIPE = 9;
+        const int DELETE_RECIPE = 10;
+        while (currentUser is not null)
+        {
+            try
+            {
+                Console.WriteLine($"Enter {CHANGE_PASSWORD} to change password");
+                Console.WriteLine($"Enter {DELETE_ACCOUNT} to delete account");
+                Console.WriteLine($"Enter {LOGOUT} to logout");
+                Console.WriteLine($"Enter {SEARCH} to search for recipes");
+                Console.WriteLine($"Enter {VIEW_RECIPES} to view your recipes");
+                Console.WriteLine($"Enter {CREATE_RECIPE} to create a new recipe");
+                Console.WriteLine($"Enter {VIEW_FAVOURITES} to view your favourites");
+                Console.WriteLine($"Enter {DELETE_FAVOURITES} to delete from favourites");
+                Console.WriteLine($"Enter {UPDATE_RECIPE} to update your recipes");
+                Console.WriteLine($"Enter {DELETE_RECIPE} to delete your recipes");
+                int input = int.Parse(Console.ReadLine()!);
+                switch (input)
+                {
+                    case CHANGE_PASSWORD:
+                        ChangePassword();
+                        break;
+                    case DELETE_ACCOUNT:
+                        DeleteAccount();
+                        break;
+                    case LOGOUT:
+                        Logout();
+                        break;
+                    case SEARCH:
+                        List<Recipe> recipes = SearchRecipe();
+                        if (recipes is null) {
+                            continue;
+                        } else {
+                            Recipe recipe = ChooseRecipe(recipes);
+                            if (recipe == null) {
+                                continue;
+                            } else {
+                                RateOrViewOrFavorite(recipe);
+                            }
+                        }
+                        break;
+                    case VIEW_RECIPES:
+                        DisplayRecipes();
+                        break;
+                    case CREATE_RECIPE:
+                        CreateRecipe();
+                        break;
+                    case VIEW_FAVOURITES:
+                        ViewFavourites();
+                        break;
+                    case DELETE_FAVOURITES:
+                        DeleteFromFavourites();
+                        break;
+                    case UPDATE_RECIPE:
+                        UpdateRecipe();
+                        break;
+                    case DELETE_RECIPE:
+                        DeleteRecipe();
+                        break;
+                    default:
+                        throw new FormatException();
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Please enter a valid option");
+            }
+        }
+        Console.WriteLine("Goodbye !");
+    }
 
-    // public static void Main(string[] args) {
-    //     MockDatabase.Init();
-    //     Console.WriteLine("Enter 1 to login or 2 to register");
-    //     int decision = GetDecision();
-    //     if (decision == 1) {
-    //         int tries = 0;
-    //         do {
-    //             try {
-    //                 Console.WriteLine("Enter username");
-    //                 string username = GetInput();
-    //                 Console.WriteLine("Enter password");
-    //                 string password = GetInput();
-    //                 _currentUser = _userService.Login(username, password);
-    //                 if (_currentUser == null) {
-    //                     Console.WriteLine("Login failed !");
-    //                     tries++;
-    //                     if (tries == 3) {
-    //                         Console.WriteLine("You are locked out");
-    //                         return;
-    //                     }
-    //                 } else {
-    //                     break;
-    //                 }
-                    
-    //             } catch (ArgumentException e) {
-    //                 Console.WriteLine(e.Message);
-    //             }
-    //         } while (_currentUser == null);
-    //     } else if (decision == 2) {
-    //         do {
-    //             try {
-    //                 Console.WriteLine("Enter username");
-    //                 string username = GetInput();
-    //                 Console.WriteLine("Enter password");
-    //                 string password = GetInput();
-    //                 Console.WriteLine("Enter description");
-    //                 string description = GetInput();
-    //                 _currentUser = _userService.Register(username, password, description);
-    //                 if (_currentUser is null) {
-    //                     throw new ArgumentException("Username already taken");
-    //                 }
-    //                 else {
-    //                     break;
-    //                 }
-    //             } catch (ArgumentException e) {
-    //                 Console.WriteLine(e.Message);
-    //             }
-    //         } while (_currentUser == null);
-    //     }
+    public static void AskLoginOrRegister()
+    {
+        const int LOGIN = 1;
+        const int REGISTER = 2;
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine($"Enter {LOGIN} to login");
+                Console.WriteLine($"Enter {REGISTER} to register");
+                int input = int.Parse(Console.ReadLine()!);
+                if (input == LOGIN)
+                {
+                    LoginUser();
+                    break;
+                }
+                else if (input == REGISTER)
+                {
+                    RegisterUser();
+                    break;
+                }
+                else
+                {
+                    throw new FormatException();
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine($"Please enter either {LOGIN} or {REGISTER}");
+            }
+        }
+    }
 
-    //     Console.Clear();
-    //     int input = 0;
-    //     while (_currentUser != null) {
-    //         Console.WriteLine("Here are your options");
-    //         Console.WriteLine("Press 1 to view all your recipes");
-    //         Console.WriteLine("Press 2 to create a recipe");
-    //         Console.WriteLine("Press 3 to update a recipe");
-    //         Console.WriteLine("Press 4 to search for recipes");
-    //         Console.WriteLine("Press 5 to delete a recipe");
-    //         Console.WriteLine("Press 6 to change your password");
-    //         Console.WriteLine("Press 7 to delete your account");
-    //         Console.WriteLine("Press 8 to view your favourited recipes");
-    //         Console.WriteLine("Press 9 to update your favourite recipes");
-    //         Console.WriteLine("Press 10 to try out hashing feature.");
-    //         try {
-    //             input = GetIntInput();
-    //             if (input == 1) {
-    //                 Console.Clear();
-    //                 foreach (Recipe recipe in _currentUser.MadeRecipes) {
-    //                     Console.WriteLine(recipe);
-    //                     try {
-    //                         Console.WriteLine("Loading nutrition facts...");
-    //                         var nutrition = _nutritionFactFetcher.Fetch(recipe);
-    //                         Console.WriteLine(nutrition);
-    //                     } catch (Exception) {
-    //                         Console.WriteLine("Could not fetch nutrition facts for this recipe");
-    //                     }
-    //                 }
-    //             } else if (input == 2) {
-    //                 Console.Clear();
-    //                 CreateRecipe();
-    //             } else if (input == 3) {
-    //                 Console.Clear();
-    //                 UpdateRecipe();
-    //             // } else if (input == 4) {
-    //             //     Console.Clear();
-    //             //     List<Recipe> foundRecipes = SearchRecipe();
-    //             //     Console.Clear();
-    //             //     Console.WriteLine("FOUND RECIPES");
-    //             //     foreach(Recipe recipe in foundRecipes) {
-    //             //         Console.WriteLine(recipe);
-    //             //         try {
-    //             //             Console.WriteLine("Loading nutrition facts...");
-    //             //             var nutrition = _nutritionFactFetcher.Fetch(recipe);
-    //             //             Console.WriteLine(nutrition);
-    //             //         } catch (Exception) {
-    //             //             Console.WriteLine("Could not fetch nutrition facts for this recipe");
-    //             //         }
-    //             //     }
-    //                 // FavouriteRecipes(foundRecipes);
-    //             } else if (input == 5) {
-    //                 Console.Clear();
-    //                 DeleteRecipe();
-    //             } else if (input == 6) {
-    //                 Console.Clear();
-    //                 ChangePassword();
-    //             } else if (input == 7) {
-    //                 Console.Clear();
-    //                 DeleteAccount();
-    //                 return;
-    //             } else if (input == 8) {
-    //                 Console.Clear();
-    //                 Console.WriteLine("FAVOURITE RECIPES");
-    //                 foreach (Recipe recipe in _currentUser.Favorites) {
-    //                     Console.WriteLine(recipe);
-    //                     try {
-    //                         Console.WriteLine("Loading nutrition facts...");
-    //                         var nutrition = _nutritionFactFetcher.Fetch(recipe);
-    //                         Console.WriteLine(nutrition);
-    //                     } catch (Exception) {
-    //                         Console.WriteLine("Could not fetch nutrition facts for this recipe");
-    //                     }
-    //                 }
-    //             } else if (input == 9) {
-    //                 Console.Clear();
-    //                 DeleteFromFavourites();
-    //             }
-    //                 else if (input == 10) {
-    //                 Console.Clear();
-    //                 HashInputPassword();
-    //             }
-    //         } catch (FormatException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         }
-    //     }
-    // }
+    public static void LoginUser()
+    {
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine("Enter username: ");
+                string username = Console.ReadLine()!;
+                Console.WriteLine("Enter password: ");
+                string password = Console.ReadLine()!;
+                currentUser = userService.Login(username, password);
+                break;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (UserDoesNotExistException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (InvalidCredentialsException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
 
-    // private static void DeleteFromFavourites() {
-    //     for (int i = 0; i < _currentUser.Favorites.Count; i++) {
-    //         System.Console.WriteLine((i+1) + ": " + _currentUser.Favorites[i].Name);
-    //     }
-    //     System.Console.WriteLine("Enter recipe number to delete");
-    //     int recipeNum = GetIntInput();
-    //     try {
-    //         //_userService.DeleteFromFavourites(_currentUser.Favorites[recipeNum - 1], _currentUser);
-    //     }   
-    //     catch (ArgumentOutOfRangeException) {
-    //         System.Console.WriteLine("Please enter a valid number");
-    //     }
-    // }
+    public static void RegisterUser()
+    {
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine("Enter username: ");
+                string username = Console.ReadLine()!;
+                Console.WriteLine("Enter password: ");
+                string password = Console.ReadLine()!;
+                Console.WriteLine("Enter description: ");
+                string description = Console.ReadLine()!;
+                userService.Register(username, password, description);
+                Console.WriteLine("You have been registered !");
+                LoginUser();
+                break;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch (UserAlreadyExistsException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
 
-    // private static void FavouriteRecipes(List<Recipe> recipes) {
-    //     Console.WriteLine("Press f to favourite a recipe, anything else to cancel");
-    //     string input = GetInput();
-    //     if (!input.Equals("f")) {
-    //         return;
-    //     }
-    //     for (int i = 0; i < recipes.Count; i++) {
-    //         Console.WriteLine((i + 1) + ": " + recipes[i].Name);
-    //     }
-    //     Console.WriteLine("Choose a recipe number to favourite");
-    //     int num = GetIntInput();
-    //     try {
-    //         _userService.AddToFavourites(recipes[num - 1], _currentUser);
-    //     } catch (ArgumentOutOfRangeException) {
-    //         Console.WriteLine("You did not enter a valid number");
-    //     } catch (ArgumentException e) {
-    //         Console.WriteLine(e.Message);
-    //     }
-    // }
+    public static void ChangePassword()
+    {
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine("Enter new password");
+                string newPassword = Console.ReadLine()!;
+                userService.ChangePassword(currentUser, newPassword);
+                Console.WriteLine("Your password has been changed !");
+                break;
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
 
-    // private static void DeleteRecipe() {
-    //     for (int i = 0; i < _currentUser.MadeRecipes.Count; i++) {
-    //         int recipeNum = i + 1;
-    //         Console.WriteLine(recipeNum + ": " + _currentUser.MadeRecipes[i].Name);
-    //     }
-    //     while (true) {
-    //         Console.WriteLine("Please choose recipe number to delete");
-    //         try {
-    //             _recipeService.DeleteRecipe(_currentUser.MadeRecipes[GetIntInput() - 1], _currentUser);
-    //             break;
-    //         } catch (ArgumentOutOfRangeException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         } catch (FormatException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         } catch (ArgumentException e) {
-    //             Console.WriteLine(e.Message);
-    //         }
-    //     }
-    // }
+    public static void DeleteAccount()
+    {
+        try
+        {
+            userService.DeleteAccount(currentUser);
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        Logout();
+    }
 
-    // private static void DeleteAccount() {
-    //     Console.WriteLine("Enter username");
-    //     string username = GetInput();
-    //     Console.WriteLine("Enter password");
-    //     string password = GetInput();
-    //     _currentUser = _userService.Login(username, password);
-    //     if (_currentUser != null) {
-    //         _userService.DeleteAccount(_currentUser);
-    //         Console.WriteLine("Successfully deleted account");
-    //         _currentUser = null;
-    //     }
-    //     else {
-    //         Console.WriteLine("Failed to authenticate and delete account");
-    //     }
-    // }
+    public static void Logout()
+    {
+        Environment.Exit(0);
+    }
 
-    // private static void ChangePassword() {
-    //     Console.WriteLine("Enter username");
-    //     string username = GetInput();
-    //     Console.WriteLine("Enter current password");
-    //     string password = GetInput();
-    //     _currentUser = _userService.Login(username, password);
-    //     if (_currentUser == null) {
-    //         Console.WriteLine("Login failed");
-    //         return;
-    //     }
-    //     Console.WriteLine("Enter new password");
-    //     string newPassword = GetInput();
-    //     _userService.ChangePassword(_currentUser, newPassword);
-    //     Console.WriteLine("Your password has been changed");
-    //     Console.WriteLine("Please login once more...");
-    //     Console.WriteLine("Enter username");
-    //     username = GetInput();
-    //     Console.WriteLine("Enter password");
-    //     password = GetInput();
-    //     _currentUser = _userService.Login(username, password);
-    //     if (_currentUser is null) {
-    //         System.Console.WriteLine("Login failed, you have been logged out");
-    //         return;
-    //     } else {
-    //         System.Console.WriteLine("Welcome back !");
-    //     }
-    // }   
+    public static void ViewFavourites()
+    {
+        SearchByUserFavorite searcher = new(splankContext, currentUser);
+        List<Recipe> favourites = searcher.FilterRecipes();
+        currentUser.Favorites = favourites;
+        if (favourites is null || favourites.Count == 0)
+        {
+            Console.WriteLine("No favourites to show !");
+            return;
+        }
+        foreach (Recipe recipe in currentUser.Favorites)
+        {
+            Console.WriteLine(recipe);
+        }
+    }
 
-    // private static int GetDecision() {
-    //     int decision = 0;
-    //     do {
-    //         try {
-    //             decision = GetIntInput();
-    //         } catch (FormatException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         }
-    //         if (decision != 1 && decision != 2) {
-    //             Console.WriteLine("Please enter either 1 or 2");
-    //         }
-    //     } while (decision != 1 && decision != 2);
-    //     return decision;
-    // }
+    public static void DeleteFromFavourites() 
+    {
+        currentUser.Favorites = new SearchByUserFavorite(splankContext, currentUser).FilterRecipes();
+        if (currentUser.Favorites is not null && currentUser.Favorites.Count > 0) 
+        {
+            int index = 0;
+            foreach (Recipe recipe in currentUser.Favorites) 
+            {   
+                Console.WriteLine("Favourite #:" + index);
+                Console.WriteLine(recipe);
+            }
+            Console.WriteLine("Enter favourite number to delete");
+            try {
+                Recipe chosen = currentUser.Favorites[index];
+                Favourite favourite = new();
+                userService.DeleteFromFavourites(chosen, currentUser);
+                Console.WriteLine("Successfully delete favourite !");
+            } catch (ArgumentOutOfRangeException) {
+                return;
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+                return;
+            }
+        } else {
+            Console.WriteLine("No favourites to delete !");
+            return;
+        }
+    }
 
-    // private static string GetInput() {
-    //     string input = null;
-    //     do {
-    //         input = Console.ReadLine();
-    //     } while (input == null);
-    //     return input;
-    // }
+    public static void DisplayRecipes()
+    {
+        SearchByUsername searcher = new(splankContext, currentUser.Name);
+        var recipes = searcher.FilterRecipes();
+        int index = 1;
+        foreach (Recipe recipe in recipes)
+        {
+            Console.WriteLine(index);
+            Console.WriteLine(recipe);
+            index++;
+        }
+    }
 
-    // /// <summary>
-    // /// Allows the user to create a recipe
-    // /// </summary>
-    // /// <param name="user">The current user</param>
-    // /// <returns>The Recipe object that the user made</returns>
-    // private static void CreateRecipe() {
-    //     while (true) {
-    //         try {
-    //             Console.WriteLine("Enter the name of your recipe: ");
-    //             string name = GetInput();
-    //             Console.WriteLine("Enter the description of your recipe");
-    //             string description = GetInput();
-    //             Console.WriteLine("Enter the amount of serving your recipe has");
-    //             int servings = GetIntInput();
-    //             Console.WriteLine("Create your ingredients:");
-    //             List<Ingredient> ingredients = CreateListIngredients();
-    //             Console.WriteLine("Add your steps:");
-    //             List<Step> steps = CreateListStep();
-    //             Console.WriteLine("Add your tags: ");
-    //             List<Tag> tags = CreateListTags();
-    //             Recipe recipe = new(name, _currentUser, description, servings, ingredients, steps, new(), tags);
-    //             _recipeService.CreateRecipe(recipe, _currentUser);
-    //             break;
-    //         } catch (ArgumentException e) {
-    //             Console.Clear();
-    //             Console.WriteLine(e.Message);
-    //         }
-    //     }
-    // }
+    private static void CreateRecipe()
+    {
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine("Enter the name of your recipe: ");
+                string name = Console.ReadLine()!;
+                Console.WriteLine("Enter the description of your recipe");
+                string description = Console.ReadLine()!;
+                Console.WriteLine("Enter the amount of serving your recipe has");
+                int servings = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Create your ingredients:");
+                List<Ingredient> ingredients = CreateListIngredients();
+                Console.WriteLine("Add your steps:");
+                List<Step> steps = CreateListStep();
+                Console.WriteLine("Add your tags: ");
+                List<Tag> tags = CreateListTags();
+                Recipe recipe = new(name, currentUser, description, servings, ingredients, steps, new(), tags);
+                recipeService.CreateRecipe(recipe);
+                break;
+            }
+            catch (ArgumentException e)
+            {
+                Console.Clear();
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
 
-    // /// <summary>
-    // /// Gets an integer input from a user
-    // /// </summary>
-    // /// <returns>The integer input</returns>
-    // private static int GetIntInput() {
-    //     int input = 0;
-    //     do {
-    //         try {
-    //             input = Convert.ToInt32(GetInput());
-    //         } catch (FormatException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         }
-    //         if (input <= 0) {
-    //             Console.WriteLine("Please enter an amount greater than 0");
-    //         }
-    //     } while (input <= 0);
-    //     return input;
-    // }
+    private static Ingredient CreateIngredient()
+    {
+        Console.WriteLine("Enter ingredient name:");
+        string name = Console.ReadLine()!;
 
-    // /// <summary>
-    // /// Asks the user to create an ingredient object
-    // /// </summary>
-    // /// <returns>An ingredient object</returns>
-    // private static Ingredient CreateIngredient() {
-    //     Console.WriteLine("Enter ingredient name:");
-    //     string name = GetInput();
+        Console.WriteLine("Enter unit of measurement: ");
+        Console.WriteLine("1 (Spoons)");
+        Console.WriteLine("2 (Grams)");
+        Console.WriteLine("3 (Cups)");
+        Console.WriteLine("4 (Teaspoons)");
+        Console.WriteLine("5 (Amount)");
 
-    //     Console.WriteLine("Enter unit of measurement: ");
-    //     Console.WriteLine("1 (Spoons)");
-    //     Console.WriteLine("2 (Grams)");
-    //     Console.WriteLine("3 (Cups)");
-    //     Console.WriteLine("4 (Teaspoons)");
-    //     Console.WriteLine("5 (Amount)");
-        
-    //     int unit = 0;
-    //     do { unit = GetIntInput(); } 
-    //     while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
-        
-    //     Console.WriteLine("Enter the amount:");
-    //     int quantity = GetIntInput();
+        int unit = 0;
+        do { unit = Convert.ToInt32(Console.ReadLine()); }
+        while (unit != 1 && unit != 2 && unit != 3 && unit != 4 && unit != 5);
 
-    //     Console.WriteLine("Enter the price:");
-    //     double price = GetIntInput();
+        Console.WriteLine("Enter the amount:");
+        int quantity = Convert.ToInt32(Console.ReadLine());
 
-    //     UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
-    //     if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
-    //     else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
-    //     else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
-    //     else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
-    //     else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
-    //     return new Ingredient(name, quantity, unitOfMeasurement, price);
-    // }
+        Console.WriteLine("Enter the price:");
+        double price = Convert.ToInt32(Console.ReadLine());
 
-    // /// <summary>
-    // /// Creates a list of ingredients chosen by the user
-    // /// </summary>
-    // /// <returns>A list of ingredients</returns>
-    // private static List<Ingredient> CreateListIngredients() {
-    //     List<Ingredient> ingredients = new List<Ingredient>();
+        UnitOfMeasurement unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+        if (unit == 1) unitOfMeasurement = UnitOfMeasurement.SPOONS;
+        else if (unit == 2) unitOfMeasurement = UnitOfMeasurement.GRAMS;
+        else if (unit == 3) unitOfMeasurement = UnitOfMeasurement.CUPS;
+        else if (unit == 4) unitOfMeasurement = UnitOfMeasurement.TEASPOONS;
+        else if (unit == 5) unitOfMeasurement = UnitOfMeasurement.AMOUNT;
+        return new Ingredient(name, quantity, unitOfMeasurement, price);
+    }
 
-    //     bool createIng = true;
+    private static List<Ingredient> CreateListIngredients()
+    {
+        List<Ingredient> ingredients = new List<Ingredient>();
 
-    //     while(createIng) {
-    //         Ingredient ingredient = CreateIngredient();
-    //         ingredients.Add(ingredient);
+        bool createIng = true;
 
-    //         Console.WriteLine("Add another ingredient? (Y/N):");
-    //         string choice = GetInput();
-    //         if(choice.ToUpper() == "N") {
-    //             createIng = false;
-    //         }
-    //     }
-    //     return ingredients;
-    // }
+        while (createIng)
+        {
+            Ingredient ingredient = CreateIngredient();
+            ingredients.Add(ingredient);
 
-    // /// <summary>
-    // /// Asks the user to create a step
-    // /// </summary>
-    // /// <returns>The user made step</returns>
-    // private static Step CreateSteps() {
-    //     Console.WriteLine("Enter instruction details:");
-    //     string instruction = GetInput();
-    //     Console.WriteLine("Enter the amount of time in minutes:");
-    //     int time = GetIntInput();
-    //     return new Step(time, instruction);
-    // }
+            Console.WriteLine("Add another ingredient? (Y/N):");
+            string choice = Console.ReadLine()!;
+            if (choice.ToUpper() == "N")
+            {
+                createIng = false;
+            }
+        }
+        return ingredients;
+    }
 
-    // /// <summary>
-    // /// Using the CreateSteps() method, the user creates a list of steps
-    // /// </summary>
-    // /// <returns>A list of custom made steps</returns>
-    // private static List<Step> CreateListStep() {
-    //     List<Step> steps = new List<Step>();
+    private static List<Step> CreateListStep()
+    {
+        List<Step> steps = new List<Step>();
 
-    //     bool createStep = true;
+        bool createStep = true;
 
-    //     while(createStep) {
-    //         Step step = CreateSteps();
-    //         steps.Add(step);
+        while (createStep)
+        {
+            Step step = CreateSteps();
+            steps.Add(step);
 
-    //         Console.WriteLine("Add Step? (Y/N):");
-    //         string choice = GetInput();
-    //         if(choice.ToUpper() == "N") {
-    //             createStep = false;
-    //         }
-    //     }
-    //     return steps;
-    // }
+            Console.WriteLine("Add Step? (Y/N):");
+            string choice = Console.ReadLine()!;
+            if (choice.ToUpper() == "N")
+            {
+                createStep = false;
+            }
+        }
+        return steps;
+    }
 
-    // public static List<Tag> CreateListTags() {
-    //     List<Tag> tags = new();
-    //     for (int i = 0; i < Constants.MAX_TAGS; i++) {
-    //         Console.WriteLine("Please enter a tag, or nothing to exit");
-    //         string input = GetInput();
-    //         if (input.Length == 0) {
-    //             return tags;
-    //         }
-    //         Tag tag = new(input);
-    //         tags.Add(tag);
-    //     }
-    //     return tags;
-    // }
+    private static Step CreateSteps()
+    {
+        Console.WriteLine("Enter instruction details:");
+        string instruction = Console.ReadLine()!;
+        Console.WriteLine("Enter the amount of time in minutes:");
+        int time = Convert.ToInt32(Console.ReadLine());
+        return new Step(time, instruction);
+    }
 
-    // private static void UpdateRecipe() {
-    //     for (int i = 0; i < _currentUser.MadeRecipes.Count; i++) {
-    //         int recipeNum = i + 1;
-    //         Console.WriteLine(recipeNum + ": " + _currentUser.MadeRecipes[i].Name);
-    //     }
-    //     while (true) {
-    //         Console.WriteLine("Please choose recipe number to update");
-    //         try {
-    //             Recipe recipeToUpdate = _currentUser.MadeRecipes[GetIntInput() - 1];
-    //             UpdateSingleRecipe(recipeToUpdate);
-    //             break;
-    //         } catch (ArgumentOutOfRangeException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         } catch (FormatException) {
-    //             Console.WriteLine("Please enter a valid number");
-    //         } catch (ArgumentException e) {
-    //             Console.WriteLine(e.Message);
-    //         }
-    //     }
-    // }
+    public static List<Tag> CreateListTags()
+    {
+        List<Tag> tags = new();
+        for (int i = 0; i < Constants.MAX_TAGS; i++)
+        {
+            Console.WriteLine("Please enter a tag, or nothing to exit");
+            string input = Console.ReadLine()!;
+            if (input.Length == 0)
+            {
+                return tags;
+            }
+            Tag tag = new(input);
+            tags.Add(tag);
+        }
+        return tags;
+    }
+    private static void UpdateRecipe()
+    {
+        DisplayRecipes();
+        while (true)
+        {
+            Console.WriteLine("Please choose recipe number to update");
+            try
+            {
+                Recipe recipeToUpdate = currentUser.MadeRecipes[Convert.ToInt32(Console.ReadLine()) - 1];
+                UpdateSingleRecipe(recipeToUpdate);
+                break;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("Please enter a valid number");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Please enter a valid number");
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        System.Console.WriteLine("Recipe updated succesfully!");
+    }
 
-    // private static void UpdateSingleRecipe(Recipe recipeToUpdate) {
-    //     Console.WriteLine("Enter 1 to change description");
-    //     Console.WriteLine("Enter 2 to change servings");
-    //     Console.WriteLine("Enter 3 to change ingredients");
-    //     Console.WriteLine("Enter 4 to change steps");
-    //     Console.WriteLine("Enter 5 to change tags");
-    //     Console.WriteLine("Enter 6 to change name");
-    //     int input = GetIntInput();
-    //     if (input == 1) {
-    //         Console.WriteLine("Enter new description");
-    //         recipeToUpdate.Description = GetInput();
-    //     } else if (input == 2) {
-    //         Console.WriteLine("Enter new servings");
-    //         recipeToUpdate.Servings = GetIntInput();            
-    //     } else if (input == 3) {
-    //         Console.WriteLine("Enter new ingredients");
-    //         recipeToUpdate.Ingredients = CreateListIngredients();
-    //     } else if (input == 4) {
-    //         Console.WriteLine("Enter new steps");
-    //         recipeToUpdate.Steps = CreateListStep();
-    //     } else if (input == 5) {
-    //         Console.WriteLine("Enter new tags");
-    //         recipeToUpdate.Tags = CreateListTags();
-    //     } else if (input == 6) {
-    //         Console.WriteLine("Enter new name");
-    //         recipeToUpdate.Name = GetInput();
-    //     }
-    //     _recipeService.UpdateRecipe(recipeToUpdate, _currentUser);
-    // }
+    private static void UpdateSingleRecipe(Recipe recipeToUpdate)
+    {
+        Console.WriteLine("Enter 1 to change description");
+        Console.WriteLine("Enter 2 to change servings");
+        Console.WriteLine("Enter 3 to change ingredients");
+        Console.WriteLine("Enter 4 to change steps");
+        Console.WriteLine("Enter 5 to change tags");
+        Console.WriteLine("Enter 6 to change name");
+        Recipe updatedRecipe = recipeToUpdate;
+        int input = Convert.ToInt32(Console.ReadLine());
+        if (input == 1)
+        {
+            Console.WriteLine("Enter new description");
+            updatedRecipe.Description = Console.ReadLine()!;
+        }
+        else if (input == 2)
+        {
+            Console.WriteLine("Enter new servings");
+            updatedRecipe.Servings = Convert.ToInt32(Console.ReadLine());
+        }
+        else if (input == 3)
+        {
+            Console.WriteLine("Enter new ingredients");
+            updatedRecipe.Ingredients = CreateListIngredients();
+        }
+        else if (input == 4)
+        {
+            Console.WriteLine("Enter new steps");
+            updatedRecipe.Steps = CreateListStep();
+        }
+        else if (input == 5)
+        {
+            Console.WriteLine("Enter new tags");
+            updatedRecipe.Tags = CreateListTags();
+        }
+        else if (input == 6)
+        {
+            Console.WriteLine("Enter new name");
+            updatedRecipe.Name = Console.ReadLine()!;
+        }
+        recipeService.UpdateRecipe(recipeToUpdate, updatedRecipe);
+    }
+    private static void DeleteRecipe()
+    {
+        DisplayRecipes();
+        while (true)
+        {
+            Console.WriteLine("Please choose recipe number to delete");
+            try
+            {
+                recipeService.DeleteRecipe(currentUser.MadeRecipes[Convert.ToInt32(Console.ReadLine()) - 1]);
+                break;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("Please enter a valid number");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Please enter a valid number");
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        Console.WriteLine("Recipe deleted succesfully!");
+    }
 
-    // /// <summary>
-    // /// Rates a recipe
-    // /// </summary>
-    // /// <param name="recipeToRate">Recipe thats getting rated</param>
-    // private static void RatingRecipe(Recipe recipeToRate) {
-    //     Rating newRating = CreateRating();
-    //     _ratingService.RatingRecipe(recipeToRate, newRating);
-    // }
+    private static Rating CreateRating()
+    {
+        System.Console.WriteLine("How many stars: ");
+        int stars = Convert.ToInt32(Console.ReadLine());
+        System.Console.WriteLine("Write a description if you want:");
+        string description = Console.ReadLine();
+        return new Rating(stars, description, currentUser);
 
-    // /// <summary>
-    // /// Creates a rating
-    // /// </summary>
-    // /// <returns>A Rating made by the user</returns>
-    // private static Rating CreateRating() {
-    //     Console.WriteLine("How many stars would you like to rate this recipe:");
-    //     int stars = int.Parse(Console.ReadLine());
-    //     Console.WriteLine("Write a review!");
-    //     string description = GetInput();
-    //     return _ratingService.CreateRating(_currentUser, stars, description);
-    // }
+    }
+    private static void RateRecipe(Recipe recipe)
+    {
+        Rating newRating = CreateRating();
+        ratingService.RatingRecipe(newRating, recipe);
+    }
 
-    // /// <summary>
-    // /// Filters the list of recipes to a certain criteria
-    // /// </summary>
-    // /// <returns>A filtered list of recipes</returns>
-    // // private static List<Recipe> SearchRecipe() {
-    // //     SearcherBase search = null;
-    // //     Console.WriteLine("Enter 1 to Search By Keyword");
-    // //     Console.WriteLine("Enter 2 to Search By Ingredient name");
-    // //     Console.WriteLine("Enter 3 to Search By Price range");
-    // //     Console.WriteLine("Enter 4 to Search By Rating");
-    // //     Console.WriteLine("Enter 5 to Search By Serving");
-    // //     Console.WriteLine("Enter 6 to Search By Tag name");
-    // //     Console.WriteLine("Enter 7 to Search By Prepare Time range");
-    // //     Console.WriteLine("Enter 8 to Search By Username");
-    // //     int input = GetIntInput();
-    // //     if(input == 1){
-    // //         Console.WriteLine("Enter a keyword: ");
-    // //         string keyword = GetInput();
-    // //         search = new SearchKeyWord(keyword);
-    // //     } else if(input == 2) {
-    // //         Console.WriteLine("Enter an ingredient:");
-    // //         string ingredientName = GetInput();
-    // //         search = new SearchByIngredients(ingredientName);
-    // //     } else if(input == 3) {
-    // //         Console.WriteLine("Enter the min");
-    // //         double min = double.Parse(Console.ReadLine());
-    // //         Console.WriteLine("Enter the max");
-    // //         double max = double.Parse(Console.ReadLine());
-    // //         search = new SearchByPriceRange(min, max);
-    // //     } else if(input == 4) {
-    // //         Console.WriteLine("Enter rating to search");
-    // //         int rating = GetIntInput();
-    // //         search = new SearchByRating(rating);
-    // //     } else if(input == 5) {
-    // //         Console.WriteLine("Enter num of servings");
-    // //         int serving = GetIntInput();
-    // //         search = new SearchByServings(serving);
-    // //     } else if(input == 6) {
-    // //         Console.WriteLine("Enter tag name");
-    // //         string tagName = GetInput();
-    // //         search = new SearchByTags(tagName);
-    // //     } else if(input == 7) {
-    // //         Console.WriteLine("Enter min time");
-    // //         int min = GetIntInput();
-    // //         Console.WriteLine("Enter max time");
-    // //         int max = GetIntInput();
-    // //         search = new SearchByTime(min, max);
-    // //     } else if(input == 8) {
-    // //         Console.WriteLine("Enter username:");
-    // //         string username = GetInput();
-    // //         search = new SearchByUsername(username);
-    // //     } else {
-    // //         Console.WriteLine("Invalid input");
-    // //         return null;
-    // //     }
-    // //     return _recipeService.SearchRecipes(search);
-    // // }
+    private static Recipe ChooseRecipe(List<Recipe> recipes)
+    {
+        try {
+            PrintRecipes(recipes);
+            Console.WriteLine("Choose a recipe or input nothing to leave");
+            int index = Convert.ToInt32(Console.ReadLine());
+            return recipes[index];
+        } catch (ArgumentOutOfRangeException) {
+            return null;
+        }
+    }
 
-    // /// <summary>
-    // /// Prints the list of recipes
-    // /// </summary>
-    // /// <param name="recipes">The list of recipes thats gonna be printed</param>
-    // private static void PrintRecipes(List<Recipe> recipes) {
-    //     int count =1;
-    //     foreach(Recipe recipe in recipes) {
-    //         Console.WriteLine(count + ":");
-    //         Console.WriteLine(recipe);
-    //         count++;
-    //     }
-    // }
+    private static void RateOrViewOrFavorite(Recipe recipe)
+    {
+        Console.WriteLine("Enter '1' to View the recipe");
+        Console.WriteLine("Enter '2' to Rate the recipe");
+        Console.WriteLine("Enter '3' to Favorite the recipe");
+        Console.WriteLine("Enter Nothing to exit");
+        int choice = Convert.ToInt32(Console.ReadLine());
+        switch (choice)
+        {
+            case 1:
+                Console.WriteLine(recipe);
+                break;
+            case 2:
+                RateRecipe(recipe);
+                break;
+            case 3:
+                try {
+                    userService.AddToFavourites(recipe, currentUser);
+                    Console.WriteLine("Recipe added to favourites !");
+                } catch (AlreadyFavouritedException e) {
+                    Console.WriteLine(e.Message);
+                }
+                break; 
+            default:
+                return;
+        }
+    }
 
-    // /// <summary>
-    // /// Chooses a recipe from the list of recipes
-    // /// </summary>
-    // /// <param name="recipes">The list of recipe the user is choosing from</param>
-    // /// <returns>The specific recipe the user chooses</returns>
-    // private static Recipe ChooseRecipe(List<Recipe> recipes) {
-    //     PrintRecipes(recipes);
-    //     Console.WriteLine("Choose a recipe by entering its number: ");
-    //     int choice = GetIntInput();
-    //     while(choice > recipes.Count) {
-    //         Console.WriteLine("Invalid choice. Please enter a valid number.");
-    //         Console.WriteLine("Choose a recipe by entering its number: ");
-    //         choice = GetIntInput();
-    //     }
-    //     return recipes[choice - 1];
-        
-    // }
+    private static string GetInput()
+    {
+        string input = null!;
+        do
+        {
+            input = Console.ReadLine()!;
+        } while (input == null);
+        return input;
+    }
 
-    // private static void HashInputPassword(){
-    //     Console.WriteLine("Please enter your desired password to view hash sample.");
-    //     string passwordToHash = Console.ReadLine();
-    //     PasswordEncrypter enc = new();
-    //     Console.WriteLine(enc.Encrypt(passwordToHash));
-    // }
+    /// <summary>
+    /// Gets an integer input from a user
+    /// </summary>
+    /// <returns>The integer input</returns>
+    private static int GetIntInput()
+    {
+        int input = 0;
+        do
+        {
+            try
+            {
+                input = Convert.ToInt32(GetInput());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Please enter a valid number");
+            }
+            if (input <= 0)
+            {
+                Console.WriteLine("Please enter an amount greater than 0");
+            }
+        } while (input <= 0);
+        return input;
+    }
+
+
+    private static List<Recipe> SearchRecipe()
+    {
+        List<Recipe> filteredRecipes = new List<Recipe>();
+        Console.WriteLine("Enter '1' to Search by Ingredient");
+        Console.WriteLine("Enter '2' to Search by Keyword");
+        Console.WriteLine("Enter '3' to Search by Price Range");
+        Console.WriteLine("Enter '4' to Search by Rating");
+        Console.WriteLine("Enter '5' to Search by Servings");
+        Console.WriteLine("Enter '6' to Search by Tags");
+        Console.WriteLine("Enter '7' to Search by Time");
+        Console.WriteLine("Enter '8' to Search by a User's Favorite.");
+        Console.WriteLine("Enter '9' to Search by Username");
+        int choice = GetIntInput();
+        while (true)
+        {
+            try
+            {
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("Enter the ingredient you would like to search by:");
+                        string ingredient = GetInput();
+                        searcher = new SearchByIngredients(splankContext, ingredient);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 2:
+                        Console.WriteLine("Enter the keyword you would like to search by");
+                        string keyword = GetInput();
+                        searcher = new SearchKeyWord(splankContext, keyword);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 3:
+                        Console.WriteLine("Enter the price range you would like to search for");
+                        Console.WriteLine("Min");
+                        int min = GetIntInput();
+                        Console.WriteLine("Max");
+                        int max = GetIntInput();
+                        searcher = new SearchByPriceRange(splankContext, min, max);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 4:
+                        Console.WriteLine("Enter the star rating you would like to search by");
+                        int rating = GetIntInput();
+                        searcher = new SearchByRating(splankContext, rating);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 5:
+                        Console.WriteLine("Enter the number of servings you would like to search by");
+                        int servings = GetIntInput();
+                        searcher = new SearchByServings(splankContext, servings);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 6:
+                        Console.WriteLine("Enter the name of tag you would like to search by");
+                        string tagName = GetInput();
+                        searcher = new SearchByTags(splankContext, tagName);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 7:
+                        Console.WriteLine("Enter the time range of recipe to search by");
+                        Console.Write("Min Time:");
+                        int minTime = GetIntInput();
+                        Console.Write("Max Time");
+                        int maxTime = GetIntInput();
+                        searcher = new SearchByTime(splankContext, minTime, maxTime);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 8:
+                        Console.WriteLine("Viewing a user's favourite: Enter a username to search for..:");
+                        string nameUser = GetInput();
+                        SearchAllUsers nameSearcher = new(splankContext, nameUser);
+                        List<User> users = nameSearcher.GetUserByName();
+                        PrintUsers(users);
+                        Console.WriteLine("Select the number of user to view their favorites");
+                        int userIndex = Convert.ToInt32(Console.ReadLine());
+                        searcher = new SearchByUserFavorite(splankContext, users[userIndex]);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                    case 9:
+                        Console.WriteLine("Enter a username to view all recipes made by them");
+                        string username = GetInput();
+                        searcher = new SearchByUsername(splankContext, username);
+                        filteredRecipes = searcher.FilterRecipes();
+                        break;
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return filteredRecipes;
+        }
+    }
+
+    public static void PrintUsers(List<User> users)
+    {
+        int index = 0;
+        foreach (User u in users)
+        {
+            Console.WriteLine($"[{index}]. Username: {u.Name}, Description: {u.Description}");
+            index++;
+        }
+    }
+
+    public static void PrintRecipes(List<Recipe> recipes)
+    {
+        if (recipes is null || recipes.Count == 0)
+        {
+            Console.WriteLine("No recipes to print");
+            return;
+        }
+        int index = 0;
+        foreach (Recipe r in recipes)
+        {
+            Console.WriteLine($"[{index}]: {r}");
+            index++;
+        }
+    }
 }
+
+//hi
+//Hello!

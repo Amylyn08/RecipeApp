@@ -1,5 +1,6 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
@@ -26,9 +27,21 @@ public class SearchByPriceRange: SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
-                                    .Where(recipe => recipe.GetTotalPrice() >= _minPrice
-                                    &&  recipe.GetTotalPrice() <= _maxPrice)
-                                    .ToList<Recipe>();
+            .GroupJoin(Context.Ingredients,
+                        recipe => recipe.RecipeId,
+                        ingredient => ingredient.RecipeId,
+                        (recipe, ingredients) => new
+                        {
+                            Recipe = recipe,
+                            TotalPrice = ingredients.Sum(ing => ing.Price)
+                        })
+            .Where(recipe => recipe.TotalPrice >= _minPrice && recipe.TotalPrice <= _maxPrice)
+            .Select(recipe => recipe.Recipe)
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Ratings)
+            .Include(recipe => recipe.Tags)
+            .ToList();
         return filteredRecipes;
     }
 }

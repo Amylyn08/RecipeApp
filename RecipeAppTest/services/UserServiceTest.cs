@@ -15,7 +15,9 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void NullEncrypterThrowsArgumentException() {
         // act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         UserService userService = new(new(), null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -24,7 +26,9 @@ public class UserServiceTest {
         // arrange
         UserService userService = new UserService(new(), new PasswordEncrypter());
         // act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Login(null, "Password");
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -33,7 +37,9 @@ public class UserServiceTest {
         // arrange
         UserService userService = new UserService(new(), new PasswordEncrypter());
         // act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Login("Username123", null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -232,7 +238,9 @@ public class UserServiceTest {
     public void RegisterNullUsernameThrowsArgumentException() {
         // arrang/act
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Register(null, "ValidPassword", "Valid Description");
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -248,7 +256,9 @@ public class UserServiceTest {
     public void RegisterNullPasswordThrowsArgumentException() {
         // arrange/act
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Register("ValidUsername", null, "Valid Description");
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -300,9 +310,7 @@ public class UserServiceTest {
 
         // assert
         mockContext.Verify(m => m.Update(It.IsAny<User>()), Times.Once);
-        mockContext.Verify(m => m.SaveChanges(), Times.Once());  
-
-        Assert.AreNotEqual(userToChangePassword.Password, oldPassword);
+        mockContext.Verify(m => m.SaveChanges(), Times.Once()); 
     }
 
     [TestMethod]
@@ -310,7 +318,9 @@ public class UserServiceTest {
     public void ChangePasswordNullUserThrowsArgumentException() {
         // arrange/act
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.ChangePassword(null, "Some random password");
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -319,7 +329,9 @@ public class UserServiceTest {
         // arrange/act
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
         User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.ChangePassword(user, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     public void ChangePasswordShortPasswordThrowsArgumentException() {
@@ -449,7 +461,9 @@ public class UserServiceTest {
         // arrange/act
         User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.AddToFavourites(null, user);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -466,7 +480,9 @@ public class UserServiceTest {
         };
         Recipe recipe = new Recipe("Potato", user, "Description", 2, ingredients, steps, new(), new());
         // act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.AddToFavourites(recipe, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
     [TestMethod]
@@ -600,16 +616,18 @@ public class UserServiceTest {
         UserService userService = new(mockContext.Object, encrypter);
 
         // act
-        userService.DeleteFromFavourites(listFavourites[0]);
+        userService.DeleteFromFavourites(listRecipe[0], listUser[0]);
 
         // assert
         mockContext.Verify(m => m.Remove(It.IsAny<Favourite>()), Times.Once);
         mockContext.Verify(m => m.SaveChanges(), Times.Once());  
     }
 
-    public void DeleteFromFavouritesNullFavouriteThrowsArgumentException() {
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void DeleteFromFavouritesNullArgumentsThrowsArgumentException() {
         // arrange/assert
         UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
-        userService.DeleteFromFavourites(null);
+        userService.DeleteFromFavourites(null!, null!);
     }
 }

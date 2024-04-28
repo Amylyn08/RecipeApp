@@ -27,9 +27,12 @@ public class SearchByServings : SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
-                                    .Where(recipe => recipe.Servings == _criteria)
-                                    .ToList<Recipe>();
-
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Tags)
+            .Include(recipe => recipe.Ratings)
+            .Where(recipe => recipe.Servings == _criteria)
+            .ToList();
         return filteredRecipes;
     }
 }

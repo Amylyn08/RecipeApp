@@ -1,5 +1,6 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
@@ -24,10 +25,12 @@ public class SearchByRating : SearcherBase{
     public override List<Recipe> FilterRecipes()
     {
         List<Recipe> filteredRecipes = Context.Recipes
-        .Where(recipe => recipe.GetTotalAverageRating() >=  _criteria
-                && recipe.GetTotalAverageRating() <= _criteria +1)
-                .ToList<Recipe>();
-
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Tags)
+            .Include(recipe => recipe.Ratings)
+            .Where(recipe => recipe.GetTotalAverageRating() >=  _criteria && recipe.GetTotalAverageRating() <= _criteria +1)
+            .ToList();
         return filteredRecipes;
     }
 }

@@ -13,7 +13,7 @@ public class StepTest {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void NullInstruction_Throws_ArgumentException() {
-        Step step = new(0, null);
+        Step step = new(0, null!);
     }
 
     [TestMethod]
@@ -33,7 +33,7 @@ public class StepTest {
     [ExpectedException(typeof(ArgumentException))]
     public void InstructionSetter_Null_Throws_ArgumentException() {
         Step step = new(5, "Boil potato");
-        step.Instruction = null;
+        step.Instruction = null!;
     }
 
     [TestMethod]

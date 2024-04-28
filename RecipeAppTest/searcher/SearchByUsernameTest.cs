@@ -15,7 +15,7 @@ public class SearchByUsernameTest {
     public void UsernameIsNullException(){
         //Arrange
         SplankContext context = new();
-        string username = null;
+        string username = null!;
 
         //Act
         SearchByUsername searcher = new(context, username);

@@ -5,13 +5,15 @@ namespace RecipeApp.Models;
 /// </summary>
 public class Rating {
     private int _stars;
-    private string _description;
-    private User _user;
+    private string _description = null!;
+    private User _user = null!;
 
-    public Recipe Recipe {
+    public Recipe? Recipe {
         get; 
         set;
     }
+
+    public int RecipeId { get; set; }
 
     public int RatingId { 
         get; 
@@ -27,13 +29,13 @@ public class Rating {
         }
     }
 
-    public string Description{
+    public string? Description{
         get => _description; 
         set {
+            if (string.IsNullOrWhiteSpace(value)) 
+                value = "";
             if (value.Length > Constants.MAX_DESCRIPTION_LENGTH) 
                 throw new ArgumentException("Max description length exceeded!");
-            if (value is null) 
-                _description = "";
             else 
                 _description = value;
         }
@@ -47,6 +49,8 @@ public class Rating {
             _user = value;
         }
     }
+
+    public int UserId { get; set; }
 
      
 

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
@@ -28,10 +29,13 @@ public class SearchByUserFavorite : SearcherBase
     /// <returns>The list of recipes from user's favorites.</returns>
     public override List<Recipe> FilterRecipes(){
         List<Recipe> filteredRecipes = Context.Favourites
-                                    .Where(favorite => favorite.User == _user)
-                                    .Select(favorite => favorite.Recipe)
-                                    .ToList<Recipe>();
-        
+            .Where(favorite => favorite.User.Equals(_user))
+            .Include(fav => fav.Recipe.Ingredients)    
+            .Include(fav => fav.Recipe.Steps)
+            .Include(fav => fav.Recipe.Tags)
+            .Include(fav => fav.Recipe.Ratings)
+            .Select(favorite => favorite.Recipe)
+            .ToList();
         return filteredRecipes;
     }
 
