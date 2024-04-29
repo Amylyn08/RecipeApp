@@ -21,4 +21,8 @@ public class MainWindowViewModel : ViewModelBase {
     public void ChangeToRegisterView() {
         ContentViewModel = new RegisterViewModel();
     }
+
+    public void ChangeToHomeView() {
+        ContentViewModel = new HomeViewModel();
+    }
 }

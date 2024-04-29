@@ -5,26 +5,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.HomeView">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock FontSize="24" 
-                   Text="Welcome"
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"
-                   Margin="0 10"/>
-        <Button HorizontalAlignment="Stretch" 
-                HorizontalContentAlignment="Center"
-                Margin="0 10"
-                FontSize="18"
-                x:CompileBindings="False"
-                Command="{Binding $parent[Window].DataContext.ChangeToLoginView}">
-            Login
-        </Button>
-        <Button HorizontalAlignment="Stretch" 
-                HorizontalContentAlignment="Center"
-                Margin="0 10"
-                FontSize="18"
-                x:CompileBindings="False"
-                Command="{Binding $parent[Window].DataContext.ChangeToRegisterView}">
-            Register
-        </Button>
+        <TextBlock FontSize="24" Text="Welcome" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10"/>
+        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0 10" FontSize="18" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToLoginView}">Login</Button>
+        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0 10" FontSize="18" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToRegisterView}">Register</Button>
     </StackPanel>
 </UserControl>
