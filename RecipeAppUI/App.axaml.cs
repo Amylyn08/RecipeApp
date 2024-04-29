@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SplankUi.ViewModels;
-using SplankUi.Views;
+using RecipeAppUI.ViewModels;
+using RecipeAppUI.Views;
 
-namespace SplankUi;
+namespace RecipeAppUI;
 
 public partial class App : Application
 {

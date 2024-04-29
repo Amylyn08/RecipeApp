@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace SplankUi.Views;
+namespace RecipeAppUI.Views;
 
 public partial class MainWindow : Window
 {
