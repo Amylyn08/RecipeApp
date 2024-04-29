@@ -4,5 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.RegisterView">
-  Welcome to Avalonia!
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock FontSize="32" Text="Register an account" TextAlignment="Center" Margin="0,0,0,20"/>
+        
+        <TextBlock FontSize="20" Text="Username" />
+        <TextBox AcceptsReturn="False" Watermark="Enter your username" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
+        
+        <TextBlock FontSize="20" Text="Password" />
+        <TextBox AcceptsReturn="False" Watermark="Enter your password" PasswordChar="*" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
+
+        <TextBlock FontSize="20" Text="Description" />
+        <TextBox AcceptsReturn="True" Watermark="Describe yourself briefly" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
+        
+        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Register</Button>
+        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToHomeView}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Go Back</Button>
+    </StackPanel>
 </UserControl>
