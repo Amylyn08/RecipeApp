@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         xmlns:views="clr-namespace:SplankUi.Views"
-        x:Class="SplankUi.Views.MainWindow"
+        x:Class="SplankUi.Views.MainWindowView"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="SplankUi"
@@ -19,7 +19,9 @@
 
     <DockPanel>
         <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button>
+        <Button 
+            x:CompileBindings="False"
+            Command="{ Binding $parent[Window].DataContext.Authentication }">
             LOGIN
         </Button>
     </DockPanel>

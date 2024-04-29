@@ -10,7 +10,7 @@ public class MainWindowViewModel : ViewModelBase
     public string Greeting => "FUCK YOU!";
     public MainWindowViewModel() {
         LOR = new LoginViewAndRegisterViewModel();
-        // _contentViewModel = LOR;
+        _contentViewModel = LOR;
     }
 
 

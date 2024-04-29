@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace SplankUi.Views;
 
-public partial class LoginViewAndRegister : UserControl
+public partial class LoginViewAndRegisterView : UserControl
 {
-    public LoginViewAndRegister()
+    public LoginViewAndRegisterView()
     {
         InitializeComponent();
     }
