@@ -3,9 +3,9 @@ using Avalonia.Markup.Xaml;
 
 namespace SplankUi.Views;
 
-public partial class MainWindow : Window
+public partial class LoginView : Window
 {
-    public MainWindow()
+    public LoginView()
     {
         InitializeComponent();
     }
