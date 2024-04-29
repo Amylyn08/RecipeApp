@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SplankUi.ViewModels;
-using SplankUi.Views;
+using RecipeAppUI.ViewModels;
+using RecipeAppUI.Views;
 
-namespace SplankUi;
+namespace RecipeAppUI;
 
 public partial class App : Application
 {
@@ -17,9 +17,9 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new LoginView
+            desktop.MainWindow = new MainWindow
             {
-                DataContext = new LoginViewModel(),
+                DataContext = new MainWindowViewModel(),
             };
         }
 

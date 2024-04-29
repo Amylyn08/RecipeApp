@@ -1,9 +1,9 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using SplankUi.ViewModels;
+using RecipeAppUI.ViewModels;
 
-namespace SplankUi;
+namespace RecipeAppUI;
 
 public class ViewLocator : IDataTemplate
 {

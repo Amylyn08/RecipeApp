@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace SplankUi.ViewModels;
+namespace RecipeAppUI.ViewModels;
 
 public class ViewModelBase : ReactiveObject
 {

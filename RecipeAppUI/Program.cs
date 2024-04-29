@@ -2,7 +2,7 @@
 using Avalonia.ReactiveUI;
 using System;
 
-namespace SplankUi;
+namespace RecipeAppUI;
 
 sealed class Program
 {
