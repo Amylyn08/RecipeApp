@@ -7,28 +7,9 @@
         x:Class="RecipeAppUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="RecipeAppUI">
+        Title="RecipeAppUI"
+        Content="{Binding ContentViewModel}">
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    <StackPanel HorizontalAlignment="Center" 
-                VerticalAlignment="Center">
-        <TextBlock FontSize="24" 
-                   Text="{Binding Greeting}" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center"
-                   Margin="0 10"/>
-        <Button HorizontalAlignment="Stretch" 
-                HorizontalContentAlignment="Center"
-                Margin="0 10"
-                FontSize="18">
-            Login
-        </Button>
-        <Button HorizontalAlignment="Stretch" 
-                HorizontalContentAlignment="Center"
-                Margin="0 10"
-                FontSize="18">
-            Register
-        </Button>
-    </StackPanel>
 </Window>
