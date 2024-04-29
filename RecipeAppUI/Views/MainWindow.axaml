@@ -6,10 +6,16 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RecipeAppUI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
+        xmlns:views="clr-namespace:RecipeAppUI.Views"
         Icon="/Assets/avalonia-logo.ico"
         Title="RecipeAppUI"
         Content="{Binding ContentViewModel}">
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+    <StackPanel>
+        <views:HomeView/>
+        <views:LoginView/>
+        <views:RegisterView />
+    </StackPanel>
 </Window>

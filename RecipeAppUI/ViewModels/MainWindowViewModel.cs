@@ -14,7 +14,11 @@ public class MainWindowViewModel : ViewModelBase {
         ContentViewModel = new HomeViewModel();
     }
 
-    public void SwitchToLoginView() {
+    public void ChangeToLoginView() {
         ContentViewModel = new LoginViewModel();
+    }
+
+    public void ChangeToRegisterView() {
+        ContentViewModel = new RegisterViewModel();
     }
 }
