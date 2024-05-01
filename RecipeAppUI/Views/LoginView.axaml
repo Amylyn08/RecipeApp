@@ -3,17 +3,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="RecipeAppUI.Views.LoginView">
+			 xmlns:vm="using:RecipeAppUI.ViewModels"
+             x:Class="RecipeAppUI.Views.LoginView"
+			 x:DataType="vm:LoginViewModel">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock FontSize="32" Text="Login to your account" TextAlignment="Center" Margin="0,0,0,20"/>
-        
+		<TextBlock FontSize="20" Text="{Binding LoginErrorMessage}"/>
         <TextBlock FontSize="20" Text="Username" />
-        <TextBox  AcceptsReturn="False" Watermark="Enter your username" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
+        <TextBox Text="{Binding Username}" AcceptsReturn="False" Watermark="Enter your username" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
         
         <TextBlock FontSize="20" Text="Password" />
-        <TextBox AcceptsReturn="False" Watermark="Enter your password" PasswordChar="*" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
+        <TextBox Text="{Binding Password}" AcceptsReturn="False" Watermark="Enter your password" PasswordChar="*" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
         
-        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Login</Button>
+        <Button Command="{Binding Login}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Login</Button>
         <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToHomeView}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Go Back</Button>
     </StackPanel>
 </UserControl>

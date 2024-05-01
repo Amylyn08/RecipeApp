@@ -1,9 +1,13 @@
 ﻿using ReactiveUI;
+using RecipeApp.Context;
 
 namespace RecipeAppUI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase {
     private ViewModelBase _contentViewModel;
+    private SplankContext _context;
+
+    public SplankContext Context { get; private set; }
 
     public ViewModelBase ContentViewModel {
         get => _contentViewModel;
@@ -11,15 +15,16 @@ public class MainWindowViewModel : ViewModelBase {
     }
 
     public MainWindowViewModel() {
+        Context = new SplankContext();
         ContentViewModel = new HomeViewModel();
     }
 
     public void ChangeToLoginView() {
-        ContentViewModel = new LoginViewModel();
+        ContentViewModel = new LoginViewModel(Context);
     }
 
     public void ChangeToRegisterView() {
-        ContentViewModel = new RegisterViewModel();
+        ContentViewModel = new RegisterViewModel(Context);
     }
 
     public void ChangeToHomeView() {
