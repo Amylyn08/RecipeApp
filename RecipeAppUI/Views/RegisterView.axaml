@@ -7,15 +7,46 @@
 			 xmlns:vm="using:RecipeAppUI.ViewModels"
 			 x:DataType="vm:RegisterViewModel">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock FontSize="32" Text="Register an account" TextAlignment="Center" Margin="0,0,0,20"/>
-		<TextBlock FontSize="20" Text="{Binding RegisterErrorMessage}"/>
-        <TextBlock FontSize="20" Text="Username" />
-        <TextBox Text="{Binding Username}" AcceptsReturn="False" Watermark="Enter your username" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
-        <TextBlock FontSize="20" Text="Password" />
-        <TextBox Text="{Binding Password}" AcceptsReturn="False" Watermark="Enter your password" PasswordChar="*" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
-        <TextBlock FontSize="20" Text="Description" />
-        <TextBox Text="{Binding Description}" AcceptsReturn="True" Watermark="Describe yourself briefly" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
-        <Button Command="{Binding Register}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Register</Button>
-        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Go Back</Button>
+        <TextBlock FontSize="32" 
+				   Text="Register an account"
+				   TextAlignment="Center" 
+				   Margin="0,0,0,20"/>
+		<TextBlock FontSize="20" 
+				   Text="{Binding RegisterErrorMessage}"/>
+        <TextBlock FontSize="20" 
+				   Text="Username" />
+        <TextBox Text="{Binding Username}" 
+				 AcceptsReturn="False"
+				 Watermark="Enter your username" 
+				 HorizontalAlignment="Stretch" 
+				 Margin="0,0,0,20"/>
+        <TextBlock FontSize="20"
+				   Text="Password" />
+        <TextBox Text="{Binding Password}" 
+				 AcceptsReturn="False"
+				 Watermark="Enter your password" 
+				 PasswordChar="*" 
+				 HorizontalAlignment="Stretch" 
+				 Margin="0,0,0,20"/>
+        <TextBlock FontSize="20" 
+				   Text="Description" />
+        <TextBox Text="{Binding Description}"
+				 AcceptsReturn="True" 
+				 Watermark="Describe yourself briefly"
+				 HorizontalAlignment="Stretch" 
+				 Margin="0,0,0,20"/>
+        <Button Command="{Binding Register}"
+				HorizontalAlignment="Stretch" 
+				HorizontalContentAlignment="Center" 
+				FontSize="20" 
+				Margin="0,0,0,20">
+			Register</Button>
+        <Button x:CompileBindings="False" 
+				Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" 
+				HorizontalAlignment="Stretch" 
+				HorizontalContentAlignment="Center" 
+				FontSize="20" 
+				Margin="0,0,0,20">
+			Go Back</Button>
     </StackPanel>
 </UserControl>
