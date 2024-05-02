@@ -15,7 +15,7 @@ public class SearchByTagsTest {
     public void TagIsNullException(){
         //Arrange
         string tagName = null!;
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         
         //Act
         SearchByTags searcher = new(context, tagName);
@@ -27,7 +27,7 @@ public class SearchByTagsTest {
     [ExpectedException(typeof(ArgumentException))]
     public void TagIsZeroLengthException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string tagName = "";
 
         //Act

@@ -16,4 +16,15 @@ public class SplankContext : DbContext {
         string? password = Environment.GetEnvironmentVariable("ORA_PASSWORD");
         optionsBuilder.UseOracle($"User Id={username}; Password={password};Data Source=198.168.52.211:1521/pdbora19c.dawsoncollege.qc.ca;");
     }
+
+    public SplankContext() {} // keep it public for the tests
+
+    public static SplankContext instance;
+
+    public static SplankContext GetInstance() {
+        if (instance == null) {
+            instance = new SplankContext();
+        }
+        return instance;
+    }
 }

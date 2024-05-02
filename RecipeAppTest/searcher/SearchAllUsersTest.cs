@@ -12,7 +12,7 @@ public class SearchAllUsersTest{
     [ExpectedException(typeof(ArgumentException))]
     public void UserNameIsNullException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string username = null!;
 
         //Act
@@ -23,7 +23,7 @@ public class SearchAllUsersTest{
     [ExpectedException(typeof(ArgumentException))]
     public void UserNameIsLengthZero(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string username = "";
 
         //Act

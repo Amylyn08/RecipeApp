@@ -15,16 +15,15 @@ public class MainWindowViewModel : ViewModelBase {
     }
 
     public MainWindowViewModel() {
-        Context = new SplankContext();
         ContentViewModel = new HomeViewModel();
     }
 
     public void ChangeToLoginView() {
-        ContentViewModel = new LoginViewModel(Context);
+        ContentViewModel = new LoginViewModel(SplankContext.GetInstance());
     }
 
     public void ChangeToRegisterView() {
-        ContentViewModel = new RegisterViewModel(Context);
+        ContentViewModel = new RegisterViewModel(SplankContext.GetInstance());
     }
 
     public void ChangeToHomeView() {

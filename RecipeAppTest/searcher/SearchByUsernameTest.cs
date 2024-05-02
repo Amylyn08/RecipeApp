@@ -14,7 +14,7 @@ public class SearchByUsernameTest {
     [ExpectedException(typeof(ArgumentException))]
     public void UsernameIsNullException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string username = null!;
 
         //Act
@@ -25,7 +25,7 @@ public class SearchByUsernameTest {
     [ExpectedException(typeof(ArgumentException))]
     public void UserNameLengthIsZeroException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string username = "";
 
         //Act

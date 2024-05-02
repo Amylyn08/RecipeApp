@@ -10,7 +10,7 @@ namespace RecipeApp;
 
 public class MainDummy
 {
-    public static SplankContext splankContext = new();
+    public static SplankContext splankContext = SplankContext.GetInstance();
     public static PasswordEncrypter passwordEncrypter = new();
     public static IApiForIngredients apiForIngredients = new NutritionFactFetcher();
     public static UserService userService = new(splankContext, passwordEncrypter);

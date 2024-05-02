@@ -15,7 +15,7 @@ public class SearchByServingsTests {
     public void ServingsInputBelowMinimum(){
         //Arrange
         int servings = 0;
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
 
         //Act
         SearchByServings searcher = new(context, servings);

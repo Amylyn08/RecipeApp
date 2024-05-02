@@ -16,7 +16,7 @@ public class UserServiceTest {
     public void NullEncrypterThrowsArgumentException() {
         // act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-        UserService userService = new(new(), null);
+        UserService userService = new(SplankContext.GetInstance(), null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
 
@@ -24,7 +24,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void LoginNullUsernameThrowsArgumentException() {
         // arrange
-        UserService userService = new UserService(new(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         // act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Login(null, "Password");
@@ -35,7 +35,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void LoginNullPasswordThrowsArgumentException() {
         // arrange
-        UserService userService = new UserService(new(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         // act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Login("Username123", null);
@@ -237,7 +237,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void RegisterNullUsernameThrowsArgumentException() {
         // arrang/act
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Register(null, "ValidPassword", "Valid Description");
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -247,7 +247,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void RegisterEmptyUsernameThrowsArgumentException() {
         // arrange/act
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         userService.Register("", "ValidPassword", "Valid Description");
     }
 
@@ -255,7 +255,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void RegisterNullPasswordThrowsArgumentException() {
         // arrange/act
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.Register("ValidUsername", null, "Valid Description");
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -265,7 +265,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void RegisterEmptyPasswordThrowsArgumentException() {
         // arrange/act
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         userService.Register("ValidUsername", "", "Valid Description");
     }
 
@@ -317,7 +317,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void ChangePasswordNullUserThrowsArgumentException() {
         // arrange/act
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.ChangePassword(null, "Some random password");
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -327,7 +327,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void ChangePasswordNullPasswordThrowsArgumentException() {
         // arrange/act
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.ChangePassword(user, null);
@@ -336,7 +336,7 @@ public class UserServiceTest {
 
     public void ChangePasswordShortPasswordThrowsArgumentException() {
         // arrange/act
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
         userService.ChangePassword(user, "short");
     }
@@ -460,7 +460,7 @@ public class UserServiceTest {
     public void AddToFavouritesNullFavouritedThrowsArgumentException() {
         // arrange/act
         User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.AddToFavourites(null, user);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -470,7 +470,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void AddToFavouritesNullUserhrowsArgumentException() {
         // arrange
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
         var ingredients = new List<Ingredient>() {
             new Ingredient("Something", 1, UnitOfMeasurement.AMOUNT, 2.00)
@@ -627,7 +627,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void DeleteFromFavouritesNullArgumentsThrowsArgumentException() {
         // arrange/assert
-        UserService userService = new UserService(new SplankContext(), new PasswordEncrypter());
+        UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         userService.DeleteFromFavourites(null!, null!);
     }
 }

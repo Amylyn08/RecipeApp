@@ -15,7 +15,7 @@ public class SearchByRatingTests {
     [ExpectedException(typeof(ArgumentException))]
     public void RatingBelow0Exception(){
         //Arrange
-        SplankContext context = new SplankContext();
+        SplankContext context = SplankContext.GetInstance();
         int rating = -1;
         
         //Act
@@ -26,7 +26,7 @@ public class SearchByRatingTests {
     [ExpectedException(typeof(ArgumentException))]
     public void RatingTooHighAbove5(){
         //Arrange
-        SplankContext context = new SplankContext();
+        SplankContext context = SplankContext.GetInstance();
         int rating = 6;
         
         //Act

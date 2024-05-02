@@ -5,7 +5,7 @@ using RecipeApp.Context;
 using RecipeApp.Models;
 
 public abstract class SearcherBase{
-    public SplankContext Context { get; set; } = new SplankContext();
+    public SplankContext Context { get; set; } = SplankContext.GetInstance();
 
     public SearcherBase(SplankContext context){
         Context = context;
