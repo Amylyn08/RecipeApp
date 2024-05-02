@@ -14,6 +14,6 @@
         <TextBlock FontSize="20" Text="Password" />
         <TextBox Text="{Binding Password}" AcceptsReturn="False" Watermark="Enter your password" PasswordChar="*" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
         <Button Command="{Binding Login}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Login</Button>
-        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToHomeView}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Go Back</Button>
+        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Go Back</Button>
     </StackPanel>
 </UserControl>

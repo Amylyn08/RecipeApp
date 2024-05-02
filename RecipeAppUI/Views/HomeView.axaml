@@ -6,7 +6,7 @@
              x:Class="RecipeAppUI.Views.HomeView">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock FontSize="24" Text="Welcome To Splank's Recipe App !" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10"/>
-        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0 10" FontSize="18" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToLoginView}">Login</Button>
-        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0 10" FontSize="18" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToRegisterView}">Register</Button>
+        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0 10" FontSize="18" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToLoginViewCommand}">Login</Button>
+        <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0 10" FontSize="18" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToRegisterViewCommand}">Register</Button>
     </StackPanel>
 </UserControl>

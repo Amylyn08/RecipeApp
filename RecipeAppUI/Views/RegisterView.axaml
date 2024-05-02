@@ -16,6 +16,6 @@
         <TextBlock FontSize="20" Text="Description" />
         <TextBox Text="{Binding Description}" AcceptsReturn="True" Watermark="Describe yourself briefly" HorizontalAlignment="Stretch" Margin="0,0,0,20"/>
         <Button Command="{Binding Register}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Register</Button>
-        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToHomeView}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Go Back</Button>
+        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="20" Margin="0,0,0,20">Go Back</Button>
     </StackPanel>
 </UserControl>
