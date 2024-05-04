@@ -17,5 +17,6 @@
         <views:HomeView/>
         <views:LoginView/>
         <views:RegisterView />
+        <views:DashboardView />
     </StackPanel>
 </Window>

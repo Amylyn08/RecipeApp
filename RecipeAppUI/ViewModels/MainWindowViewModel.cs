@@ -18,23 +18,32 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit>  ChangeToLoginViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToRegisterViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToHomeViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToDashboardViewCommand { get; }
+
 
     public MainWindowViewModel() {
         ChangeToLoginViewCommand = ReactiveCommand.Create(ChangeToLoginView);
         ChangeToRegisterViewCommand = ReactiveCommand.Create(ChangeToRegisterView);
         ChangeToHomeViewCommand = ReactiveCommand.Create(ChangeToHomeView);
+        ChangeToDashboardViewCommand = ReactiveCommand.Create(ChangeToDashboardView);
         ContentViewModel = new HomeViewModel();
     }
 
     public void ChangeToLoginView() {
-        ContentViewModel = new LoginViewModel(SplankContext.GetInstance());
+        ContentViewModel = new LoginViewModel(SplankContext.GetInstance(), this);
     }
 
     public void ChangeToRegisterView() {
-        ContentViewModel = new RegisterViewModel(SplankContext.GetInstance());
+        ContentViewModel = new RegisterViewModel(SplankContext.GetInstance(), this);
     }
 
     public void ChangeToHomeView() {
         ContentViewModel = new HomeViewModel();
     }
+
+    public void ChangeToDashboardView() {
+        ContentViewModel = new DashboardViewModel();
+    }
 }
+
+//peackaboo prabhjot

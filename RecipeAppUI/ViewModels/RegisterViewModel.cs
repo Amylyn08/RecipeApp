@@ -13,6 +13,7 @@ public class RegisterViewModel : ViewModelBase {
     private string _description;
     private string _registerErrorMessage;
     private UserService _userService;
+    private MainWindowViewModel _mainWindowViewModel;
 
     public string Username { get => _username; set => this.RaiseAndSetIfChanged(ref _username, value); }
     public string Password { get => _password; set => this.RaiseAndSetIfChanged(ref _password, value); }
@@ -21,15 +22,18 @@ public class RegisterViewModel : ViewModelBase {
     public UserService UserService { get => _userService; private set => _userService = value; }
     public ReactiveCommand<Unit, Unit> RegisterCommand { get; }
 
-    public RegisterViewModel(SplankContext context) {
+    public RegisterViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
         UserService = new(context, new());
         RegisterCommand = ReactiveCommand.Create(Register);
+        _mainWindowViewModel = mainWindowViewModel;
     }
 
     public void Register()
     {
         try {
             UserService.Register(Username, Password, Description);
+            _mainWindowViewModel.ChangeToLoginView();
+
         } catch (UserAlreadyExistsException e) {
             RegisterErrorMessage = e.Message;
         } catch (ArgumentException e) {
