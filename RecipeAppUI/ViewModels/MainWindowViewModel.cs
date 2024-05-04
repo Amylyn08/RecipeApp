@@ -42,7 +42,7 @@ public class MainWindowViewModel : ViewModelBase {
     }
 
     public void ChangeToDashboardView() {
-        ContentViewModel = new DashboardViewModel();
+        ContentViewModel = new DashboardViewModel(SplankContext.GetInstance());
     }
 }
 

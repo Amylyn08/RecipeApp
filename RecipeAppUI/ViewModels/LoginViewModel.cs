@@ -1,6 +1,7 @@
 using ReactiveUI;
 using RecipeApp.Services;
 using RecipeApp.Context;
+using RecipeApp.Models;
 using System.Reactive;
 using System;
 using RecipeApp.Exceptions;
