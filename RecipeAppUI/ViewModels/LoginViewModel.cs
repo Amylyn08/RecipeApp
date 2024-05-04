@@ -18,21 +18,21 @@ public class LoginViewModel : ViewModelBase {
     public string LoginErrorMessage { get => _loginErrorMessage; set => this.RaiseAndSetIfChanged(ref _loginErrorMessage, value); }
     public UserService UserService { get => _userService; private set => _userService = value; }
 
+    public ReactiveCommand<Unit, Unit> LoginCommand { get; }
+
     public LoginViewModel(SplankContext context) {
         UserService = new(context, new());
+        LoginCommand = ReactiveCommand.Create(Login);
     }
 
     public void Login() {
-        try
-        {
+        try {
             var user = UserService.Login(Username, Password);
-        }
-        catch (InvalidCredentialsException e)
-        {
+        } catch (InvalidCredentialsException e) {
             LoginErrorMessage = e.Message;
-        }
-        catch (UserDoesNotExistException e)
-        {
+        } catch (UserDoesNotExistException e) {
+            LoginErrorMessage = e.Message;
+        } catch (ArgumentException e) {
             LoginErrorMessage = e.Message;
         }
     }

@@ -14,7 +14,7 @@ public class SearchByKeyWordTests {
     [ExpectedException(typeof(ArgumentException))]
     public void keywordNullException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string keyword = null!;
 
         //Act
@@ -25,7 +25,7 @@ public class SearchByKeyWordTests {
     [ExpectedException(typeof(ArgumentException))]
     public void keywordNullLength0Exception(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string keyword = "";
 
         //Act

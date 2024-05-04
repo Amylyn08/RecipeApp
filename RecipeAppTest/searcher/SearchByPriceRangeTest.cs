@@ -14,7 +14,7 @@ public class SearchByPriceRangeTests {
     [ExpectedException(typeof(ArgumentException))]
     public void MinValueLessThan0(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         double min = -0.1;
         double max = 5;
 
@@ -26,7 +26,7 @@ public class SearchByPriceRangeTests {
     [ExpectedException(typeof(ArgumentException))]
     public void MaxValueLessThan0(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         double min = 5;
         double max = -0.1;
 
@@ -38,7 +38,7 @@ public class SearchByPriceRangeTests {
     [ExpectedException(typeof(ArgumentException))]
     public void MinValueMoreThanMax(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         double min = 10;
         double max = 9;
 

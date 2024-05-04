@@ -14,7 +14,7 @@ public class SearchByTimeTest {
     [ExpectedException(typeof(ArgumentException))]
     public void MinBelowZeroException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         int min = -1;
         int max = 10;
 
@@ -26,7 +26,7 @@ public class SearchByTimeTest {
     [ExpectedException(typeof(ArgumentException))]
     public void MaxBelowZeroException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         int min = 2;
         int max = -1;
 
@@ -38,7 +38,7 @@ public class SearchByTimeTest {
     [ExpectedException(typeof(ArgumentException))]
     public void MinMoreThanMax(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         int min = 100;
         int max = 10;
 

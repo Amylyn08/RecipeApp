@@ -3,6 +3,7 @@ using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Services;
 using System;
+using System.Reactive;
 
 namespace RecipeAppUI.ViewModels;
 
@@ -18,23 +19,20 @@ public class RegisterViewModel : ViewModelBase {
     public string Description { get => _description; set => this.RaiseAndSetIfChanged(ref _description, value); }
     public string RegisterErrorMessage { get => _registerErrorMessage; set => this.RaiseAndSetIfChanged(ref _registerErrorMessage, value); }
     public UserService UserService { get => _userService; private set => _userService = value; }
+    public ReactiveCommand<Unit, Unit> RegisterCommand { get; }
 
     public RegisterViewModel(SplankContext context) {
         UserService = new(context, new());
+        RegisterCommand = ReactiveCommand.Create(Register);
     }
 
     public void Register()
     {
-        try
-        {
+        try {
             UserService.Register(Username, Password, Description);
-        }
-        catch (UserAlreadyExistsException e)
-        {
+        } catch (UserAlreadyExistsException e) {
             RegisterErrorMessage = e.Message;
-        }
-        catch (ArgumentException e)
-        {
+        } catch (ArgumentException e) {
             RegisterErrorMessage = e.Message;
         }
     }
