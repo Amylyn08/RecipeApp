@@ -1,6 +1,7 @@
 using ReactiveUI;
 using RecipeApp.Services;
 using RecipeApp.Context;
+using RecipeApp.Models;
 using System.Reactive;
 using System;
 using RecipeApp.Exceptions;
@@ -10,8 +11,9 @@ namespace RecipeAppUI.ViewModels;
 public class LoginViewModel : ViewModelBase {
     private string _username;
     private string _password;
-    private string _loginErrorMessage;
-    private UserService _userService;
+    private string _loginErrorMessage ="";
+    private UserService _userService = null;
+    private MainWindowViewModel _mainWindowViewModel;
 
     public string Username { get => _username; set => this.RaiseAndSetIfChanged(ref _username, value); }
     public string Password { get => _password; set => this.RaiseAndSetIfChanged(ref _password, value); }
@@ -20,14 +22,16 @@ public class LoginViewModel : ViewModelBase {
 
     public ReactiveCommand<Unit, Unit> LoginCommand { get; }
 
-    public LoginViewModel(SplankContext context) {
+    public LoginViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
         UserService = new(context, new());
         LoginCommand = ReactiveCommand.Create(Login);
+        _mainWindowViewModel = mainWindowViewModel;
     }
 
     public void Login() {
         try {
             var user = UserService.Login(Username, Password);
+            _mainWindowViewModel.ChangeToDashboardView();
         } catch (InvalidCredentialsException e) {
             LoginErrorMessage = e.Message;
         } catch (UserDoesNotExistException e) {
@@ -36,4 +40,5 @@ public class LoginViewModel : ViewModelBase {
             LoginErrorMessage = e.Message;
         }
     }
+
 }

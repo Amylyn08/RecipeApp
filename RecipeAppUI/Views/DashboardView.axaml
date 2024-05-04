@@ -1,0 +1,73 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RecipeAppUI.Views.DashboardView"
+             xmlns:vm="using:RecipeAppUI.ViewModels"
+			 x:DataType="vm:DashboardViewModel">
+    <DockPanel>
+
+        <!-- Navigation on top -->
+    <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="#FF9A56" Margin="0,0,0,0">
+        <!-- Splank -->
+        <TextBlock FontSize="25" Text="Splank" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        
+        <!-- Welcome -->
+        <TextBlock FontSize="25" Text="Welcome" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        
+        <!-- Log Out -->
+        <Button Content="Log Out" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" VerticalAlignment="Top"/>
+    </StackPanel>
+
+
+        <!-- Textbox with search features -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search..."/>
+            <Button Content="Search" Margin="5"/>
+            <ComboBox SelectedIndex="0" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
+                <ComboBoxItem>Keyword</ComboBoxItem>
+                <ComboBoxItem>Username</ComboBoxItem>
+                <ComboBoxItem>Ingredient</ComboBoxItem>
+                <ComboBoxItem>Price</ComboBoxItem>
+                <ComboBoxItem>Rating</ComboBoxItem>
+                <ComboBoxItem>Servings</ComboBoxItem>
+                <ComboBoxItem>Tags</ComboBoxItem>
+                <ComboBoxItem>Time</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Main views -->
+        <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
+            <!-- Navigation view -->
+            <Button Content="View 1" Margin="5"/>
+            <Button Content="View 2" Margin="5"/>
+            <!-- Add more navigation buttons or tabs as needed -->
+        </StackPanel>
+
+        <!-- Main content area -->
+        <StackPanel DockPanel.Dock="Right" Margin="10">
+            <!-- Bigger view for list views -->
+            <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+            <!-- Your list view content here -->
+            <TextBlock FontSize="20"
+                        Text="{Binding DashBoardErrorMessage }"/>
+            <ListBox ItemsSource="{Binding Recipes}" Margin="0,10">
+                <!-- Define the template for each item in the ListBox -->
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Use a StackPanel to layout the recipe details -->
+                        <StackPanel Orientation="Horizontal">
+                            <!-- Display the recipe name -->
+                            <TextBlock Text="{Binding Name}" FontSize="16" Margin="5"/>
+                            <TextBlock Text="{Binding Description}" FontSize="16" Margin="5"/>
+                            <TextBlock Text="{Binding GetUserName}" FontSize="16" Margin="5"/>
+                            <!-- Add more TextBlocks or other UI elements to display other properties of the recipe -->
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </StackPanel>
+    </DockPanel>
+</UserControl>
