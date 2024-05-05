@@ -9,6 +9,11 @@ public class RecipeService : ServiceBase {
     {
     }
 
+    ///
+    /// Gets all recipes from the DB
+    public List<Recipe> GetAllRecipes() {
+        return Context.Recipes.ToList();
+    }
     /// <summary>
     /// Adds recipe to DB
     /// </summary>

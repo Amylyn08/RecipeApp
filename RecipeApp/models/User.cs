@@ -127,4 +127,8 @@ public class User {
     {
         throw new NotImplementedException();
     }
+
+    public override string ToString() {
+        return Name;
+    }
 }

@@ -110,6 +110,10 @@ public class Recipe {
         }
     }
 
+    public string GetUserName{
+        get => _user.Name;
+    }
+
     public int UserId { get; set; }
 
     /// <summary>
