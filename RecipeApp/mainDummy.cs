@@ -640,11 +640,9 @@ public class MainDummy
                         break;
                     case 3:
                         Console.WriteLine("Enter the price range you would like to search for");
-                        Console.WriteLine("Min");
-                        int min = GetIntInput();
-                        Console.WriteLine("Max");
-                        int max = GetIntInput();
-                        searcher = new SearchByPriceRange(splankContext, min, max);
+                        Console.WriteLine("Price");
+                        int price = GetIntInput();
+                        searcher = new SearchByPriceRange(splankContext, price);
                         filteredRecipes = searcher.FilterRecipes();
                         break;
                     case 4:
