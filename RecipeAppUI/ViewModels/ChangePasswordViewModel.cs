@@ -24,8 +24,14 @@ public class ChangePasswordViewModel : ViewModelBase {
     public UserService UserService { get => _userService; private set => _userService = value; }
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
 
+    public ReactiveCommand<Unit, Unit> ChangePasswordCommand { get; }
+
     public ChangePasswordViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
         UserService = new(context, new());
+        ChangePasswordCommand = ReactiveCommand.Create(ChangePassword);
         MainWindowViewModel = mainWindowViewModel;
     }
+
+    public void ChangePassword() {}
+
 }

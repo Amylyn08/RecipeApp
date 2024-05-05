@@ -18,6 +18,9 @@
         
         <!-- Log Out -->
         <Button Content="Log Out" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" VerticalAlignment="Top"/>
+        
+        <!-- Change Password -->
+        <Button Content="Change Password" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" VerticalAlignment="Top"/>
     </StackPanel>
 
 
