@@ -61,7 +61,7 @@
                             <!-- Display the recipe name -->
                             <TextBlock Text="{Binding Name}" FontSize="16" Margin="5"/>
                             <TextBlock Text="{Binding Description}" FontSize="16" Margin="5"/>
-                            <TextBlock Text="{Binding GetUserName}" FontSize="16" Margin="5"/>
+                            <!-- <TextBlock Text="{Binding GetUserName}" FontSize="16" Margin="5"/> -->
                             <!-- Add more TextBlocks or other UI elements to display other properties of the recipe -->
                         </StackPanel>
                     </DataTemplate>

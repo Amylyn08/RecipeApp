@@ -24,12 +24,12 @@ public class DashboardViewModel : ViewModelBase {
     }
 
     public void GetRecipes(){
-        try{
-            Recipes = recipeService.GetAllRecipes();
-        }
-        catch(ArgumentException e){
-            _dashboardErrorMessage = e.Message;
-        }
+        // try{
+        //     Recipes = recipeService.GetAllRecipes();
+        // }
+        // catch(ArgumentException e){
+        //     _dashboardErrorMessage = e.Message;
+        // }
     }
 }
 
