@@ -45,6 +45,7 @@ namespace RecipeAppUI.ViewModels {
         public DeleteAccountViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel){
             UserService = new UserService(context, new PasswordEncrypter());
             MainWindowViewModel = mainWindowViewModel;
+            DeleteAccountCommand = ReactiveCommand.Create(DeleteAccount);
         }
 
         public void DeleteAccount() {
