@@ -2,6 +2,7 @@ using ReactiveUI;
 using RecipeApp.Services;
 using RecipeApp.Context;
 using RecipeApp.Models;
+using RecipeAppUI.Models; // singleton
 using System.Reactive;
 using System;
 using RecipeApp.Exceptions;
@@ -31,6 +32,7 @@ public class LoginViewModel : ViewModelBase {
     public void Login() {
         try {
             var user = UserService.Login(Username, Password);
+            UserSingleton.InstantiateUserOnce(user); // we now have a global user
             _mainWindowViewModel.ChangeToDashboardView();
         } catch (InvalidCredentialsException e) {
             LoginErrorMessage = e.Message;
