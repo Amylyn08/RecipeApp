@@ -1,4 +1,4 @@
-namespace RecipeAppUI.UserSingleton;
+namespace RecipeAppUI.User;
 
 using RecipeApp.Models;
 using System;

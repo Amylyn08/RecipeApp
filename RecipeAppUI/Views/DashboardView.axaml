@@ -29,8 +29,9 @@
 
         <!-- Textbox with search features -->
     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
-        <TextBlock x:CompileBindings="False" FontSize="20" Text="{Binding SearchText}"/>
-        <Button Content="Search" Margin="5"/>
+        <TextBlock x:CompileBindings="False" FontSize="20" />
+        <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
+        <Button Content="Search" Margin="5" Command="{Binding SearchCommand}"/>
         <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
                 <ComboBoxItem>Keyword</ComboBoxItem>
                 <ComboBoxItem>Username</ComboBoxItem>
