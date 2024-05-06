@@ -19,12 +19,14 @@ namespace RecipeAppUI.ViewModels
         private string _selectedCriteria;
         private string _searchText;
         private string _searchingMessage;
+        private string _selectedIndex = "0";
 
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public List<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
         public ReactiveCommand<Unit, Unit> SearchCommand { get; }
         public ReactiveCommand<string, Unit> ChangeCriteria { get; }
         public ReactiveCommand<Unit, Unit> ClickHandler { get ; }
+        
 
         public string SearchMessage{
             get => _searchingMessage;
@@ -45,6 +47,11 @@ namespace RecipeAppUI.ViewModels
         {
             get => _searchText;
             set => this.RaiseAndSetIfChanged(ref _searchText, value);
+        }
+
+        public string SelectedIndex{
+            get => _selectedIndex;
+            set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
         }
 
         public DashboardViewModel(SplankContext context)
@@ -69,33 +76,33 @@ namespace RecipeAppUI.ViewModels
         {
             try
             {
-                SearcherBase searcher;
-                switch (_selectedCriteria)
+                SearcherBase searcher = null;
+                switch (_selectedIndex)
                 {
-                    case "Username":
+                    case "0":
+                        searcher = new SearchKeyWord(_recipeService.Context, _searchText);
+                        break;
+                    case  "1":
                         searcher = new SearchByUsername(_recipeService.Context, _searchText);
                         break;
-                    case "Ingredients":
+                    case "2":
                         searcher = new SearchByIngredients(_recipeService.Context, _searchText);
                         break;
-                    case "Price":
+                    case "3":
                         searcher = new SearchByPriceRange(_recipeService.Context, Convert.ToDouble(_searchText));
                         break;
-                    case "Rating":
+                    case "4":
                         searcher = new SearchByRating(_recipeService.Context, Int32.Parse(_searchText));
                         break;
-                    case "Servings":
+                    case "5":
                         searcher = new SearchByServings(_recipeService.Context, Int32.Parse(_searchText));
                         break;
-                    case "Tags":
+                    case "6":
                         searcher = new SearchByTags(_recipeService.Context, _searchText);
                         break;
                     // case "Time":
                     //     searcher = new SearchByTime(_recipeService.Context, Int32.Parse(_searchText));
                     //     break;
-                    default:
-                        searcher = new SearchKeyWord(_recipeService.Context, _searchText);
-                        break;
                 }
                 Recipes = _recipeService.SearchRecipes(searcher);
             }

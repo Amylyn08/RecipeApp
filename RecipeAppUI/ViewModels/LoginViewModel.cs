@@ -2,10 +2,10 @@ using ReactiveUI;
 using RecipeApp.Services;
 using RecipeApp.Context;
 using RecipeApp.Models;
-using RecipeAppUI.Models; // singleton
 using System.Reactive;
 using System;
 using RecipeApp.Exceptions;
+using RecipeAppUI.User;
 
 namespace RecipeAppUI.ViewModels;
 

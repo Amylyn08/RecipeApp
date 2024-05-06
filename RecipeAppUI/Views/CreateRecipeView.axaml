@@ -33,7 +33,11 @@
                     Margin="5"
                     AcceptsReturn="False"
                     Watermark="Servings"/>
-          
+          <Button x:CompileBindings="False"
+                  Command="{Binding AddIngredient}">
+            Add Ingredient
+          </Button>
+            
     </StackPanel>
   </DockPanel>
 </UserControl>

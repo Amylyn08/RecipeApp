@@ -1,9 +1,10 @@
 namespace RecipeAppUI.User;
 
 using RecipeApp.Models;
+using System;
 
 public class UserSingleton {
-    private static User instance;
+    public static User instance;
 
     private UserSingleton() {}
 

@@ -5,7 +5,8 @@ using RecipeApp.Models;
 using System.Reactive;
 using System;
 using RecipeApp.Exceptions;
-using RecipeAppUI.UserSingleton;
+using RecipeAppUI.User;
+using System.Collections.Generic;
 namespace RecipeAppUI.ViewModels;
 
 public class CreateRecipeViewModel : ViewModelBase
@@ -51,7 +52,7 @@ public class CreateRecipeViewModel : ViewModelBase
 
     public CreateRecipeViewModel(SplankContext context) 
     {
-        _recipeRecipe = new RecipeService(context);
+        _recipeService = new RecipeService(context);
     }
 
     public void CreateRecipe() {
@@ -67,5 +68,13 @@ public class CreateRecipeViewModel : ViewModelBase
             };
             _recipeService.CreateRecipe(recipe);
         }
+        catch(ArgumentException e){
+            Console.WriteLine(e.Message);
+        }
     }
+
+    public void AddIngredient(){
+        
+    }
+
 }
