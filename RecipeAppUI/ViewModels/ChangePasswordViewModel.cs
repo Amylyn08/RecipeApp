@@ -2,7 +2,6 @@ namespace RecipeAppUI.ViewModels;
 
 using ReactiveUI;
 using System;
-using System.Threading;
 using RecipeApp.Services;
 using RecipeApp.Context;
 using RecipeApp.Models;
