@@ -2,6 +2,7 @@ namespace RecipeAppUI.ViewModels;
 
 using ReactiveUI;
 using System;
+using System.Threading;
 using RecipeApp.Services;
 using RecipeApp.Context;
 using RecipeApp.Models;
@@ -32,6 +33,17 @@ public class ChangePasswordViewModel : ViewModelBase {
         MainWindowViewModel = mainWindowViewModel;
     }
 
-    public void ChangePassword() {}
-
+    public void ChangePassword() {
+        try {
+            var user = UserService.Login(Username, OldPassword);
+            UserService.ChangePassword(user, NewPassword);
+            Console.WriteLine("Password changed, redirecting to login...");
+            Thread.Sleep(1500);
+            MainWindowViewModel.ChangeToLoginView();
+        } catch (ArgumentException e) {
+            ErrorMessage = e.Message;
+        } catch (Exception e) {
+            ErrorMessage = "Failed to change password, please try again later";
+        }
+    }
 }
