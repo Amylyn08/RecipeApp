@@ -21,6 +21,9 @@
         
         <!-- Change Password -->
         <Button Content="Change Password" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" VerticalAlignment="Top"/>
+
+        <!-- Delete account -->
+        <Button Content="Delete account" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" VerticalAlignment="Top"/>
     </StackPanel>
 
 
