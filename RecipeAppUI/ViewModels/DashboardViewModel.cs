@@ -52,7 +52,7 @@ namespace RecipeAppUI.ViewModels
             _recipeService = new RecipeService(context);
             SearchCommand = ReactiveCommand.Create(SearchRecipes);
             ChangeCriteria = ReactiveCommand.Create<string>(ExecuteChangCriteria);
-            ClickHandler = ReactiveCommand.Create<Unit,Unit>(ExecuteClickHandler);
+            // ClickHandler = ReactiveCommand.Create<Unit,Unit>(ExecuteClickHandler);
             GetRecipes();
         }
 
