@@ -37,13 +37,13 @@ public class ChangePasswordViewModel : ViewModelBase {
         try {
             var user = UserService.Login(Username, OldPassword);
             UserService.ChangePassword(user, NewPassword);
-            Console.WriteLine("Password changed, redirecting to login...");
-            Thread.Sleep(1500);
             MainWindowViewModel.ChangeToLoginView();
         } catch (ArgumentException e) {
             ErrorMessage = e.Message;
-        } catch (Exception e) {
-            ErrorMessage = "Failed to change password, please try again later";
+        } catch (UserDoesNotExistException e) {
+            ErrorMessage = e.Message;
+        } catch (InvalidCredentialsException e) {
+            ErrorMessage = e.Message;
         }
     }
 }
