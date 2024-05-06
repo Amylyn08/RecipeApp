@@ -1,6 +1,6 @@
-namespace RecipeAppUI.UserSingleton;
+namespace RecipeAppUI.User;
 
-using RecipeAppUI.Models;
+using RecipeApp.Models;
 
 public class UserSingleton {
     private static User instance;

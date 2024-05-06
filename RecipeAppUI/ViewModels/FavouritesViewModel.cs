@@ -1,7 +1,7 @@
 using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Services;
-using RecipeApp.Security.
+using RecipeApp.Security;
 using System.Collections.Generic;
 
 namespace RecipeAppUI.ViewModels;
