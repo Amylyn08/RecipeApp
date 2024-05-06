@@ -68,4 +68,9 @@ public class CreateRecipeViewModel : ViewModelBase
             _recipeService.CreateRecipe(recipe);
         }
     }
+
+    public void AddIngredient(){
+        
+    }
+
 }
