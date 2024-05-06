@@ -19,6 +19,8 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> ChangeToRegisterViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToHomeViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToDashboardViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToChangePasswordViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToDeleteAccountViewCommand { get; }
 
 
     public MainWindowViewModel() {
@@ -26,6 +28,8 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToRegisterViewCommand = ReactiveCommand.Create(ChangeToRegisterView);
         ChangeToHomeViewCommand = ReactiveCommand.Create(ChangeToHomeView);
         ChangeToDashboardViewCommand = ReactiveCommand.Create(ChangeToDashboardView);
+        ChangeToChangePasswordViewCommand = ReactiveCommand.Create(ChangeToChangePasswordView);
+        ChangeToDeleteAccountViewCommand = ReactiveCommand.Create(ChangeToDeleteAccountView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -43,6 +47,14 @@ public class MainWindowViewModel : ViewModelBase {
 
     public void ChangeToDashboardView() {
         ContentViewModel = new DashboardViewModel(SplankContext.GetInstance());
+    }
+
+    public void ChangeToChangePasswordView() {
+        ContentViewModel = new ChangePasswordViewModel(SplankContext.GetInstance(), this);
+    }
+
+    public void ChangeToDeleteAccountView() {
+        ContentViewModel = new DeleteAccountViewModel(SplankContext.GetInstance(), this);
     }
 }
 
