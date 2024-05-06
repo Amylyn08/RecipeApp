@@ -29,8 +29,23 @@
 
         <!-- Textbox with search features -->
     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
-        <TextBlock x:CompileBindings="False" FontSize="20" Text="{Binding SearchMessage}"/>
-        <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
+        <TextBlock x:CompileBindings="False" FontSize="20" Text="{Binding SearchText}"/>
+        <Button Content="Search" Margin="5"/>
+        <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
+                <ComboBoxItem>Keyword</ComboBoxItem>
+                <ComboBoxItem>Username</ComboBoxItem>
+                <ComboBoxItem>Ingredient</ComboBoxItem>
+                <ComboBoxItem>Price</ComboBoxItem>
+                <ComboBoxItem>Rating</ComboBoxItem>
+                <ComboBoxItem>Servings</ComboBoxItem>
+                <ComboBoxItem>Tags</ComboBoxItem>
+                <ComboBoxItem>Time</ComboBoxItem>
+            </ComboBox>
+
+    </StackPanel>
+    
+
+        <!-- <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
         <Button x:CompileBindings="False" Content="Search" Margin="5" Command="{Binding SearchCommand}"/>
         <Button x:CompileBindings="False" Content="Keyword" Command="{Binding ChangeCriteria}" CommandParameter="Keyword"/>
         <Button x:CompileBindings="False" Content="Username" Command="{Binding ChangeCriteria}" CommandParameter="Username"/>
@@ -39,10 +54,7 @@
         <Button x:CompileBindings="False" Content="Rating" Command="{Binding ChangeCriteria}" CommandParameter="Rating"/>
         <Button x:CompileBindings="False" Content="Servings" Command="{Binding ChangeCriteria}" CommandParameter="Servings"/>
         <Button x:CompileBindings="False" Content="Tags" Command="{Binding ChangeCriteria}" CommandParameter="Tags"/>
-        <Button x:CompileBindings="False" Content="Time" Command="{Binding ChangeCriteria}" CommandParameter="Time"/>
-    </StackPanel>
-
-
+        <Button x:CompileBindings="False" Content="Time" Command="{Binding ChangeCriteria}" CommandParameter="Time"/> -->
 
         <!-- Main views -->
         <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
