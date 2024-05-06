@@ -24,10 +24,10 @@
         <!-- Textbox with search features -->
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBox x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search..." />
-            <Button Content="Search" Margin="5"/>
-            <ComboBox x:Name="searcherCriteria" SelectedIndex="0" MaxDropDownHeight="100"
+            <Button Content="Search" Margin="5" Command="{Binding SearchRecipes_SelectionChanged}"/>
+            <ComboBox Name="searcherCriteria" SelectedIndex="0" MaxDropDownHeight="100"
                      VerticalContentAlignment="Center" VerticalAlignment="Center"
-                     SelctionChanged="SearchRecipes_SelectionChanged">
+                     SelectionChanged="SearchRecipes_SelectionChanged">
                 <ComboBoxItem>Keyword</ComboBoxItem>
                 <ComboBoxItem>Username</ComboBoxItem>
                 <ComboBoxItem>Ingredient</ComboBoxItem>
