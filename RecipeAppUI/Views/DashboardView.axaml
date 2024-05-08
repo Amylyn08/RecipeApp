@@ -24,6 +24,9 @@
 
         <!-- Delete account -->
         <Button Content="Delete account" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" VerticalAlignment="Top"/>
+
+         <!-- View Favourites -->
+         <Button Content="View Favourites" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToFavouritesViewCommand}" VerticalAlignment="Top"/>
     </StackPanel>
 
 

@@ -3,6 +3,8 @@ using RecipeApp.Models;
 using RecipeApp.Services;
 using RecipeApp.Security;
 using System.Collections.Generic;
+using ReactiveUI;
+using RecipeAppUI.User;
 
 namespace RecipeAppUI.ViewModels;
 
@@ -10,7 +12,7 @@ public class FavouritesViewModel : ViewModelBase
 {
     private MainWindowViewModel _mainWindowViewModel;
     private UserService _userService;
-    private List<Recipe> _favourites;
+    private List<Recipe> _favourites = UserSingleton.instance.Favorites;
 
     public UserService UserService
     {
@@ -22,6 +24,12 @@ public class FavouritesViewModel : ViewModelBase
     {
         get => _mainWindowViewModel;
         private set => _mainWindowViewModel = value;    
+    }
+
+    public List<Recipe> Favourites 
+    {
+        get => _favourites;
+        set => this.RaiseAndSetIfChanged(ref _favourites, value);
     }
 
     public FavouritesViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel)
