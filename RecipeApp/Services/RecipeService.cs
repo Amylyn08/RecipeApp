@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
@@ -12,7 +13,13 @@ public class RecipeService : ServiceBase {
     ///
     /// Gets all recipes from the DB
     public List<Recipe> GetAllRecipes() {
-        return Context.Recipes.ToList();
+        return Context.Recipes
+        .Include(r => r.Ingredients)
+        .Include(r => r.Steps)
+        .Include(r => r.Tags)
+        .Include(r => r.Ratings)
+        .Include(r => r.User)
+        .ToList();
     }
     /// <summary>
     /// Adds recipe to DB
