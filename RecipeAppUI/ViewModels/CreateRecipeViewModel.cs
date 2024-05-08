@@ -19,7 +19,12 @@ public class CreateRecipeViewModel : ViewModelBase
     private List<Step> _steps;
     private List<Tag> _tags;
     private readonly RecipeService _recipeService;
+    private ViewModelBase _contentViewModel;
 
+    public ViewModelBase ContentViewModel{
+        get => _contentViewModel;
+        set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
+    }
     public string Name {
         get => _name;
         set => this.RaiseAndSetIfChanged(ref _name, value);
@@ -50,8 +55,13 @@ public class CreateRecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _tags, value);
     }
 
+    public ReactiveCommand<Unit,Unit> ChangeToAddIngredientViewCommand { get;}
+    public ReactiveCommand<Unit,Unit> ChangeToDashboardViewCommand { get;}
+    
     public CreateRecipeViewModel(SplankContext context) 
     {
+        ChangeToAddIngredientViewCommand = ReactiveCommand.Create(ChangeToIngredientView);
+        ChangeToDashboardViewCommand = ReactiveCommand.Create(ChangeToDashboardView);
         _recipeService = new RecipeService(context);
     }
 
@@ -73,8 +83,12 @@ public class CreateRecipeViewModel : ViewModelBase
         }
     }
 
-    public void AddIngredient(){
-        
+    public void ChangeToIngredientView(){
+        ContentViewModel = new AddIngredientViewModel(SplankContext.GetInstance());
+    }
+
+    public void ChangeToDashboardView(){
+        ContentViewModel = new DashboardViewModel(SplankContext.GetInstance());
     }
 
 }

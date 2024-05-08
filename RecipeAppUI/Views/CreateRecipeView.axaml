@@ -37,6 +37,8 @@
                   Command="{Binding AddIngredient}">
             Add Ingredient
           </Button>
+          <!-- <Button>
+          </Button> -->
             
     </StackPanel>
   </DockPanel>

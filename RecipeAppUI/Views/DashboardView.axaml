@@ -44,23 +44,11 @@
             </ComboBox>
 
     </StackPanel>
-    
-
-        <!-- <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
-        <Button x:CompileBindings="False" Content="Search" Margin="5" Command="{Binding SearchCommand}"/>
-        <Button x:CompileBindings="False" Content="Keyword" Command="{Binding ChangeCriteria}" CommandParameter="Keyword"/>
-        <Button x:CompileBindings="False" Content="Username" Command="{Binding ChangeCriteria}" CommandParameter="Username"/>
-        <Button x:CompileBindings="False" Content="Ingredient" Command="{Binding ChangeCriteria}" CommandParameter="Ingredient"/>
-        <Button x:CompileBindings="False" Content="Price" Command="{Binding ChangeCriteria}" CommandParameter="Price"/>
-        <Button x:CompileBindings="False" Content="Rating" Command="{Binding ChangeCriteria}" CommandParameter="Rating"/>
-        <Button x:CompileBindings="False" Content="Servings" Command="{Binding ChangeCriteria}" CommandParameter="Servings"/>
-        <Button x:CompileBindings="False" Content="Tags" Command="{Binding ChangeCriteria}" CommandParameter="Tags"/>
-        <Button x:CompileBindings="False" Content="Time" Command="{Binding ChangeCriteria}" CommandParameter="Time"/> -->
 
         <!-- Main views -->
         <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
             <!-- Navigation view -->
-            <Button Content="View 1" Margin="5"/>
+            <Button x:CompileBindings="False" Command="{Binding ChangeToCreateRecipeViewCommand }" Content="Creaate Recipe" Margin="5"/>
             <Button Content="View 2" Margin="5"/>
             <!-- Add more navigation buttons or tabs as needed -->
         </StackPanel>
