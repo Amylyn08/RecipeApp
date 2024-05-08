@@ -4,5 +4,100 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.AddIngredientView">
-  Welcome to Avalonia!
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Name"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10" />
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Name"
+                  AcceptsReturn="False"
+                  Text="{Binding Name}"/>
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Price"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10"/>
+
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Price"
+                  AcceptsReturn="False"
+                  Text="{Binding Price}"/>
+
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Quantity"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10"/>
+
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Quantity"
+                  AcceptsReturn="False"
+                  Text="{Binding Quantity}" />
+      <ComboBox SelectedIndex="{Binding SelectedUnit}"  MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
+        <ComboBoxItem></ComboBoxItem>
+        <ComboBoxItem></ComboBoxItem>
+        <ComboBoxItem></ComboBoxItem>
+      </ComboxBox>
+                  
+  </StackPanel>
+
+</UserControl>
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RecipeAppUI.Views.AddIngredientView">
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Name"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10" />
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Name"
+                  AcceptsReturn="False"
+                  Text="{Binding Name}"/>
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Price"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10"/>
+
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Price"
+                  AcceptsReturn="False"
+                  Text="{Binding Price}"/>
+
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Quantity"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10"/>
+
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Quantity"
+                  AcceptsReturn="False"
+                  Text="{Binding Quantity}" />
+      <ComboBox SelectedIndex="{Binding SelectedUnit}"  MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
+        <ComboBoxItem>Spoon(s)</ComboBoxItem>
+        <ComboBoxItem>Gram(s)</ComboBoxItem>
+        <ComboBoxItem>Cup(s)</ComboBoxItem>
+        <ComboBoxItem>Teaspoon(s)</ComboBoxItem>
+        <ComboBoxItem>Amount</ComboBoxItem>
+      </ComboxBox>     
+      <Button>Add</Button>        
+      
+  </StackPanel>
+
 </UserControl>

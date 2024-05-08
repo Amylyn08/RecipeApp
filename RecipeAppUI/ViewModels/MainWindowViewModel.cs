@@ -22,6 +22,7 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> ChangeToChangePasswordViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToDeleteAccountViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToCreateRecipeViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToAddIngredientViewCommand { get; }
 
 
 
@@ -33,6 +34,7 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToChangePasswordViewCommand = ReactiveCommand.Create(ChangeToChangePasswordView);
         ChangeToDeleteAccountViewCommand = ReactiveCommand.Create(ChangeToDeleteAccountView);
         ChangeToCreateRecipeViewCommand = ReactiveCommand.Create(ChangeToCreateRecipeView);
+        ChangeToAddIngredientViewCommand = ReactiveCommand.Create(ChangeToAddIngredientView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -61,8 +63,12 @@ public class MainWindowViewModel : ViewModelBase {
     }
 
     public void ChangeToCreateRecipeView() {
-            ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance());
-        }
+        ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance());
+    }
+    
+    public void ChangeToAddIngredientView(){
+        ContentViewModel = new AddIngredientViewModel(SplankContext.GetInstance());
+    }
 }
 
 //peackaboo prabhjot
