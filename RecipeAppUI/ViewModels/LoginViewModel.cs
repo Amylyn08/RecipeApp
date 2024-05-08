@@ -2,10 +2,13 @@ using ReactiveUI;
 using RecipeApp.Services;
 using RecipeApp.Context;
 using RecipeApp.Models;
+using RecipeApp.Searcher;
 using System.Reactive;
 using System;
 using RecipeApp.Exceptions;
 using RecipeAppUI.User;
+using System.Collections.Generic;
+
 
 namespace RecipeAppUI.ViewModels;
 
@@ -31,7 +34,9 @@ public class LoginViewModel : ViewModelBase {
 
     public void Login() {
         try {
-            var user = UserService.Login(Username, Password);
+            RecipeApp.Models.User user = UserService.Login(Username, Password);
+            List<Recipe> favouriteRecipes = new SearchByUserFavorite(SplankContext.GetInstance(), user).FilterRecipes();
+            user.Favorites = favouriteRecipes;
             UserSingleton.InstantiateUserOnce(user); // we now have a global user
             _mainWindowViewModel.ChangeToDashboardView();
         } catch (InvalidCredentialsException e) {
@@ -42,5 +47,4 @@ public class LoginViewModel : ViewModelBase {
             LoginErrorMessage = e.Message;
         }
     }
-
 }

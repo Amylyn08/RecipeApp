@@ -24,6 +24,9 @@
 
         <!-- Delete account -->
         <Button Content="Delete account" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" VerticalAlignment="Top"/>
+
+         <!-- View Favourites -->
+         <Button Content="View Favourites" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToFavouritesViewCommand}" VerticalAlignment="Top"/>
     </StackPanel>
 
 
@@ -57,24 +60,117 @@
         <StackPanel DockPanel.Dock="Right" Margin="10">
             <!-- Bigger view for list views -->
             <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-            <!-- Your list view content here -->
-            <TextBlock FontSize="20"
+            <!-- <TextBlock FontSize="20"
                         Text="{Binding DashboardErrorMessage }"/>
             <ListBox ItemsSource="{Binding Recipes}" Margin="0,10">
-                <!-- Define the template for each item in the ListBox -->
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <!-- Use a StackPanel to layout the recipe details -->
                         <StackPanel Orientation="Horizontal">
-                            <!-- Display the recipe name -->
                             <TextBlock Text="{Binding Name}" FontSize="16" Margin="5"/>
                             <TextBlock Text="{Binding Description}" FontSize="16" Margin="5"/>
-                            <!-- <TextBlock Text="{Binding GetUserName}" FontSize="16" Margin="5"/> -->
-                            <!-- Add more TextBlocks or other UI elements to display other properties of the recipe -->
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
+            </ListBox> -->
+
+        <ListBox ItemsSource="{Binding Recipes}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        
+                        <!-- Author -->
+                        <TextBlock FontWeight="Bold">
+                            <Run Text="Author: "/>
+                            <Run Text="{Binding User.Name}"/>
+                        </TextBlock>
+    
+                        <!-- Name -->
+                        <TextBlock FontWeight="Bold">
+                            <Run Text="Name: "/>
+                            <Run Text="{Binding Name}"/>
+                        </TextBlock>
+    
+                        <!-- Description -->
+                        <TextBlock FontWeight="Bold">
+                            <Run Text="Description: "/>
+                            <Run Text="{Binding Description}"/>
+                        </TextBlock>
+    
+                        <!-- Servings -->
+                        <TextBlock FontWeight="Bold">
+                            <Run Text="Servings: "/>
+                            <Run Text="{Binding Servings}"/>
+                        </TextBlock>
+                        
+                        <!-- Ingredients -->
+                        <TextBlock Text="Ingredients:" FontWeight="Bold"/>
+                        <ItemsControl ItemsSource="{Binding Ingredients}" Margin="20 0 0 0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Run Text="{Binding Quantity}"/>
+                                        <Run Text=" "/>
+                                        <Run Text="{Binding UnitOfMeasurement}"/>
+                                        <Run Text=" of " FontWeight="Bold"/>
+                                        <Run Text="{Binding Name}" FontWeight="Bold"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl> 
+    
+                        <!-- Steps -->
+                        <TextBlock Text="Steps" FontWeight="Bold"/>
+                        <ItemsControl ItemsSource="{Binding Steps}" Margin="20 0 0 0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold">
+                                            <Run Text="{Binding Instruction}"/>
+                                            <Run Text=","/>
+                                            <Run Text="{Binding TimeInMinutes}"/>
+                                            <Run Text=" Minutes"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl> 
+                        
+                        <!-- Tags -->
+                        <TextBlock Text="Tags" FontWeight="Bold"/>
+                        <ItemsControl ItemsSource="{Binding Tags}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TagName}" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+    
+                        <!-- Ratings -->
+                        <TextBlock Text="Ratings" FontWeight="Bold"/>
+                        <ItemsControl ItemsSource="{Binding Ratings}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold">
+                                            <Run Text="User: "/>
+                                            <Run Text="{Binding User.Name}"/>
+                                        </TextBlock>
+                                        <TextBlock FontWeight="Bold">
+                                            <Run Text="Stars: "/>
+                                            <Run Text="{Binding Stars}"/>
+                                        </TextBlock>
+                                        <TextBlock FontWeight="Bold">
+                                            <Run Text="Description: "/>
+                                            <Run Text="{Binding Description}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         </StackPanel>
     </DockPanel>

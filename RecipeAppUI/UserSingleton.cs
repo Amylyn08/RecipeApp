@@ -4,11 +4,11 @@ using RecipeApp.Models;
 using System;
 
 public class UserSingleton {
-    private static User instance;
+    public static RecipeApp.Models.User instance;
 
     private UserSingleton() {}
 
-    public static User GetInstance() {
+    public static RecipeApp.Models.User GetInstance() {
         // If we didn't instantiate the instance once before, then just throw an exception
         if (instance == null) {
             throw new InvalidOperationException("Please ensure InstantiateUserOnce has been called before getting an instance of this object");
