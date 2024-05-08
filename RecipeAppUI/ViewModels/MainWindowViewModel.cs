@@ -68,11 +68,11 @@ public class MainWindowViewModel : ViewModelBase {
     }
     
     public void ChangeToCreateRecipeView() {
-        ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance());
+        ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance(), this);
     }
     
     public void ChangeToAddIngredientView(){
-        ContentViewModel = new AddIngredientViewModel(SplankContext.GetInstance());
+        ContentViewModel = new AddIngredientViewModel(SplankContext.GetInstance(), this);
     }
 }
 

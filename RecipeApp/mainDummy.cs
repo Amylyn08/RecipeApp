@@ -5,6 +5,7 @@ using RecipeApp.Api;
 using RecipeApp.Searcher;
 using RecipeApp.Models;
 using RecipeApp.Exceptions;
+using System.Collections.ObjectModel;
 
 namespace RecipeApp;
 
@@ -304,7 +305,7 @@ public class MainDummy
                 Console.WriteLine("Enter the amount of serving your recipe has");
                 int servings = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Create your ingredients:");
-                List<Ingredient> ingredients = CreateListIngredients();
+                ObservableCollection<Ingredient> ingredients = CreateListIngredients();
                 Console.WriteLine("Add your steps:");
                 List<Step> steps = CreateListStep();
                 Console.WriteLine("Add your tags: ");
@@ -352,9 +353,9 @@ public class MainDummy
         return new Ingredient(name, quantity, unitOfMeasurement, price);
     }
 
-    private static List<Ingredient> CreateListIngredients()
+    private static ObservableCollection<Ingredient> CreateListIngredients()
     {
-        List<Ingredient> ingredients = new List<Ingredient>();
+        ObservableCollection<Ingredient> ingredients = new ObservableCollection<Ingredient>();
 
         bool createIng = true;
 

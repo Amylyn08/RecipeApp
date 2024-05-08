@@ -7,6 +7,7 @@ using System;
 using RecipeApp.Exceptions;
 using RecipeAppUI.User;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 namespace RecipeAppUI.ViewModels;
 
 public class CreateRecipeViewModel : ViewModelBase
@@ -15,7 +16,7 @@ public class CreateRecipeViewModel : ViewModelBase
     private string _name;
     private string _description;
     private int _servings;
-    private List<Ingredient> _ingredients;
+    private ObservableCollection<Ingredient> _ingredients;
     private List<Step> _steps;
     private List<Tag> _tags;
     private readonly RecipeService _recipeService;
@@ -40,7 +41,7 @@ public class CreateRecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _servings, value);
     }
 
-    public List<Ingredient> Ingredients {
+    public ObservableCollection<Ingredient> Ingredients {
         get => _ingredients;
         set => this.RaiseAndSetIfChanged(ref _ingredients, value);
     }
@@ -57,9 +58,11 @@ public class CreateRecipeViewModel : ViewModelBase
 
     public ReactiveCommand<Unit,Unit> ChangeToAddIngredientViewCommand { get;}
     public ReactiveCommand<Unit,Unit> ChangeToDashboardViewCommand { get;}
+    private MainWindowViewModel _mainWindowViewModel;
     
-    public CreateRecipeViewModel(SplankContext context) 
+    public CreateRecipeViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) 
     {
+        _mainWindowViewModel = mainWindowViewModel;
         ChangeToAddIngredientViewCommand = ReactiveCommand.Create(ChangeToIngredientView);
         ChangeToDashboardViewCommand = ReactiveCommand.Create(ChangeToDashboardView);
         _recipeService = new RecipeService(context);
@@ -84,7 +87,7 @@ public class CreateRecipeViewModel : ViewModelBase
     }
 
     public void ChangeToIngredientView(){
-        ContentViewModel = new AddIngredientViewModel(SplankContext.GetInstance());
+        ContentViewModel = new AddIngredientViewModel(SplankContext.GetInstance(), _mainWindowViewModel);
     }
 
     public void ChangeToDashboardView(){

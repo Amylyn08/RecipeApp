@@ -1,5 +1,6 @@
 namespace RecipeApp.Models;
 
+using System.Collections.ObjectModel;
 using System.Text;
 
 /// <summary>
@@ -9,7 +10,7 @@ public class Recipe {
     private string _name = null!;
     private string _description = null!;
     private int _servings;
-    private List<Ingredient> _ingredients = null!;
+    private ObservableCollection<Ingredient> _ingredients = null!;
     private List<Step> _steps = null!;
     private List<Rating> _ratings = null!;
     private List<Tag> _tags = null!;
@@ -51,7 +52,7 @@ public class Recipe {
         }
     }
 
-    public List<Ingredient> Ingredients { 
+    public ObservableCollection<Ingredient> Ingredients { 
         get => _ingredients; 
         set {
             if (value == null) 
@@ -127,7 +128,7 @@ public class Recipe {
     /// <param name="ratings">Recipe ratings</param>
     /// <param name="tags">List of tags</param>
     /// <exception cref="ArgumentException">If any fields are null, empty or doesn't respect certain constraints</exception>
-    public Recipe(string name, User user, string description, int servings, List<Ingredient> ingredients, List<Step> steps, List<Rating> ratings, List<Tag> tags) {
+    public Recipe(string name, User user, string description, int servings, ObservableCollection<Ingredient> ingredients, List<Step> steps, List<Rating> ratings, List<Tag> tags) {
         Name = name;
         User = user;
         Description = description;
