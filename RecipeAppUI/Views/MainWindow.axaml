@@ -18,5 +18,6 @@
         <views:LoginView/>
         <views:RegisterView />
         <views:DashboardView />
+        <views:CreateRecipeView />
     </StackPanel>
 </Window>

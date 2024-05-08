@@ -22,6 +22,7 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> ChangeToChangePasswordViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToDeleteAccountViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToFavouritesViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToCreateRecipeViewCommand { get; }
 
 
     public MainWindowViewModel() {
@@ -32,6 +33,7 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToChangePasswordViewCommand = ReactiveCommand.Create(ChangeToChangePasswordView);
         ChangeToDeleteAccountViewCommand = ReactiveCommand.Create(ChangeToDeleteAccountView);
         ChangeToFavouritesViewCommand = ReactiveCommand.Create(ChangeToFavouritesView);
+        ChangeToCreateRecipeViewCommand = ReactiveCommand.Create(ChangeToCreateRecipeView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -59,10 +61,11 @@ public class MainWindowViewModel : ViewModelBase {
         ContentViewModel = new DeleteAccountViewModel(SplankContext.GetInstance(), this);
     }
 
-    public void ChangeToFavouritesView() 
-    {
+    public void ChangeToFavouritesView() {
         ContentViewModel = new FavouritesViewModel(SplankContext.GetInstance(), this);
     }
+    
+    public void ChangeToCreateRecipeView() {
+        ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance());
+    }
 }
-
-//peackaboo prabhjot

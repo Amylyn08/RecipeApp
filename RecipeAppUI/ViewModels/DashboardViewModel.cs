@@ -54,14 +54,22 @@ namespace RecipeAppUI.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
         }
 
+        private ViewModelBase _contentViewModel;
+
+        public ViewModelBase ContentViewModel {
+            get => _contentViewModel;
+            private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
+        }
+
         public DashboardViewModel(SplankContext context)
         {
             _recipeService = new RecipeService(context);
             SearchCommand = ReactiveCommand.Create(SearchRecipes);
             ChangeCriteria = ReactiveCommand.Create<string>(ExecuteChangCriteria);
-            // ClickHandler = ReactiveCommand.Create<Unit,Unit>(ExecuteClickHandler);
             GetRecipes();
         }
+
+
 
         public void ExecuteChangCriteria(string criteria){
             SelectedCriteria = criteria;
