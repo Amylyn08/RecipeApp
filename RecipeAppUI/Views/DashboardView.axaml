@@ -28,10 +28,11 @@
 
 
         <!-- Textbox with search features -->
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBox Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search..."/>
-            <Button Content="Search" Margin="5"/>
-            <ComboBox SelectedIndex="0" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+        <TextBlock x:CompileBindings="False" FontSize="20" />
+        <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
+        <Button Content="Search" Margin="5" Command="{Binding SearchCommand}"/>
+        <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
                 <ComboBoxItem>Keyword</ComboBoxItem>
                 <ComboBoxItem>Username</ComboBoxItem>
                 <ComboBoxItem>Ingredient</ComboBoxItem>
@@ -41,12 +42,13 @@
                 <ComboBoxItem>Tags</ComboBoxItem>
                 <ComboBoxItem>Time</ComboBoxItem>
             </ComboBox>
-        </StackPanel>
+
+    </StackPanel>
 
         <!-- Main views -->
         <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
             <!-- Navigation view -->
-            <Button Content="View 1" Margin="5"/>
+            <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToCreateRecipeViewCommand}" Content="Creaate Recipe" Margin="5"/>
             <Button Content="View 2" Margin="5"/>
             <!-- Add more navigation buttons or tabs as needed -->
         </StackPanel>
@@ -57,7 +59,7 @@
             <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
             <!-- Your list view content here -->
             <TextBlock FontSize="20"
-                        Text="{Binding DashBoardErrorMessage }"/>
+                        Text="{Binding DashboardErrorMessage }"/>
             <ListBox ItemsSource="{Binding Recipes}" Margin="0,10">
                 <!-- Define the template for each item in the ListBox -->
                 <ListBox.ItemTemplate>

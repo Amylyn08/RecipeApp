@@ -1,16 +1,13 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using System.Linq;
 
 namespace RecipeAppUI.Views;
 
-public partial class DashboardView : UserControl
+public partial class CreateRecipeView : UserControl
 {
-    public DashboardView()
+    public CreateRecipeView()
     {
         InitializeComponent();
-
     }
-    
 }

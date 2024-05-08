@@ -9,19 +9,18 @@ public class SearchByPriceRange: SearcherBase{
     private readonly double _minPrice;
     private readonly double _maxPrice;
 
+    private readonly double _price;
+
     /// <summary>
     /// Constructor for SearchByPriceRange, takes in a min price and max price and sets them.
     /// </summary>
     /// <param name="min">The min price.</param>
     /// <param name="max">The max price.</param>
-    public SearchByPriceRange(SplankContext context, double min, double max) : base(context){
+    public SearchByPriceRange(SplankContext context, double price) : base(context){
 
-        if (min < 0 || max < 0)
-            throw new ArgumentException("Min or max cannot be negative");
-        if (min > max) 
-            throw new ArgumentException("Min cannot be greater than max");
-        _minPrice = min;
-        _maxPrice = max;
+        if (price < 0)
+            throw new ArgumentException("Price cannot be negative");
+        _price = price;
     }
 
     public override List<Recipe> FilterRecipes()
@@ -35,7 +34,7 @@ public class SearchByPriceRange: SearcherBase{
                             Recipe = recipe,
                             TotalPrice = ingredients.Sum(ing => ing.Price)
                         })
-            .Where(recipe => recipe.TotalPrice >= _minPrice && recipe.TotalPrice <= _maxPrice)
+            .Where(recipe => recipe.TotalPrice >= _price-5 && recipe.TotalPrice <= _price+5)
             .Select(recipe => recipe.Recipe)
             .Include(recipe => recipe.Ingredients)
             .Include(recipe => recipe.Steps)
@@ -44,4 +43,5 @@ public class SearchByPriceRange: SearcherBase{
             .ToList();
         return filteredRecipes;
     }
+
 }
