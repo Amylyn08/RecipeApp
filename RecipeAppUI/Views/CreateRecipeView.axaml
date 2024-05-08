@@ -9,7 +9,7 @@
   <DockPanel>
       <StackPanel HorizontalAlignment="Center" 
 				          VerticalAlignment="Center">
-          <TextBlock FontSize="32" 
+          <TextBlock FontSize="20" 
 				   Text="Enter Recipe Name" 
 				   TextAlignment="Center" 
 				   Margin="0,0,0,20"/>

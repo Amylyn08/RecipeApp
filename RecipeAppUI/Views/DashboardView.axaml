@@ -48,7 +48,7 @@
         <!-- Main views -->
         <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
             <!-- Navigation view -->
-            <Button x:CompileBindings="False" Command="{Binding ChangeToCreateRecipeViewCommand }" Content="Creaate Recipe" Margin="5"/>
+            <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToCreateRecipeViewCommand}" Content="Creaate Recipe" Margin="5"/>
             <Button Content="View 2" Margin="5"/>
             <!-- Add more navigation buttons or tabs as needed -->
         </StackPanel>

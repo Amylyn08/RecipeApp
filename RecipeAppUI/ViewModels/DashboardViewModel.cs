@@ -60,21 +60,17 @@ namespace RecipeAppUI.ViewModels
             get => _contentViewModel;
             private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
         }
-        public ReactiveCommand<Unit, Unit> ChangeToCreateRecipeViewCommand { get; }
 
         public DashboardViewModel(SplankContext context)
         {
             _recipeService = new RecipeService(context);
             SearchCommand = ReactiveCommand.Create(SearchRecipes);
             ChangeCriteria = ReactiveCommand.Create<string>(ExecuteChangCriteria);
-            ChangeToCreateRecipeViewCommand = ReactiveCommand.Create(ChangeToCreateRecipeView);
             GetRecipes();
         }
 
 
-        public void ChangeToCreateRecipeView() {
-            ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance());
-        }
+
         public void ExecuteChangCriteria(string criteria){
             SelectedCriteria = criteria;
             _searchingMessage = "You are now searching by: " + criteria;
