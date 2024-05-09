@@ -26,6 +26,7 @@ namespace RecipeAppUI.ViewModels
         private string _searchingMessage;
         private string _selectedIndex = "0";
         private UserService _userService;
+        private string _errorMessage;
 
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public List<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
@@ -36,6 +37,8 @@ namespace RecipeAppUI.ViewModels
             get => _userService;
             set => _userService = value;
         }
+
+        public string ErrorMessage { get => _errorMessage; set => this.RaiseAndSetIfChanged(ref _errorMessage, value); } = "";
 
         public string SearchMessage{
             get => _searchingMessage;
@@ -150,9 +153,9 @@ namespace RecipeAppUI.ViewModels
                 Recipe recipe = this.Recipes.FirstOrDefault(r => r.RecipeId == recipeId);
                 UserService.AddToFavourites(recipe, UserSingleton.GetInstance());
             } catch (ArgumentException e) {
-                Console.WriteLine(e.Message);
+                ErrorMessage = e.Message;
             } catch (AlreadyFavouritedException e) {
-                Console.WriteLine(e.Message);
+                ErrorMessage = e.Message;
             }
         }
     }

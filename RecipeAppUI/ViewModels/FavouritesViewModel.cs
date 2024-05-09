@@ -2,6 +2,7 @@ using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Services;
 using RecipeApp.Security;
+using RecipeApp.Searcher;
 using System.Collections.Generic;
 using ReactiveUI;
 using RecipeAppUI.Session;
@@ -12,7 +13,7 @@ public class FavouritesViewModel : ViewModelBase
 {
     private MainWindowViewModel _mainWindowViewModel;
     private UserService _userService;
-    private List<Recipe> _favourites = UserSingleton.instance.Favorites;
+    private List<Recipe> _favourites;
 
     public UserService UserService
     {
@@ -36,5 +37,6 @@ public class FavouritesViewModel : ViewModelBase
     {
         UserService = new UserService(context, new PasswordEncrypter());
         MainWindowViewModel = mainWindowViewModel;
+        Favourites = new SearchByUserFavorite(context, UserSingleton.GetInstance()).FilterRecipes();
     }
 }
