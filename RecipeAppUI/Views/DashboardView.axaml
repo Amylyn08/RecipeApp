@@ -72,13 +72,14 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox> -->
-
         <ListBox ItemsSource="{Binding Recipes}">
-            <ListBox.ItemTemplate>
+			<ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
-                        
-                        <!-- Author -->
+						<Button Content="Add to Favorites"
+                                Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).AddToFavouritesCommand}"
+                                CommandParameter="{Binding RecipeId}"/>
+						<!-- Author -->
                         <TextBlock FontWeight="Bold">
                             <Run Text="Author: "/>
                             <Run Text="{Binding User.Name}"/>
@@ -171,7 +172,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
         </StackPanel>
     </DockPanel>
 </UserControl>

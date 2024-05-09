@@ -1,4 +1,4 @@
-namespace RecipeAppUI.User;
+namespace RecipeAppUI.Session;
 
 using RecipeApp.Models;
 using System;
@@ -8,7 +8,7 @@ public class UserSingleton {
 
     private UserSingleton() {}
 
-    public static RecipeApp.Models.User GetInstance() {
+    public static User GetInstance() {
         // If we didn't instantiate the instance once before, then just throw an exception
         if (instance == null) {
             throw new InvalidOperationException("Please ensure InstantiateUserOnce has been called before getting an instance of this object");

@@ -4,10 +4,15 @@ using RecipeApp.Exceptions;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 using RecipeApp.Services;
+using RecipeAppUI.Session;
 using System;
 using System.Collections.Generic;
 using System.Reactive;
 using Avalonia.Controls;
+using System.Linq;
+using System.Reactive.Linq;
+using Avalonia.Input;
+
 
 namespace RecipeAppUI.ViewModels
 {
@@ -20,13 +25,17 @@ namespace RecipeAppUI.ViewModels
         private string _searchText;
         private string _searchingMessage;
         private string _selectedIndex = "0";
+        private UserService _userService;
 
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public List<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
         public ReactiveCommand<Unit, Unit> SearchCommand { get; }
         public ReactiveCommand<string, Unit> ChangeCriteria { get; }
-        public ReactiveCommand<Unit, Unit> ClickHandler { get ; }
-        
+        public ReactiveCommand<int, Unit> AddToFavouritesCommand {get;}
+        public UserService UserService {
+            get => _userService;
+            set => _userService = value;
+        }
 
         public string SearchMessage{
             get => _searchingMessage;
@@ -64,10 +73,14 @@ namespace RecipeAppUI.ViewModels
         public DashboardViewModel(SplankContext context)
         {
             _recipeService = new RecipeService(context);
+            UserService = new UserService(context, new());
             SearchCommand = ReactiveCommand.Create(SearchRecipes);
             ChangeCriteria = ReactiveCommand.Create<string>(ExecuteChangCriteria);
+            AddToFavouritesCommand = ReactiveCommand.Create<int>(AddToFavourites);
             GetRecipes();
         }
+
+        public DashboardViewModel() {}
 
 
 
@@ -129,6 +142,17 @@ namespace RecipeAppUI.ViewModels
             catch (ArgumentException e)
             {
                 DashboardErrorMessage = e.Message;
+            }
+        }
+
+        public void AddToFavourites(int recipeId) {
+            try {
+                Recipe recipe = this.Recipes.FirstOrDefault(r => r.RecipeId == recipeId);
+                UserService.AddToFavourites(recipe, UserSingleton.GetInstance());
+            } catch (ArgumentException e) {
+                Console.WriteLine(e.Message);
+            } catch (AlreadyFavouritedException e) {
+                Console.WriteLine(e.Message);
             }
         }
     }

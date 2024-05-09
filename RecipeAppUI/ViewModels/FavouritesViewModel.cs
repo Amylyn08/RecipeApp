@@ -4,7 +4,7 @@ using RecipeApp.Services;
 using RecipeApp.Security;
 using System.Collections.Generic;
 using ReactiveUI;
-using RecipeAppUI.User;
+using RecipeAppUI.Session;
 
 namespace RecipeAppUI.ViewModels;
 
