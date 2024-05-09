@@ -6,6 +6,7 @@ using RecipeApp.Searcher;
 using System.Collections.Generic;
 using ReactiveUI;
 using RecipeAppUI.Session;
+using System.Collections.ObjectModel;
 
 namespace RecipeAppUI.ViewModels;
 
@@ -13,7 +14,7 @@ public class FavouritesViewModel : ViewModelBase
 {
     private MainWindowViewModel _mainWindowViewModel;
     private UserService _userService;
-    private List<Recipe> _favourites;
+    private ObservableCollection<Recipe> _favourites;
 
     public UserService UserService
     {
@@ -27,7 +28,7 @@ public class FavouritesViewModel : ViewModelBase
         private set => _mainWindowViewModel = value;    
     }
 
-    public List<Recipe> Favourites 
+    public ObservableCollection<Recipe> Favourites 
     {
         get => _favourites;
         set => this.RaiseAndSetIfChanged(ref _favourites, value);
@@ -37,6 +38,6 @@ public class FavouritesViewModel : ViewModelBase
     {
         UserService = new UserService(context, new PasswordEncrypter());
         MainWindowViewModel = mainWindowViewModel;
-        Favourites = new SearchByUserFavorite(context, UserSingleton.GetInstance()).FilterRecipes();
+        Favourites = new ObservableCollection<Recipe>(new SearchByUserFavorite(context, UserSingleton.GetInstance()).FilterRecipes());
     }
 }
