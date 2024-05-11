@@ -30,13 +30,17 @@
             </StackPanel>
 
             <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
-    
+            
+            <TextBlock Text="{Binding ErrorMessage}" FontSize="20"/>
+
             <!-- Show the favourites -->
             <ListBox ItemsSource="{Binding Favourites}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            
+                            <Button Content="Delete From Favourites"
+                                Command="{Binding $parent[ListBox].((vm:FavouritesViewModel)DataContext).DeleteFavouriteCommand}"
+                                CommandParameter="{Binding RecipeId}"/>
                             <!-- Author -->
                             <TextBlock FontWeight="Bold">
                                 <Run Text="Author: "/>
