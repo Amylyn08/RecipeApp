@@ -1,10 +1,10 @@
-namespace RecipeAppUI.User;
+namespace RecipeAppUI.Session;
 
 using RecipeApp.Models;
 using System;
 
 public class UserSingleton {
-    private static User instance;
+    public static RecipeApp.Models.User instance;
 
     private UserSingleton() {}
 
