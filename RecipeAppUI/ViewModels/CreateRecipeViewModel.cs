@@ -5,7 +5,7 @@ using RecipeApp.Models;
 using System.Reactive;
 using System;
 using RecipeApp.Exceptions;
-using RecipeAppUI.User;
+using RecipeAppUI.Session;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 namespace RecipeAppUI.ViewModels;
