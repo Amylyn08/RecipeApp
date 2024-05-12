@@ -35,7 +35,6 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToDeleteAccountViewCommand = ReactiveCommand.Create(ChangeToDeleteAccountView);
         ChangeToFavouritesViewCommand = ReactiveCommand.Create(ChangeToFavouritesView);
         ChangeToCreateRecipeViewCommand = ReactiveCommand.Create(ChangeToCreateRecipeView);
-        ChangeToAddIngredientViewCommand = ReactiveCommand.Create(ChangeToAddIngredientView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -71,9 +70,6 @@ public class MainWindowViewModel : ViewModelBase {
         ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance(), this);
     }
     
-    public void ChangeToAddIngredientView(){
-        ContentViewModel = new AddIngredientViewModel(SplankContext.GetInstance(), this);
-    }
 }
 
 //peackaboo prabhjot
