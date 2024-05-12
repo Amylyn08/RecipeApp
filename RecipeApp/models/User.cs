@@ -14,6 +14,7 @@ public class User {
     private string _salt = null!;
     private List<Recipe> _favourites = null!;
     private List<Recipe> _madeRecipes; 
+    private byte[] _profilePicture;
 
     public int UserId {
         get; 
@@ -83,6 +84,15 @@ public class User {
             _madeRecipes = new();
             foreach (var recipe in value)
                 _madeRecipes.Add(recipe);
+        }
+    }
+
+    public byte[] ProfilePicture {
+        get => _profilePicture;
+        set {
+            if (value is null) 
+                throw new ArgumentException("Profile picture cannot be null");
+            _profilePicture = value;
         }
     }
 
