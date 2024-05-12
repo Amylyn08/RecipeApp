@@ -630,4 +630,11 @@ public class UserServiceTest {
         UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         userService.DeleteFromFavourites(null!, null!);
     }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void SetProfilePictureNullArgumentThrowsArgumentException() {
+        UserService userService = new(SplankContext.GetInstance(), new PasswordEncrypter());
+        userService.SetProfilePicture(null!, null!);
+    }
 }
