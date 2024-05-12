@@ -3,6 +3,58 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="RecipeAppUI.Views.AddIngredientView">
-  Welcome to Avalonia!
+             x:Class="RecipeAppUI.Views.AddIngredientView"
+             >
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+      <TextBlock FontSize="20"
+                        Text="{Binding IngredientErrorMessage }"
+                        x:CompileBindings="False"/>
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Name"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10" />
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Name"
+                  AcceptsReturn="False"
+                  Text="{Binding Name}"
+                  x:CompileBindings="False"/>
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Price"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10"/>
+
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Price"
+                  AcceptsReturn="False"
+                  Text="{Binding Price}"
+                  x:CompileBindings="False"/>
+
+      <TextBlock  FontSize="20"
+                  Text="Ingredient Quantity"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Margin="0 10"/>
+
+      <TextBox    HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Watermark="Ingredient Quantity"
+                  AcceptsReturn="False"
+                  Text="{Binding Quantity}" 
+                  x:CompileBindings="False"/>
+      <ComboBox x:CompileBindings="False" SelectedIndex="{Binding SelectedIndex}"  MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
+        <ComboBoxItem>Spoon(s)</ComboBoxItem>
+        <ComboBoxItem>Gram(s)</ComboBoxItem>
+        <ComboBoxItem>Cup(s)</ComboBoxItem>
+        <ComboBoxItem>Teaspoon(s)</ComboBoxItem>
+        <ComboBoxItem>Amount</ComboBoxItem>
+      </ComboBox>     
+      <Button x:CompileBindings="False" Command="{Binding AddIngredientCommand}">Add</Button>        
+      
+  </StackPanel>
+
 </UserControl>

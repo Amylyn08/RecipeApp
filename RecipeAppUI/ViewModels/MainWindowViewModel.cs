@@ -23,6 +23,7 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> ChangeToDeleteAccountViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToFavouritesViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToCreateRecipeViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToAddIngredientViewCommand { get; }
 
 
     public MainWindowViewModel() {
@@ -66,6 +67,10 @@ public class MainWindowViewModel : ViewModelBase {
     }
     
     public void ChangeToCreateRecipeView() {
-        ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance());
+        ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance(), this);
     }
+    
 }
+
+//peackaboo prabhjot
+
