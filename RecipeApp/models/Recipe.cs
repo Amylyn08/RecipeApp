@@ -11,9 +11,9 @@ public class Recipe {
     private string _description = null!;
     private int _servings;
     private ObservableCollection<Ingredient> _ingredients = null!;
-    private List<Step> _steps = null!;
+    private ObservableCollection<Step> _steps = null!;
     private List<Rating> _ratings = null!;
-    private List<Tag> _tags = null!;
+    private ObservableCollection<Tag> _tags = null!;
     private User _user = null!;
 
     public int RecipeId { 
@@ -65,7 +65,7 @@ public class Recipe {
         } 
     }
 
-    public List<Step> Steps { 
+    public ObservableCollection<Step> Steps { 
         get => _steps; 
         set {
             if (value == null) 
@@ -89,7 +89,7 @@ public class Recipe {
         }
     }
 
-    public List<Tag> Tags { 
+    public ObservableCollection<Tag> Tags { 
         get => _tags; 
         set {
             if (value == null) 
@@ -128,7 +128,7 @@ public class Recipe {
     /// <param name="ratings">Recipe ratings</param>
     /// <param name="tags">List of tags</param>
     /// <exception cref="ArgumentException">If any fields are null, empty or doesn't respect certain constraints</exception>
-    public Recipe(string name, User user, string description, int servings, ObservableCollection<Ingredient> ingredients, List<Step> steps, List<Rating> ratings, List<Tag> tags) {
+    public Recipe(string name, User user, string description, int servings, ObservableCollection<Ingredient> ingredients, ObservableCollection<Step> steps, List<Rating> ratings, ObservableCollection<Tag> tags) {
         Name = name;
         User = user;
         Description = description;
