@@ -89,11 +89,7 @@ public class User {
 
     public byte[]? ProfilePicture {
         get => _profilePicture;
-        set {
-            if (value is null) 
-                throw new ArgumentException("Profile picture cannot be null");
-            _profilePicture = value;
-        }
+        set => _profilePicture = value!;
     }
 
     /// <summary>
