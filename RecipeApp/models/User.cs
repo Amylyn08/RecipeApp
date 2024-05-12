@@ -87,7 +87,7 @@ public class User {
         }
     }
 
-    public byte[] ProfilePicture {
+    public byte[]? ProfilePicture {
         get => _profilePicture;
         set {
             if (value is null) 
