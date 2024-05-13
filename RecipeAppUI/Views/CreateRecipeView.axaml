@@ -20,6 +20,7 @@
                   Grid.RowSpan="3"
                   HorizontalAlignment="Center" 
 				          VerticalAlignment="Center">
+          <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
           <TextBlock FontSize="20" 
                     Text="{Binding ErrorMessage}"/>
           <TextBlock FontSize="20" 
@@ -97,7 +98,6 @@
                         </ItemsControl.ItemTemplate>
                 </ItemsControl>
         <Button Command="{Binding CreateRecipe}">Create Recipe</Button>
-        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
     </StackPanel>
     <StackPanel Grid.Column="1"
                 Grid.Row="0"
