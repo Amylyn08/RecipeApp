@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 using Avalonia.Controls;
 using System.IO;
+using System;
 using System.Reactive;
 
 namespace RecipeAppUI.ViewModels;
@@ -19,6 +20,8 @@ public class ProfileViewModel : ViewModelBase {
     private byte[]? _profilePicture;
     private UserService _userService = null!;
     private string? _errorMessage; 
+    private Bitmap? _bitmap;
+    private string? _pathToImage;
 
     public MainWindowViewModel MainWindowViewModel {
         get => _mainWindowViewModel;
@@ -50,6 +53,16 @@ public class ProfileViewModel : ViewModelBase {
         set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
     }
 
+    public string PathToImage {
+        get => _pathToImage;
+        set => this.RaiseAndSetIfChanged(ref _pathToImage, value);
+    }
+
+    public Bitmap Bitmap {
+        get => _bitmap;
+        set => this.RaiseAndSetIfChanged(ref _bitmap, value);
+    }
+
     public ReactiveCommand<Unit, Unit> ChooseImageCommand { get; }
 
     public ProfileViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
@@ -58,21 +71,18 @@ public class ProfileViewModel : ViewModelBase {
         Username = UserSingleton.GetInstance().Name;
         Description = UserSingleton.GetInstance().Description;
         ProfilePicture = UserSingleton.GetInstance().ProfilePicture;
-        ChooseImageCommand = ReactiveCommand.CreateFromTask(ChooseImage);
+        ChooseImageCommand = ReactiveCommand.Create(ChooseImage);
     }
 
-   private async Task ChooseImage(){
-        OpenFileDialog dialog = new OpenFileDialog();
-        dialog.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { "jpg", "jpeg", "png", "gif", "bmp" } });
-
-        string[] result = await dialog.ShowAsync(new());
-        if (result.Length > 0)
-        {
-            string imagePath = result[0];
-            using (FileStream stream = File.OpenRead(imagePath))
+   private void ChooseImage(){
+       try {
+            byte[] bytes = File.ReadAllBytes(PathToImage);
+            using (MemoryStream stream = new MemoryStream(bytes))
             {
-                ProfilePicture = await stream.ReadAllBytesAsync();
+                Bitmap = new Bitmap(stream);
             }
-        }
-    }
+        } catch (Exception e) {
+            ErrorMessage = e.Message;
+       }
+   }
 }

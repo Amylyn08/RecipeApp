@@ -7,6 +7,7 @@
              xmlns:vm="using:RecipeAppUI.ViewModels"
 			 x:DataType="vm:ProfileViewModel">
     <StackPanel>
+		<TextBlock Text="{Binding ErrorMessage}"/>
         <Button Content="Go Back" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}"/>
 
 		<TextBlock Text="Username: " FontSize="20" FontWeight="Bold"/>
@@ -15,9 +16,9 @@
 		<TextBlock Text="Description: " FontSize="20" FontWeight="Bold"/>
 		<TextBlock Text="{Binding Description}" FontSize="15" Margin="20 0 0 0"/>
 
-		<TextBlock Text="Profile Picture: " FontSize="20" FontWeight="Bold"/>
-
-		<Image Source="{Binding ProfilePicture}, Converter={StaticResource ByteArrayToBitmapConverter}}" Width="200" Height="200"/>
-        <Button Content="Set a profile picture"/>
+		<TextBlock Text="Add Path to profile picture" FontSize="20" FontWeight="Bold"/>
+		<TextBox Text="{Binding PathToImage}" Watermark="Copy and paste the absolute path"/>
+        <Button Content="Set profile picture" x:CompileBindings="False" Command="{Binding ChooseImageCommand}"/>
+		<Image Source="{Binding Bitmap}"/>
     </StackPanel>
 </UserControl>
