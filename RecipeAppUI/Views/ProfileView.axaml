@@ -6,10 +6,18 @@
              x:Class="RecipeAppUI.Views.ProfileView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
 			 x:DataType="vm:ProfileViewModel">
-    <Grid>
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button Content="Select Image" Command="{Binding OpenFileCommand}"/>
-        <Image Source="{Binding SelectedImage}" Width="200" Height="200"/>
+    <StackPanel>
+        <Button Content="Go Back" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}"/>
+
+		<TextBlock Text="Username: " FontSize="20" FontWeight="Bold"/>
+		<TextBlock Text="{Binding Username}" FontSize="15" Margin="20 0 0 0"/>
+
+		<TextBlock Text="Description: " FontSize="20" FontWeight="Bold"/>
+		<TextBlock Text="{Binding Description}" FontSize="15" Margin="20 0 0 0"/>
+
+		<TextBlock Text="Profile Picture: " FontSize="20" FontWeight="Bold"/>
+
+		<Image Source="{Binding ProfilePicture}, Converter={StaticResource ByteArrayToBitmapConverter}}" Width="200" Height="200"/>
+        <Button Content="Set a profile picture"/>
     </StackPanel>
-</Grid>
 </UserControl>
