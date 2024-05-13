@@ -76,10 +76,9 @@ public class MainWindowViewModel : ViewModelBase {
     
     public void ChangeToRecipesView() {
         ContentViewModel = new RecipesViewModel(SplankContext.GetInstance(), this);
-
+    }
     public void ChangeToProfileView() {
         ContentViewModel = new ProfileViewModel(SplankContext.GetInstance(), this);
     }
 }
 
-}
