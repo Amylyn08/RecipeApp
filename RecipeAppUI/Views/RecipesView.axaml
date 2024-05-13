@@ -18,6 +18,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
+                                <Button x:CompileBindings="False" >Delete</Button>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>

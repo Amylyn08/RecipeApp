@@ -5,7 +5,8 @@ using RecipeApp.Exceptions;
 using RecipeApp.Models;
 using RecipeApp.Security;
 using RecipeApp.Services;
-
+using System;
+using System.IO;
 
 namespace RecipeAppTest.Services;
 
@@ -629,5 +630,59 @@ public class UserServiceTest {
         // arrange/assert
         UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
         userService.DeleteFromFavourites(null!, null!);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentException))]
+    public void SetProfilePictureNullArgumentThrowsArgumentException() {
+        UserService userService = new(SplankContext.GetInstance(), new PasswordEncrypter());
+        userService.SetProfilePicture(null!, null!);
+    }
+
+    [TestMethod]
+    public void SetProfilePictureSucecssfullySetsProfilePicture() {
+        // arrange
+        PasswordEncrypter passwordEncrypter = new PasswordEncrypter();
+        
+        var salt1 = passwordEncrypter.CreateSalt();
+        var salt2 = passwordEncrypter.CreateSalt();
+        var salt3 = passwordEncrypter.CreateSalt();
+
+        var password1 = passwordEncrypter.CreateHash("Rida1Password", salt1);
+        var password2 = passwordEncrypter.CreateHash("Rida1Password", salt2);
+        var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
+
+        var listUser = new List<User>();
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
+        listUser.Add(new User("Rida2", "I am rida 3", password3, new(), new(), salt3));
+
+        listUser[0].ProfilePicture = null;
+        listUser[1].ProfilePicture = null;
+        listUser[2].ProfilePicture = null;
+
+        var data = listUser.AsQueryable();
+
+        var mockSet = new Mock<DbSet<User>>();
+        mockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+
+        var mockContext = new Mock<SplankContext>();
+        mockContext.Setup(m => m.Users).Returns(mockSet.Object);
+
+        var encrypter = new PasswordEncrypter();
+        UserService userService = new(mockContext.Object, encrypter);
+
+        try {
+            byte[] bytes = File.ReadAllBytes("..\\..\\..\\..\\RecipeAppTest\\Services\\test_avatar.jpg");
+            userService.SetProfilePicture(bytes, listUser[0]);
+        } catch (IOException e) {
+            Assert.Fail(e.Message);
+        }
+
+        // assert
+        mockContext.Verify(m => m.SaveChanges(), Times.Once);
     }
 }

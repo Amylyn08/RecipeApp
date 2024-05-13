@@ -1,6 +1,7 @@
 
 
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace RecipeApp.Models;
 
@@ -14,6 +15,7 @@ public class User {
     private string _salt = null!;
     private List<Recipe> _favourites = null!;
     private List<Recipe> _madeRecipes; 
+    private byte[] _profilePicture;
 
     public int UserId {
         get; 
@@ -84,6 +86,11 @@ public class User {
             foreach (var recipe in value)
                 _madeRecipes.Add(recipe);
         }
+    }
+
+    public byte[]? ProfilePicture {
+        get => _profilePicture;
+        set => _profilePicture = value!;
     }
 
     /// <summary>
