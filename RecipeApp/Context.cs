@@ -19,7 +19,7 @@ public class SplankContext : DbContext {
 
     public SplankContext() {} // keep it public for the tests
 
-    public static SplankContext instance;
+    public static SplankContext instance = null!;
 
     public static SplankContext GetInstance() {
         if (instance == null) {

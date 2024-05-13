@@ -162,4 +162,19 @@ public class UserService : ServiceBase {
         Context.Remove(favouriteToDelete);
         Context.SaveChanges();
     }
+
+    /// <summary>
+    /// Sets the users profile picture
+    /// </summary>
+    /// <param name="profilePicture"></param>
+    public void SetProfilePicture(byte[] profilePicture, User user) {
+        if (profilePicture == null) {
+            throw new ArgumentException("Profile picture cannot be null");
+        }
+        if (user == null) {
+            throw new ArgumentException("User cannot be null");
+        }
+        user.ProfilePicture = profilePicture;
+        Context.SaveChanges();
+    }
 }       
