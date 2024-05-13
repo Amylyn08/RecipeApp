@@ -39,15 +39,15 @@
         <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
         <Button Content="Search" Margin="5" Command="{Binding SearchCommand}"/>
         <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
-                <ComboBoxItem>Keyword</ComboBoxItem>
-                <ComboBoxItem>Username</ComboBoxItem>
-                <ComboBoxItem>Ingredient</ComboBoxItem>
-                <ComboBoxItem>Price</ComboBoxItem>
-                <ComboBoxItem>Rating</ComboBoxItem>
-                <ComboBoxItem>Servings</ComboBoxItem>
-                <ComboBoxItem>Tags</ComboBoxItem>
-                <ComboBoxItem>Time</ComboBoxItem>
-            </ComboBox>
+            <ComboBoxItem>Keyword</ComboBoxItem>
+            <ComboBoxItem>Username</ComboBoxItem>
+            <ComboBoxItem>Ingredient</ComboBoxItem>
+            <ComboBoxItem>Price</ComboBoxItem>
+            <ComboBoxItem>Rating</ComboBoxItem>
+            <ComboBoxItem>Servings</ComboBoxItem>
+            <ComboBoxItem>Tags</ComboBoxItem>
+            <ComboBoxItem>Time</ComboBoxItem>
+        </ComboBox>
 
     </StackPanel>
 
