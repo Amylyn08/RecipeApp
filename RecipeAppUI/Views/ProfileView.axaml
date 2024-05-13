@@ -19,6 +19,6 @@
 		<TextBlock Text="Add Path to profile picture" FontSize="20" FontWeight="Bold"/>
 		<TextBox Text="{Binding PathToImage}" Watermark="Copy and paste the absolute path"/>
         <Button Content="Set profile picture" x:CompileBindings="False" Command="{Binding ChooseImageCommand}"/>
-		<Image Source="{Binding Bitmap}"/>
+		<Image HorizontalAlignment="Left" Source="{Binding Bitmap}" Height="200" Width="200"/>
     </StackPanel>
 </UserControl>

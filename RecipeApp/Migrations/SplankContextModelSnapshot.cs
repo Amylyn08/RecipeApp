@@ -41,7 +41,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Favourites");
+                    b.ToTable("Favourites", (string)null);
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Ingredient", b =>
@@ -72,7 +72,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Rating", b =>
@@ -101,7 +101,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Ratings", (string)null);
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Recipe", b =>
@@ -130,7 +130,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Recipes");
+                    b.ToTable("Recipes", (string)null);
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Step", b =>
@@ -155,7 +155,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Steps");
+                    b.ToTable("Steps", (string)null);
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Tag", b =>
@@ -171,7 +171,7 @@ namespace RecipeApp.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tag", (string)null);
                 });
 
             modelBuilder.Entity("RecipeApp.Models.User", b =>
@@ -203,7 +203,7 @@ namespace RecipeApp.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("RecipeTag", b =>
@@ -218,7 +218,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("TagsTagId");
 
-                    b.ToTable("RecipeTag");
+                    b.ToTable("RecipeTag", (string)null);
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Favourite", b =>

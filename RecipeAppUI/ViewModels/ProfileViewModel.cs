@@ -72,17 +72,29 @@ public class ProfileViewModel : ViewModelBase {
         Description = UserSingleton.GetInstance().Description;
         ProfilePicture = UserSingleton.GetInstance().ProfilePicture;
         ChooseImageCommand = ReactiveCommand.Create(ChooseImage);
+        SetupBitmapOnViewLoad();
     }
 
    private void ChooseImage(){
        try {
+            PathToImage = PathToImage.Trim('"'); // remove quotes from ctrl + c, ctrl + v
             byte[] bytes = File.ReadAllBytes(PathToImage);
-            using (MemoryStream stream = new MemoryStream(bytes))
-            {
-                Bitmap = new Bitmap(stream);
-            }
-        } catch (Exception e) {
+            UserService.SetProfilePicture(bytes, UserSingleton.GetInstance());
+            using MemoryStream stream = new(bytes);
+            Bitmap = new Bitmap(stream);
+        } catch (FileNotFoundException) {
+            ErrorMessage = "File not found, please check the path again, or try copy pasting";
+        } catch (ArgumentException e) {
             ErrorMessage = e.Message;
-       }
-   }
+        } catch (Exception) {
+            ErrorMessage = "The image is too large, or too high quality";
+        }
+    }
+
+    private void SetupBitmapOnViewLoad() {
+        if (ProfilePicture is not null) {
+            using MemoryStream stream = new MemoryStream(ProfilePicture);
+            Bitmap = new Bitmap(stream);
+        }
+    }
 }
