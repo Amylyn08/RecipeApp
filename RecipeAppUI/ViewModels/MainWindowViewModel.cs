@@ -23,12 +23,9 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> ChangeToDeleteAccountViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToFavouritesViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToCreateRecipeViewCommand { get; }
-<<<<<<< HEAD
     public ReactiveCommand<Unit, Unit> ChangeToProfileViewCommand { get; }
-=======
     public ReactiveCommand<Unit, Unit> ChangeToAddIngredientViewCommand { get; }
 
->>>>>>> d3f114c6aadebeb3db8787a64bd6eeba4355dcfb
 
     public MainWindowViewModel() {
         ChangeToLoginViewCommand = ReactiveCommand.Create(ChangeToLoginView);
