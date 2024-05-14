@@ -5,22 +5,22 @@
 namespace RecipeApp.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstCreate : Migration
+    public partial class InitialCreateWithBlob : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Tag",
+                name: "Tags",
                 columns: table => new
                 {
                     TagId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    TagName = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    TagName = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tag", x => x.TagId);
+                    table.PrimaryKey("PK_Tags", x => x.TagId);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,9 +29,11 @@ namespace RecipeApp.Migrations
                 {
                     UserId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Salt = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Name = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
                     Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Password = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    Password = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    ProfilePicture = table.Column<byte[]>(type: "BLOB", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -117,7 +119,7 @@ namespace RecipeApp.Migrations
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
                     RecipeId = table.Column<int>(type: "NUMBER(10)", nullable: false),
                     Stars = table.Column<int>(type: "NUMBER(10)", nullable: false),
-                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
+                    Description = table.Column<string>(type: "NVARCHAR2(2000)", nullable: true),
                     UserId = table.Column<int>(type: "NUMBER(10)", nullable: false)
                 },
                 constraints: table =>
@@ -154,9 +156,9 @@ namespace RecipeApp.Migrations
                         principalColumn: "RecipeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RecipeTag_Tag_TagsTagId",
+                        name: "FK_RecipeTag_Tags_TagsTagId",
                         column: x => x.TagsTagId,
-                        principalTable: "Tag",
+                        principalTable: "Tags",
                         principalColumn: "TagId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -242,7 +244,7 @@ namespace RecipeApp.Migrations
                 name: "Steps");
 
             migrationBuilder.DropTable(
-                name: "Tag");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Recipes");
