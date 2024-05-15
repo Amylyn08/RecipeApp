@@ -4,7 +4,7 @@ using RecipeApp.Models;
 using System;
 
 public class UserSingleton {
-    public static User instance;
+    private static User instance = null!;
 
     private UserSingleton() {}
 

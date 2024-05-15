@@ -4,18 +4,16 @@ using ReactiveUI;
 using System;
 using RecipeApp.Services;
 using RecipeApp.Context;
-using RecipeApp.Models;
 using System.Reactive;
 using RecipeApp.Exceptions;
-using RecipeAppUI.ViewModels;
 
 public class ChangePasswordViewModel : ViewModelBase {
-    private string _username;
-    private string _oldPassword;
-    private string _newPassword;
-    private string _errorMessage;
-    private UserService _userService;
-    private MainWindowViewModel _mainWindowViewModel;
+    private string _username = null!;
+    private string _oldPassword = null!;
+    private string _newPassword = null!;
+    private string _errorMessage = null!;
+    private UserService _userService = null!;
+    private MainWindowViewModel _mainWindowViewModel = null!;
 
     public string Username { get => _username; set => this.RaiseAndSetIfChanged(ref _username, value); }
     public string OldPassword { get => _oldPassword; set => this.RaiseAndSetIfChanged(ref _oldPassword, value); }

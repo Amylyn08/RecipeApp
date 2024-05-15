@@ -1,17 +1,12 @@
 namespace RecipeAppUI.ViewModels;
 using ReactiveUI;
 using RecipeApp.Context;
-using RecipeApp.Exceptions;
 using RecipeApp.Models;
-using RecipeApp.Searcher;
-using RecipeApp.Services;
 using System;
-using System.Collections.Generic;
 using System.Reactive;
-using Avalonia.Controls;
 public class AddIngredientViewModel : ViewModelBase {
 
-    private string _name;
+    private string _name = null!; 
     private double _price;
     private int _quantity;
     private UnitOfMeasurement _unitOfMeasurement;
@@ -38,7 +33,7 @@ public class AddIngredientViewModel : ViewModelBase {
     }
 
     private MainWindowViewModel _mainWindowViewModel;
-    public CreateRecipeViewModel CreateRecipe {get;}
+    public CreateRecipeViewModel CreateRecipe {get;} = null!;
     private string _ingredientErrorMessage = "";
     public string IngredientErrorMessage { get => _ingredientErrorMessage; set => this.RaiseAndSetIfChanged(ref _ingredientErrorMessage, value); }
 

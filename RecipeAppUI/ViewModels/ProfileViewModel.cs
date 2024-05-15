@@ -1,12 +1,9 @@
 using RecipeApp.Services;
 using RecipeApp.Security;
 using RecipeApp.Context;
-using RecipeApp.Models;
 using ReactiveUI;
 using RecipeAppUI.Session;
-using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
-using Avalonia.Controls;
 using System.IO;
 using System;
 using System.Reactive;

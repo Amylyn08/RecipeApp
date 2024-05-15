@@ -19,18 +19,18 @@ namespace RecipeAppUI.ViewModels
         private string _dashboardErrorMessage = "";
         private readonly RecipeService _recipeService;
         private List<Recipe> _recipes = [];
-        private string _selectedCriteria;
-        private string _searchText;
-        private string _searchingMessage;
+        private string _selectedCriteria = null!;
+        private string _searchText = null!;
+        private string _searchingMessage = null!;
         private string _selectedIndex = "0";
-        private UserService _userService;
-        private string _errorMessage;
+        private UserService _userService = null!;
+        private string _errorMessage = null!;
 
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public List<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
-        public ReactiveCommand<Unit, Unit> SearchCommand { get; }
-        public ReactiveCommand<string, Unit> ChangeCriteria { get; }
-        public ReactiveCommand<int, Unit> AddToFavouritesCommand {get;}
+        public ReactiveCommand<Unit, Unit> SearchCommand { get; } = null!;
+        public ReactiveCommand<string, Unit> ChangeCriteria { get; } = null!;
+        public ReactiveCommand<int, Unit> AddToFavouritesCommand {get;} = null!;
         public UserService UserService {
             get => _userService;
             set => _userService = value;
@@ -64,13 +64,6 @@ namespace RecipeAppUI.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
         }
 
-        private ViewModelBase _contentViewModel;
-
-        public ViewModelBase ContentViewModel {
-            get => _contentViewModel;
-            private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
-        }
-
         public DashboardViewModel(SplankContext context)
         {
             _recipeService = new RecipeService(context);
@@ -80,10 +73,6 @@ namespace RecipeAppUI.ViewModels
             AddToFavouritesCommand = ReactiveCommand.Create<int>(AddToFavourites);
             GetRecipes();
         }
-
-        public DashboardViewModel() {}
-
-
 
         public void ExecuteChangCriteria(string criteria){
             SelectedCriteria = criteria;

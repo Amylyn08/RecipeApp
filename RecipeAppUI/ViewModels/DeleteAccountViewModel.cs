@@ -9,11 +9,11 @@ using System.Reactive;
 
 namespace RecipeAppUI.ViewModels {
     public class DeleteAccountViewModel : ViewModelBase {
-        private string _accountDeletionErrorMessage;
-        private string _username;
-        private string _password;
-        private UserService _userService;
-        private MainWindowViewModel _mainWindowViewModel;
+        private string _accountDeletionErrorMessage = null!;
+        private string _username = null!;
+        private string _password = null!;
+        private UserService _userService = null!;
+        private MainWindowViewModel _mainWindowViewModel = null!;
 
         public string AccountDeletionErrorMessage {
             get => _accountDeletionErrorMessage;
@@ -40,7 +40,7 @@ namespace RecipeAppUI.ViewModels {
             private set => _mainWindowViewModel = value; 
         }
 
-        public ReactiveCommand<Unit, Unit> DeleteAccountCommand { get; }
+        public ReactiveCommand<Unit, Unit> DeleteAccountCommand { get; } = null!;
 
         public DeleteAccountViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel){
             UserService = new UserService(context, new PasswordEncrypter());

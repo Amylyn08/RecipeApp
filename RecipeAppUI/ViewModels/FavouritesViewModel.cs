@@ -3,7 +3,6 @@ using RecipeApp.Models;
 using RecipeApp.Services;
 using RecipeApp.Security;
 using RecipeApp.Searcher;
-using System.Collections.Generic;
 using ReactiveUI;
 using System.Reactive;
 using RecipeAppUI.Session;
@@ -16,12 +15,12 @@ namespace RecipeAppUI.ViewModels;
 
 public class FavouritesViewModel : ViewModelBase 
 {
-    private MainWindowViewModel _mainWindowViewModel;
-    private UserService _userService;
-    private ObservableCollection<Recipe> _favourites;
+    private MainWindowViewModel _mainWindowViewModel = null!;
+    private UserService _userService = null!;
+    private ObservableCollection<Recipe> _favourites = null!;
 
-    public ReactiveCommand<int, Unit> DeleteFavouriteCommand { get; }
-    public string ErrorMessage { get; set; }
+    public ReactiveCommand<int, Unit> DeleteFavouriteCommand { get; } = null!;
+    public string ErrorMessage { get; set; } = null!;
 
     public UserService UserService
     {
@@ -50,13 +49,13 @@ public class FavouritesViewModel : ViewModelBase
     }
 
     public void DeleteFavourite(int recipeId){
-        Recipe recipeToDelete = Favourites.FirstOrDefault(r => r.RecipeId == recipeId);
+        Recipe recipeToDelete = Favourites.FirstOrDefault(r => r.RecipeId == recipeId)!;
         try {
             UserService.DeleteFromFavourites(recipeToDelete, UserSingleton.GetInstance());
             Favourites.Remove(recipeToDelete);
         } catch (ArgumentException e) {
             ErrorMessage = e.Message;
-        } catch (Exception e) {
+        } catch (Exception) {
             ErrorMessage = "Unable to delete from favorites for the moment";
         }
     }
