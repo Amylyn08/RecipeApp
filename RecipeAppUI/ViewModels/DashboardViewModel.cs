@@ -8,10 +8,8 @@ using RecipeAppUI.Session;
 using System;
 using System.Collections.Generic;
 using System.Reactive;
-using Avalonia.Controls;
 using System.Linq;
 using System.Reactive.Linq;
-using Avalonia.Input;
 
 
 namespace RecipeAppUI.ViewModels
@@ -20,7 +18,7 @@ namespace RecipeAppUI.ViewModels
     {
         private string _dashboardErrorMessage = "";
         private readonly RecipeService _recipeService;
-        private List<Recipe> _recipes = new List<Recipe>();
+        private List<Recipe> _recipes = [];
         private string _selectedCriteria;
         private string _searchText;
         private string _searchingMessage;
@@ -100,7 +98,7 @@ namespace RecipeAppUI.ViewModels
         {
             try
             {
-                SearcherBase searcher = null;
+                SearcherBase searcher = null!;
                 switch (_selectedIndex)
                 {
                     case "0":
@@ -129,6 +127,7 @@ namespace RecipeAppUI.ViewModels
                     //     break;
                 }
                 Recipes = _recipeService.SearchRecipes(searcher);
+                
             }
             catch (ArgumentException e)
             {
@@ -150,7 +149,7 @@ namespace RecipeAppUI.ViewModels
 
         public void AddToFavourites(int recipeId) {
             try {
-                Recipe recipe = this.Recipes.FirstOrDefault(r => r.RecipeId == recipeId);
+                Recipe recipe = this.Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
                 UserService.AddToFavourites(recipe, UserSingleton.GetInstance());
             } catch (ArgumentException e) {
                 ErrorMessage = e.Message;

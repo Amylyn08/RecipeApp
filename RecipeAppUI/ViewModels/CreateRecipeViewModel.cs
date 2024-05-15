@@ -10,6 +10,7 @@ using RecipeAppUI.Session;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using RecipeAppUI.ViewModels;
+using System.Linq;
 
 public class CreateRecipeViewModel : ViewModelBase
 {
@@ -136,7 +137,8 @@ public class CreateRecipeViewModel : ViewModelBase
 
     public void CreateRecipeCommand() {
         try {
-            Recipe recipe = new Recipe(Name, UserSingleton.GetInstance(), Description, Servings, Ingredients, Steps, new() ,Tags);
+
+            Recipe recipe = new Recipe(Name, UserSingleton.GetInstance(), Description, Servings, Ingredients.ToList(), Steps.ToList(), new() ,Tags.ToList());
             _recipeService.CreateRecipe(recipe);
             MainWindowViewModel.ChangeToDashboardView();
         }
