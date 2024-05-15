@@ -8,7 +8,53 @@
 			 x:DataType="vm:NutritionFactsViewModel">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock>Test</TextBlock>
+            <TextBlock Text="This is only an estimation, please do your own research" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="{Binding ErrorMessage}" /> 
+            <TextBlock FontSize="18">
+                <Run Text="Total Calories: "/>
+                <Run Text="{Binding Calories}"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Total Fat: "/>
+                <Run Text="{Binding TotalFat}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Saturated Fat: "/>
+                <Run Text="{Binding SaturatedFat}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Protein: "/>
+                <Run Text="{Binding Protein}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Sodium: "/>
+                <Run Text="{Binding Sodium}"/>
+                <Run Text="mg"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Cholesterol: "/>
+                <Run Text="{Binding Cholesterol}"/>
+                <Run Text="mg"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Carbohydrates: "/>
+                <Run Text="{Binding Carbohydrates}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Fiber: "/>
+                <Run Text="{Binding Fiber}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <TextBlock FontSize="18">
+                <Run Text="Sugar: "/>
+                <Run Text="{Binding Sugar}"/>
+                <Run Text="g"/>
+            </TextBlock>
+            <Button Content="Go Back" Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToDashboardViewCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

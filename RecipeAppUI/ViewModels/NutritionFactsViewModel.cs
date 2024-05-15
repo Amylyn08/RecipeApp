@@ -78,6 +78,15 @@ public class NutritionFactsViewModel : ViewModelBase {
         MainWindowViewModel = mainWindowViewModel;
         try {
             NutritionResponse response = (NutritionResponse) _nutrientationFetcher.Fetch(recipe);
+            Calories = response.calories;
+            TotalFat = response.fat_total_g;
+            SaturatedFat = response.fat_saturated_g;
+            Protein = response.protein_g;
+            Sodium = response.sodium_mg;
+            Cholesterol = response.cholesterol_mg;
+            Carbohydrates = response.carbohydrates_total_g;
+            Fiber = response.fiber_g;
+            Sugar = response.sugar_g;
         } catch (ArgumentException e) {
             ErrorMessage = e.Message;
         } catch (Exception) {
