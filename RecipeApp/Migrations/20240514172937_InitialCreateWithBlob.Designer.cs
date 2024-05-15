@@ -11,8 +11,8 @@ using RecipeApp.Context;
 namespace RecipeApp.Migrations
 {
     [DbContext(typeof(SplankContext))]
-    [Migration("20240413032254_FirstCreate")]
-    partial class FirstCreate
+    [Migration("20240514172937_InitialCreateWithBlob")]
+    partial class InitialCreateWithBlob
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,6 @@ namespace RecipeApp.Migrations
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<int>("RecipeId")
@@ -171,12 +170,11 @@ namespace RecipeApp.Migrations
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"));
 
                     b.Property<string>("TagName")
-                        .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.User", b =>
@@ -196,6 +194,13 @@ namespace RecipeApp.Migrations
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasColumnType("BLOB");
+
+                    b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
 

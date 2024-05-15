@@ -41,7 +41,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Favourites", (string)null);
+                    b.ToTable("Favourites");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Ingredient", b =>
@@ -72,7 +72,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Ingredients", (string)null);
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Rating", b =>
@@ -101,7 +101,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Ratings", (string)null);
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Recipe", b =>
@@ -130,7 +130,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Recipes", (string)null);
+                    b.ToTable("Recipes");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Step", b =>
@@ -155,7 +155,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("Steps", (string)null);
+                    b.ToTable("Steps");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Tag", b =>
@@ -171,7 +171,7 @@ namespace RecipeApp.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tag", (string)null);
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.User", b =>
@@ -195,7 +195,7 @@ namespace RecipeApp.Migrations
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<byte[]>("ProfilePicture")
-                        .HasColumnType("RAW(2000)");
+                        .HasColumnType("BLOB");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -203,7 +203,7 @@ namespace RecipeApp.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("RecipeTag", b =>
@@ -218,7 +218,7 @@ namespace RecipeApp.Migrations
 
                     b.HasIndex("TagsTagId");
 
-                    b.ToTable("RecipeTag", (string)null);
+                    b.ToTable("RecipeTag");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.Favourite", b =>
