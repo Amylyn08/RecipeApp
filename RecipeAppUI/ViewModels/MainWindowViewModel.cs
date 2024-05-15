@@ -1,14 +1,12 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using ReactiveUI;
+﻿using ReactiveUI;
 using RecipeApp.Context;
+using RecipeApp.Models;
 using System.Reactive;
 
 namespace RecipeAppUI.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase {
-    private ViewModelBase _contentViewModel;
+    private ViewModelBase _contentViewModel = null!;
 
     public ViewModelBase ContentViewModel {
         get => _contentViewModel;
@@ -25,7 +23,8 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> ChangeToCreateRecipeViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToRecipesViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToProfileViewCommand { get; }
-    public ReactiveCommand<Unit, Unit> ChangeToAddIngredientViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToAddIngredientViewCommand { get; } = null!;
+    public ReactiveCommand<Recipe, Unit> ChangeToNutritionFactsViewCommand { get; }
 
 
     public MainWindowViewModel() {
@@ -39,6 +38,7 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToCreateRecipeViewCommand = ReactiveCommand.Create(ChangeToCreateRecipeView);
         ChangeToRecipesViewCommand = ReactiveCommand.Create(ChangeToRecipesView);
         ChangeToProfileViewCommand = ReactiveCommand.Create(ChangeToProfileView);
+        ChangeToNutritionFactsViewCommand = ReactiveCommand.Create<Recipe>(ChangeToNutritionFactsView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -79,6 +79,10 @@ public class MainWindowViewModel : ViewModelBase {
     }
     public void ChangeToProfileView() {
         ContentViewModel = new ProfileViewModel(SplankContext.GetInstance(), this);
+    }
+
+    public void ChangeToNutritionFactsView(Recipe recipe) {
+        ContentViewModel = new NutritionFactsViewModel(recipe, this);
     }
 }
 

@@ -10,23 +10,24 @@ using RecipeAppUI.Session;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using RecipeAppUI.ViewModels;
+using System.Linq;
 
 public class CreateRecipeViewModel : ViewModelBase
 {
 
-    private string _name;
-    private string _description;
+    private string _name = null!;
+    private string _description = null!;
     private int _servings;
-    private ObservableCollection<Ingredient> _ingredients;
-    private ObservableCollection<Step> _steps;
-    private ObservableCollection<Tag> _tags;
-    private readonly RecipeService _recipeService;
-    private MainWindowViewModel _mainWindowViewModel;
-    private string _errorMessage;
+    private ObservableCollection<Ingredient> _ingredients = null!;
+    private ObservableCollection<Step> _steps  = null!;
+    private ObservableCollection<Tag> _tags  = null!;
+    private readonly RecipeService _recipeService  = null!;
+    private MainWindowViewModel _mainWindowViewModel  = null!;
+    private string _errorMessage = null!;
 
     public string ErrorMessage { get => _errorMessage; set => this.RaiseAndSetIfChanged(ref _errorMessage, value); }
     // --------- Inredient stuff-------------
-    private string _ingredientName;
+    private string _ingredientName = null!;
     private UnitOfMeasurement _unitOfMeasurement;
     private double _ingredientPrice;
     private int _ingredientQuantity;
@@ -61,7 +62,7 @@ public class CreateRecipeViewModel : ViewModelBase
 // -------------------------- Steps -------------------------------
 
     private int _stepTime;
-    private string _stepInstruction;
+    private string _stepInstruction = null!;
 
     public int StepTime{
         get => _stepTime;
@@ -74,7 +75,7 @@ public class CreateRecipeViewModel : ViewModelBase
 
 // ----------------------------------------------------------------
 // -----------------------------Tags-------------------------------
-    private string _tagName;
+    private string _tagName = null!;
     public string TagName{
         get => _tagName;
         set => this.RaiseAndSetIfChanged(ref _tagName, value);
@@ -112,13 +113,13 @@ public class CreateRecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _tags, value);
     }
 // ----------------------------------------------------------------------
-    public ReactiveCommand<Unit,Unit> ChangeToAddIngredientViewCommand { get;}
-    public ReactiveCommand<Unit,Unit> ChangeToDashboardViewCommand { get;}
+    public ReactiveCommand<Unit,Unit> ChangeToAddIngredientViewCommand { get;} = null!;
+    public ReactiveCommand<Unit,Unit> ChangeToDashboardViewCommand { get;} = null!;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
-    public ReactiveCommand<Unit, Unit> CreateIngredient { get; }
-    public ReactiveCommand<Unit, Unit> CreateStep { get; }
-    public ReactiveCommand<Unit, Unit> CreateTag { get; }
-    public ReactiveCommand<Unit, Unit> CreateRecipe { get; }
+    public ReactiveCommand<Unit, Unit> CreateIngredient { get; } = null!;
+    public ReactiveCommand<Unit, Unit> CreateStep { get; } = null!;
+    public ReactiveCommand<Unit, Unit> CreateTag { get; } = null!;
+    public ReactiveCommand<Unit, Unit> CreateRecipe { get; } = null!;
 
     
     public CreateRecipeViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) 
@@ -136,7 +137,8 @@ public class CreateRecipeViewModel : ViewModelBase
 
     public void CreateRecipeCommand() {
         try {
-            Recipe recipe = new Recipe(Name, UserSingleton.GetInstance(), Description, Servings, Ingredients, Steps, new() ,Tags);
+
+            Recipe recipe = new Recipe(Name, UserSingleton.GetInstance(), Description, Servings, Ingredients.ToList(), Steps.ToList(), new() ,Tags.ToList());
             _recipeService.CreateRecipe(recipe);
             MainWindowViewModel.ChangeToDashboardView();
         }

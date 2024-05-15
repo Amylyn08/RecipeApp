@@ -1,12 +1,9 @@
 using RecipeApp.Services;
 using RecipeApp.Security;
 using RecipeApp.Context;
-using RecipeApp.Models;
 using ReactiveUI;
 using RecipeAppUI.Session;
-using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
-using Avalonia.Controls;
 using System.IO;
 using System;
 using System.Reactive;
@@ -19,7 +16,7 @@ public class ProfileViewModel : ViewModelBase {
     private string _description = null!;
     private byte[]? _profilePicture;
     private UserService _userService = null!;
-    private string? _errorMessage; 
+    private string _errorMessage = null!; 
     private Bitmap? _bitmap;
     private string? _pathToImage;
 
@@ -38,7 +35,7 @@ public class ProfileViewModel : ViewModelBase {
         set => this.RaiseAndSetIfChanged(ref _description, value);
     }
 
-    public byte[] ProfilePicture {
+    public byte[]? ProfilePicture {
         get => _profilePicture;
         set => this.RaiseAndSetIfChanged(ref _profilePicture, value);
     }
@@ -53,12 +50,12 @@ public class ProfileViewModel : ViewModelBase {
         set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
     }
 
-    public string PathToImage {
+    public string? PathToImage {
         get => _pathToImage;
         set => this.RaiseAndSetIfChanged(ref _pathToImage, value);
     }
 
-    public Bitmap Bitmap {
+    public Bitmap? Bitmap {
         get => _bitmap;
         set => this.RaiseAndSetIfChanged(ref _bitmap, value);
     }
@@ -77,6 +74,9 @@ public class ProfileViewModel : ViewModelBase {
 
    private void ChooseImage(){
        try {
+            if (PathToImage == null) {
+                return;
+            }
             PathToImage = PathToImage.Trim('"'); // remove quotes from ctrl + c, ctrl + v
             byte[] bytes = File.ReadAllBytes(PathToImage);
             UserService.SetProfilePicture(bytes, UserSingleton.GetInstance());

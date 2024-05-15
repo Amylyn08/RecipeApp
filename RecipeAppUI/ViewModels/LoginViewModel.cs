@@ -13,11 +13,11 @@ using System.Collections.Generic;
 namespace RecipeAppUI.ViewModels;
 
 public class LoginViewModel : ViewModelBase {
-    private string _username;
-    private string _password;
+    private string _username = null!;
+    private string _password = null!;
     private string _loginErrorMessage ="";
-    private UserService _userService = null;
-    private MainWindowViewModel _mainWindowViewModel;
+    private UserService _userService = null!;
+    private MainWindowViewModel _mainWindowViewModel = null!;
 
     public string Username { get => _username; set => this.RaiseAndSetIfChanged(ref _username, value); }
     public string Password { get => _password; set => this.RaiseAndSetIfChanged(ref _password, value); }
@@ -34,7 +34,7 @@ public class LoginViewModel : ViewModelBase {
 
     public void Login() {
         try {
-            RecipeApp.Models.User user = UserService.Login(Username, Password);
+            User user = UserService.Login(Username, Password);
             List<Recipe> favouriteRecipes = new SearchByUserFavorite(SplankContext.GetInstance(), user).FilterRecipes();
             user.Favorites = favouriteRecipes;
             UserSingleton.InstantiateUserOnce(user); // we now have a global user
@@ -44,6 +44,8 @@ public class LoginViewModel : ViewModelBase {
         } catch (UserDoesNotExistException e) {
             LoginErrorMessage = e.Message;
         } catch (ArgumentException e) {
+            LoginErrorMessage = e.Message;
+        } catch (Exception e) {
             LoginErrorMessage = e.Message;
         }
     }

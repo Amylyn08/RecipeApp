@@ -75,6 +75,9 @@
                                 <Button Content="Add to Favorites"
                                         Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).AddToFavouritesCommand}"
                                         CommandParameter="{Binding RecipeId}"/>
+                                <Button Content="View nutrition facts"
+                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToNutritionFactsViewCommand}"
+                                        CommandParameter="{Binding}"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>
