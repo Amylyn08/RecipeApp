@@ -23,6 +23,7 @@ public class RecipesViewModel : ViewModelBase {
 
     public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
     public ReactiveCommand<int, Unit> DeleteRecipe { get; } = null!;
+     public ReactiveCommand<int, Unit> UpdateRecipe { get; } = null!;
     public string ErrorMessage { get; set; } = null!;
 
 
@@ -32,6 +33,7 @@ public class RecipesViewModel : ViewModelBase {
         MainWindowViewModel = mainWindowViewModel;
         ChangeRecipe();
         DeleteRecipe = ReactiveCommand.Create<int>(DeleteRecipeCommand);
+        UpdateRecipe = ReactiveCommand.Create<int>(UpdateRecipeCommand);
         
     }
 
@@ -49,4 +51,12 @@ public class RecipesViewModel : ViewModelBase {
             ErrorMessage = e.Message;
         } 
     }
+
+    public void UpdateRecipeCommand(int recipeId) {
+        Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.RecipeId == recipeId);
+        MainWindowViewModel.ChangeToUpdateRecipeView(recipeToUpdate);
+    }
+
+
+
 }
