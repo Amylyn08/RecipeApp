@@ -117,10 +117,10 @@ public class CreateRecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit,Unit> ChangeToDashboardViewCommand { get;} = null!;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
     public ReactiveCommand<Unit, Unit> CreateIngredient { get; } = null!;
+    public ReactiveCommand<Ingredient, Unit> RemoveIngredient { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateStep { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateTag { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; } = null!;
-
     
     public CreateRecipeViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) 
     {
@@ -132,6 +132,7 @@ public class CreateRecipeViewModel : ViewModelBase
         CreateStep = ReactiveCommand.Create(CreateStepCommand);
         CreateTag = ReactiveCommand.Create(CreateTagCommand);
         CreateRecipe= ReactiveCommand.Create(CreateRecipeCommand);
+        RemoveIngredient = ReactiveCommand.Create<Ingredient>(RemoveIngredientCommand);
         MainWindowViewModel = mainWindowViewModel;
     }
 
@@ -163,6 +164,10 @@ public class CreateRecipeViewModel : ViewModelBase
             throw new ArgumentException(e.Message);
 
         }
+    }
+
+    public void RemoveIngredientCommand(Ingredient ingredient) {
+        Ingredients.Remove(ingredient);
     }
 
     public void ChangeUnit() {

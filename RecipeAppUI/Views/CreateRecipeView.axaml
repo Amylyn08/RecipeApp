@@ -36,6 +36,7 @@
                 <ItemsControl ItemsSource="{Binding Ingredients}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
+                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock>
                                 <Run Text="{Binding Name}" FontWeight="Bold"/>
                                 <Run Text=", "/>
@@ -43,6 +44,8 @@
                                 <Run Text=" "/>
                                 <Run Text="{Binding UnitOfMeasurement}"/>
                             </TextBlock>
+                            <Button Command="{Binding $parent[Window].((vm:CreateRecipeViewModel)DataContext).RemoveIngredient}" Content="X" Margin="5,0,0,0"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
