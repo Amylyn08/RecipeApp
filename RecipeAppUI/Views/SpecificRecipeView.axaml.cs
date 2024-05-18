@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace RecipeAppUI.Views;
 
-public partial class RatingsView : UserControl
+public partial class SpecificRecipeView : UserControl
 {
-    public RatingsView()
+    public SpecificRecipeView()
     {
         InitializeComponent();
     }

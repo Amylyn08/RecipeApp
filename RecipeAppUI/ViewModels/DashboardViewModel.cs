@@ -31,6 +31,7 @@ namespace RecipeAppUI.ViewModels
         public ReactiveCommand<Unit, Unit> SearchCommand { get; } = null!;
         public ReactiveCommand<string, Unit> ChangeCriteria { get; } = null!;
         public ReactiveCommand<int, Unit> AddToFavouritesCommand {get;} = null!;
+        public ReactiveCommand<int, Unit> 
         public UserService UserService {
             get => _userService;
             set => _userService = value;

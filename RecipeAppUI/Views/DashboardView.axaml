@@ -81,6 +81,8 @@
                                 <Button Content="Ratings"
                                         Command="{Binding }"
                                         CommandParameter="{Binding RecipeId}"/>
+                                <Button Content="View Details"
+                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToSpecificViewCommand}"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>
