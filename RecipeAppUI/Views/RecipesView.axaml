@@ -3,84 +3,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="RecipeAppUI.Views.DashboardView"
+             x:Class="RecipeAppUI.Views.RecipesView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
-			 x:DataType="vm:DashboardViewModel">
-    <DockPanel>
-
-        <!-- Navigation on top -->
-    <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="#FF9A56" Margin="0,0,0,0">
-        <!-- Splank -->
-        <TextBlock FontSize="25" Text="Splank" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        
-        <!-- Welcome -->
-        <TextBlock FontSize="25" Text="Welcome" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        
-        <!-- Log Out -->
-        <Button Content="Log Out" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" VerticalAlignment="Top"/>
-        
-        <!-- Change Password -->
-        <Button Content="Change Password" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" VerticalAlignment="Top"/>
-
-        <!-- Delete account -->
-        <Button Content="Delete account" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" VerticalAlignment="Top"/>
-
-         <!-- View Favourites -->
-         <Button Content="View Favourites" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToFavouritesViewCommand}" VerticalAlignment="Top"/>
-
-         <!-- Profile -->
-         <Button Content="Profile" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToProfileViewCommand}" VerticalAlignment="Top"/>
-    </StackPanel>
-
-
-        <!-- Textbox with search features -->
-    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
-        <TextBlock x:CompileBindings="False" FontSize="20" />
-        <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
-        <Button Content="Search" Margin="5" Command="{Binding SearchCommand}"/>
-        <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
-            <ComboBoxItem>Keyword</ComboBoxItem>
-            <ComboBoxItem>Username</ComboBoxItem>
-            <ComboBoxItem>Ingredient</ComboBoxItem>
-            <ComboBoxItem>Price</ComboBoxItem>
-            <ComboBoxItem>Rating</ComboBoxItem>
-            <ComboBoxItem>Servings</ComboBoxItem>
-            <ComboBoxItem>Tags</ComboBoxItem>
-            <ComboBoxItem>Time</ComboBoxItem>
-        </ComboBox>
-
-    </StackPanel>
-
-        <!-- Main views -->
-        <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
-            <!-- Navigation view -->
-            <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToCreateRecipeViewCommand}" Content="Create Recipe" Margin="5"/>
-            <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToRecipesViewCommand}" Content="View your recipes" Margin="5"/>
-            <!-- Add more navigation buttons or tabs as needed -->
-        </StackPanel>
-
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <!-- Main content area -->
-        <StackPanel DockPanel.Dock="Right" Margin="10">
-            <!-- Bigger view for list views -->
-            <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-            <Button Content="Load more recipes" x:CompileBindings="False" 
-                Command="{Binding FetchNextFewRecipesCommmand}"/>
-            <!-- <TextBlock FontSize="20"
-            <TextBlock FontSize="20"
-                        Text="{Binding DashboardErrorMessage }"/>
-        <TextBlock Text="{Binding ErrorMessage}" FontSize="32"/>
-            <StackPanel>
+             x:DataType="vm:RecipesViewModel">
+          
+          
+          
+    <StackPanel>
+    <TextBlock FontSize="25" Text="Your Recipes" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
+    <ScrollViewer>
+    <StackPanel>
                 <ListBox ItemsSource="{Binding Recipes}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
-                                <Button Content="Add to Favorites"
-                                        Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).AddToFavouritesCommand}"
-                                        CommandParameter="{Binding RecipeId}"/>
-                                <Button Content="View nutrition facts"
-                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToNutritionFactsViewCommand}"
-                                        CommandParameter="{Binding}"/>
+                            <Button Content="Delete this recipe"
+                                Command="{Binding $parent[ListBox].((vm:RecipesViewModel)DataContext).DeleteRecipe}"
+                                CommandParameter="{Binding RecipeId}"/>
+                                <Button Content="Update this recipe"
+                                Command="{Binding $parent[ListBox].((vm:RecipesViewModel)DataContext).UpdateRecipe}"
+                                CommandParameter="{Binding RecipeId}"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>
@@ -174,8 +117,8 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            </StackPanel>
         </StackPanel>
     </ScrollViewer>
-    </DockPanel>
+    </StackPanel>
+
 </UserControl>

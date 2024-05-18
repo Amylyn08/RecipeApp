@@ -21,9 +21,11 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> ChangeToDeleteAccountViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToFavouritesViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToCreateRecipeViewCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeToRecipesViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToProfileViewCommand { get; }
     public ReactiveCommand<Unit, Unit> ChangeToAddIngredientViewCommand { get; } = null!;
     public ReactiveCommand<Recipe, Unit> ChangeToNutritionFactsViewCommand { get; }
+    public ReactiveCommand<Recipe, Unit> ChangeToUpdateRecipeCommand { get; }
 
 
     public MainWindowViewModel() {
@@ -35,8 +37,10 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToDeleteAccountViewCommand = ReactiveCommand.Create(ChangeToDeleteAccountView);
         ChangeToFavouritesViewCommand = ReactiveCommand.Create(ChangeToFavouritesView);
         ChangeToCreateRecipeViewCommand = ReactiveCommand.Create(ChangeToCreateRecipeView);
+        ChangeToRecipesViewCommand = ReactiveCommand.Create(ChangeToRecipesView);
         ChangeToProfileViewCommand = ReactiveCommand.Create(ChangeToProfileView);
         ChangeToNutritionFactsViewCommand = ReactiveCommand.Create<Recipe>(ChangeToNutritionFactsView);
+        ChangeToUpdateRecipeCommand = ReactiveCommand.Create<Recipe>(ChangeToUpdateRecipeView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -71,7 +75,10 @@ public class MainWindowViewModel : ViewModelBase {
     public void ChangeToCreateRecipeView() {
         ContentViewModel = new CreateRecipeViewModel(SplankContext.GetInstance(), this);
     }
-
+    
+    public void ChangeToRecipesView() {
+        ContentViewModel = new RecipesViewModel(SplankContext.GetInstance(), this);
+    }
     public void ChangeToProfileView() {
         ContentViewModel = new ProfileViewModel(SplankContext.GetInstance(), this);
     }
@@ -79,6 +86,9 @@ public class MainWindowViewModel : ViewModelBase {
     public void ChangeToNutritionFactsView(Recipe recipe) {
         ContentViewModel = new NutritionFactsViewModel(recipe, this);
     }
-}
 
+    public void ChangeToUpdateRecipeView(Recipe recipe) {
+        ContentViewModel = new RecipeUpdateViewModel(SplankContext.GetInstance(),  this, recipe);
+    }
+}
 
