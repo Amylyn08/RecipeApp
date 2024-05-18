@@ -27,6 +27,7 @@ namespace RecipeAppUI.ViewModels
         private string _selectedIndex = "0";
         private UserService _userService = null!;
         private string _errorMessage = null!;
+        private readonly List<int> _excludedIds = [];
 
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
@@ -138,7 +139,10 @@ namespace RecipeAppUI.ViewModels
         {
             try
             {
-                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(1, 1));
+                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(1, 1, _excludedIds));
+                foreach (Recipe recipe in Recipes) {
+                    _excludedIds.Add(recipe.RecipeId);
+                }
             }
             catch (ArgumentException e)
             {
@@ -149,7 +153,10 @@ namespace RecipeAppUI.ViewModels
         private void LoadMoreRecipes() 
         {
             try {
-                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(1, 1);
+                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(1, 1, _excludedIds);
+                foreach (Recipe recipe in moreRecipes) {
+                    _excludedIds.Add(recipe.RecipeId);
+                }
                 Recipes.AddRange(moreRecipes);
             } catch (ArgumentException e) {
                 DashboardErrorMessage = e.Message;
