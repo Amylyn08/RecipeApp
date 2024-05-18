@@ -78,6 +78,9 @@
                                 <Button Content="View nutrition facts"
                                         Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToNutritionFactsViewCommand}"
                                         CommandParameter="{Binding}"/>
+                                <Button Content="Ratings"
+                                        Command="{Binding }"
+                                        CommandParameter="{Binding RecipeId}"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>
