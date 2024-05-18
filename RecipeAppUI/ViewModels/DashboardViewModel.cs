@@ -34,6 +34,8 @@ namespace RecipeAppUI.ViewModels
         public ReactiveCommand<string, Unit> ChangeCriteria { get; } = null!;
         public ReactiveCommand<int, Unit> AddToFavouritesCommand {get;} = null!;
         public ReactiveCommand<Unit, Unit> FetchNextFewRecipesCommmand { get; } = null!;
+        public ReactiveCommand<Unit, Unit> LogoutCommand { get; } = null!;
+
         public UserService UserService {
             get => _userService;
             set => _userService = value;
@@ -67,7 +69,9 @@ namespace RecipeAppUI.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
         }
 
-        public DashboardViewModel(SplankContext context)
+        public MainWindowViewModel MainWindowViewModel { get; set; }
+
+        public DashboardViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel)
         {
             _recipeService = new RecipeService(context);
             UserService = new UserService(context, new());
@@ -75,6 +79,8 @@ namespace RecipeAppUI.ViewModels
             ChangeCriteria = ReactiveCommand.Create<string>(ExecuteChangCriteria);
             AddToFavouritesCommand = ReactiveCommand.Create<int>(AddToFavourites);
             FetchNextFewRecipesCommmand = ReactiveCommand.Create(LoadMoreRecipes);
+            LogoutCommand = ReactiveCommand.Create(Logout);
+            MainWindowViewModel = mainWindowViewModel;
             GetRecipes();
         }
 
@@ -132,7 +138,7 @@ namespace RecipeAppUI.ViewModels
         {
             try
             {
-                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(2, 2));
+                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(1, 1));
             }
             catch (ArgumentException e)
             {
@@ -143,11 +149,16 @@ namespace RecipeAppUI.ViewModels
         private void LoadMoreRecipes() 
         {
             try {
-                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(2, 2);
+                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(1, 1);
                 Recipes.AddRange(moreRecipes);
             } catch (ArgumentException e) {
                 DashboardErrorMessage = e.Message;
             }
+        }
+
+        private void Logout() {
+            UserSingleton.NullifyUser();
+            MainWindowViewModel.ChangeToHomeView();
         }
 
         public void AddToFavourites(int recipeId) {
