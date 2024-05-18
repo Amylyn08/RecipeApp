@@ -12,13 +12,18 @@
     <StackPanel>
     <TextBlock FontSize="25" Text="Your Recipes" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <ScrollViewer>
     <StackPanel>
                 <ListBox ItemsSource="{Binding Recipes}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
-                                <Button x:CompileBindings="False" >Delete</Button>
+                            <Button Content="Delete this recipe"
+                                Command="{Binding $parent[ListBox].((vm:RecipesViewModel)DataContext).DeleteRecipe}"
+                                CommandParameter="{Binding RecipeId}"/>
+                                <Button Content="Update this recipe"
+                                Command="{Binding $parent[ListBox].((vm:RecipesViewModel)DataContext).UpdateRecipe}"
+                                CommandParameter="{Binding RecipeId}"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>
