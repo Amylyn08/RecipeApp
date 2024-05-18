@@ -49,25 +49,33 @@
                 </ListBox>
 
                 <TextBlock FontSize="20" Text="Steps:" HorizontalAlignment="Center" Margin="10"/>
-                <ItemsControl ItemsSource="{Binding Steps}">
-                    <ItemsControl.ItemTemplate>
+                <ListBox ItemsSource="{Binding Steps}">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Instruction}" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding TimeInMinutes}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Instruction}" FontWeight="Bold" Margin="0 5 5 0"/>
+                                <TextBlock Text="{Binding TimeInMinutes}" Margin="0 5 5 0"/>
+                                <Button Content="X"
+                                    Command="{Binding $parent[ListBox].((vm:CreateRecipeViewModel)DataContext).RemoveStep}"
+                                    CommandParameter="{Binding}" Margin="5 0"/>
                             </StackPanel>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
                 <TextBlock FontSize="20" Text="Tags:" HorizontalAlignment="Center" Margin="10"/>
-                <ItemsControl ItemsSource="{Binding Tags}">
-                    <ItemsControl.ItemTemplate>
+                <ListBox ItemsSource="{Binding Tags}">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding TagName}" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding TagName}" FontWeight="Bold" Margin="0 5 5 0"/>
+                                <Button Content="X"
+                                    Command="{Binding $parent[ListBox].((vm:CreateRecipeViewModel)DataContext).RemoveTag}"
+                                    CommandParameter="{Binding}" Margin="5 0"/>
+                            </StackPanel>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
                 <Button Command="{Binding CreateRecipe}" Margin="10" HorizontalAlignment="Center">Create Recipe</Button>
             </StackPanel>

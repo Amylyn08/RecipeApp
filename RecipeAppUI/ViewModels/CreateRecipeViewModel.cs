@@ -118,6 +118,8 @@ public class CreateRecipeViewModel : ViewModelBase
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
     public ReactiveCommand<Unit, Unit> CreateIngredient { get; } = null!;
     public ReactiveCommand<Ingredient, Unit> RemoveIngredient { get; } = null!;
+    public ReactiveCommand<Step, Unit> RemoveStep { get; } = null!;
+    public ReactiveCommand<Tag, Unit> RemoveTag { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateStep { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateTag { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; } = null!;
@@ -133,6 +135,8 @@ public class CreateRecipeViewModel : ViewModelBase
         CreateTag = ReactiveCommand.Create(CreateTagCommand);
         CreateRecipe= ReactiveCommand.Create(CreateRecipeCommand);
         RemoveIngredient = ReactiveCommand.Create<Ingredient>(RemoveIngredientCommand);
+        RemoveStep = ReactiveCommand.Create<Step>(RemoveStepCommand);
+        RemoveTag = ReactiveCommand.Create<Tag>(RemoveTagCommand);
         MainWindowViewModel = mainWindowViewModel;
     }
 
@@ -168,6 +172,16 @@ public class CreateRecipeViewModel : ViewModelBase
 
     public void RemoveIngredientCommand(Ingredient ingredient) {
         Ingredients.Remove(ingredient);
+    }
+
+    private void RemoveStepCommand(Step stepToRemove)
+    {
+        Steps.Remove(stepToRemove);
+    }
+
+    private void RemoveTagCommand(Tag tagToRemove)
+    {
+        Tags.Remove(tagToRemove);
     }
 
     public void ChangeUnit() {
