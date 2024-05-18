@@ -64,6 +64,8 @@
         <StackPanel DockPanel.Dock="Right" Margin="10">
             <!-- Bigger view for list views -->
             <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+            <Button Content="Load more recipes" x:CompileBindings="False" 
+                Command="{Binding FetchNextFewRecipesCommmand}"/>
             <!-- <TextBlock FontSize="20"
                         Text="{Binding DashboardErrorMessage }"/>
             <ListBox ItemsSource="{Binding Recipes}" Margin="0,10">

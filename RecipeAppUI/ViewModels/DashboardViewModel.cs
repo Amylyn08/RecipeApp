@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Collections.ObjectModel;
+using DynamicData;
 
 
 namespace RecipeAppUI.ViewModels
@@ -18,7 +20,7 @@ namespace RecipeAppUI.ViewModels
     {
         private string _dashboardErrorMessage = "";
         private readonly RecipeService _recipeService;
-        private List<Recipe> _recipes = [];
+        private ObservableCollection<Recipe> _recipes = [];
         private string _selectedCriteria = null!;
         private string _searchText = null!;
         private string _searchingMessage = null!;
@@ -27,10 +29,11 @@ namespace RecipeAppUI.ViewModels
         private string _errorMessage = null!;
 
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
-        public List<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
+        public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
         public ReactiveCommand<Unit, Unit> SearchCommand { get; } = null!;
         public ReactiveCommand<string, Unit> ChangeCriteria { get; } = null!;
         public ReactiveCommand<int, Unit> AddToFavouritesCommand {get;} = null!;
+        public ReactiveCommand<Unit, Unit> FetchNextFewRecipesCommmand { get; } = null!;
         public UserService UserService {
             get => _userService;
             set => _userService = value;
@@ -71,6 +74,7 @@ namespace RecipeAppUI.ViewModels
             SearchCommand = ReactiveCommand.Create(SearchRecipes);
             ChangeCriteria = ReactiveCommand.Create<string>(ExecuteChangCriteria);
             AddToFavouritesCommand = ReactiveCommand.Create<int>(AddToFavourites);
+            FetchNextFewRecipesCommmand = ReactiveCommand.Create(LoadMoreRecipes);
             GetRecipes();
         }
 
@@ -115,7 +119,7 @@ namespace RecipeAppUI.ViewModels
                     //     searcher = new SearchByTime(_recipeService.Context, Int32.Parse(_searchText));
                     //     break;
                 }
-                Recipes = _recipeService.SearchRecipes(searcher);
+                Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
                 
             }
             catch (ArgumentException e)
@@ -128,10 +132,20 @@ namespace RecipeAppUI.ViewModels
         {
             try
             {
-                Recipes = _recipeService.GetAllRecipes();
+                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(2, 2));
             }
             catch (ArgumentException e)
             {
+                DashboardErrorMessage = e.Message;
+            }
+        }
+
+        private void LoadMoreRecipes() 
+        {
+            try {
+                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(2, 2);
+                Recipes.AddRange(moreRecipes);
+            } catch (ArgumentException e) {
                 DashboardErrorMessage = e.Message;
             }
         }
