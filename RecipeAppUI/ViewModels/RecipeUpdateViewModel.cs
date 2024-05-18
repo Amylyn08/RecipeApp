@@ -21,6 +21,7 @@ public class RecipeUpdateViewModel : ViewModelBase {
     private MainWindowViewModel _mainWindowViewModel;
     private Recipe _recipe;
     public Recipe Recipe { get => _recipe; set => _recipe = this.RaiseAndSetIfChanged(ref _recipe, value); }
+    public Recipe NewRecipe { get; set; }
     public string Name 
     { 
         get => _recipe.Name; 
@@ -39,6 +40,9 @@ public class RecipeUpdateViewModel : ViewModelBase {
         set => _recipe.Servings = value; 
     }
 
+    private string _errorMessage = null!;
+
+    public string ErrorMessage { get => _errorMessage; set => this.RaiseAndSetIfChanged(ref _errorMessage, value); }
 // --------- Inredient stuff-------------
     private string _ingredientName = null!;
     private UnitOfMeasurement _unitOfMeasurement;
@@ -104,6 +108,8 @@ public class RecipeUpdateViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> CreateIngredientCommand { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateStepCommand { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateTagCommand { get; } = null!;
+    public ReactiveCommand<Unit, Unit> UpdateRecipeCommand { get; } = null!;
+
 
 
     private readonly RecipeService _recipeService;
@@ -121,6 +127,7 @@ public class RecipeUpdateViewModel : ViewModelBase {
         CreateIngredientCommand = ReactiveCommand.Create(CreateIngredient);
         CreateStepCommand = ReactiveCommand.Create(CreateStep);
         CreateTagCommand = ReactiveCommand.Create(CreateTag);
+        UpdateRecipeCommand= ReactiveCommand.Create(UpdateRecipe);
     }
 
     private void RemoveIngredient(Ingredient ingredientToRemove)
@@ -196,6 +203,19 @@ public class RecipeUpdateViewModel : ViewModelBase {
                 break;
         }
         _unitOfMeasurement = unit;   
+    }
+
+
+    public void UpdateRecipe() {
+        try {
+
+            Recipe recipe = new Recipe(Name, UserSingleton.GetInstance(), Description, Servings, Ingredients.ToList(), Steps.ToList(), new() ,Tags.ToList());
+            _recipeService.UpdateRecipe(Recipe, recipe);
+            MainWindowViewModel.ChangeToRecipesView();
+        }
+        catch(ArgumentException e){
+            ErrorMessage = e.Message;
+        }
     }
 
 }

@@ -33,22 +33,20 @@
                 <TextBox FontSize="20" Margin="5" Watermark="Servings" Text="{Binding Servings}"/>
                 
                 <TextBlock FontSize="20" Text="Ingredients:" HorizontalAlignment="Center" Margin="10"/>
-                <ItemsControl ItemsSource="{Binding Ingredients}">
-                    <ItemsControl.ItemTemplate>
+                <ListBox ItemsSource="{Binding Ingredients}">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <TextBlock>
-                                <Run Text="{Binding Name}" FontWeight="Bold"/>
-                                <Run Text=", "/>
-                                <Run Text="{Binding Quantity}"/>
-                                <Run Text=" "/>
-                                <Run Text="{Binding UnitOfMeasurement}"/>
-                            </TextBlock>
-                            <Button Command="{Binding $parent[Window].((vm:CreateRecipeViewModel)DataContext).RemoveIngredient}" Content="X" Margin="5,0,0,0"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="0 5 5 0"/>
+                                <TextBlock Text="{Binding Quantity}" Margin="0 5 5 0"/>
+                                <TextBlock Text="{Binding UnitOfMeasurement}" Margin="0 10 10 0"/>
+                                <Button Content="X"
+                                    Command="{Binding $parent[ListBox].((vm:CreateRecipeViewModel)DataContext).RemoveIngredient}"
+                                    CommandParameter="{Binding}" Margin="5 0"/>
                             </StackPanel>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
                 <TextBlock FontSize="20" Text="Steps:" HorizontalAlignment="Center" Margin="10"/>
                 <ItemsControl ItemsSource="{Binding Steps}">

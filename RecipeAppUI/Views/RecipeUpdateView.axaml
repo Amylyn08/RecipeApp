@@ -6,98 +6,108 @@
              x:Class="RecipeAppUI.Views.RecipeUpdateView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
              x:DataType="vm:RecipeUpdateViewModel">
-  <StackPanel>
-    <TextBlock Text="Recipe Name"/>
-    <TextBox Text="{Binding Name}" />
-    <TextBlock Text="Recipe Description"/>
-    <TextBox Text="{Binding Description}" />
-    <TextBlock Text="Servings"/>
-    <TextBox Text="{Binding Servings}" />
-    <TextBlock Text="Ingredients"/>
-    <ListBox ItemsSource="{Binding Ingredients}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-            <StackPanel Orientation="Horizontal" Margin="0">
-                <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="0 0 5 0"/>
-                <TextBlock Text="{Binding Quantity}" Margin="0 0 5 0"/>
-                <TextBlock Text="{Binding UnitOfMeasurement}" Margin="0 0 10 0"/>
-                <Button Content="X"
-                  Command="{Binding $parent[ListBox].((vm:RecipeUpdateViewModel)DataContext).RemoveIngredientCommand}"
-                  CommandParameter="{Binding}" Margin="0"/>
+<ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="10">
+        <TextBlock Text="{Binding ErrorMessage}"/>
+        <TextBlock Text="Recipe Name"/>
+        <TextBox Text="{Binding Name}" Margin="0 0 0 10"/>
+
+        <TextBlock Text="Recipe Description"/>
+        <TextBox Text="{Binding Description}" Margin="0 0 0 10"/>
+
+        <TextBlock Text="Servings"/>
+        <TextBox Text="{Binding Servings}" Margin="0 0 0 10"/>
+
+        <TextBlock Text="Ingredients"/>
+        <ListBox ItemsSource="{Binding Ingredients}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="0 5 5 0"/>
+                        <TextBlock Text="{Binding Quantity}" Margin="0 5 5 0"/>
+                        <TextBlock Text="{Binding UnitOfMeasurement}" Margin="0 10 10 0"/>
+                        <Button Content="X"
+                            Command="{Binding $parent[ListBox].((vm:RecipeUpdateViewModel)DataContext).RemoveIngredientCommand}"
+                            CommandParameter="{Binding}" Margin="5 0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBlock Text="Steps"/>
+        <ListBox ItemsSource="{Binding Steps}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Instruction}" FontWeight="Bold" Margin="0 5 5 0"/>
+                        <TextBlock Text="{Binding TimeInMinutes}" Margin="0 5 5 0"/>
+                        <Button Content="X"
+                            Command="{Binding $parent[ListBox].((vm:RecipeUpdateViewModel)DataContext).RemoveStepCommand}"
+                            CommandParameter="{Binding}" Margin="5 0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBlock Text="Tags"/>
+        <ListBox ItemsSource="{Binding Tags}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding TagName}" FontWeight="Bold" Margin="0 5 5 0"/>
+                        <Button Content="X"
+                            Command="{Binding $parent[ListBox].((vm:RecipeUpdateViewModel)DataContext).RemoveTagCommand}"
+                            CommandParameter="{Binding}" Margin="5 0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Command="{Binding UpdateRecipeCommand}" Margin="10" HorizontalAlignment="Center">Update Recipe</Button>
+        <!-- Ingredient form -->
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="0 10">
+            <StackPanel>
+                <TextBlock FontSize="20" Text="Ingredient Name"/>
+                <TextBox Watermark="Ingredient Name" Text="{Binding IngredientName}" Margin="0 0 0 10"/>
+
+                <TextBlock FontSize="20" Text="Ingredient Price"/>
+                <TextBox Watermark="Ingredient Price" Text="{Binding IngredientPrice}" Margin="0 0 0 10"/>
+
+                <TextBlock FontSize="20" Text="Ingredient Quantity"/>
+                <TextBox Watermark="Ingredient Quantity" Text="{Binding IngredientQuantity}" Margin="0 0 0 10"/>
+
+                <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" Margin="0 0 0 10">
+                    <ComboBoxItem>Spoon(s)</ComboBoxItem>
+                    <ComboBoxItem>Gram(s)</ComboBoxItem>
+                    <ComboBoxItem>Cup(s)</ComboBoxItem>
+                    <ComboBoxItem>Teaspoon(s)</ComboBoxItem>
+                    <ComboBoxItem>Amount</ComboBoxItem>
+                </ComboBox>
+
+                <Button Content="Add Ingredient" Command="{Binding CreateIngredientCommand}" Margin="0 10 0 0"/>
             </StackPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
-    <TextBlock Text="Steps"/>
-    <ListBox ItemsSource="{Binding Steps}">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal" Margin="0">
-                    <TextBlock Text="{Binding Instruction}" FontWeight="Bold" Margin="0 0 5 0"/>
-                    <TextBlock Text="{Binding TimeInMinutes}" Margin="0 0 5 0"/>
-                    <Button Content="X"
-                      Command="{Binding $parent[ListBox].((vm:RecipeUpdateViewModel)DataContext).RemoveStepCommand}"
-                      CommandParameter="{Binding}" Margin="0"/>
-                </StackPanel>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
-    <TextBlock Text="Tags"/>
-    <ListBox ItemsSource="{Binding Tags}">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <StackPanel Orientation="Horizontal" Margin="0">
-              <TextBlock Text="{Binding TagName}" FontWeight="Bold" Margin="0 0 5 0"/>
-              <Button Content="X"
-                      Command="{Binding $parent[ListBox].((vm:RecipeUpdateViewModel)DataContext).RemoveTagCommand}"
-                      CommandParameter="{Binding}" Margin="0"/>
-          </StackPanel>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
-      <!-- Ingredient form -->
-      <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
-          <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
-              <TextBlock FontSize="20" Text="Ingredient Name" HorizontalAlignment="Center" Margin="10"/>
-              <TextBox HorizontalAlignment="Center" Watermark="Ingredient Name" Text="{Binding IngredientName}" Margin="5"/>
-
-              <TextBlock FontSize="20" Text="Ingredient Price" HorizontalAlignment="Center" Margin="10"/>
-              <TextBox HorizontalAlignment="Center" Watermark="Ingredient Price" Text="{Binding IngredientPrice}" Margin="5"/>
-
-              <TextBlock FontSize="20" Text="Ingredient Quantity" HorizontalAlignment="Center" Margin="10"/>
-              <TextBox HorizontalAlignment="Center" Watermark="Ingredient Quantity" Text="{Binding IngredientQuantity}" Margin="5"/>
-
-              <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" HorizontalAlignment="Center" Margin="5">
-                  <ComboBoxItem>Spoon(s)</ComboBoxItem>
-                  <ComboBoxItem>Gram(s)</ComboBoxItem>
-                  <ComboBoxItem>Cup(s)</ComboBoxItem>
-                  <ComboBoxItem>Teaspoon(s)</ComboBoxItem>
-                  <ComboBoxItem>Amount</ComboBoxItem>
-              </ComboBox>
-
-              <Button Command="{Binding CreateIngredientCommand}" Margin="10" HorizontalAlignment="Center">Add Ingredient</Button>
-          </StackPanel>
-      </Border>
+        </Border>
 
         <!-- Step form -->
-        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock FontSize="20" Text="Step Time" HorizontalAlignment="Center" Margin="10"/>
-                <TextBox HorizontalAlignment="Center" Watermark="Step time in minutes" Text="{Binding StepTime}" Margin="5"/>
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="0 10">
+            <StackPanel>
+                <TextBlock FontSize="20" Text="Step Time"/>
+                <TextBox Watermark="Step time in minutes" Text="{Binding StepTime}" Margin="0 0 0 10"/>
 
-                <TextBlock FontSize="20" Text="Step Instruction" HorizontalAlignment="Center" Margin="10"/>
-                <TextBox HorizontalAlignment="Center" Watermark="Instruction" Text="{Binding StepInstruction}" Margin="5"/>
+                <TextBlock FontSize="20" Text="Step Instruction"/>
+                <TextBox Watermark="Instruction" Text="{Binding StepInstruction}" Margin="0 0 0 10"/>
 
-                <Button Command="{Binding CreateStepCommand}" Margin="10" HorizontalAlignment="Center">Add Step</Button>
+                <Button Content="Add Step" Command="{Binding CreateStepCommand}" Margin="0 10 0 0"/>
             </StackPanel>
         </Border>
+
         <!-- Tag Form -->
-        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock FontSize="20" Text="Tag:" VerticalAlignment="Center" Margin="10"/>
-                <TextBox Watermark="Tag name" Text="{Binding TagName}" Margin="5"/>
-                <Button Command="{Binding CreateTagCommand}" Margin="5">Add Tag</Button>
+        <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="0 10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="20" Text="Tag:" Margin="0 0 10 0"/>
+                <TextBox Watermark="Tag name" Text="{Binding TagName}" Margin="0 0 0 10"/>
+                <Button Content="Add Tag" Command="{Binding CreateTagCommand}"/>
             </StackPanel>
         </Border>
-  </StackPanel>
+    </StackPanel>
+</ScrollViewer>
 </UserControl>
