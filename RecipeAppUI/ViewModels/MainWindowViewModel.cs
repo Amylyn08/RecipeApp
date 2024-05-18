@@ -57,7 +57,7 @@ public class MainWindowViewModel : ViewModelBase {
     }
 
     public void ChangeToDashboardView() {
-        ContentViewModel = new DashboardViewModel(SplankContext.GetInstance());
+        ContentViewModel = new DashboardViewModel(SplankContext.GetInstance(), this);
     }
 
     public void ChangeToChangePasswordView() {
