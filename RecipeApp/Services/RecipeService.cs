@@ -20,6 +20,7 @@ public class RecipeService : ServiceBase {
         .Include(r => r.Tags)
         .Include(r => r.Ratings)
         .Include(r => r.User)
+        .OrderBy(r => Guid.NewGuid()) // sort randomly 
         .Take(take)
         .ToList();
     }
