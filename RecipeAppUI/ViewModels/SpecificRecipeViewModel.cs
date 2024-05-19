@@ -13,16 +13,11 @@ public class SpecificRecipeViewModel : ViewModelBase{
     private RatingService __ratingService =  null!;
     private ObservableCollection<Rating> __ratings = null!;
     private ObservableCollection<Rating> __yourRatings = null!;
-
-    public SpecificRecipeViewModel(SplankContext context){
+    private Recipe __recipe = null!;
+    public SpecificRecipeViewModel(SplankContext context, Recipe recipe){
         __ratingService = new RatingService(context);
-        Ratings = new ObservableCollection<Rating>(context.Ratings);
-        YourRatings = new ObservableCollection<Rating>(context.Ratings
-                                            .Include(r => r.Stars)
-                                            .Include(r => r.Description)
-                                            .Include(r => r.User)
-                                            .Where(r => r.User.Equals(UserSingleton.GetInstance()))
-                                            .ToList());
+        Ratings = new ObservableCollection<Rating>(recipe.Ratings);
+        YourRatings = new ObservableCollection<Rating>(context.Ratings.Where(r => r.User.UserId == UserSingleton.GetInstance().UserId));
     }
 
     public RatingService RatingService{
@@ -39,6 +34,10 @@ public class SpecificRecipeViewModel : ViewModelBase{
         set => this.RaiseAndSetIfChanged(ref __yourRatings, value);
     }
 
+    public Recipe recipe{
+        get => __recipe;
+        set => this.RaiseAndSetIfChanged(ref __recipe, value);
+    }
 
 
     

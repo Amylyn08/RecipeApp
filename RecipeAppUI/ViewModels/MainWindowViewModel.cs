@@ -94,7 +94,7 @@ public class MainWindowViewModel : ViewModelBase {
     }
 
     public void ChangeToSpecificView(Recipe recipe){
-        ContentViewModel = new SpecificRecipeViewModel(SplankContext.GetInstance());
+        ContentViewModel = new SpecificRecipeViewModel(SplankContext.GetInstance(), recipe);
     }
 }
 

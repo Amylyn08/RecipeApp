@@ -6,7 +6,9 @@
              x:Class="RecipeAppUI.Views.SpecificRecipeView"
              xmlns:vm="using:RecipeAppUI.ViewModels" 
              x:DataType="vm:SpecificRecipeViewModel">
-             
-    <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
+    <StackPanel>             
+        <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
+        <TextBlock Text="Hello Test"/>
+    </StackPanel>             
 
 </UserControl>

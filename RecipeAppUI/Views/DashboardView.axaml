@@ -84,7 +84,7 @@
                                         Command="{Binding }"
                                         CommandParameter="{Binding RecipeId}"/>
                                 <Button Content="View Details"
-                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToSpecificViewCommand}"
+                                        Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).SpecificViewCommand}"
                                         CommandParameter="{Binding RecipeId}"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
