@@ -7,118 +7,142 @@
              xmlns:vm="using:RecipeAppUI.ViewModels" 
              x:DataType="vm:SpecificRecipeViewModel">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
 
-        <!-- Go Back Button -->
-        <Button Grid.Row="0" Grid.Column="0" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}">Go Back</Button>
-        
-        <!-- Recipe Information -->
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
-            <TextBlock FontWeight="Bold" Text="{Binding Recipe.Name}"/>
-            <TextBlock FontWeight="Bold" Text="{Binding Recipe.Description}"/>
-            <TextBlock FontWeight="Bold" Text="{Binding Recipe.Servings}"/>
+        <Border Grid.Column="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+            <!-- Recipe Information -->
+            <StackPanel Margin="7">
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold">
+                    <Run Text="Recipe: "/>
+                    <Run Text="{Binding Recipe.Name}"/>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" Text="{Binding Recipe.Description}"/>
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" Text="{Binding Recipe.Servings}"/>
 
-            <!-- Ingredients -->
-            <TextBlock Text="Ingredients:" FontWeight="Bold"/>
-            <ItemsControl ItemsSource="{Binding Recipe.Ingredients}" Margin="20 0 0 0">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <Run Text="{Binding Quantity}"/>
-                            <Run Text=" "/>
-                            <Run Text="{Binding UnitOfMeasurement}"/>
-                            <Run Text=" of " FontWeight="Bold"/>
-                            <Run Text="{Binding Name}" FontWeight="Bold"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                <!-- Ingredients -->
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ingredients:" FontWeight="Bold"/>
+                    <ScrollViewer Height="60">
+                        <ItemsControl ItemsSource="{Binding Recipe.Ingredients}" Margin="20 0 0 0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Center" Margin="8">
+                                        <Run Text="{Binding Quantity}"/>
+                                        <Run Text=" "/>
+                                        <Run Text="{Binding UnitOfMeasurement}"/>
+                                        <Run Text=" of "/>
+                                        <Run Text="{Binding Name}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
 
-            <!-- Steps -->
-            <TextBlock Text="Steps" FontWeight="Bold"/>
-            <ItemsControl ItemsSource="{Binding Recipe.Steps}" Margin="20 0 0 0">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock FontWeight="Bold">
-                                <Run Text="{Binding Instruction}"/>
-                                <Run Text=","/>
-                                <Run Text="{Binding TimeInMinutes}"/>
-                                <Run Text=" Minutes"/>
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl> 
+                <!-- Steps -->
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Steps" FontWeight="Bold"/>
+                    <ScrollViewer Height="60">
+                        <ItemsControl ItemsSource="{Binding Recipe.Steps}" Margin="20 0 0 0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock HorizontalAlignment="Center" Margin="8">
+                                            <Run Text="{Binding Instruction}"/>
+                                            <Run Text=","/>
+                                            <Run Text="{Binding TimeInMinutes}"/>
+                                            <Run Text=" Minutes"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </StackPanel>
 
-            <!-- Tags -->
-            <TextBlock Text="Tags" FontWeight="Bold"/>
-            <ItemsControl ItemsSource="{Binding Recipe.Tags}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding TagName}" FontWeight="Bold"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                <!-- Tags -->
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Tags" FontWeight="Bold"/>
+                    <ScrollViewer Height="60">
+                        <ItemsControl ItemsSource="{Binding Recipe.Tags}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="{Binding TagName}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
 
-            <!-- User -->
-            <TextBlock Text="User" FontWeight="Bold"/>
-            <TextBlock Text="{Binding Recipe.User.Name}"/>
-        </StackPanel>
+                <!-- User -->
+                <TextBlock HorizontalAlignment="Center" Margin="8" Text="User" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Center" Margin="8" Text="{Binding Recipe.User.Name}"/>
+            </StackPanel>
+        </Border>
 
         <!-- All Ratings -->
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
-            <TextBlock Text="All Ratings" FontWeight="Bold"/>
-            <ItemsControl ItemsSource="{Binding Ratings}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <Run Text="Number of Stars: " FontWeight="Bold"/>
-                            <Run Text="{Binding Stars}"/>
-                            <Run Text="Description: " FontWeight="Bold"/>
-                            <Run Text="{Binding Description}"/>
-                            <Run Text="Created by user: " FontWeight="Bold"/>
-                            <Run Text="{Binding User.Name}"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center" Margin="8" Text="All Ratings" FontWeight="Bold"/>
+                <ScrollViewer Height="160">
+                    <ItemsControl ItemsSource="{Binding Ratings}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" Margin="8">
+                                    <Run Text="Number of Stars: " FontWeight="Bold"/>
+                                    <Run Text="{Binding Stars}"/>
+                                    <Run Text="Description: " FontWeight="Bold"/>
+                                    <Run Text="{Binding Description}"/>
+                                    <Run Text="Created by user: " FontWeight="Bold"/>
+                                    <Run Text="{Binding User.Name}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+        </Border>
 
         <!-- Ratings by You -->
-        <StackPanel Grid.Row="2" Grid.Column="1" Margin="10">
-            <TextBlock Text="Ratings by You" FontWeight="Bold"/>
-            <ItemsControl ItemsSource="{Binding YourRatings}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <Run Text="Number of Stars: " FontWeight="Bold"/>
-                            <Run Text="{Binding Stars}"/>
-                            <Run Text="Description: " FontWeight="Bold"/>
-                            <Run Text="{Binding Description}"/>
-                            <Run Text="Created by user: " FontWeight="Bold"/>
-                            <Run Text="{Binding User.Name}"/>
-                            <Button Content="Delete Rating"/>
-                            <Button Content="Edit Rating"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+            <StackPanel Margin="10">
+                <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ratings by You" FontWeight="Bold"/>
+                <ScrollViewer Height="250">
+                    <ItemsControl ItemsSource="{Binding YourRatings}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock HorizontalAlignment="Center" Margin="8">
+                                        <Run Text="Number of Stars: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Stars}"/>
+                                        <Run Text="Description: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Description}"/>
+                                        <Run Text="Created by user: " FontWeight="Bold"/>
+                                        <Run Text="{Binding User.Name}"/>
+                                    </TextBlock>
+                                    <Button Content="Delete Rating" Command="{Binding }" CommandParameter="{Binding}" HorizontalAlignment="Right"/>
+                                    <Button Content="Edit Rating" Command="{Binding }" CommandParameter="{Binding}" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+        </Border>
+
+        <!-- Buttons at the Bottom -->
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
+            <Button Content="Add Rating" Command="{Binding ChangeToAddRatingViewCommand}" HorizontalAlignment="Stretch" Margin="0,0,0,5"/>
+            <Button x:CompileBindings="False" Content="Go Back" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" HorizontalAlignment="Stretch"/>
         </StackPanel>
 
-        <!-- Add Rating Button -->
-        <Button Grid.Row="2" 
-                Grid.Column="0" 
-                HorizontalAlignment="Center" 
-                Content="Add Rating" 
-                Command="{Binding ChangeToAddRatingViewCommand}"/>
     </Grid>
 </UserControl>

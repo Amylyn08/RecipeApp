@@ -1,4 +1,5 @@
 using System;
+using System.Reactive;
 using ReactiveUI;
 using RecipeApp.Context;
 using RecipeApp.Models;
@@ -16,12 +17,13 @@ public class AddRatingViewModel : ViewModelBase{
 
     private MainWindowViewModel _mainWindowViewModel;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
+    public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
 
-    // public ReactiveCommand<
-
-    public AddRatingViewModel(SplankContext context, Recipe recipe){
+    public AddRatingViewModel(SplankContext context, Recipe recipe, MainWindowViewModel mainWindowViewModel){
         __ratingService = new RatingService(context);
         __recipe = recipe;
+        MainWindowViewModel = mainWindowViewModel;
+        ChangeToSpecificViewCommand = ReactiveCommand.Create(ChangeToSpecificView);
     }
 
     public RatingService RatingService{
@@ -51,13 +53,14 @@ public class AddRatingViewModel : ViewModelBase{
         try{
             Rating rating = new(__stars, __description, UserSingleton.GetInstance());
             __ratingService.RatingRecipe(rating, __recipe);
+            MainWindowViewModel.ChangeToSpecificView(__recipe);
         }
         catch(ArgumentException e){
             ErrorMessage = e.Message;
         }
     }
 
-    public void ChangeToSpecificViewCommand(Recipe recipe){
-        MainWindowViewModel.ChangeToSpecificView(recipe);
+    public void ChangeToSpecificView(){
+        MainWindowViewModel.ChangeToSpecificView(__recipe);
     }
 }

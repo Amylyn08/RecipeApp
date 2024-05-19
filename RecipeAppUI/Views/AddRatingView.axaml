@@ -7,7 +7,7 @@
              xmlns:vm="using:RecipeAppUI.ViewModels"
              x:DataType="vm:AddRatingViewModel">
   <StackPanel>
-    <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToSpecificViewCommand}">Go Back</Button>
+    <Button x:CompileBindings="False" Command="{Binding ChangeToSpecificViewCommand}" Margin="5" Background="#00796B" Foreground="White">Go Back</Button>
     <TextBlock FontWeight="Bold" Text="Stars"/>
     <NumericUpDown Value="{Binding Stars}" 
                   Minimum="0"       

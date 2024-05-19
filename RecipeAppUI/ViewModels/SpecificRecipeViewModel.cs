@@ -21,8 +21,9 @@ public class SpecificRecipeViewModel : ViewModelBase{
     public SpecificRecipeViewModel(SplankContext context, Recipe recipe, MainWindowViewModel mainWindowViewModel){
         MainWindowViewModel = mainWindowViewModel;
         Ratings = new ObservableCollection<Rating>(recipe.Ratings);
-        YourRatings = new ObservableCollection<Rating>(context.Ratings.Where(r => r.User.UserId == UserSingleton.GetInstance().UserId));
         Recipe = recipe;
+        YourRatings = new ObservableCollection<Rating>(context.Ratings.Where(r => r.User.UserId == UserSingleton.GetInstance().UserId &&
+                                                                                r.RecipeId == __recipe.RecipeId));
         ChangeToAddRatingViewCommand = ReactiveCommand.Create(ChangeToAddRatingView);
     }
 
