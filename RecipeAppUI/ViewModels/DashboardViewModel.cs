@@ -127,7 +127,7 @@ namespace RecipeAppUI.ViewModels
                     //     break;
                 }
                 Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
-                
+                _excludedIds.Clear();
             }
             catch (ArgumentException e)
             {
