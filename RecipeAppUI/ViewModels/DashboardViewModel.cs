@@ -128,6 +128,7 @@ namespace RecipeAppUI.ViewModels
                 }
                 Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
                 _excludedIds.Clear();
+                AddToRecipesToNotLoadAgain([.. Recipes]);
             }
             catch (ArgumentException e)
             {
