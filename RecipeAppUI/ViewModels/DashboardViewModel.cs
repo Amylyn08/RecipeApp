@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using DynamicData;
+using System.Threading.Tasks;
 
 
 namespace RecipeAppUI.ViewModels
@@ -96,7 +97,7 @@ namespace RecipeAppUI.ViewModels
             _searchingMessage = "You are now searching by: " + SelectedCriteria;
         }
 
-        private void SearchRecipes()
+        private async void SearchRecipes()
         {
             try
             {
@@ -130,7 +131,7 @@ namespace RecipeAppUI.ViewModels
                 }
                 Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
                 _excludedIds.Clear();
-                AddToRecipesToNotLoadAgain([.. Recipes]);
+                await AddRecipesToNotLoadAgain([.. Recipes]); // reset list
             }
             catch (ArgumentException e)
             {
@@ -138,13 +139,13 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
-        private void GetRecipes()
+        private async void GetRecipes()
         {
             try
             {
                 const int NUM_DEFAULT_RECIPES_TO_GET = 3;
                 Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(NUM_DEFAULT_RECIPES_TO_GET, _excludedIds));
-                AddToRecipesToNotLoadAgain([.. Recipes]); // Observable collection -> List Collection
+                await AddRecipesToNotLoadAgain([.. Recipes]); // Observable collection -> List Collection
             }
             catch (ArgumentException e)
             {
@@ -152,24 +153,29 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
-        private void LoadMoreRecipes() 
+        private async void LoadMoreRecipes() 
         {
             try {
                 const int NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES = 2;
                 List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES, _excludedIds);
-                AddToRecipesToNotLoadAgain(moreRecipes);
+                await AddRecipesToNotLoadAgain(moreRecipes);
                 Recipes.AddRange(moreRecipes);
             } catch (ArgumentException e) {
                 DashboardErrorMessage = e.Message;
             }
         }
 
-        private void AddToRecipesToNotLoadAgain(List<Recipe> recipes) 
+        // if we load many recipes, this operation will take long,
+        // make it async and run it in the bg
+        public async Task AddRecipesToNotLoadAgain(List<Recipe> recipes)
         {
-            foreach (Recipe recipe in recipes)
+            await Task.Run(() =>
             {
-                _excludedIds.Add(recipe.RecipeId);
-            }
+                foreach (Recipe recipe in recipes)
+                {
+                    _excludedIds.Add(recipe.RecipeId);
+                }
+            });
         }
 
         private void Logout() {
