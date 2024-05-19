@@ -139,7 +139,7 @@ namespace RecipeAppUI.ViewModels
         {
             try
             {
-                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(1, 1, _excludedIds));
+                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(10, 0, _excludedIds));
                 foreach (Recipe recipe in Recipes) {
                     _excludedIds.Add(recipe.RecipeId);
                 }
@@ -153,7 +153,7 @@ namespace RecipeAppUI.ViewModels
         private void LoadMoreRecipes() 
         {
             try {
-                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(1, 1, _excludedIds);
+                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(10, 10, _excludedIds);
                 foreach (Recipe recipe in moreRecipes) {
                     _excludedIds.Add(recipe.RecipeId);
                 }
