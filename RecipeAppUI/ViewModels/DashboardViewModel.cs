@@ -11,8 +11,10 @@ using System.Reactive;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
-using DynamicData;
+using Avalonia.Media.Imaging;
+using System.IO;
 using System.Threading.Tasks;
+using DynamicData;
 
 
 namespace RecipeAppUI.ViewModels
@@ -30,6 +32,7 @@ namespace RecipeAppUI.ViewModels
         private string _errorMessage = null!;
         private readonly List<int> _excludedIds = [];
 
+        public Bitmap? Bitmap { get; set; }
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
         public ReactiveCommand<Unit, Unit> SearchCommand { get; } = null!;
@@ -83,6 +86,11 @@ namespace RecipeAppUI.ViewModels
             FetchNextFewRecipesCommmand = ReactiveCommand.Create(LoadMoreRecipes);
             LogoutCommand = ReactiveCommand.Create(Logout);
             MainWindowViewModel = mainWindowViewModel;
+            if (UserSingleton.GetInstance().ProfilePicture != null)
+            {
+                using MemoryStream memoryStream = new(UserSingleton.GetInstance().ProfilePicture!);
+                Bitmap = new Bitmap(memoryStream);
+            }
             GetRecipes();
         }
 

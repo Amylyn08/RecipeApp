@@ -8,32 +8,12 @@
 			 x:DataType="vm:DashboardViewModel">
     <DockPanel>
 
-        <!-- Navigation on top -->
     <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="#FF9A56" Margin="0,0,0,0">
-        <!-- Splank -->
-        <TextBlock FontSize="25" Text="Splank" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        
-        <!-- Welcome -->
-        <TextBlock FontSize="25" Text="Welcome" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" />
-        
-        <!-- Log Out -->
-        <Button Content="Log Out" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding LogoutCommand}" VerticalAlignment="Top"/>
-        
-        <!-- Change Password -->
-        <Button Content="Change Password" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" VerticalAlignment="Top"/>
-
-        <!-- Delete account -->
-        <Button Content="Delete account" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" VerticalAlignment="Top"/>
-
-         <!-- View Favourites -->
-         <Button Content="View Favourites" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToFavouritesViewCommand}" VerticalAlignment="Top"/>
-
-         <!-- Profile -->
-         <Button Content="Profile" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToProfileViewCommand}" VerticalAlignment="Top"/>
+        <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Bitmap}" Height="250" Width="250"/>
     </StackPanel>
-
-
-        <!-- Textbox with search features -->
+    
+    
+    <!-- Textbox with search features -->
     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
         <TextBlock x:CompileBindings="False" FontSize="20" />
         <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="Search" />
@@ -48,15 +28,17 @@
             <ComboBoxItem>Tags</ComboBoxItem>
             <ComboBoxItem>Time</ComboBoxItem>
         </ComboBox>
-
+        
     </StackPanel>
-
-        <!-- Main views -->
+    
         <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
-            <!-- Navigation view -->
+            <Button Margin="5" Content="Log Out" x:CompileBindings="False" Command="{Binding LogoutCommand}" VerticalAlignment="Top"/>
+            <Button Margin="5" Content="Change Password" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" VerticalAlignment="Top"/>
+            <Button Margin="5" Content="Delete account" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" VerticalAlignment="Top"/>
+            <Button Margin="5" Content="View Favourites" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToFavouritesViewCommand}" VerticalAlignment="Top"/>
+            <Button Margin="5" Content="Profile" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToProfileViewCommand}" VerticalAlignment="Top"/>
             <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToCreateRecipeViewCommand}" Content="Create Recipe" Margin="5"/>
             <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToRecipesViewCommand}" Content="View your recipes" Margin="5"/>
-            <!-- Add more navigation buttons or tabs as needed -->
         </StackPanel>
 
         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -64,8 +46,7 @@
         <StackPanel DockPanel.Dock="Right" Margin="10">
             <!-- Bigger view for list views -->
             <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-            <Button Content="Load more recipes" x:CompileBindings="False" 
-                Command="{Binding FetchNextFewRecipesCommmand}"/>
+            <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}"/>
             <TextBlock FontSize="20"
                         Text="{Binding DashboardErrorMessage }"/>
             <TextBlock Text="{Binding ErrorMessage}" FontSize="32"/>
@@ -121,7 +102,7 @@
                                 </ItemsControl> 
             
                                 <!-- Steps -->
-                                <TextBlock Text="Steps" FontWeight="Bold"/>
+                                <TextBlock Text="Steps:" FontWeight="Bold"/>
                                 <ItemsControl ItemsSource="{Binding Steps}" Margin="20 0 0 0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
@@ -138,34 +119,11 @@
                                 </ItemsControl> 
                                 
                                 <!-- Tags -->
-                                <TextBlock Text="Tags" FontWeight="Bold"/>
-                                <ItemsControl ItemsSource="{Binding Tags}">
+                                <TextBlock Text="Tags:" FontWeight="Bold"/>
+                                <ItemsControl ItemsSource="{Binding Tags}" Margin="20 0 0 0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding TagName}" FontWeight="Bold"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-            
-                                <!-- Ratings -->
-                                <TextBlock Text="Ratings" FontWeight="Bold"/>
-                                <ItemsControl ItemsSource="{Binding Ratings}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock FontWeight="Bold">
-                                                    <Run Text="User: "/>
-                                                    <Run Text="{Binding User.Name}"/>
-                                                </TextBlock>
-                                                <TextBlock FontWeight="Bold">
-                                                    <Run Text="Stars: "/>
-                                                    <Run Text="{Binding Stars}"/>
-                                                </TextBlock>
-                                                <TextBlock FontWeight="Bold">
-                                                    <Run Text="Description: "/>
-                                                    <Run Text="{Binding Description}"/>
-                                                </TextBlock>
-                                            </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
