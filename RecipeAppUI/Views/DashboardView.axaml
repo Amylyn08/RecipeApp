@@ -85,7 +85,8 @@
                                         CommandParameter="{Binding RecipeId}"/>
                                 <Button Content="View Details"
                                         Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).SpecificViewCommand}"
-                                        CommandParameter="{Binding RecipeId}"/>
+                                        CommandParameter="{Binding RecipeId}"
+                                        HorizontalAlignment="Right"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>
