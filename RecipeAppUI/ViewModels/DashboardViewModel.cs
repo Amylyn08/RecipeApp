@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using DynamicData;
+using System.Threading.Tasks;
 
 
 namespace RecipeAppUI.ViewModels
@@ -27,6 +28,7 @@ namespace RecipeAppUI.ViewModels
         private string _selectedIndex = "0";
         private UserService _userService = null!;
         private string _errorMessage = null!;
+        private readonly List<int> _excludedIds = [];
 
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
@@ -93,7 +95,7 @@ namespace RecipeAppUI.ViewModels
             _searchingMessage = "You are now searching by: " + SelectedCriteria;
         }
 
-        private void SearchRecipes()
+        private async void SearchRecipes()
         {
             try
             {
@@ -126,7 +128,8 @@ namespace RecipeAppUI.ViewModels
                     //     break;
                 }
                 Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
-                
+                _excludedIds.Clear();
+                await AddRecipesToNotLoadAgain([.. Recipes]); // reset list
             }
             catch (ArgumentException e)
             {
@@ -134,11 +137,13 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
-        private void GetRecipes()
+        private async void GetRecipes()
         {
             try
             {
-                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(1, 1));
+                const int NUM_DEFAULT_RECIPES_TO_GET = 3;
+                Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(NUM_DEFAULT_RECIPES_TO_GET, _excludedIds));
+                await AddRecipesToNotLoadAgain([.. Recipes]); // Observable collection -> List Collection
             }
             catch (ArgumentException e)
             {
@@ -146,14 +151,29 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
-        private void LoadMoreRecipes() 
+        private async void LoadMoreRecipes() 
         {
             try {
-                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(1, 1);
+                const int NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES = 2;
+                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES, _excludedIds);
+                await AddRecipesToNotLoadAgain(moreRecipes);
                 Recipes.AddRange(moreRecipes);
             } catch (ArgumentException e) {
                 DashboardErrorMessage = e.Message;
             }
+        }
+
+        // if we load many recipes, this operation will take long,
+        // make it async and run it in the bg
+        public async Task AddRecipesToNotLoadAgain(List<Recipe> recipes)
+        {
+            await Task.Run(() =>
+            {
+                foreach (Recipe recipe in recipes)
+                {
+                    _excludedIds.Add(recipe.RecipeId);
+                }
+            });
         }
 
         private void Logout() {
