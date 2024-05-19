@@ -20,8 +20,8 @@ public class RecipeService : ServiceBase {
         .Include(r => r.Tags)
         .Include(r => r.Ratings)
         .Include(r => r.User)
-        .Skip(take)
-        .Take(skip)
+        .Skip(skip)
+        .Take(take)
         .ToList();
     }
 

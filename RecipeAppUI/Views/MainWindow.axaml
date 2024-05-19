@@ -19,6 +19,5 @@
         <views:RegisterView />
         <views:DashboardView />
         <views:CreateRecipeView />
-        <views:AddIngredientView/>
     </StackPanel>
 </Window>
