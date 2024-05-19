@@ -5,7 +5,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.CreateRecipeView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
-             x:DataType="vm:CreateRecipeViewModel">
+             x:DataType="vm:CreateRecipeViewModel"
+             Background="#F5F5F5">
   <ScrollViewer>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -18,9 +19,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Column="0" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
+        <!-- Main Form Section -->
+        <Border Grid.Column="0" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10" Background="#E0F7FA">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" Margin="5">Go Back</Button>
+                <Button x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" Margin="5" Background="#00796B" Foreground="White">Go Back</Button>
                 <TextBlock FontSize="20" Text="{Binding ErrorMessage}" Foreground="Red" Margin="5"/>
                 
                 <TextBlock FontSize="20" Text="Enter Recipe Name" TextAlignment="Center" Margin="0,20"/>
@@ -80,11 +82,12 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <Button Command="{Binding CreateRecipe}" Margin="10" HorizontalAlignment="Center">Create Recipe</Button>
+                <Button Command="{Binding CreateRecipe}" Margin="10" HorizontalAlignment="Center" Background="#00796B" Foreground="White">Create Recipe</Button>
             </StackPanel>
         </Border>
-        <!-- Ingredient form -->
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
+
+        <!-- Ingredient Form Section -->
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10" Background="#B2DFDB">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
                 <TextBlock FontSize="20" Text="Ingredient Name" HorizontalAlignment="Center" Margin="10"/>
                 <TextBox HorizontalAlignment="Center" Watermark="Ingredient Name" Text="{Binding IngredientName}" Margin="5"/>
@@ -103,12 +106,12 @@
                     <ComboBoxItem>Amount</ComboBoxItem>
                 </ComboBox>
 
-                <Button Command="{Binding CreateIngredient}" Margin="10" HorizontalAlignment="Center">Add Ingredient</Button>
+                <Button Command="{Binding CreateIngredient}" Margin="10" HorizontalAlignment="Center" Background="#00796B" Foreground="White">Add Ingredient</Button>
             </StackPanel>
         </Border>
 
-        <!-- Step form -->
-        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
+        <!-- Step Form Section -->
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10" Background="#E0F2F1">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
                 <TextBlock FontSize="20" Text="Step Time" HorizontalAlignment="Center" Margin="10"/>
                 <TextBox HorizontalAlignment="Center" Watermark="Step time in minutes" Text="{Binding StepTime}" Margin="5"/>
@@ -116,15 +119,16 @@
                 <TextBlock FontSize="20" Text="Step Instruction" HorizontalAlignment="Center" Margin="10"/>
                 <TextBox HorizontalAlignment="Center" Watermark="Instruction" Text="{Binding StepInstruction}" Margin="5"/>
 
-                <Button Command="{Binding CreateStep}" Margin="10" HorizontalAlignment="Center">Add Step</Button>
+                <Button Command="{Binding CreateStep}" Margin="10" HorizontalAlignment="Center" Background="#00796B" Foreground="White">Add Step</Button>
             </StackPanel>
         </Border>
-        <!-- Tag Form -->
-        <Border Grid.Column="1" Grid.Row="2" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
+
+        <!-- Tag Form Section -->
+        <Border Grid.Column="1" Grid.Row="2" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10" Background="#B2EBF2">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <TextBlock FontSize="20" Text="Tag:" VerticalAlignment="Center" Margin="10"/>
                 <TextBox Watermark="Tag name" Text="{Binding TagName}" Margin="5"/>
-                <Button Command="{Binding CreateTag}" Margin="5">Add Tag</Button>
+                <Button Command="{Binding CreateTag}" Margin="5" Background="#00796B" Foreground="White">Add Tag</Button>
             </StackPanel>
         </Border>
     </Grid>
