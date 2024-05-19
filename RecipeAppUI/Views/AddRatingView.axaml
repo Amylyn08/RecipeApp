@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RecipeAppUI.Views.AddRatingView"
+             xmlns:vm="using:RecipeAppUI.ViewModels"
+             x:DataType="vm:AddRatingViewModel">
+  <StackPanel>
+    <Button x:CompileBindings="False" Command="{Binding ChangeToSpecificViewCommand}" Margin="5" Background="#00796B" Foreground="White">Go Back</Button>
+    <TextBlock FontWeight="Bold" Text="Stars"/>
+    <NumericUpDown Value="{Binding Stars}" 
+                  Minimum="0"       
+                  Maximum="5"
+                  ButtonSpinnerLocation="Right"/>
+
+    <TextBlock FontWeight="Bold" Text="Description"/>
+    <TextBox Text="{Binding Description}"/>
+    <Button Content="Create Rating" Command="{Binding AddRating}"/>
+  </StackPanel>
+</UserControl>
