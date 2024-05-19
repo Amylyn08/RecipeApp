@@ -14,6 +14,11 @@ public class AddRatingViewModel : ViewModelBase{
     private string  __description;
     private string _errorMessage = null!;
 
+    private MainWindowViewModel _mainWindowViewModel;
+    public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
+
+    // public ReactiveCommand<
+
     public AddRatingViewModel(SplankContext context, Recipe recipe){
         __ratingService = new RatingService(context);
         __recipe = recipe;
@@ -26,7 +31,14 @@ public class AddRatingViewModel : ViewModelBase{
 
     public int Stars{
         get => __stars;
-        set => this.RaiseAndSetIfChanged(ref __stars, value);
+        set {
+            try{
+                this.RaiseAndSetIfChanged(ref __stars, Convert.ToInt32(value));
+            }
+            catch(Exception e){
+                ErrorMessage = e.Message;
+            }
+        }
     }
 
     public string Description{
@@ -43,5 +55,9 @@ public class AddRatingViewModel : ViewModelBase{
         catch(ArgumentException e){
             ErrorMessage = e.Message;
         }
+    }
+
+    public void ChangeToSpecificViewCommand(Recipe recipe){
+        MainWindowViewModel.ChangeToSpecificView(recipe);
     }
 }

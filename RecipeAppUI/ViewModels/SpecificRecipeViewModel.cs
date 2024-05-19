@@ -17,13 +17,13 @@ public class SpecificRecipeViewModel : ViewModelBase{
     private MainWindowViewModel _mainWindowViewModel;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
 
-    public ReactiveCommand<Recipe, Unit> ChangeToAddRatingViewCommand {get;}
+    public ReactiveCommand<Unit, Unit> ChangeToAddRatingViewCommand {get;}
     public SpecificRecipeViewModel(SplankContext context, Recipe recipe, MainWindowViewModel mainWindowViewModel){
         MainWindowViewModel = mainWindowViewModel;
         Ratings = new ObservableCollection<Rating>(recipe.Ratings);
         YourRatings = new ObservableCollection<Rating>(context.Ratings.Where(r => r.User.UserId == UserSingleton.GetInstance().UserId));
         Recipe = recipe;
-        ChangeToAddRatingViewCommand = ReactiveCommand.Create<Recipe>(ChangeToAddRatingView);
+        ChangeToAddRatingViewCommand = ReactiveCommand.Create(ChangeToAddRatingView);
     }
 
 
@@ -42,8 +42,8 @@ public class SpecificRecipeViewModel : ViewModelBase{
         set => this.RaiseAndSetIfChanged(ref __recipe, value);
     }
 
-    public void ChangeToAddRatingView(Recipe recipe){
-        MainWindowViewModel.ChangeToAddRatingView(recipe);
+    public void ChangeToAddRatingView(){
+        MainWindowViewModel.ChangeToAddRatingView(__recipe);
     }
     
 }
