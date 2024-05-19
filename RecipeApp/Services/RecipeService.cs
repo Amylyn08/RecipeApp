@@ -12,7 +12,7 @@ public class RecipeService : ServiceBase {
 
     ///
     /// Gets some recipes from the DB
-    public List<Recipe> GetSomeRecipes(int take, int skip, List<int> excludedIds) {
+    public List<Recipe> GetSomeRecipes(int take, List<int> excludedIds) {
         return Context.Recipes
         .Where(r => !excludedIds.Contains(r.RecipeId)) 
         .Include(r => r.Ingredients)
@@ -20,7 +20,6 @@ public class RecipeService : ServiceBase {
         .Include(r => r.Tags)
         .Include(r => r.Ratings)
         .Include(r => r.User)
-        .Skip(skip)
         .Take(take)
         .ToList();
     }
