@@ -1,7 +1,6 @@
 namespace RecipeApp.Searcher;
 
 using Microsoft.EntityFrameworkCore;
-using recipeapp;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
@@ -27,12 +26,12 @@ public class SearchByTags :SearcherBase{
     /// <returns>Returns filtered list of recipes.</returns>
     public override List<Recipe> FilterRecipes()
     {
-        List<Recipe> filteredRecipes = Context.Recipes 
+        List<Recipe> filteredRecipes = Context.Recipes
             .Include(recipe => recipe.Ingredients)
+            .Where(recipe => recipe.Tags.Any(tag => tag.TagName!.Equals(_criteria)))
             .Include(recipe => recipe.Steps)
             .Include(recipe => recipe.Tags)
             .Include(recipe => recipe.Ratings)
-            .Where(recipe => recipe.Tags.Any(tag => tag.TagName.Equals(_criteria)))
             .ToList();
         return filteredRecipes;
     }

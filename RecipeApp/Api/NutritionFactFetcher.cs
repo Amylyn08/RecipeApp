@@ -4,20 +4,24 @@ using System.Text.Json;
 
 namespace RecipeApp.Api;
 
+/// <summary>
+/// Fetches nutrition facts about a recipe through an API
+/// </summary>
 public class NutritionFactFetcher : IApiForIngredients {
     public string JsonAsString { get; private set; } = null!;
 
-    // This may or may not work depending on the ingredients
-    // Use try/catch in the code that is calling this method and simply 
-    // tell the client that the nutrition facts for this recipe was not available
-    // if the API call fails
-    // The code is ugly, but it works
+    /// <summary>
+    /// Gets nutrition facts
+    /// </summary>
+    /// <param name="recipe">Recipe to get nutrition facts from</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException">If recipe is null</exception>
+    /// <exception cref="ApiException">If API call fails</exception>
     public ApiResponse Fetch(Recipe recipe) {
         if (recipe is null) {
             throw new ArgumentException("Recipe cannot be null");
         }
 
-        // total macros for a recipe
         var totalCalories = 0.0;
         var totalFat = 0.0;
         var totalSaturatedFat = 0.0;
@@ -27,7 +31,6 @@ public class NutritionFactFetcher : IApiForIngredients {
         var totalCarbs = 0.0;
         var totalFiber = 0.0;
         var totalSugar = 0.0;
-
         
         foreach (var ingredient in recipe.Ingredients) {
             using var client = new HttpClient();
@@ -38,12 +41,7 @@ public class NutritionFactFetcher : IApiForIngredients {
 
             var halfParsedData = JsonAsString.Substring(JsonAsString.IndexOf("[{") + 1);
             var fullParsedJsonData = halfParsedData.Substring(0, halfParsedData.IndexOf("}") + 1);
-            var apiRep = JsonSerializer.Deserialize<NutritionResponse>(fullParsedJsonData);
-
-            if (apiRep is null) {
-                throw new ApiException("Could not fetch recipe nutrition facts");
-            }
-
+            var apiRep = JsonSerializer.Deserialize<NutritionResponse>(fullParsedJsonData) ?? throw new ApiException("Could not fetch recipe nutrition facts");
             totalCalories += apiRep.calories;
             totalFat += apiRep.fat_total_g;
             totalSaturatedFat += apiRep.fat_saturated_g;
@@ -54,6 +52,7 @@ public class NutritionFactFetcher : IApiForIngredients {
             totalFiber += apiRep.fiber_g;
             totalSugar += apiRep.sugar_g;
         }
+
         return new NutritionResponse() {
             calories = totalCalories,
             fat_total_g = totalFat,
@@ -67,6 +66,10 @@ public class NutritionFactFetcher : IApiForIngredients {
         };
     }
 
+    /// <summary>
+    /// Turns a HTTP response into a JSON string 
+    /// </summary>
+    /// <param name="httpResponseMessage"></param>
     private async void TransformResponseToDeserializableJsonString(HttpResponseMessage httpResponseMessage) {
         JsonAsString = await httpResponseMessage.Content.ReadAsStringAsync();
     }

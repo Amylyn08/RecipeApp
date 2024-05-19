@@ -1,27 +1,22 @@
 using ReactiveUI;
 using RecipeApp.Context;
-using RecipeApp.Exceptions;
 using RecipeApp.Models;
-using RecipeApp.Searcher;
 using RecipeApp.Services;
 using RecipeAppUI.Session;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using Avalonia.Controls;
 using System.Linq;
 using System.Reactive.Linq;
-using Avalonia.Input;
 namespace RecipeAppUI.ViewModels;
 
 
 
 public class RecipeUpdateViewModel : ViewModelBase {
-    private MainWindowViewModel _mainWindowViewModel;
+    private MainWindowViewModel _mainWindowViewModel = null!;
     private Recipe _recipe;
     public Recipe Recipe { get => _recipe; set => _recipe = this.RaiseAndSetIfChanged(ref _recipe, value); }
-    public Recipe NewRecipe { get; set; }
+    public Recipe NewRecipe { get; set; } = null!;
     public string Name 
     { 
         get => _recipe.Name; 
@@ -118,7 +113,7 @@ public class RecipeUpdateViewModel : ViewModelBase {
         _recipeService = new RecipeService(context);
         MainWindowViewModel = mainWindowViewModel;
         Recipe = recipe;
-        Ingredients = new ObservableCollection<Ingredient>(_recipe.Ingredients);
+        Ingredients = new ObservableCollection<Ingredient>(_recipe!.Ingredients);
         Steps = new ObservableCollection<Step>(_recipe.Steps);
         Tags = new ObservableCollection<Tag>(_recipe.Tags);
         RemoveIngredientCommand = ReactiveCommand.Create<Ingredient>(RemoveIngredient);

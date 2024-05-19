@@ -134,7 +134,7 @@ public class UserService : ServiceBase {
             throw new ArgumentException("User cannot be null !");
         }
         var alreadyFavourited = Context.Favourites
-            .Where(f => f.Recipe.Equals(favourited) && f.User.Equals(user)).FirstOrDefault();
+            .Where(f => f.Recipe!.Equals(favourited) && f.User!.Equals(user)).FirstOrDefault();
         if (alreadyFavourited is not null) {
             throw new AlreadyFavouritedException();
         }
@@ -158,7 +158,7 @@ public class UserService : ServiceBase {
         if (user is null) {
             throw new ArgumentException("User cannot be null");
         }
-        Favourite favouriteToDelete = Context.Favourites.Where(f => f.RecipeId == recipe.RecipeId && f.UserId == user.UserId).FirstOrDefault();
+        Favourite favouriteToDelete = Context.Favourites.Where(f => f.RecipeId == recipe.RecipeId && f.UserId == user.UserId).FirstOrDefault()!;
         Context.Remove(favouriteToDelete);
         Context.SaveChanges();
     }

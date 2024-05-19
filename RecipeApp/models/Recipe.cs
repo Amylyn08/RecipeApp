@@ -1,6 +1,5 @@
 namespace RecipeApp.Models;
 
-using System.Collections.ObjectModel;
 using System.Text;
 
 /// <summary>
@@ -105,9 +104,7 @@ public class Recipe {
     public User User { 
         get => _user;
         set {
-            if (value == null) 
-                throw new ArgumentException("User cannot be null");
-            _user = value;
+            _user = value ?? throw new ArgumentException("User cannot be null");
         }
     }
 

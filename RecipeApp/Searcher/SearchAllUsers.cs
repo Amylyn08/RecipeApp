@@ -3,11 +3,14 @@ using RecipeApp.Models;
 
 namespace RecipeApp.Searcher;
 
+/// <summary>
+/// Searcher for users
+/// </summary>
 public class SearchAllUsers
 {
 
     private readonly string _criteria;
-    private SplankContext _context;
+    private readonly SplankContext _context;
 
     /// <summary>
     /// Constructor for searchAllUsers, validates username, assigns username
@@ -15,7 +18,7 @@ public class SearchAllUsers
     /// </summary>
     /// <param name="context">The splank context</param>
     /// <param name="username">the username of specified by input.</param>
-    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentException">If username is invalid</exception>
     public SearchAllUsers(SplankContext context, string username)
     {
         if (username == null) throw new ArgumentException("Username cannot be null");
@@ -24,11 +27,15 @@ public class SearchAllUsers
         _context = context;
     }
 
+    /// <summary>
+    /// Returns a list of users by name
+    /// </summary>
+    /// <returns>Returns a list of users by name</returns>
     public List<User> GetUserByName()
     {
         List<User> userFiltered = _context.Users
                                 .Where(user => user.Name.ToLower().Contains(_criteria.ToLower()))
-                                .ToList<User>();
+                                .ToList();
         return userFiltered;
     }
 

@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace RecipeApp.Models;
 
 /// <summary>

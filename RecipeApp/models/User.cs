@@ -14,8 +14,8 @@ public class User {
     private string _description = null!;
     private string _salt = null!;
     private List<Recipe> _favourites = null!;
-    private List<Recipe> _madeRecipes; 
-    private byte[] _profilePicture;
+    private List<Recipe>? _madeRecipes; 
+    private byte[]? _profilePicture;
 
     public int UserId {
         get; 
@@ -77,7 +77,7 @@ public class User {
         }
     }
 
-    public List<Recipe> MadeRecipes {
+    public List<Recipe>? MadeRecipes {
         get => _madeRecipes;
         set {
             if (value is null)
