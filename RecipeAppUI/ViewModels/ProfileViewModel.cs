@@ -93,7 +93,7 @@ public class ProfileViewModel : ViewModelBase {
 
     private void SetupBitmapOnViewLoad() {
         if (ProfilePicture is not null) {
-            using MemoryStream stream = new MemoryStream(ProfilePicture);
+            using MemoryStream stream = new(ProfilePicture);
             Bitmap = new Bitmap(stream);
         }
     }
