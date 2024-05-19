@@ -17,7 +17,7 @@
         <TextBlock FontSize="25" Text="Welcome" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" />
         
         <!-- Log Out -->
-        <Button Content="Log Out" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToHomeViewCommand}" VerticalAlignment="Top"/>
+        <Button Content="Log Out" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding LogoutCommand}" VerticalAlignment="Top"/>
         
         <!-- Change Password -->
         <Button Content="Change Password" x:CompileBindings="False" HorizontalAlignment="Right" Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" VerticalAlignment="Top"/>
@@ -64,9 +64,11 @@
         <StackPanel DockPanel.Dock="Right" Margin="10">
             <!-- Bigger view for list views -->
             <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+            <Button Content="Load more recipes" x:CompileBindings="False" 
+                Command="{Binding FetchNextFewRecipesCommmand}"/>
             <TextBlock FontSize="20"
                         Text="{Binding DashboardErrorMessage }"/>
-        <TextBlock Text="{Binding ErrorMessage}" FontSize="32"/>
+            <TextBlock Text="{Binding ErrorMessage}" FontSize="32"/>
             <StackPanel>
                 <ListBox ItemsSource="{Binding Recipes}">
                     <ListBox.ItemTemplate>
@@ -82,7 +84,8 @@
                                         Command="{Binding }"
                                         CommandParameter="{Binding RecipeId}"/>
                                 <Button Content="View Details"
-                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToSpecificViewCommand}"/>
+                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToSpecificViewCommand}"
+                                        CommandParameter="{Binding RecipeId}"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>

@@ -11,16 +11,19 @@ public class RecipeService : ServiceBase {
     }
 
     ///
-    /// Gets all recipes from the DB
-    public List<Recipe> GetAllRecipes() {
+    /// Gets some recipes from the DB
+    public List<Recipe> GetSomeRecipes(int take, int skip) {
         return Context.Recipes
         .Include(r => r.Ingredients)
         .Include(r => r.Steps)
         .Include(r => r.Tags)
         .Include(r => r.Ratings)
         .Include(r => r.User)
+        .Skip(10)
+        .Take(10)
         .ToList();
     }
+
     /// <summary>
     /// Adds recipe to DB
     /// </summary>
