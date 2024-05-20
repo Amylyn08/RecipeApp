@@ -53,7 +53,7 @@ public class EditRatingViewModel : ViewModelBase
         set
         {
             this.RaiseAndSetIfChanged(ref _description, value);
-            EditAvailable = !string.IsNullOrEmpty(value); // Update EditAvailable based on Description
+            EditAvailable = !string.IsNullOrEmpty(value); 
         }
     }
 

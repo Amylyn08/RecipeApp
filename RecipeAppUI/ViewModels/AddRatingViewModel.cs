@@ -14,7 +14,7 @@ public class AddRatingViewModel : ViewModelBase{
     private int __stars;
     private string  __description;
     private string _errorMessage = null!;
-
+    private bool _editAvailable;
     private MainWindowViewModel _mainWindowViewModel;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
     public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
@@ -25,7 +25,10 @@ public class AddRatingViewModel : ViewModelBase{
         MainWindowViewModel = mainWindowViewModel;
         ChangeToSpecificViewCommand = ReactiveCommand.Create(ChangeToSpecificView);
     }
-
+    public bool EditAvailable{
+        get => _editAvailable;
+        set => this.RaiseAndSetIfChanged(ref _editAvailable, value);
+    }
     public RatingService RatingService{
         get => __ratingService;
         private set => __ratingService = value;
@@ -45,7 +48,10 @@ public class AddRatingViewModel : ViewModelBase{
 
     public string Description{
         get => __description;
-        set => this.RaiseAndSetIfChanged(ref __description, value);
+        set {
+            this.RaiseAndSetIfChanged(ref __description, value);
+            EditAvailable = !string.IsNullOrEmpty(value);
+        }
     }
     public string ErrorMessage { get => _errorMessage; set => this.RaiseAndSetIfChanged(ref _errorMessage, value); }
 
