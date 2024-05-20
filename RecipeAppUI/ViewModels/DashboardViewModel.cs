@@ -31,7 +31,7 @@ namespace RecipeAppUI.ViewModels
         private UserService _userService = null!;
         private string _errorMessage = null!;
         private readonly List<int> _excludedIds = [];
-
+        public string CurrentUser { get; set; }
         public Bitmap? Bitmap { get; set; }
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
@@ -93,6 +93,7 @@ namespace RecipeAppUI.ViewModels
                 using MemoryStream memoryStream = new(UserSingleton.GetInstance().ProfilePicture!);
                 Bitmap = new Bitmap(memoryStream);
             }
+            CurrentUser = UserSingleton.GetInstance().Name;
             GetRecipes();
         }
 

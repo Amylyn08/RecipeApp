@@ -5,8 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.RecipesView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
-             x:DataType="vm:RecipesViewModel"
-             Background="#F5F5F5">
+             x:DataType="vm:RecipesViewModel">
           
     <Grid Margin="20">
         <Grid.RowDefinitions>
