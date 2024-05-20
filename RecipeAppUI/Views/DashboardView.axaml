@@ -61,6 +61,13 @@
                                 <Button Content="View nutrition facts"
                                         Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToNutritionFactsViewCommand}"
                                         CommandParameter="{Binding}"/>
+                                <Button Content="Ratings"
+                                        Command="{Binding }"
+                                        CommandParameter="{Binding RecipeId}"/>
+                                <Button Content="View Details"
+                                        Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).SpecificViewCommand}"
+                                        CommandParameter="{Binding RecipeId}"
+                                        HorizontalAlignment="Right"/>
                                 <!-- Author -->
                                 <TextBlock FontWeight="Bold">
                                     <Run Text="Author: "/>
