@@ -8,9 +8,10 @@
              x:DataType="vm:EditRatingViewModel">
              
   <StackPanel HorizontalAlignment="Center"
-              VerticalAlignment="Center">
+              VerticalAlignment="Center"
+              Margin="10">
     <Border BorderBrush="Black" BorderThickness="2" CornerRadius="4" Padding="10" Margin="10">
-      <StackPanel>
+      <StackPanel Margin="20">
         <TextBlock HorizontalAlignment="Center">
           <Run Text="Current Stars: "/>
           <Run Text="{Binding Rating.Stars}" FontWeight="Bold"/>
@@ -19,13 +20,14 @@
         <NumericUpDown Value="{Binding Stars}" 
                   Minimum="0"       
                   Maximum="5"
-                  ButtonSpinnerLocation="Right"/>
+                  ButtonSpinnerLocation="Right"
+                  Margin="10"/>
         <TextBlock HorizontalAlignment="Center">
           <Run Text="Current Description: "/>
           <Run Text="{Binding Rating.Description}"  FontWeight="Bold"/>
         </TextBlock>
         <TextBlock Text="Edit Description: " FontWeight="Bold"/>
-        <TextBox Text="{Binding Description}"/>
+        <TextBox Text="{Binding Description}" Margin="10"/>
       </StackPanel>
     </Border>
     <StackPanel>
@@ -38,7 +40,7 @@
             <SolidColorBrush Color="#90EE90"/> <!-- Light green color -->
         </Button.Background>
       </Button>
-      <Button HorizontalAlignment="Center" Content="Cancel" Command="{Binding ChangeToSpecificView}"/>
+      <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="Cancel" Command="{Binding ChangeToSpecificView}"/>
     </StackPanel>
 </StackPanel>
 </UserControl>

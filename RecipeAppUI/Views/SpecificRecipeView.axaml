@@ -5,7 +5,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.SpecificRecipeView"
              xmlns:vm="using:RecipeAppUI.ViewModels" 
-             x:DataType="vm:SpecificRecipeViewModel">
+             x:DataType="vm:SpecificRecipeViewModel"
+             Background="#91FEFFF3">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -17,19 +18,33 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Column="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+        <Border Grid.Column="0" 
+                Background="#81FFFDEF" 
+                Grid.RowSpan="2" 
+                BorderBrush="Black" 
+                BorderThickness="2" 
+                CornerRadius="3" 
+                Padding="10" 
+                Margin="10"
+                Background="#81FFF3E1" >
             <!-- Recipe Information -->
-            <StackPanel Margin="7">
-                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold">
+            <StackPanel Margin="7" >
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" FontSize="23">
                     <Run Text="Recipe: "/>
                     <Run Text="{Binding Recipe.Name}"/>
                 </TextBlock>
-                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" Text="{Binding Recipe.Description}"/>
-                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" Text="{Binding Recipe.Servings}"/>
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" >
+                    <Run Text="Descrpition: "/>
+                    <Run Text="{Binding Recipe.Description}"/>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" />
+                    <Run Text="Number of servings: "/>
+                    <Run Text="{Binding Recipe.Servings}"/>
+                </TextBlock>
 
                 <!-- Ingredients -->
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ingredients:" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ingredients:" FontWeight="Bold" FontSize="19"/>
                     <ScrollViewer Height="60">
                         <ItemsControl ItemsSource="{Binding Recipe.Ingredients}" Margin="20 0 0 0">
                             <ItemsControl.ItemTemplate>
@@ -49,7 +64,7 @@
 
                 <!-- Steps -->
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Steps" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Steps" FontWeight="Bold" FontSize="19"/>
                     <ScrollViewer Height="60">
                         <ItemsControl ItemsSource="{Binding Recipe.Steps}" Margin="20 0 0 0">
                             <ItemsControl.ItemTemplate>
@@ -70,7 +85,7 @@
 
                 <!-- Tags -->
                 <StackPanel>
-                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Tags" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Tags" FontWeight="Bold" FontSize="19"/>
                     <ScrollViewer Height="60">
                         <ItemsControl ItemsSource="{Binding Recipe.Tags}">
                             <ItemsControl.ItemTemplate>
@@ -83,7 +98,7 @@
                 </StackPanel>
 
                 <!-- User -->
-                <TextBlock HorizontalAlignment="Center" Margin="8" Text="User" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Center" Margin="8" Text="User" FontWeight="Bold" FontSize="19"/>
                 <TextBlock HorizontalAlignment="Center" Margin="8" Text="{Binding Recipe.User.Name}"/>
             </StackPanel>
         </Border>
@@ -132,10 +147,10 @@
                                         <Button Content="Delete Rating" 
                                                 Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
                                                 CommandParameter="{Binding RatingId}" 
-                                                HorizontalAlignment="Stretch"
+                                                HorizontalAlignment="Center"
                                                 HorizontalContentAlignment="Center">
                                             <Button.Background>
-                                                <SolidColorBrush Color="#FF5733"/> <!-- Light red color -->
+                                                <SolidColorBrush Color="#68FF1717"/> 
                                             </Button.Background>
                                         </Button>
                                         <Button Content="Edit Rating" 
@@ -144,7 +159,7 @@
                                                 HorizontalAlignment="Stretch"
                                                 HorizontalContentAlignment="Center">
                                             <Button.Background>
-                                                <SolidColorBrush Color="#FFFF99"/> <!-- Light yellow color -->
+                                                <SolidColorBrush Color="#FFFFFCBB"/> 
                                             </Button.Background>
                                         </Button>
                                     </StackPanel>
@@ -158,10 +173,19 @@
         </Border>
 
         <!-- Buttons at the Bottom -->
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
+        <StackPanel  Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
             <TextBlock Text="{Binding ErrorMessage}" />
-            <Button Content="Add Rating" Command="{Binding ChangeToAddRatingViewCommand}" HorizontalAlignment="Stretch" Margin="0,0,0,5"/>
-            <Button x:CompileBindings="False" Content="Go Back" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" HorizontalAlignment="Stretch"/>
+            <Button Content="Add Rating" 
+                    Command="{Binding ChangeToAddRatingViewCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Margin="0,0,0,5"
+                    Background="#00796B" Foreground="White"/>
+            <Button x:CompileBindings="False" 
+                    Content="Go Back" 
+                    Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" 
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"/>
         </StackPanel>
 
     </Grid>
