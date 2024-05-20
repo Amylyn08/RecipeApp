@@ -66,6 +66,6 @@ public class UserTest {
         Assert.AreEqual("rida was here", Rida.Description);
         Assert.AreEqual("PrabBoss123", Rida.Password);
         Assert.AreEqual(0, Rida.Favorites.Count);
-        Assert.AreEqual(0, Rida.MadeRecipes.Count);
+        Assert.AreEqual(0, Rida.MadeRecipes!.Count);
     }
 }

@@ -4,13 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
-public class SearchByPriceRange: SearcherBase{
-
-    private readonly double _minPrice;
-    private readonly double _maxPrice;
+public class SearchByPriceRange: SearcherBase {
 
     private readonly double _price;
-
+    
     /// <summary>
     /// Constructor for SearchByPriceRange, takes in a min price and max price and sets them.
     /// </summary>
@@ -34,7 +31,7 @@ public class SearchByPriceRange: SearcherBase{
                             Recipe = recipe,
                             TotalPrice = ingredients.Sum(ing => ing.Price)
                         })
-            .Where(recipe => recipe.TotalPrice >= _price-5 && recipe.TotalPrice <= _price+5)
+            .Where(recipe => recipe.TotalPrice >= _price - 5 && recipe.TotalPrice <= _price + 5)
             .Select(recipe => recipe.Recipe)
             .Include(recipe => recipe.Ingredients)
             .Include(recipe => recipe.Steps)

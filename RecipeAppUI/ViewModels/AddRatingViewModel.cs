@@ -12,10 +12,10 @@ public class AddRatingViewModel : ViewModelBase{
     private RatingService __ratingService =  null!;
     private Recipe __recipe = null!;
     private int __stars;
-    private string  __description;
+    private string  __description = null!;
     private string _errorMessage = null!;
 
-    private MainWindowViewModel _mainWindowViewModel;
+    private MainWindowViewModel _mainWindowViewModel = null!;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
     public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
 
