@@ -18,8 +18,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Column="0" 
-                Background="#81FFFDEF" 
+        <Border Grid.Column="0"  
                 Grid.RowSpan="2" 
                 BorderBrush="Black" 
                 BorderThickness="2" 
@@ -28,7 +27,7 @@
                 Margin="10"
                 Background="#81FFF3E1" >
             <!-- Recipe Information -->
-            <StackPanel Margin="7" >
+            <StackPanel Margin="7">
                 <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" FontSize="23">
                     <Run Text="Recipe: "/>
                     <Run Text="{Binding Recipe.Name}"/>
@@ -37,7 +36,7 @@
                     <Run Text="Descrpition: "/>
                     <Run Text="{Binding Recipe.Description}"/>
                 </TextBlock>
-                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" />
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold">
                     <Run Text="Number of servings: "/>
                     <Run Text="{Binding Recipe.Servings}"/>
                 </TextBlock>
@@ -143,7 +142,7 @@
                                         <Run Text="Created by user: " FontWeight="Bold"/>
                                         <Run Text="{Binding User.Name}"/>
                                     </TextBlock>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <Button Content="Delete Rating" 
                                                 Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
                                                 CommandParameter="{Binding RatingId}" 
@@ -173,7 +172,7 @@
         </Border>
 
         <!-- Buttons at the Bottom -->
-        <StackPanel  Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
+        <StackPanel  Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
             <TextBlock Text="{Binding ErrorMessage}" />
             <Button Content="Add Rating" 
                     Command="{Binding ChangeToAddRatingViewCommand}" 
