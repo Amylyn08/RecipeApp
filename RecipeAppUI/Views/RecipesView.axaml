@@ -85,7 +85,7 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-            
+                                    
                                     <!-- Ratings -->
                                     <TextBlock Text="Ratings:" FontWeight="Bold" FontSize="18"/>
                                     <ItemsControl ItemsSource="{Binding Ratings}">

@@ -24,13 +24,21 @@ public class ChangePasswordViewModel : ViewModelBase {
 
     public ReactiveCommand<Unit, Unit> ChangePasswordCommand { get; }
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="context">Database connection</param>
+    /// <param name="mainWindowViewModel">Used for navigation</param>
     public ChangePasswordViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
         UserService = new(context, new());
         ChangePasswordCommand = ReactiveCommand.Create(ChangePassword);
         MainWindowViewModel = mainWindowViewModel;
     }
 
-    public void ChangePassword() {
+    /// <summary>
+    /// Changes a users password
+    /// </summary>
+    private void ChangePassword() {
         try {
             var user = UserService.Login(Username, OldPassword);
             UserService.ChangePassword(user, NewPassword);

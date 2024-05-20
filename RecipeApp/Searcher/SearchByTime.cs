@@ -3,7 +3,6 @@ namespace RecipeApp.Searcher;
 using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
-using RecipeApp.Searcher;
 
 public class SearchByTime : SearcherBase{
     private readonly int  _minTime;
