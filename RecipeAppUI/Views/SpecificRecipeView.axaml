@@ -93,8 +93,8 @@
             <StackPanel Margin="10">
                 <TextBlock HorizontalAlignment="Center" Margin="8" Text="All Ratings" FontWeight="Bold"/>
                 <ScrollViewer Height="160">
-                    <ItemsControl ItemsSource="{Binding Ratings}">
-                        <ItemsControl.ItemTemplate>
+                    <ListBox ItemsSource="{Binding Ratings}">
+                        <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Center" Margin="8">
                                     <Run Text="Number of Stars: " FontWeight="Bold"/>
@@ -105,8 +105,8 @@
                                     <Run Text="{Binding User.Name}"/>
                                 </TextBlock>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </ScrollViewer>
             </StackPanel>
         </Border>
@@ -116,8 +116,8 @@
             <StackPanel Margin="10">
                 <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ratings by You" FontWeight="Bold"/>
                 <ScrollViewer Height="250">
-                    <ItemsControl ItemsSource="{Binding YourRatings}">
-                        <ItemsControl.ItemTemplate>
+                    <ListBox ItemsSource="{Binding YourRatings}">
+                        <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBlock HorizontalAlignment="Center" Margin="8">
@@ -128,18 +128,19 @@
                                         <Run Text="Created by user: " FontWeight="Bold"/>
                                         <Run Text="{Binding User.Name}"/>
                                     </TextBlock>
-                                    <Button Content="Delete Rating" Command="{Binding }" CommandParameter="{Binding}" HorizontalAlignment="Right"/>
+                                    <Button Content="Delete Rating" Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" CommandParameter="{Binding RatingId}" HorizontalAlignment="Right"/>
                                     <Button Content="Edit Rating" Command="{Binding }" CommandParameter="{Binding}" HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </ScrollViewer>
             </StackPanel>
         </Border>
 
         <!-- Buttons at the Bottom -->
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
+            <TextBlock Text="{Binding ErrorMessage}" />
             <Button Content="Add Rating" Command="{Binding ChangeToAddRatingViewCommand}" HorizontalAlignment="Stretch" Margin="0,0,0,5"/>
             <Button x:CompileBindings="False" Content="Go Back" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" HorizontalAlignment="Stretch"/>
         </StackPanel>
