@@ -29,7 +29,15 @@
       </StackPanel>
     </Border>
     <StackPanel>
-      <Button HorizontalAlignment="Center" Content="Edit Rating" Command="{Binding EditRating}"/>
+      <Button Content="Edit Rating"
+            Command="{Binding EditRating}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            IsVisible="{Binding EditAvailable}">
+        <Button.Background>
+            <SolidColorBrush Color="#90EE90"/> <!-- Light green color -->
+        </Button.Background>
+      </Button>
       <Button HorizontalAlignment="Center" Content="Cancel" Command="{Binding ChangeToSpecificView}"/>
     </StackPanel>
 </StackPanel>

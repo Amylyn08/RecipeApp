@@ -17,7 +17,7 @@ public class EditRatingViewModel : ViewModelBase
     private string _description;
     private MainWindowViewModel _mainWindowViewModel = null!;
     private SplankContext _context;
-
+    private bool _editAvailable;
     public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
 
     public EditRatingViewModel(SplankContext context, Rating rating, MainWindowViewModel mainViewModel)
@@ -37,6 +37,10 @@ public class EditRatingViewModel : ViewModelBase
         private set => _mainWindowViewModel = value;
     }
 
+    public bool EditAvailable{
+        get => _editAvailable;
+        set => this.RaiseAndSetIfChanged(ref _editAvailable, value);
+    }
     public int Stars
     {
         get => _stars;
@@ -46,8 +50,13 @@ public class EditRatingViewModel : ViewModelBase
     public string Description
     {
         get => _description;
-        set => this.RaiseAndSetIfChanged(ref _description, value);
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _description, value);
+            EditAvailable = !string.IsNullOrEmpty(value); // Update EditAvailable based on Description
+        }
     }
+
 
     public Rating Rating
     {

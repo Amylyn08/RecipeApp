@@ -128,14 +128,27 @@
                                         <Run Text="Created by user: " FontWeight="Bold"/>
                                         <Run Text="{Binding User.Name}"/>
                                     </TextBlock>
-                                    <Button Content="Delete Rating" 
-                                            Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
-                                            CommandParameter="{Binding RatingId}" 
-                                            HorizontalAlignment="Right"/>
-                                    <Button Content="Edit Rating" 
-                                            CommandParameter="{Binding RatingId}" 
-                                            Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).EditRatingViewCommand}" 
-                                            HorizontalAlignment="Right"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Delete Rating" 
+                                                Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
+                                                CommandParameter="{Binding RatingId}" 
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center">
+                                            <Button.Background>
+                                                <SolidColorBrush Color="#FF5733"/> <!-- Light red color -->
+                                            </Button.Background>
+                                        </Button>
+                                        <Button Content="Edit Rating" 
+                                                CommandParameter="{Binding RatingId}" 
+                                                Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).EditRatingViewCommand}" 
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Center">
+                                            <Button.Background>
+                                                <SolidColorBrush Color="#FFFF99"/> <!-- Light yellow color -->
+                                            </Button.Background>
+                                        </Button>
+                                    </StackPanel>
+
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
