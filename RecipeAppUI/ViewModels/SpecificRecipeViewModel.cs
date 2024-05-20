@@ -23,6 +23,7 @@ public class SpecificRecipeViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> ChangeToAddRatingViewCommand { get; }
     public ReactiveCommand<int, Unit> DeleteRatingCommand { get; } 
+    public ReactiveCommand<int, Unit> EditRatingViewCommand { get; }
     public SpecificRecipeViewModel(SplankContext context, Recipe recipe, MainWindowViewModel mainWindowViewModel)
     {
         __ratingService = new RatingService(context);
@@ -33,6 +34,7 @@ public class SpecificRecipeViewModel : ViewModelBase
                                                                                 r.RecipeId == __recipe.RecipeId));
         ChangeToAddRatingViewCommand = ReactiveCommand.Create(ChangeToAddRatingView);
         DeleteRatingCommand = ReactiveCommand.Create<int>(DeleteRating);
+        EditRatingViewCommand = ReactiveCommand.Create<int>(EditRatingView);
     }
 
     public RatingService RatingService
@@ -85,6 +87,20 @@ public class SpecificRecipeViewModel : ViewModelBase
         else
         {
             ErrorMessage = "Rating not found.";
+        }
+    }
+
+    public void EditRatingView(int ratingId){
+        try{
+            Rating? rating = __yourRatings.FirstOrDefault(r => r.RatingId == ratingId);   
+            if(rating == null){
+                ErrorMessage = "Unable to retrieve rating";
+                return;
+            }
+            MainWindowViewModel.ChangeToEditRatingView(rating);
+        }
+        catch(Exception){
+            ErrorMessage = "Unable to go into edit for this rating";
         }
     }
 

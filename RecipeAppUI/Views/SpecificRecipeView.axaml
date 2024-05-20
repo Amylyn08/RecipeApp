@@ -128,8 +128,14 @@
                                         <Run Text="Created by user: " FontWeight="Bold"/>
                                         <Run Text="{Binding User.Name}"/>
                                     </TextBlock>
-                                    <Button Content="Delete Rating" Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" CommandParameter="{Binding RatingId}" HorizontalAlignment="Right"/>
-                                    <Button Content="Edit Rating" Command="{Binding }" CommandParameter="{Binding}" HorizontalAlignment="Right"/>
+                                    <Button Content="Delete Rating" 
+                                            Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
+                                            CommandParameter="{Binding RatingId}" 
+                                            HorizontalAlignment="Right"/>
+                                    <Button Content="Edit Rating" 
+                                            CommandParameter="{Binding RatingId}" 
+                                            Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).EditRatingViewCommand}" 
+                                            HorizontalAlignment="Right"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
