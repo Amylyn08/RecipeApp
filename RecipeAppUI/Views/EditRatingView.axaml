@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RecipeAppUI.Views.EditRatingView"
+             xmlns:vm="using:RecipeAppUI.ViewModels"
+             x:DataType="vm:EditRatingViewModel">
+             
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Margin="10">
+  <TextBlock HorizontalAlignment="Center"
+        FontWeight="Bold"
+        FontSize="34"
+        Text="Edit Rating"/>
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="4" Padding="10" Margin="10">
+      <StackPanel Margin="20">
+        <TextBlock HorizontalAlignment="Center">
+          <Run Text="Current Stars: "/>
+          <Run Text="{Binding Rating.Stars}" FontWeight="Bold"/>
+        </TextBlock>
+        <TextBlock Text="Edit Stars: " FontWeight="Bold" />
+        <NumericUpDown Value="{Binding Stars}" 
+                  Minimum="0"       
+                  Maximum="5"
+                  ButtonSpinnerLocation="Right"
+                  Margin="17"/>
+        <TextBlock HorizontalAlignment="Center">
+          <Run Text="Current Description: "/>
+          <Run Text="{Binding Rating.Description}"  FontWeight="Bold"/>
+        </TextBlock>
+        <TextBlock Text="Edit Description: " FontWeight="Bold"/>
+        <TextBox Text="{Binding Description}" 
+                  MinWidth="320"
+                  MaxWidth="320"
+                  Margin="17" 
+                  MaxLength="60"/>
+      </StackPanel>
+    </Border>
+    <StackPanel>
+      <Button Content="Edit Rating"
+            Command="{Binding EditRating}"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Center"
+            IsVisible="{Binding EditAvailable}">
+        <Button.Background>
+            <SolidColorBrush Color="#90EE90"/>
+        </Button.Background>
+      </Button>
+      <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="Cancel" Command="{Binding ChangeToSpecificView}"/>
+    </StackPanel>
+</StackPanel>
+</UserControl>

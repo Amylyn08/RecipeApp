@@ -30,9 +30,9 @@ public class RatingService : ServiceBase {
     /// <param name="newDesc">The new description of the rating</param>
     /// <param name="newStars">The new stars of the rating</param>
     /// <exception cref="ArgumentException"></exception>
-    public void UpdateRecipeRating(Rating rating, Recipe recipe, string newDesc, int newStars ){
+    public void UpdateRecipeRating(Rating rating, string newDesc, int newStars ){
         //get ratings from the recipe, recipe has list of ratings
-        Rating? ratingToUpdate = recipe.Ratings.Find(r => r.RatingId == rating.RatingId) ?? 
+        Rating? ratingToUpdate = Context.Ratings.FirstOrDefault(r => r.RatingId == rating.RatingId) ?? 
             throw new ArgumentException("Rating cannot be found");
         ratingToUpdate.Stars = newStars;
         ratingToUpdate.Description = newDesc;

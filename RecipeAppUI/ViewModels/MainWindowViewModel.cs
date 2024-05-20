@@ -28,7 +28,7 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Recipe, Unit> ChangeToUpdateRecipeCommand { get; }
     public ReactiveCommand<Recipe, Unit> ChangeToSpecificViewCommand {get; }
     public ReactiveCommand<Recipe, Unit> ChangeToAddRatingViewCommand {get; }
-
+    public ReactiveCommand<Rating, Unit> ChangeToEditRatingViewCommand { get; }
 
     public MainWindowViewModel() {
         ChangeToLoginViewCommand = ReactiveCommand.Create(ChangeToLoginView);
@@ -45,6 +45,7 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToUpdateRecipeCommand = ReactiveCommand.Create<Recipe>(ChangeToUpdateRecipeView);
         ChangeToSpecificViewCommand = ReactiveCommand.Create<Recipe>(ChangeToSpecificView);
         ChangeToAddRatingViewCommand = ReactiveCommand.Create<Recipe>(ChangeToAddRatingView);
+        ChangeToEditRatingViewCommand = ReactiveCommand.Create<Rating>(ChangeToEditRatingView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -100,6 +101,9 @@ public class MainWindowViewModel : ViewModelBase {
     }
     public void ChangeToAddRatingView(Recipe recipe){
         ContentViewModel = new AddRatingViewModel(SplankContext.GetInstance(), recipe, this);
+    }
+    public void ChangeToEditRatingView(Rating rating){
+        ContentViewModel = new EditRatingViewModel(SplankContext.GetInstance(), rating, this);
     }
 }
 

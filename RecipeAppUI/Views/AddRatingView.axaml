@@ -6,16 +6,45 @@
              x:Class="RecipeAppUI.Views.AddRatingView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
              x:DataType="vm:AddRatingViewModel">
-  <StackPanel>
-    <Button x:CompileBindings="False" Command="{Binding ChangeToSpecificViewCommand}" Margin="5" Background="#00796B" Foreground="White">Go Back</Button>
-    <TextBlock FontWeight="Bold" Text="Stars"/>
-    <NumericUpDown Value="{Binding Stars}" 
-                  Minimum="0"       
-                  Maximum="5"
-                  ButtonSpinnerLocation="Right"/>
 
-    <TextBlock FontWeight="Bold" Text="Description"/>
-    <TextBox Text="{Binding Description}"/>
-    <Button Content="Create Rating" Command="{Binding AddRating}"/>
+  <StackPanel HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Margin="10">
+
+    <TextBlock HorizontalAlignment="Center"
+              FontWeight="Bold"
+              FontSize="34"
+              Text="Add Rating"/>
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="4" Padding="10" Margin="10">
+      <StackPanel Margin="20">
+        <TextBlock FontWeight="Bold" Text="Stars" HorizontalAlignment="Center"/>
+        <NumericUpDown Value="{Binding Stars}" 
+                      Minimum="0"       
+                      Maximum="5"
+                      ButtonSpinnerLocation="Right"
+                      Margin="17"/>
+
+        <TextBlock FontWeight="Bold" Text="Description" HorizontalAlignment="Center"/>
+        <TextBox Text="{Binding Description}" 
+                  MaxLength="60" 
+                  MinWidth="320"
+                  MaxWidth="320"
+                  Margin="17" />
+      </StackPanel>
+    </Border>
+    <StackPanel>
+      <Button Content="Create Rating" 
+              Command="{Binding AddRating}"
+              Background="#90EE90" 
+              HorizontalAlignment="Stretch"
+              HorizontalContentAlignment="Center"
+              IsVisible="{Binding EditAvailable}"/>
+      <Button x:CompileBindings="False" 
+        Content="Go Back" 
+        Command="{Binding ChangeToSpecificViewCommand}" 
+        HorizontalAlignment="Stretch" 
+        HorizontalContentAlignment="Center" 
+        Margin="5"/>
+    </StackPanel>
   </StackPanel>
 </UserControl>
