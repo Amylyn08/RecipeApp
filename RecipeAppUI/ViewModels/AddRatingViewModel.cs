@@ -12,7 +12,7 @@ public class AddRatingViewModel : ViewModelBase{
     private RatingService __ratingService =  null!;
     private Recipe __recipe = null!;
     private int __stars;
-    private string  __description;
+    private string  __description = null!;
     private string _errorMessage = null!;
     private bool _editAvailable;
     private MainWindowViewModel _mainWindowViewModel;

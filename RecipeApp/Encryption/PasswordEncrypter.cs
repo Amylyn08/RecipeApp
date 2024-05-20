@@ -1,18 +1,21 @@
 using System.Security.Cryptography;
 namespace RecipeApp.Security;
 
+/// <summary>
+/// Encrypts passwords
+/// </summary>
 public class PasswordEncrypter
 {       
     /// <summary>
-    ///Creates a salt using RNGCryptoServiceProvider for random crypto number generator,
-    ///fills array of salt with random values.
+    /// Creates a salt using RNGCryptoServiceProvider for random crypto number generator,
+    /// fills array of salt with random values.
     /// </summary>
     /// <returns>Returns the salt in base 64 string format.</returns>
     public string CreateSalt()
     {
-#pragma warning disable SYSLIB0023 // Type or member is obsolete
-        RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
-#pragma warning restore SYSLIB0023 // Type or member is obsolete
+        #pragma warning disable SYSLIB0023 // Type or member is obsolete
+        RNGCryptoServiceProvider rngCsp = new();
+        #pragma warning restore SYSLIB0023 // Type or member is obsolete
         byte[] salt = new byte[8];
         rngCsp.GetBytes(salt);
         return Convert.ToBase64String(salt);

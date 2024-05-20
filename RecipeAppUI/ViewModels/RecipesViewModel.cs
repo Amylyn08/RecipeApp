@@ -1,24 +1,20 @@
 using ReactiveUI;
 using RecipeApp.Context;
-using RecipeApp.Exceptions;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 using RecipeApp.Services;
 using RecipeAppUI.Session;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using Avalonia.Controls;
 using System.Linq;
 using System.Reactive.Linq;
-using Avalonia.Input;
 namespace RecipeAppUI.ViewModels;
 
 public class RecipesViewModel : ViewModelBase {
     private readonly RecipeService _recipeService;
-    private ObservableCollection<Recipe> _recipes = new ObservableCollection<Recipe>();
-    private MainWindowViewModel _mainWindowViewModel;
+    private ObservableCollection<Recipe> _recipes = [];
+    private MainWindowViewModel _mainWindowViewModel = null!;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
 
     public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
@@ -43,7 +39,7 @@ public class RecipesViewModel : ViewModelBase {
     }
 
     public void DeleteRecipeCommand(int recipeId) {
-            Recipe recipeToDelete = Recipes.FirstOrDefault(r => r.RecipeId == recipeId);
+        Recipe recipeToDelete = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
         try {
             _recipeService.DeleteRecipe(recipeToDelete);
             Recipes.Remove(recipeToDelete);
@@ -53,10 +49,7 @@ public class RecipesViewModel : ViewModelBase {
     }
 
     public void UpdateRecipeCommand(int recipeId) {
-        Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.RecipeId == recipeId);
+        Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
         MainWindowViewModel.ChangeToUpdateRecipeView(recipeToUpdate);
     }
-
-
-
 }

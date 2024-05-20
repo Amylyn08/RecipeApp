@@ -17,7 +17,7 @@ public class SpecificRecipeViewModel : ViewModelBase
     private ObservableCollection<Rating> __ratings = null!;
     private ObservableCollection<Rating> __yourRatings = null!;
     private Recipe __recipe = null!;
-    private MainWindowViewModel _mainWindowViewModel;
+    private MainWindowViewModel _mainWindowViewModel = null!;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
     private string _errorMessage = null!;
 

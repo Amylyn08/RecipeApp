@@ -1,6 +1,5 @@
 namespace RecipeApp.Searcher;
 
-using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
@@ -10,6 +9,7 @@ public abstract class SearcherBase{
     public SearcherBase(SplankContext context){
         Context = context;
     }
+    
     /// <summary>
     /// Returns a list of recipes matching a filter.
     /// </summary>
