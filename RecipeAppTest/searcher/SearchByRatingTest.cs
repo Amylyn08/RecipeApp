@@ -56,33 +56,33 @@ public class SearchByRatingTests {
         User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
 
         List<Rating> ratings0 = new List<Rating> {
-            new(4, "amazing", new()),
-            new(5, "fantastic", new())
+            new(5, "amazing", new()),
+            new(5, "fantastic", new()) //5
         };
         List<Rating> ratings1 = new List<Rating> {
             new(3, "gross", new()),
-            new(4, "diarrhea inducing", new()),
+            new(4, "diarrhea inducing", new()) //3.5
         };
         List<Rating> ratings2 = new List<Rating> {
-            new(4, "amazing", new()),
-            new(5, "fantastic", new())
+            new(5, "amazing", new()),
+            new(5, "fantastic", new())  //5
         };
         List<Rating> ratings3 = new List<Rating> {
             new(5, "diarrhea inducing", new()),
-            new(4, "meh, im vegan", new())
+            new(4, "meh, im vegan", new()) //4.5
         };
         List<Rating> ratings4 = new List<Rating> {
             new(3, "gross", new()),
-            new(5, "diarrhea inducing", new())
+            new(5, "diarrhea inducing", new()) //4
         };
 
         var listData = new List<Recipe>
         {
             new ("Recipe0", user, "desc", 5, ings1, steps, ratings0, new()),
-            new ("Recipe1", user, "desc", 5, ings4, steps, ratings1, new()),
+            new ("Recipe1", user, "desc", 5, ings4, steps, ratings1, new()), //yes
             new ("Recipe2", user, "desc", 5, ings3, steps, ratings2, new()),
-            new ("Recipe3", user, "desc", 5, ings2, steps, ratings3, new()),
-            new ("Recipe4", user, "desc", 5, ings1, steps, ratings4, new())
+            new ("Recipe3", user, "desc", 5, ings2, steps, ratings3, new()), //yes
+            new ("Recipe4", user, "desc", 5, ings1, steps, ratings4, new()) //yes
         };
 
         var data = listData.AsQueryable();
@@ -95,14 +95,15 @@ public class SearchByRatingTests {
 
         var mockContext = new Mock<SplankContext>();
         mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
-        SearchByRating searcher = new(mockContext.Object, 3);
+        SearchByRating searcher = new(mockContext.Object, 4);
 
         //Act
         List<Recipe> filteredList = searcher.FilterRecipes();
         //Assert
-        Assert.AreEqual(2,filteredList.Count);
+        Assert.AreEqual(3,filteredList.Count);
         Assert.AreEqual("Recipe1", filteredList[0].Name);
-        Assert.AreEqual("Recipe4", filteredList[1].Name);
+        Assert.AreEqual("Recipe3", filteredList[1].Name);
+        Assert.AreEqual("Recipe4", filteredList[2].Name);
     }
 
     [TestMethod]
