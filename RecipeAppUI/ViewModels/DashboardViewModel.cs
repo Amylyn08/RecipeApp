@@ -130,18 +130,11 @@ namespace RecipeAppUI.ViewModels
         public MainWindowViewModel MainWindowViewModel { get; set; }
 
         /// <summary>
-<<<<<<< HEAD
         /// Constructor for the DashboardViewModel, sets the user and the list of recipes when 
         /// loading.
         /// </summary>
         /// <param name="context">The Splank Context of the application</param>
         /// <param name="mainWindowViewModel">The main window view model.</param>
-=======
-        /// Constructor for dashboard view model
-        /// </summary>
-        /// <param name="context">DB context</param>
-        /// <param name="mainWindowViewModel">MainWindowViewModel instance</param>
->>>>>>> 16c0030cd56f27b903136a280ff8a8e0eb8bc810
         public DashboardViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel)
         {
             _recipeService = new RecipeService(context);
@@ -158,23 +151,11 @@ namespace RecipeAppUI.ViewModels
             GetRecipes();
         }
         
-<<<<<<< HEAD
         /// <summary>
         /// Method to search through recipes with a certain searcher and sets
         /// the observable recipe list. Handels recipe loading and clears error message
         /// if successful.
         /// </summary>
-=======
-        public void ExecuteChangCriteria(string criteria){
-            SelectedCriteria = criteria;
-            _searchingMessage = "You are now searching by: " + criteria;
-        }
-
-        public void ExecuteClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e){
-            _searchingMessage = "You are now searching by: " + SelectedCriteria;
-        }
-        
->>>>>>> 16c0030cd56f27b903136a280ff8a8e0eb8bc810
         private void SearchRecipes()
         {
             try
@@ -300,14 +281,5 @@ namespace RecipeAppUI.ViewModels
                 ErrorMessage = "Error: Unable to go to specific view.";
             }
         }
-<<<<<<< HEAD
-=======
-
-        public double GetRatingAvgForSingleRecipe(int recipeId){
-            Recipe recipe = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
-            return recipe.GetTotalAverageRating();
-
-        }
->>>>>>> 16c0030cd56f27b903136a280ff8a8e0eb8bc810
     }
 }
