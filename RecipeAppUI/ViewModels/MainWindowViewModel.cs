@@ -29,6 +29,7 @@ public class MainWindowViewModel : ViewModelBase {
     public ReactiveCommand<Recipe, Unit> ChangeToSpecificViewCommand {get; }
     public ReactiveCommand<Recipe, Unit> ChangeToAddRatingViewCommand {get; }
     public ReactiveCommand<Rating, Unit> ChangeToEditRatingViewCommand { get; }
+    public ReactiveCommand<User, Unit> ChangeToOtherProfileViewCommand { get; }
 
     public MainWindowViewModel() {
         ChangeToLoginViewCommand = ReactiveCommand.Create(ChangeToLoginView);
@@ -46,6 +47,7 @@ public class MainWindowViewModel : ViewModelBase {
         ChangeToSpecificViewCommand = ReactiveCommand.Create<Recipe>(ChangeToSpecificView);
         ChangeToAddRatingViewCommand = ReactiveCommand.Create<Recipe>(ChangeToAddRatingView);
         ChangeToEditRatingViewCommand = ReactiveCommand.Create<Rating>(ChangeToEditRatingView);
+        ChangeToOtherProfileViewCommand = ReactiveCommand.Create<User>(ChangeToOtherProfileView);
         ContentViewModel = new HomeViewModel();
     }
 
@@ -156,6 +158,10 @@ public class MainWindowViewModel : ViewModelBase {
     /// <param name="rating">The rating you are updating</param>
     public void ChangeToEditRatingView(Rating rating){
         ContentViewModel = new EditRatingViewModel(SplankContext.GetInstance(), rating, this);
+    }
+
+    public void ChangeToOtherProfileView(User user) {
+        ContentViewModel = new OtherProfileViewModel(SplankContext.GetInstance(), user);
     }
 }
 

@@ -71,6 +71,9 @@
                                                 Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).SpecificViewCommand}"
                                                 CommandParameter="{Binding RecipeId}"
                                                 Margin="5"/>
+										<Button Content="View Profile"
+												Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToOtherProfileViewCommand}"
+												CommandParameter="{Binding User}" />
                                         <TextBlock HorizontalAlignment="Right">
                                             <Run Text="{Binding AverageRating}"/>
                                             <Run Text="⭐"/>

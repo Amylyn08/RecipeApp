@@ -22,14 +22,14 @@ namespace RecipeAppUI.ViewModels
     {
         private string _dashboardErrorMessage = "";
         private readonly RecipeService _recipeService;
-        private ObservableCollection<Recipe> _recipes = [];
+        private ObservableCollection<Recipe> _recipes = new();
         private string _selectedCriteria = null!;
         private string _searchText = null!;
         private string _searchingMessage = null!;
         private string _selectedIndex = "0";
         private UserService _userService = null!;
         private string _errorMessage = null!;
-        private readonly List<int> _excludedIds = [];
+        private readonly List<int> _excludedIds = new();
         public string CurrentUser { get; set; }
         public Bitmap? Bitmap { get; set; }
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
@@ -141,7 +141,7 @@ namespace RecipeAppUI.ViewModels
                 }
                 Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
                 _excludedIds.Clear();
-                AddToRecipesToNotLoadAgain([.. Recipes]);
+                AddToRecipesToNotLoadAgain(Recipes.ToList());
                 DashboardErrorMessage = "";
             }
             catch (ArgumentException e)
@@ -156,7 +156,7 @@ namespace RecipeAppUI.ViewModels
             {
                 const int NUM_DEFAULT_RECIPES_TO_GET = 3;
                 Recipes = new ObservableCollection<Recipe>(_recipeService.GetSomeRecipes(NUM_DEFAULT_RECIPES_TO_GET, _excludedIds));
-                AddToRecipesToNotLoadAgain([.. Recipes]); // Observable collection -> List Collection
+                AddToRecipesToNotLoadAgain(Recipes.ToList()); // Observable collection -> List Collection
             }
             catch (ArgumentException e)
             {
