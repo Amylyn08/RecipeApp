@@ -22,7 +22,11 @@ public class RecipesViewModel : ViewModelBase {
      public ReactiveCommand<int, Unit> UpdateRecipe { get; } = null!;
     public string ErrorMessage { get; set; } = null!;
 
-
+    /// <summary>
+    /// Constructor that creates a new instance of RecipesViewModel
+    /// </summary>
+    /// <param name="context">DB context</param>
+    /// <param name="mainWindowViewModel">Instance of the MainWindowView</param>
     public RecipesViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel)
     {
         _recipeService = new RecipeService(context);
@@ -33,11 +37,18 @@ public class RecipesViewModel : ViewModelBase {
         
     }
 
+    /// <summary>
+    /// Loads the user's recipe
+    /// </summary>
     public void ChangeRecipe() {
         SearcherBase searcher = new SearchByUsername(_recipeService.Context, UserSingleton.GetInstance().Name);
         Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
     }
 
+    /// <summary>
+    /// Command the delete recipe from your recipe list
+    /// </summary>
+    /// <param name="recipeId">The id of the recipe</param>
     public void DeleteRecipeCommand(int recipeId) {
         Recipe recipeToDelete = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
         try {
@@ -48,6 +59,10 @@ public class RecipesViewModel : ViewModelBase {
         } 
     }
 
+    /// <summary>
+    /// Command that brings you to the UpdateRecipeView to update your recipe
+    /// </summary>
+    /// <param name="recipeId">The id of the recipe</param>
     public void UpdateRecipeCommand(int recipeId) {
         Recipe recipeToUpdate = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
         MainWindowViewModel.ChangeToUpdateRecipeView(recipeToUpdate);
