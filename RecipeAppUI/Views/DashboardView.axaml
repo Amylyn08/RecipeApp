@@ -8,7 +8,7 @@
 			 x:DataType="vm:DashboardViewModel">
     <DockPanel>
         <!-- Profile picture -->
-        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="#FF9A56" Margin="0,0,0,0">
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="#E0257EDD" Margin="0,0,0,0">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">
                 <Run Text="Welcome back"/>
                 <Run Text="{Binding CurrentUser}"/>
