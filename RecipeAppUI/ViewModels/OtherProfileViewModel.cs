@@ -4,6 +4,9 @@ using RecipeApp.Models;
 using RecipeApp.Searcher;
 using RecipeApp.Services;
 using ReactiveUI;
+using System.Collections;
+using System.Collections.Generic;
+using RecipeAppUI.Utils;
 
 namespace RecipeAppUI.ViewModels;
 
@@ -11,19 +14,11 @@ namespace RecipeAppUI.ViewModels;
 /// ViewModel for viewing someone's elses profile
 /// </summary>
 public class OtherProfileViewModel : ViewModelBase {
-   private MainWindowViewModel _mainWindowViewModel = null!;    
     private string _username = null!;
     private string _description = null!;
     private byte[]? _profilePicture;
-    private UserService _userService = null!;
-    private string _errorMessage = null!; 
     private Bitmap? _bitmap;
-    private string? _pathToImage;
-
-    public MainWindowViewModel MainWindowViewModel {
-        get => _mainWindowViewModel;
-        set => _mainWindowViewModel = value;
-    }
+    private List<Recipe> _othersPersonFav = null!;
 
     public string Username {
         get => _username;
@@ -40,29 +35,24 @@ public class OtherProfileViewModel : ViewModelBase {
         set => this.RaiseAndSetIfChanged(ref _profilePicture, value);
     }
 
-    public UserService UserService {
-        get => _userService;
-        set => _userService = value;
-    }
-
-    public string ErrorMessage {
-        get => _errorMessage;
-        set => this.RaiseAndSetIfChanged(ref _errorMessage, value);
-    }
-
-    public string? PathToImage {
-        get => _pathToImage;
-        set => this.RaiseAndSetIfChanged(ref _pathToImage, value);
-    }
-
     public Bitmap? Bitmap {
         get => _bitmap;
         set => this.RaiseAndSetIfChanged(ref _bitmap, value);
     }
 
+    public List<Recipe> OtherPersonFavourites {
+        get => _othersPersonFav;
+        set => this.RaiseAndSetIfChanged(ref _othersPersonFav, value);
+    }
+
 
     public OtherProfileViewModel(SplankContext context, User user) {
-        UserService = new(context, new());
         OtherPersonFavourites = new SearchByUserFavorite(context, user).FilterRecipes();
+        Username = user.Name;
+        Description = user.Description;
+        ProfilePicture = user.ProfilePicture;
+        if (ProfilePicture != null) {
+            Bitmap = BitMapper.DoBitmap(ProfilePicture);
+        }
     }
 }
