@@ -113,7 +113,7 @@
             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
                 <StackPanel Margin="10">
                     <TextBlock HorizontalAlignment="Center" Margin="8" Text="All Ratings" FontWeight="Bold"/>
-                    <ScrollViewer>
+                    <ScrollViewer MaxHeight="200">
                         <ListBox ItemsSource="{Binding Ratings}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -136,7 +136,7 @@
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
                 <StackPanel Margin="10">
                     <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ratings by You" FontWeight="Bold"/>
-                    <ScrollViewer>
+                    <ScrollViewer MaxHeight="200">
                         <ListBox ItemsSource="{Binding YourRatings}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
