@@ -57,9 +57,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida2", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida2", "I am rida 3", password3, new(), salt3));
         
         var data = listUser.AsQueryable();
 
@@ -98,9 +98,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
         
         var data = listUser.AsQueryable();
 
@@ -135,9 +135,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
         
         var data = listUser.AsQueryable();
 
@@ -171,9 +171,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
         
         var data = listUser.AsQueryable();
 
@@ -212,9 +212,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
         
         var data = listUser.AsQueryable();
 
@@ -284,9 +284,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
         
         var data = listUser.AsQueryable();
 
@@ -329,7 +329,7 @@ public class UserServiceTest {
     public void ChangePasswordNullPasswordThrowsArgumentException() {
         // arrange/act
         UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
-        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        User user = new User("Rida", "Rida Description", "Some random password", new(), "This is salt");
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.ChangePassword(user, null);
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -338,7 +338,7 @@ public class UserServiceTest {
     public void ChangePasswordShortPasswordThrowsArgumentException() {
         // arrange/act
         UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
-        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        User user = new User("Rida", "Rida Description", "Some random password", new(), "This is salt");
         userService.ChangePassword(user, "short");
     }
 
@@ -356,9 +356,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
         
         var data = listUser.AsQueryable();
 
@@ -398,9 +398,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
 
         var listIngredients = new List<Ingredient>() { new("Potato", 3, UnitOfMeasurement.AMOUNT, 30) };
         var listSteps = new List<Step>() { new(5, "Do potato") };
@@ -460,7 +460,7 @@ public class UserServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void AddToFavouritesNullFavouritedThrowsArgumentException() {
         // arrange/act
-        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        User user = new User("Rida", "Rida Description", "Some random password", new(), "This is salt");
         UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         userService.AddToFavourites(null, user);
@@ -472,7 +472,7 @@ public class UserServiceTest {
     public void AddToFavouritesNullUserhrowsArgumentException() {
         // arrange
         UserService userService = new UserService(SplankContext.GetInstance(), new PasswordEncrypter());
-        User user = new User("Rida", "Rida Description", "Some random password", new(), new(), "This is salt");
+        User user = new User("Rida", "Rida Description", "Some random password", new(),  "This is salt");
         var ingredients = new List<Ingredient>() {
             new Ingredient("Something", 1, UnitOfMeasurement.AMOUNT, 2.00)
         };
@@ -501,9 +501,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
 
         var listIngredients = new List<Ingredient>() { new("Potato", 3, UnitOfMeasurement.AMOUNT, 30) };
         var listSteps = new List<Step>() { new(5, "Do potato") };
@@ -569,9 +569,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida3", "I am rida 3", password3, new(), salt3));
 
         var listIngredients = new List<Ingredient>() { new("Potato", 3, UnitOfMeasurement.AMOUNT, 30) };
         var listSteps = new List<Step>() { new(5, "Do potato") };
@@ -653,9 +653,9 @@ public class UserServiceTest {
         var password3 = passwordEncrypter.CreateHash("Rida1Password", salt3);
 
         var listUser = new List<User>();
-        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), new(), salt1));
-        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), new(), salt2));
-        listUser.Add(new User("Rida2", "I am rida 3", password3, new(), new(), salt3));
+        listUser.Add(new User("Rida1", "I am rida 1", password1, new(), salt1));
+        listUser.Add(new User("Rida2", "I am rida 2", password2, new(), salt2));
+        listUser.Add(new User("Rida2", "I am rida 3", password3, new(), salt3));
 
         listUser[0].ProfilePicture = null;
         listUser[1].ProfilePicture = null;

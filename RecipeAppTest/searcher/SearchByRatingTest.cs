@@ -5,7 +5,6 @@ using Moq;
 using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
-using RecipeAppTest.Services;
 
 [TestClass]
 
@@ -53,7 +52,7 @@ public class SearchByRatingTests {
             new Step(10, "eat")
         };
 
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
 
         List<Rating> ratings0 = new List<Rating> {
             new(4, "amazing", new()),
@@ -125,7 +124,7 @@ public class SearchByRatingTests {
             new Step(10, "eat")
         };
 
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
 
         List<Rating> ratings0 = new List<Rating> {
             new(4, "amazing", new()),

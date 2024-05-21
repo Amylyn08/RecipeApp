@@ -12,8 +12,6 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
 using Avalonia.Media.Imaging;
-using System.IO;
-using System.Threading.Tasks;
 using DynamicData;
 using RecipeAppUI.Utils;
 

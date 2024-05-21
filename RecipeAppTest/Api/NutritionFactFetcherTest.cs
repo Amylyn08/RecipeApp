@@ -25,7 +25,7 @@ public class NutritionFactFetcherTest {
         List<Step> steps = new List<Step>() {
             new Step(5, "Do potato")
         };
-        User user = new User("Rida", "This is rida", "This is my password", new(), new(), "Salt");
+        User user = new User("Rida", "This is rida", "This is my password", new(), "Salt");
         Recipe recipe = new Recipe("Potato", user, "Potato", 2, ingredients, steps, new(), new());
         // Act
         NutritionResponse apiResponse = (NutritionResponse) nutritionFactFetcher.Fetch(recipe);

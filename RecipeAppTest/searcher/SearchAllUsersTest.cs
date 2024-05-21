@@ -34,16 +34,16 @@ public class SearchAllUsersTest{
     public void SearchAllUserByUsernameReturnsCorrectList(){
         //Arrange
         var listData = new List<User>{
-            new("Amyly", "human", "12345Human", new(), new(), "salty"),
-            new("Amy123", "human", "12345Human", new(), new(), "salty"),
-            new("Amy0912", "human", "12345Human", new(), new(), "salty"),
-            new("Alexandre", "human", "12345Human", new(), new(), "salty"),
-            new("Alessandra", "human", "12345Human", new(), new(), "salty"),
-            new("Mark09", "human", "12345Human", new(), new(), "salty"),
-            new("Prabhjot_10", "human", "12345Human", new(), new(), "salty"),
-            new("Rida1", "human", "12345Human", new(), new(), "salty"),
-            new("Rida2", "human", "12345Human", new(), new(), "salty"),
-            new("Rida3", "human", "12345Human", new(), new(), "salty"),
+            new("Amyly", "human", "12345Human", new(), "salty"),
+            new("Amy123", "human", "12345Human", new(), "salty"),
+            new("Amy0912", "human", "12345Human", new(), "salty"),
+            new("Alexandre", "human", "12345Human", new(), "salty"),
+            new("Alessandra", "human", "12345Human", new(), "salty"),
+            new("Mark09", "human", "12345Human", new(), "salty"),
+            new("Prabhjot_10", "human", "12345Human", new(), "salty"),
+            new("Rida1", "human", "12345Human",  new(), "salty"),
+            new("Rida2", "human", "12345Human",  new(), "salty"),
+            new("Rida3", "human", "12345Human",  new(), "salty"),
         };
 
         var data = listData.AsQueryable();
