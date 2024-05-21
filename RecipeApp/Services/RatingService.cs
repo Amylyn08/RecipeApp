@@ -1,36 +1,25 @@
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 namespace RecipeApp.Services;
  
 
-public class RatingService {
-
-    /// <summary>
-    /// Rates a recipe
-    /// </summary>
-    /// <param name="recipeToRate">Recipe thats getting rated</param>
-    private static void RatingRecipe(Recipe recipeToRate, User currUser) {
-        Rating newRating = CreateRating(currUser);
-        recipeToRate.Ratings.Add(newRating);
+public class RatingService : ServiceBase {
+    public RatingService(SplankContext context) : base(context)
+    {
     }
 
     /// <summary>
-    /// Creates a rating
+    /// Adds a rating to the recipe and updates the DB
     /// </summary>
-    /// <returns>A Rating made by the user</returns>
-    private static Rating CreateRating(User currentUser) {
-        Console.WriteLine("How many stars would you like to rate this recipe:");
-        int stars = Convert.ToInt32(GetInput());
-        Console.WriteLine("Write a review!");
-        string description = GetInput();
-        return new Rating(stars, description, currentUser);
+    /// <param name="rating">The new recipe rating</param>
+    /// <param name="recipe">The recipe recieving the rating</param>
+    public void RatingRecipe(Rating rating, Recipe recipe) {
+        if (rating == null || recipe == null) 
+            throw new ArgumentException("Rating cannot be null");
+        recipe.Ratings.Add(rating);
+        Context.Update(recipe);
+        Context.SaveChanges();
     }
 
-    private static string GetInput() {
-    string input = null;
-    do {
-        input = Console.ReadLine();
-    } while (input == null);
-    return input;
-    }
 }

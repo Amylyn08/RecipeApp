@@ -4,12 +4,25 @@ namespace RecipeApp.Models;
 /// Represents a tag to search for
 /// </summary>
 public class Tag {
-    private string _tagName;
+    private string? _tagName = null!;
+   
+    public int TagId { 
+        get; 
+        set; 
+    }
 
-    public string TagName { 
+    public List<Recipe>? Recipes {
+        get; 
+        set;
+    }
+
+    public string? TagName { 
         get => _tagName; 
         set {
-            CheckTagName(value);
+            if (value == null) 
+                throw new ArgumentException("Tag cannot be null");
+            if (value.Length == 0) 
+                throw new ArgumentException("Tag cannot be empty");
             _tagName = value;
         } 
     }
@@ -20,24 +33,21 @@ public class Tag {
     /// <param name="tagName">Name of tag</param>
     /// <exception cref="ArgumentException">If tag name is empty or null</exception>
     public Tag(string tagName) {
-        CheckTagName(tagName);
-        _tagName = tagName;
+        TagName = tagName;
     }
 
     /// <summary>
-    /// Validate the tag name
+    /// Empty constructor for entity framework
     /// </summary>
-    /// <param name="tagName">Tag name</param>
-    /// <exception cref="ArgumentException">If null or empty</exception>
-    private static void CheckTagName(string tagName) {
-        if (tagName == null) 
-            throw new ArgumentException("Tag cannot be null");
-        if (tagName.Length == 0) 
-            throw new ArgumentException("Tag cannot be empty");
+    public Tag() {
+
     }
 
-    public override string ToString()
-    {
+    /// <summary>
+    /// Overriden ToString()
+    /// </summary>
+    /// <returns>String representation of a tag</returns>
+    public override string? ToString() {
         return TagName;
     }
 }

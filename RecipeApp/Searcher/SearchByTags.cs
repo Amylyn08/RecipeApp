@@ -1,8 +1,11 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
+using recipeapp;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
-public class SearchByTags :ISearcher{
+public class SearchByTags :SearcherBase{
 
     private readonly string _criteria;
 
@@ -10,7 +13,7 @@ public class SearchByTags :ISearcher{
     /// Contructor for SearchByTags taking in tagName specified.
     /// </summary>
     /// <param name="tagName">The tag name specified.</param>
-    public SearchByTags(string tagName) {
+    public SearchByTags(SplankContext context, string tagName) : base(context){
         if (tagName == null)
             throw new ArgumentException("Tag name cannot be null");
         if (tagName.Length == 0)
@@ -19,28 +22,18 @@ public class SearchByTags :ISearcher{
     }
 
     /// <summary>
-    /// Gets list of recipes containing the tagName specified. 
+    /// Gets list of recipes where tag name matches the criteria.
     /// </summary>
-    /// <param name="recipes">The list of recipes that are being used.</param>
-    /// <returns>List of filtered Recipse containing tag name specified.</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            foreach(Tag t in TagsOfRecipe(r)){
-                if(t.TagName.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
-                    filteredRecipes.Add(r);
-                }
-            }
-        }
+    /// <returns>Returns filtered list of recipes.</returns>
+    public override List<Recipe> FilterRecipes()
+    {
+        List<Recipe> filteredRecipes = Context.Recipes 
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Tags)
+            .Include(recipe => recipe.Ratings)
+            .Where(recipe => recipe.Tags.Any(tag => tag.TagName.Equals(_criteria)))
+            .ToList();
         return filteredRecipes;
-    }
-
-    /// <summary>
-    /// Gets the List of tags from a recipe.
-    /// </summary>
-    /// <param name="r">The specified recipe.</param>
-    /// <returns>List of Tags.</returns>
-    private static List<Tag> TagsOfRecipe (Recipe r){
-        return r.Tags;
     }
 }

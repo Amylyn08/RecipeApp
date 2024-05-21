@@ -1,9 +1,11 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 
-public class SearchByTime : ISearcher{
+public class SearchByTime : SearcherBase{
     private readonly int  _minTime;
     private readonly int _maxTime;
 
@@ -12,7 +14,7 @@ public class SearchByTime : ISearcher{
     /// </summary>
     /// <param name="min">The min time.</param>
     /// <param name="max">The max time</param>
-    public SearchByTime(int min, int max) {
+    public SearchByTime(SplankContext context, int min, int max) :base(context) {
         if (min < 0 || max < 0)
             throw new ArgumentException("Min or max cannot be negative");
         if (min > max) 
@@ -22,27 +24,28 @@ public class SearchByTime : ISearcher{
     }
 
     /// <summary>
-    /// Gets filtered list of recipes corresponding to the range, if they time is between the range given.
+    /// Gets list of recipes where time is in between min time and 
+    ///max time.
     /// </summary>
-    /// <param name="recipes">List of recipes being iterated through.</param>
-    /// <returns>The list of recipes filtered.</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            if (r.GetTimeToCook() >= _minTime && r.GetTimeToCook() <= _maxTime) {
-                filteredRecipes.Add(r);
-            }
-        }
+    /// <returns>The filtered list of recipes</returns>
+    public override List<Recipe> FilterRecipes()
+    {
+        List<Recipe> filteredRecipes = Context.Recipes
+            .GroupJoin(Context.Steps,
+                        recipe => recipe.RecipeId,
+                        step => step.RecipeId,
+                        (recipe, steps) => new
+                        {
+                            Recipe = recipe,
+                            TotalTime = steps.Sum(ing => ing.TimeInMinutes)
+                        })
+            .Where(recipe => recipe.TotalTime >= _minTime && recipe.TotalTime <= _maxTime)
+            .Select(recipe => recipe.Recipe)
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Ratings)
+            .Include(recipe => recipe.Tags)
+            .ToList();
         return filteredRecipes;
     }
-
-    /// <summary>
-    /// Gets list of steps for a recipe
-    /// </summary>
-    /// <param name="r">The recipe being used</param>
-    /// <returns>List of steps for recipe</returns>
-    private List<Step> StepsInRecipe (Recipe r){
-        return r.Steps;
-    }
-
 }

@@ -7,7 +7,7 @@ public class TagTest {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void NullName_Throws_ArgumentException() {
-        Tag tag = new(null);
+        Tag tag = new(null!);
     }
 
     [TestMethod]
@@ -20,7 +20,7 @@ public class TagTest {
     [ExpectedException(typeof(ArgumentException))]
     public void NameSetter_Null_Throws_ArgumentException() {
         Tag tag = new("Vegan");
-        tag.TagName = null;
+        tag.TagName = null!;
     }
 
     [TestMethod]

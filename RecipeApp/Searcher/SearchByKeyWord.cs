@@ -1,8 +1,10 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
-public class SearchKeyWord : ISearcher{
+public class SearchKeyWord : SearcherBase {
     
     private readonly string _criteria;
 
@@ -10,27 +12,27 @@ public class SearchKeyWord : ISearcher{
     /// Constructor for SearchKeyword, takes keyword.
     /// </summary>
     /// <param name="keyword">keyword wanna look for in desc.</param>
-    public SearchKeyWord(string keyword){
+    public SearchKeyWord(SplankContext context , string keyword): base(context){
         if (keyword == null)
             throw new ArgumentException("Keyword cannot be null");
         if (keyword.Length == 0) 
             throw new ArgumentException("Key cannot be empty");
-        _criteria = keyword;
+        _criteria = keyword.ToLower();
     }
-
-
     /// <summary>
-    /// Gets list of recipes that contains a keyword from the description.
+    /// Searches through recipes list of context, gets the ingredients
+    ///and sees if the description of recipe contains the string in criteria/keyword.
     /// </summary>
-    /// <param name="recipes">List of recipes that is being searched</param>
-    /// <returns>Filtered list of recipes that has keyuword in desc.</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            if(r.Description.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
-                filteredRecipes.Add(r);
-            }
-        }
-        return filteredRecipes;
+    /// <returns>The filtered list of recipes</returns>
+    public override List<Recipe> FilterRecipes()
+    {
+        List<Recipe> filteredRecipes = Context.Recipes
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Tags)
+            .Include(recipe => recipe.Ratings)
+            .Where(recipe => recipe.Description.Contains(_criteria))
+            .ToList();
+        return filteredRecipes;     
     }
 }

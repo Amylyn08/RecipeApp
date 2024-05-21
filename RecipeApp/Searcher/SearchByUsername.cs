@@ -1,9 +1,11 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
 
-public class SearchByUsername : ISearcher{
+public class SearchByUsername : SearcherBase{
 
     private readonly string _criteria;
 
@@ -11,7 +13,7 @@ public class SearchByUsername : ISearcher{
     /// Constructor for SearchByUsername takes in username
     /// </summary>
     /// <param name="username">Name of user</param>
-    public SearchByUsername(string username) {
+    public SearchByUsername(SplankContext context, string username) : base(context){
         if (username == null)
             throw new ArgumentException("Username cannot be null");
         if (username.Length == 0)
@@ -20,20 +22,18 @@ public class SearchByUsername : ISearcher{
     }
 
     /// <summary>
-    /// Gets filtered list of recipes containing username 
+    /// Gets list of users where recipe was made by user with specified username.
     /// </summary>
-    /// <param name="recipes">List of recipes</param>
-    /// <returns>Filtered list of recipes containing the username/criteria</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            if(r.User.Name.Contains(_criteria, StringComparison.OrdinalIgnoreCase)){
-                filteredRecipes.Add(r);
-            }
-        }
+    /// <returns>The filtered recipes.</returns>
+    public override List<Recipe> FilterRecipes()
+    {
+        List<Recipe> filteredRecipes = Context.Recipes
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Tags)
+            .Include(recipe => recipe.Ratings)
+            .Where(recipe => recipe.User.Name.Equals(_criteria))
+            .ToList();
         return filteredRecipes;
     }
-
-
-
 }

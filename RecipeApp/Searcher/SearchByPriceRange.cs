@@ -1,8 +1,10 @@
 namespace RecipeApp.Searcher;
 
+using Microsoft.EntityFrameworkCore;
+using RecipeApp.Context;
 using RecipeApp.Models;
 
-public class SearchByPriceRange: ISearcher{
+public class SearchByPriceRange: SearcherBase{
 
     private readonly double _minPrice;
     private readonly double _maxPrice;
@@ -12,7 +14,8 @@ public class SearchByPriceRange: ISearcher{
     /// </summary>
     /// <param name="min">The min price.</param>
     /// <param name="max">The max price.</param>
-    public SearchByPriceRange(double min, double max){
+    public SearchByPriceRange(SplankContext context, double min, double max) : base(context){
+
         if (min < 0 || max < 0)
             throw new ArgumentException("Min or max cannot be negative");
         if (min > max) 
@@ -21,18 +24,24 @@ public class SearchByPriceRange: ISearcher{
         _maxPrice = max;
     }
 
-    /// <summary>
-    /// Gets list of recipes where the price is in between (including) the range given.
-    /// </summary>
-    /// <param name="recipes">The list of recipes being iterated through.</param>
-    /// <returns>The list of filtered recipes corresponding to the range of price.</returns>
-    public List<Recipe> FilterRecipes(List<Recipe> recipes){
-        List<Recipe> filteredRecipes = new();
-        foreach(Recipe r in recipes){
-            if (r.GetTotalPrice() >= _minPrice && r.GetTotalPrice() <= _maxPrice) {
-                filteredRecipes.Add(r);
-            }
-        }
+    public override List<Recipe> FilterRecipes()
+    {
+        List<Recipe> filteredRecipes = Context.Recipes
+            .GroupJoin(Context.Ingredients,
+                        recipe => recipe.RecipeId,
+                        ingredient => ingredient.RecipeId,
+                        (recipe, ingredients) => new
+                        {
+                            Recipe = recipe,
+                            TotalPrice = ingredients.Sum(ing => ing.Price)
+                        })
+            .Where(recipe => recipe.TotalPrice >= _minPrice && recipe.TotalPrice <= _maxPrice)
+            .Select(recipe => recipe.Recipe)
+            .Include(recipe => recipe.Ingredients)
+            .Include(recipe => recipe.Steps)
+            .Include(recipe => recipe.Ratings)
+            .Include(recipe => recipe.Tags)
+            .ToList();
         return filteredRecipes;
     }
 }

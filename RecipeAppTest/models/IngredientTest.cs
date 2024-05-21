@@ -7,7 +7,8 @@ public class IngredientTest {
     [TestMethod]
     [ExpectedException(typeof(ArgumentException))]
     public void NullName_Throws_ArgumentException() {
-        Ingredient ingredient = new(null, 1, UnitOfMeasurement.AMOUNT, 100);
+        string name = null!;
+        Ingredient ingredient = new(name, 1, UnitOfMeasurement.AMOUNT, 100);
     }
 
     [TestMethod]
@@ -32,7 +33,7 @@ public class IngredientTest {
     [ExpectedException(typeof(ArgumentException))]
     public void NameSetter_Null_Throws_ArgumentException() {
         Ingredient ingredient = new("Potato", 1, UnitOfMeasurement.AMOUNT, 100);
-        ingredient.Name = null;
+        ingredient.Name = null!;
     }
 
     [TestMethod]
@@ -58,8 +59,8 @@ public class IngredientTest {
 
     [TestMethod]
     public void Constructor_Init() {
-        Ingredient ingredient = new("Potato", 1, UnitOfMeasurement.AMOUNT, 100);
-        Assert.AreEqual("Potato", ingredient.Name);
+        Ingredient ingredient = new("potato", 1, UnitOfMeasurement.AMOUNT, 100);
+        Assert.AreEqual("potato", ingredient.Name);
         Assert.AreEqual(1, ingredient.Quantity);
         Assert.AreEqual(UnitOfMeasurement.AMOUNT, ingredient.UnitOfMeasurement);
         Assert.AreEqual(100, ingredient.Price);
