@@ -6,6 +6,7 @@ using RecipeApp.Services;
 using RecipeApp.Context;
 using System.Reactive;
 using RecipeApp.Exceptions;
+using RecipeAppUI.Session;
 
 public class ChangePasswordViewModel : ViewModelBase {
     private string _username = null!;
@@ -42,6 +43,7 @@ public class ChangePasswordViewModel : ViewModelBase {
         try {
             var user = UserService.Login(Username, OldPassword);
             UserService.ChangePassword(user, NewPassword);
+            UserSingleton.NullifyUser();
             MainWindowViewModel.ChangeToLoginView();
         } catch (ArgumentException e) {
             ErrorMessage = e.Message;

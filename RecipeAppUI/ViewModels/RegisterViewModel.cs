@@ -7,6 +7,9 @@ using System.Reactive;
 
 namespace RecipeAppUI.ViewModels;
 
+/// <summary>
+/// ViewModel for the register page
+/// </summary>
 public class RegisterViewModel : ViewModelBase {
     private string _username = null!;
     private string _password = null!;
@@ -22,14 +25,21 @@ public class RegisterViewModel : ViewModelBase {
     public UserService UserService { get => _userService; private set => _userService = value; }
     public ReactiveCommand<Unit, Unit> RegisterCommand { get; }
 
+    /// <summary>
+    /// Constructor for RegisterViewModel
+    /// </summary>
+    /// <param name="context">To pass it through the user service</param>
+    /// <param name="mainWindowViewModel">For navigation</param>
     public RegisterViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
         UserService = new(context, new());
         RegisterCommand = ReactiveCommand.Create(Register);
         _mainWindowViewModel = mainWindowViewModel;
     }
 
-    public void Register()
-    {
+    /// <summary>
+    /// Register a new user and redirected to login
+    /// </summary>
+    private void Register() {
         try {
             UserService.Register(Username, Password, Description);
             _mainWindowViewModel.ChangeToLoginView();

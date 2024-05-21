@@ -5,6 +5,9 @@ using RecipeApp.Models;
 using ReactiveUI;
 using System;
 
+/// <summary>
+/// Displays nutrition facts about a chosen recipe
+/// </summary>
 public class NutritionFactsViewModel : ViewModelBase {
     private readonly NutritionFactFetcher _nutrientationFetcher = new();
     private MainWindowViewModel _mainWindowViewModel = null!;
@@ -74,8 +77,13 @@ public class NutritionFactsViewModel : ViewModelBase {
         set => this.RaiseAndSetIfChanged(ref _sugar, value);
     }
 
-    public NutritionFactsViewModel(Recipe recipe, MainWindowViewModel mainWindowViewModel) {
-        MainWindowViewModel = mainWindowViewModel;
+    /// <summary>
+    /// Constructs a NutritionFactsViewModel and 
+    /// immedietly fetches the nutrition facts, and sets 
+    /// the error messages if the process fails
+    /// </summary>
+    /// <param name="recipe">Recipe to get nutrition from</param>
+    public NutritionFactsViewModel(Recipe recipe) {
         try {
             NutritionResponse response = (NutritionResponse) _nutrientationFetcher.Fetch(recipe);
             Calories = response.calories;
@@ -93,5 +101,4 @@ public class NutritionFactsViewModel : ViewModelBase {
             ErrorMessage = "Sorry, unable to get nutrition facts for this recipe :(";
         }
     }
-
 }

@@ -10,6 +10,9 @@ using System.Reactive;
 
 namespace RecipeAppUI.ViewModels;
 
+/// <summary>
+/// ViewModel for the profile view
+/// </summary>
 public class ProfileViewModel : ViewModelBase {
     private MainWindowViewModel _mainWindowViewModel = null!;    
     private string _username = null!;
@@ -62,8 +65,11 @@ public class ProfileViewModel : ViewModelBase {
 
     public ReactiveCommand<Unit, Unit> ChooseImageCommand { get; }
 
-    public ProfileViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
-        MainWindowViewModel = mainWindowViewModel;
+    /// <summary>
+    /// Constructor for ProfileViewModel
+    /// </summary>
+    /// <param name="context">For db calls</param>
+    public ProfileViewModel(SplankContext context) {
         UserService = new(context, new PasswordEncrypter());
         Username = UserSingleton.GetInstance().Name;
         Description = UserSingleton.GetInstance().Description;
@@ -72,6 +78,9 @@ public class ProfileViewModel : ViewModelBase {
         SetupBitmapOnViewLoad();
     }
 
+   /// <summary>
+   /// Sets a users profile picture both in DB and in UI
+   /// </summary>
    private void ChooseImage(){
        try {
             if (PathToImage == null) {
@@ -91,6 +100,9 @@ public class ProfileViewModel : ViewModelBase {
         }
     }
 
+    /// <summary>
+    /// Set the profile of the user if it is not null
+    /// </summary>
     private void SetupBitmapOnViewLoad() {
         if (ProfilePicture is not null) {
             using MemoryStream stream = new(ProfilePicture);

@@ -13,6 +13,9 @@ using System;
 
 namespace RecipeAppUI.ViewModels;
 
+/// <summary>
+/// Renders a list of the users favourited recipes
+/// </summary>
 public class FavouritesViewModel : ViewModelBase 
 {
     private MainWindowViewModel _mainWindowViewModel = null!;
@@ -40,15 +43,22 @@ public class FavouritesViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _favourites, value);
     }
 
-    public FavouritesViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel)
+    /// <summary>
+    /// Constructor for the favourites view model
+    /// </summary>
+    /// <param name="context">To fetch favourited recipes</param>
+    public FavouritesViewModel(SplankContext context)
     {
         UserService = new UserService(context, new PasswordEncrypter());
-        MainWindowViewModel = mainWindowViewModel;
         Favourites = new ObservableCollection<Recipe>(new SearchByUserFavorite(context, UserSingleton.GetInstance()).FilterRecipes());
         DeleteFavouriteCommand = ReactiveCommand.Create<int>(DeleteFavourite);
     }
 
-    public void DeleteFavourite(int recipeId){
+    /// <summary>
+    /// Deletes a recipe from list of favourites
+    /// </summary>
+    /// <param name="recipeId">Recipe ID of the recipe to delete</param>
+    private void DeleteFavourite(int recipeId){
         Recipe recipeToDelete = Favourites.FirstOrDefault(r => r.RecipeId == recipeId)!;
         try {
             UserService.DeleteFromFavourites(recipeToDelete, UserSingleton.GetInstance());
