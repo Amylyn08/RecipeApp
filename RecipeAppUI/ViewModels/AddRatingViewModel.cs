@@ -16,17 +16,10 @@ public class AddRatingViewModel : ViewModelBase{
     private string _errorMessage = null!;
     private bool _editAvailable;
     private MainWindowViewModel _mainWindowViewModel = null!;
-    
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
     public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
 
-    public AddRatingViewModel(SplankContext context, Recipe recipe, MainWindowViewModel mainWindowViewModel){
-        __ratingService = new RatingService(context);
-        __recipe = recipe;
-        MainWindowViewModel = mainWindowViewModel;
-        ChangeToSpecificViewCommand = ReactiveCommand.Create(ChangeToSpecificView);
-    }
-    public bool EditAvailable{
+    public bool EditAvailable {
         get => _editAvailable;
         set => this.RaiseAndSetIfChanged(ref _editAvailable, value);
     }
@@ -56,6 +49,22 @@ public class AddRatingViewModel : ViewModelBase{
     }
     public string ErrorMessage { get => _errorMessage; set => this.RaiseAndSetIfChanged(ref _errorMessage, value); }
 
+    /// <summary>
+    /// Constructor of the AddRatingViewModel
+    /// </summary>
+    /// <param name="context">DB context</param>
+    /// <param name="recipe">The recipe you are viewing</param>
+    /// <param name="mainWindowViewModel">Instance of MainWindowViewModek</param>
+    public AddRatingViewModel(SplankContext context, Recipe recipe, MainWindowViewModel mainWindowViewModel){
+        __ratingService = new RatingService(context);
+        __recipe = recipe;
+        MainWindowViewModel = mainWindowViewModel;
+        ChangeToSpecificViewCommand = ReactiveCommand.Create(ChangeToSpecificView);
+    }
+
+    /// <summary>
+    /// Adds a rating to the recipe
+    /// </summary>
     public void AddRating(){
         try{
             Rating rating = new(__stars, __description, UserSingleton.GetInstance());
@@ -67,6 +76,9 @@ public class AddRatingViewModel : ViewModelBase{
         }
     }
 
+    /// <summary>
+    /// Commands that changes the view to the specified recipe page
+    /// </summary>
     public void ChangeToSpecificView(){
         MainWindowViewModel.ChangeToSpecificView(__recipe);
     }

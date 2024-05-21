@@ -113,6 +113,7 @@ public class CreateRecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _tags, value);
     }
 // ----------------------------------------------------------------------
+// --------------------------Commands------------------------------------
     public ReactiveCommand<Unit,Unit> ChangeToAddIngredientViewCommand { get;} = null!;
     public ReactiveCommand<Unit,Unit> ChangeToDashboardViewCommand { get;} = null!;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
@@ -124,6 +125,11 @@ public class CreateRecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> CreateTag { get; } = null!;
     public ReactiveCommand<Unit, Unit> CreateRecipe { get; } = null!;
     
+    /// <summary>
+    /// Constructor to create the CreateRecipeViewModel
+    /// </summary>
+    /// <param name="context">DB context</param>
+    /// <param name="mainWindowViewModel">Instance of the MainWindowViewModel</param>
     public CreateRecipeViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) 
     {
         Ingredients = new ObservableCollection<Ingredient>();
@@ -140,6 +146,9 @@ public class CreateRecipeViewModel : ViewModelBase
         MainWindowViewModel = mainWindowViewModel;
     }
 
+    /// <summary>
+    /// Command that creates a recipe
+    /// </summary>
     public void CreateRecipeCommand() {
         try {
 
@@ -152,6 +161,10 @@ public class CreateRecipeViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Command to create a new ingredient and adds it to the list of ingredients
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     public void CreateIngredientCommand() {
         try {
             ChangeUnit();
@@ -170,20 +183,35 @@ public class CreateRecipeViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Removes an Ingredient from the List of Ingredient
+    /// </summary>
+    /// <param name="ingredient">Ingredient to remove</param>
     public void RemoveIngredientCommand(Ingredient ingredient) {
         Ingredients.Remove(ingredient);
     }
 
+    /// <summary>
+    /// Removes a step from the List of Steps
+    /// </summary>
+    /// <param name="stepToRemove">The step to remove</param>
     private void RemoveStepCommand(Step stepToRemove)
     {
         Steps.Remove(stepToRemove);
     }
 
+    /// <summary>
+    /// Removes the tag from the list of tags
+    /// </summary>
+    /// <param name="tagToRemove">Tag to remove</param>
     private void RemoveTagCommand(Tag tagToRemove)
     {
         Tags.Remove(tagToRemove);
     }
 
+    /// <summary>
+    /// Changes the unit of measurement of the ingredient added depending on the combo box index
+    /// </summary>
     public void ChangeUnit() {
         UnitOfMeasurement unit = UnitOfMeasurement.SPOONS;
         switch (_selectedIndex) {
@@ -206,6 +234,10 @@ public class CreateRecipeViewModel : ViewModelBase
         _unitOfMeasurement = unit;   
     }
 
+    /// <summary>
+    /// Command that Creates a new step and adds it to the list of steps
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     public void CreateStepCommand() {
         try {
             Step step = new Step(StepTime, StepInstruction); 
@@ -215,6 +247,10 @@ public class CreateRecipeViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Command that creates a new Tag and adds it to the List of tags
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     public void CreateTagCommand() {
         try {
             Tag tag = new Tag(TagName);

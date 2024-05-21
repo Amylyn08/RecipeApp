@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-            <TextBlock Text="Profile" FontWeight="Bold" FontSize="30"/>
+            <TextBlock Text="Profile" FontWeight="Bold" FontSize="30" HorizontalAlignment="Center"/>
             <Border  BorderBrush="Black" BorderThickness="2" CornerRadius="4" Padding="50" Margin="30">
                 <StackPanel>
                     <Image Source="{Binding Bitmap}" Height="200" Width="200" Margin="0,0,0,10"/>
