@@ -198,7 +198,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato"),};
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        Assert.AreEqual(15, recipe.GetTimeToCook());
+        Assert.AreEqual(15, recipe.TimeToCook);
     }  
 
     [TestMethod]
@@ -216,7 +216,7 @@ public class RecipeTest {
         List<Rating> ratings = new();
         List<Tag> tags = new() { new Tag("Potato"),};
         Recipe recipe = new(name, user, description, servings, ingredients, steps, ratings, tags);
-        Assert.AreEqual(15, recipe.GetTotalPrice());
+        Assert.AreEqual(15, recipe.TotalPrice);
     }
 
     [TestMethod]

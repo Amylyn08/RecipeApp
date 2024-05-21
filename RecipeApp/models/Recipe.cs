@@ -1,5 +1,6 @@
 namespace RecipeApp.Models;
 
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 /// <summary>
@@ -143,40 +144,35 @@ public class Recipe {
 
     }
 
-    /// <summary>
-    /// Gets the total time to cook for a recipe 
-    /// </summary>
-    /// <returns>Total time to complete all steps</returns>
-    public int GetTimeToCook() {
-        int timeToCook = 0;
-        foreach (Step step in _steps) 
-            timeToCook += step.TimeInMinutes;
-        return timeToCook;
+    [NotMapped]
+    public int TimeToCook {
+        get {
+            int timeToCook = 0;
+            foreach (Step step in _steps) 
+                timeToCook += step.TimeInMinutes;
+            return timeToCook;
+        }
     }
 
-    /// <summary>
-    /// Gets the total price of a recipe
-    /// </summary>
-    /// <returns>Price of the recipe</returns>
-    public double GetTotalPrice() {
-        double price = 0;
-        foreach (Ingredient ingredient in _ingredients) 
-            price += ingredient.Price;
-        return price;
+    [NotMapped]
+    public double TotalPrice {
+        get {
+            double price = 0;
+            foreach (Ingredient ingredient in _ingredients) 
+                price += ingredient.Price;
+            return price;
+        }
     }
 
-    /// <summary>
-    /// This method gets the avarage of ratings of a recipe.
-    /// </summary>
-    /// <returns>The average rating</returns>
-    public double GetTotalAverageRating(){
-        double rating = 0;
-        foreach(Rating r in _ratings )
-            rating += r.Stars;
-        return rating/_ratings.Count;
+    [NotMapped]
+    public double TotalAverageRating {
+        get {
+            double rating = 0;
+            foreach(Rating r in _ratings )
+                rating += r.Stars;
+            return rating/_ratings.Count;
+        }
     }
-
-    
 
     /// <summary>
     /// Returns string representation of a recipe
