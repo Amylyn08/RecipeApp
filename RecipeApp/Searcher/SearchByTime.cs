@@ -5,8 +5,6 @@ using RecipeApp.Context;
 using RecipeApp.Models;
 
 public class SearchByTime : SearcherBase{
-    private readonly int  _minTime;
-    private readonly int _maxTime;
 
     private readonly int _criteria;
 
@@ -38,7 +36,7 @@ public class SearchByTime : SearcherBase{
                             Recipe = recipe,
                             TotalTime = steps.Sum(ing => ing.TimeInMinutes)
                         })
-            .Where(recipe => recipe.TotalTime >= _minTime && recipe.TotalTime <= _maxTime)
+            .Where(recipe => recipe.TotalTime >= _criteria - 5 && recipe.TotalTime <= _criteria + 5)
             .Select(recipe => recipe.Recipe)
             .Include(recipe => recipe.Ingredients)
             .Include(recipe => recipe.Steps)

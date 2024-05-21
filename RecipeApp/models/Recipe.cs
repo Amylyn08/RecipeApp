@@ -20,6 +20,10 @@ public class Recipe {
         set; 
     }
 
+    public double AverageRating{
+        get => GetTotalAverageRating();
+    }
+
     public string Name { 
         get => _name;  
         set {
