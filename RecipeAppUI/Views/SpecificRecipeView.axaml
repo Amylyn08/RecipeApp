@@ -6,7 +6,7 @@
              x:Class="RecipeAppUI.Views.SpecificRecipeView"
              xmlns:vm="using:RecipeAppUI.ViewModels" 
              x:DataType="vm:SpecificRecipeViewModel"
-             Background="#91FEFFF3">
+             Background="#F5F5F5">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -102,38 +102,21 @@
             </StackPanel>
         </Border>
 
-        <!-- All Ratings -->
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
-            <StackPanel Margin="10">
-                <TextBlock HorizontalAlignment="Center" Margin="8" Text="All Ratings" FontWeight="Bold"/>
-                <ScrollViewer Height="160">
-                    <ListBox ItemsSource="{Binding Ratings}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Center" Margin="8">
-                                    <Run Text="Number of Stars: " FontWeight="Bold"/>
-                                    <Run Text="{Binding Stars}"/>
-                                    <Run Text="Description: " FontWeight="Bold"/>
-                                    <Run Text="{Binding Description}"/>
-                                    <Run Text="Created by user: " FontWeight="Bold"/>
-                                    <Run Text="{Binding User.Name}"/>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </ScrollViewer>
-            </StackPanel>
-        </Border>
+        <!-- Ratings Section -->
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!-- Ratings by You -->
-        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
-            <StackPanel Margin="10">
-                <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ratings by You" FontWeight="Bold"/>
-                <ScrollViewer Height="250">
-                    <ListBox ItemsSource="{Binding YourRatings}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
+            <!-- All Ratings -->
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+                <StackPanel Margin="10">
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="All Ratings" FontWeight="Bold"/>
+                    <ScrollViewer MaxHeight="200">
+                        <ListBox ItemsSource="{Binding Ratings}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
                                     <TextBlock HorizontalAlignment="Center" Margin="8">
                                         <Run Text="Number of Stars: " FontWeight="Bold"/>
                                         <Run Text="{Binding Stars}"/>
@@ -142,38 +125,61 @@
                                         <Run Text="Created by user: " FontWeight="Bold"/>
                                         <Run Text="{Binding User.Name}"/>
                                     </TextBlock>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button Content="Delete Rating" 
-                                                Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
-                                                CommandParameter="{Binding RatingId}" 
-                                                HorizontalAlignment="Center"
-                                                HorizontalContentAlignment="Center">
-                                            <Button.Background>
-                                                <SolidColorBrush Color="#68FF1717"/> 
-                                            </Button.Background>
-                                        </Button>
-                                        <Button Content="Edit Rating" 
-                                                CommandParameter="{Binding RatingId}" 
-                                                Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).EditRatingViewCommand}" 
-                                                HorizontalAlignment="Stretch"
-                                                HorizontalContentAlignment="Center">
-                                            <Button.Background>
-                                                <SolidColorBrush Color="#FFFFFCBB"/> 
-                                            </Button.Background>
-                                        </Button>
-                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
 
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </ScrollViewer>
-            </StackPanel>
-        </Border>
+            <!-- Ratings by You -->
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+                <StackPanel Margin="10">
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ratings by You" FontWeight="Bold"/>
+                    <ScrollViewer MaxHeight="200">
+                        <ListBox ItemsSource="{Binding YourRatings}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock HorizontalAlignment="Center" Margin="8">
+                                            <Run Text="Number of Stars: " FontWeight="Bold"/>
+                                            <Run Text="{Binding Stars}"/>
+                                            <Run Text="Description: " FontWeight="Bold"/>
+                                            <Run Text="{Binding Description}"/>
+                                            <Run Text="Created by user: " FontWeight="Bold"/>
+                                            <Run Text="{Binding User.Name}"/>
+                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Content="Delete Rating" 
+                                                    Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
+                                                    CommandParameter="{Binding RatingId}" 
+                                                    HorizontalAlignment="Center"
+                                                    HorizontalContentAlignment="Center">
+                                                <Button.Background>
+                                                    <SolidColorBrush Color="#68FF1717"/> 
+                                                </Button.Background>
+                                            </Button>
+                                            <Button Content="Edit Rating" 
+                                                    CommandParameter="{Binding RatingId}" 
+                                                    Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).EditRatingViewCommand}" 
+                                                    HorizontalAlignment="Stretch"
+                                                    HorizontalContentAlignment="Center">
+                                                <Button.Background>
+                                                    <SolidColorBrush Color="#FFFFFCBB"/> 
+                                                </Button.Background>
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+        </Grid>
 
         <!-- Buttons at the Bottom -->
         <StackPanel  Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
-            <TextBlock Text="{Binding ErrorMessage}" />
             <Button Content="Add Rating" 
                     Command="{Binding ChangeToAddRatingViewCommand}" 
                     HorizontalAlignment="Stretch" 
@@ -185,6 +191,7 @@
                     Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" 
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"/>
+            <TextBlock Text="{Binding ErrorMessage}" />
         </StackPanel>
 
     </Grid>

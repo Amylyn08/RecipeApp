@@ -49,6 +49,7 @@
         </Button.Background>
       </Button>
       <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Content="Cancel" Command="{Binding ChangeToSpecificView}"/>
+      <TextBlock Text="{Binding ErrorMessage}"/>
     </StackPanel>
 </StackPanel>
 </UserControl>
