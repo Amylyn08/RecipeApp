@@ -26,13 +26,18 @@ public class SearchByRating : SearcherBase{
     /// <returns>The filtered list</returns>
     public override List<Recipe> FilterRecipes()
     {
-        List<Recipe> filteredRecipes = Context.Recipes
+        List<Recipe> recipes = Context.Recipes
             .Include(recipe => recipe.Ingredients)
             .Include(recipe => recipe.Steps)
             .Include(recipe => recipe.Tags)
             .Include(recipe => recipe.Ratings)
+            .ToList();
+
+        // Perform filtering on the client side
+        List<Recipe> filteredRecipes = recipes
             .Where(recipe => recipe.AverageRating >= _criteria - 0.5 && recipe.AverageRating <= _criteria + 0.5)
             .ToList();
+
         return filteredRecipes;
     }
 }
