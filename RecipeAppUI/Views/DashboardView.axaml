@@ -132,11 +132,11 @@
                                         <Button Content="View Ratings"
                                                 Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).SpecificViewCommand}"
                                                 CommandParameter="{Binding RecipeId}"
-                                                Margin="5"
-                                                DockPanel.Dock="Left"/>
-                                        <TextBlock DockPanel.Dock="Right"
-                                                    FontSize="22"
-                                                    FontWeight="Bold">
+                                                Margin="5"/>
+										<Button Content="View Profile"
+												Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToOtherProfileViewCommand}"
+												CommandParameter="{Binding User}" />
+                                        <TextBlock HorizontalAlignment="Right">
                                             <Run Text="{Binding AverageRating}"/>
                                             <Run Text="⭐" 
                                                 Foreground="#FFD700" 
@@ -235,10 +235,11 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}" Margin="0, 5, 0, 0"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>
