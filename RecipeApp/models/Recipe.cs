@@ -21,6 +21,31 @@ public class Recipe {
         set; 
     }
 
+    [NotMapped]
+    public double AverageRating {
+        get => GetTotalAverageRating();
+    }
+
+    [NotMapped]
+    public int TimeToCook {
+        get {
+            int timeToCook = 0;
+            foreach (Step step in _steps) 
+                timeToCook += step.TimeInMinutes;
+            return timeToCook;
+        }
+    }
+
+    [NotMapped]
+    public double TotalPrice {
+        get {
+            double price = 0;
+            foreach (Ingredient ingredient in _ingredients) 
+                price += ingredient.Price;
+            return price;
+        }
+    }
+
     public string Name { 
         get => _name;  
         set {
@@ -144,34 +169,15 @@ public class Recipe {
 
     }
 
-    [NotMapped]
-    public int TimeToCook {
-        get {
-            int timeToCook = 0;
-            foreach (Step step in _steps) 
-                timeToCook += step.TimeInMinutes;
-            return timeToCook;
-        }
-    }
-
-    [NotMapped]
-    public double TotalPrice {
-        get {
-            double price = 0;
-            foreach (Ingredient ingredient in _ingredients) 
-                price += ingredient.Price;
-            return price;
-        }
-    }
-
-    [NotMapped]
-    public double TotalAverageRating {
-        get {
-            double rating = 0;
-            foreach(Rating r in _ratings )
-                rating += r.Stars;
-            return rating/_ratings.Count;
-        }
+    /// <summary>
+    /// This method gets the avarage of ratings of a recipe.
+    /// </summary>
+    /// <returns>The ratings.</returns>
+    public double GetTotalAverageRating(){
+        double rating = 0;
+        foreach(Rating r in _ratings )
+            rating += r.Stars;
+        return rating/_ratings.Count;
     }
 
     /// <summary>

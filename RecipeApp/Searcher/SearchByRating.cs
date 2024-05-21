@@ -31,7 +31,7 @@ public class SearchByRating : SearcherBase{
             .Include(recipe => recipe.Steps)
             .Include(recipe => recipe.Tags)
             .Include(recipe => recipe.Ratings)
-            .Where(recipe => recipe.TotalAverageRating >=  _criteria && recipe.TotalAverageRating <= _criteria +1)
+            .Where(recipe => recipe.AverageRating >= _criteria - 0.5 && recipe.AverageRating <= _criteria + 0.5)
             .ToList();
         return filteredRecipes;
     }

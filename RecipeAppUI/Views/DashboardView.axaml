@@ -70,6 +70,10 @@
                                                 Command="{Binding $parent[ListBox].((vm:DashboardViewModel)DataContext).SpecificViewCommand}"
                                                 CommandParameter="{Binding RecipeId}"
                                                 Margin="5"/>
+                                        <TextBlock HorizontalAlignment="Right">
+                                            <Run Text="{Binding AverageRating}"/>
+                                            <Run Text="⭐"/>
+                                        </TextBlock>
                                     </StackPanel>
                                     
                                     <!-- Author -->

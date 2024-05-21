@@ -130,7 +130,7 @@ namespace RecipeAppUI.ViewModels
                     case "6":
                         searcher = new SearchByTags(_recipeService.Context, _searchText);
                         break;
-                    case "Time":
+                    case "7":
                         searcher = new SearchByTime(_recipeService.Context, Int32.Parse(_searchText));
                         break;
                 }
@@ -203,6 +203,11 @@ namespace RecipeAppUI.ViewModels
             catch (Exception){
                 ErrorMessage = "Error: Unable to go to specific view.";
             }
+        }
+
+        public double GetRatingAvgForSingleRecipe(int recipeId){
+            Recipe recipe = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
+            return recipe.GetTotalAverageRating();
         }
     }
 }

@@ -15,35 +15,10 @@ public class SearchByTimeTest {
     public void MinBelowZeroException(){
         //Arrange
         SplankContext context = SplankContext.GetInstance();
-        int min = -1;
-        int max = 10;
+        int time = -1;
 
         //Act
-        SearchByTime searcher = new(context, min, max);
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void MaxBelowZeroException(){
-        //Arrange
-        SplankContext context = SplankContext.GetInstance();
-        int min = 2;
-        int max = -1;
-
-        //Act
-        SearchByTime searcher = new(context, min, max);
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void MinMoreThanMax(){
-        //Arrange
-        SplankContext context = SplankContext.GetInstance();
-        int min = 100;
-        int max = 10;
-
-        //Act
-        SearchByTime searcher = new(context, min, max);
+        SearchByTime searcher = new(context, time);
     }
 
     [TestMethod]
@@ -74,7 +49,7 @@ public class SearchByTimeTest {
         {
             new(5, "eat") { RecipeId = 1 },
             new(10, "eat") { RecipeId = 2 },
-            new(30, "eat") { RecipeId = 3 },
+            new(20, "eat") { RecipeId = 3 },
             new(25, "eat") { RecipeId = 4 },
             new(75, "eat") { RecipeId = 5 },
         };
@@ -107,7 +82,7 @@ public class SearchByTimeTest {
         var mockContext = new Mock<SplankContext>();
         mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
         mockContext.Setup(m => m.Steps).Returns(stepMockSet.Object);
-        SearchByTime searcher = new(mockContext.Object, 5, 10);
+        SearchByTime searcher = new(mockContext.Object, 10);
 
         //Act
         List<Recipe> filteredList = searcher.FilterRecipes();
@@ -178,7 +153,7 @@ public class SearchByTimeTest {
         var mockContext = new Mock<SplankContext>();
         mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
         mockContext.Setup(m => m.Steps).Returns(stepMockSet.Object);
-        SearchByTime searcher = new(mockContext.Object, 1, 4);
+        SearchByTime searcher = new(mockContext.Object, 85);
 
         //Act
         List<Recipe> filteredList = searcher.FilterRecipes();
