@@ -134,7 +134,7 @@ namespace RecipeAppUI.ViewModels
                     case "6":
                         searcher = new SearchByTags(_recipeService.Context, _searchText);
                         break;
-                    case "Time":
+                    case "7":
                         searcher = new SearchByTime(_recipeService.Context, Int32.Parse(_searchText));
                         break;
                 }
