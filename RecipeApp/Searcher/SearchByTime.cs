@@ -11,18 +11,18 @@ public class SearchByTime : SearcherBase{
     private readonly int  _minTime;
     private readonly int _maxTime;
 
+    private readonly int _criteria;
+
     /// <summary>
-    /// Constructor for SearchByTime, takes in a min time and max time, sets them.
+    /// Constructor for search by time takes in context and time with validation for greater than 0.
     /// </summary>
-    /// <param name="min">The min time.</param>
-    /// <param name="max">The max time</param>
-    public SearchByTime(SplankContext context, int min, int max) :base(context) {
-        if (min < 0 || max < 0)
-            throw new ArgumentException("Min or max cannot be negative");
-        if (min > max) 
-            throw new ArgumentException("Min cannot be greater than max");
-        _minTime = min;
-        _maxTime = max;
+    /// <param name="context">The Context of application</param>
+    /// <param name="time">The time desired by user.</param>
+    /// <exception cref="ArgumentException">If time entered was less than 0</exception>
+    public SearchByTime(SplankContext context, int time) :base(context) {
+        if (time < 0)
+            throw new ArgumentException("Time must be greater than 0.");
+        _criteria = time;
     }
 
     /// <summary>

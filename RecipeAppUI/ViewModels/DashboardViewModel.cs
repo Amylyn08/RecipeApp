@@ -130,13 +130,14 @@ namespace RecipeAppUI.ViewModels
                     case "6":
                         searcher = new SearchByTags(_recipeService.Context, _searchText);
                         break;
-                    // case "Time":
-                    //     searcher = new SearchByTime(_recipeService.Context, Int32.Parse(_searchText));
-                    //     break;
+                    case "Time":
+                        searcher = new SearchByTime(_recipeService.Context, Int32.Parse(_searchText));
+                        break;
                 }
                 Recipes = new ObservableCollection<Recipe>(_recipeService.SearchRecipes(searcher));
                 _excludedIds.Clear();
                 AddToRecipesToNotLoadAgain([.. Recipes]);
+                DashboardErrorMessage = "";
             }
             catch (ArgumentException e)
             {
