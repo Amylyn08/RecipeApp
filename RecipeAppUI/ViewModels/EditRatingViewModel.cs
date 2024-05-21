@@ -18,18 +18,7 @@ public class EditRatingViewModel : ViewModelBase
     private MainWindowViewModel _mainWindowViewModel = null!;
     private SplankContext _context;
     private bool _editAvailable;
-    
-    public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
 
-    public EditRatingViewModel(SplankContext context, Rating rating, MainWindowViewModel mainViewModel)
-    {
-        _ratingService = new RatingService(context);
-        _rating = rating;
-        MainWindowViewModel = mainViewModel;
-        _context = context;
-        ChangeToSpecificViewCommand = ReactiveCommand.Create(ChangeToSpecificView);
-
-    }
     public string ErrorMessage { get => _errorMessage; set => this.RaiseAndSetIfChanged(ref _errorMessage, value); }
 
     public MainWindowViewModel MainWindowViewModel
@@ -64,6 +53,27 @@ public class EditRatingViewModel : ViewModelBase
         get => _rating;
         set => this.RaiseAndSetIfChanged(ref _rating, value);
     }
+    public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="context">DB context</param>
+    /// <param name="rating">Rating of the recipe</param>
+    /// <param name="mainViewModel"></param>
+    public EditRatingViewModel(SplankContext context, Rating rating, MainWindowViewModel mainViewModel)
+    {
+        _ratingService = new RatingService(context);
+        _rating = rating;
+        MainWindowViewModel = mainViewModel;
+        _context = context;
+        ChangeToSpecificViewCommand = ReactiveCommand.Create(ChangeToSpecificView);
+
+    }
+
+    /// <summary>
+    /// Edits the specified rating and redirects to the sepecified recipe view
+    /// </summary>
     public void EditRating()
     {
         try
@@ -88,6 +98,9 @@ public class EditRatingViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Changes to the specified recipe view (Go back)
+    /// </summary>
     public void ChangeToSpecificView()
     {
         try{
