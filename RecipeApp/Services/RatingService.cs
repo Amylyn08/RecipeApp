@@ -3,7 +3,9 @@ using RecipeApp.Models;
 
 namespace RecipeApp.Services;
  
-
+/// <summary>
+/// Peforms rating related actions
+/// </summary>
 public class RatingService : ServiceBase {
     public RatingService(SplankContext context) : base(context)
     {

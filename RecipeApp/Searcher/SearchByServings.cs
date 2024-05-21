@@ -1,12 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using recipeapp;
 using RecipeApp.Context;
 using RecipeApp.Searcher;
 
 namespace RecipeApp.Models;
 
 public class SearchByServings : SearcherBase{
-
     private readonly int _criteria;
 
     /// <summary>

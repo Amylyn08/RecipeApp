@@ -1,5 +1,8 @@
 namespace RecipeApp.Models;
 
+/// <summary>
+/// Represents bridging table between users and recipes
+/// </summary>
 public class Favourite {
     public int FavouriteId { get; set; }
 

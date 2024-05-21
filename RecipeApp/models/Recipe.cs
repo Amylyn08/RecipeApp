@@ -168,7 +168,7 @@ public class Recipe {
     /// <summary>
     /// This method gets the avarage of ratings of a recipe.
     /// </summary>
-    /// <returns>The ratings.</returns>
+    /// <returns>The average rating</returns>
     public double GetTotalAverageRating(){
         double rating = 0;
         foreach(Rating r in _ratings )

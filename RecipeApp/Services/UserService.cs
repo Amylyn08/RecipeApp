@@ -1,10 +1,8 @@
 namespace RecipeApp.Services;
 
-using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Models;
-using RecipeApp.Searcher;
 using RecipeApp.Security;
 
 /// <summary>
