@@ -45,6 +45,7 @@
         HorizontalAlignment="Stretch" 
         HorizontalContentAlignment="Center" 
         Margin="5"/>
+        <TextBlock Text="{Binding ErrorMessage}"/>
     </StackPanel>
   </StackPanel>
 </UserControl>

@@ -129,7 +129,7 @@
         <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
             <StackPanel Margin="10">
                 <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ratings by You" FontWeight="Bold"/>
-                <ScrollViewer Height="250">
+                <ScrollViewer Height="150">
                     <ListBox ItemsSource="{Binding YourRatings}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -173,7 +173,6 @@
 
         <!-- Buttons at the Bottom -->
         <StackPanel  Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
-            <TextBlock Text="{Binding ErrorMessage}" />
             <Button Content="Add Rating" 
                     Command="{Binding ChangeToAddRatingViewCommand}" 
                     HorizontalAlignment="Stretch" 
@@ -185,6 +184,7 @@
                     Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" 
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Center"/>
+            <TextBlock Text="{Binding ErrorMessage}" />
         </StackPanel>
 
     </Grid>
