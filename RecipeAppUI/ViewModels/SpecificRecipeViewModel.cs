@@ -24,6 +24,13 @@ public class SpecificRecipeViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> ChangeToAddRatingViewCommand { get; }
     public ReactiveCommand<int, Unit> DeleteRatingCommand { get; } 
     public ReactiveCommand<int, Unit> EditRatingViewCommand { get; }
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="context">DB context</param>
+    /// <param name="recipe">Recipe you are viewing</param>
+    /// <param name="mainWindowViewModel">Instance of the MainWindowViewModel</param>
     public SpecificRecipeViewModel(SplankContext context, Recipe recipe, MainWindowViewModel mainWindowViewModel)
     {
         __ratingService = new RatingService(context);
@@ -62,11 +69,18 @@ public class SpecificRecipeViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref __recipe, value);
     }
 
+    /// <summary>
+    /// Changes to the AddRatingView
+    /// </summary>
     public void ChangeToAddRatingView()
     {
         MainWindowViewModel.ChangeToAddRatingView(__recipe);
     }
 
+    /// <summary>
+    /// Deletes the rating
+    /// </summary>
+    /// <param name="ratingId">Rating you are deleting</param>
     public void DeleteRating(int ratingId)
     {
         Rating? ratingToDelete = __yourRatings.FirstOrDefault(r => r.RatingId == ratingId);
@@ -90,6 +104,10 @@ public class SpecificRecipeViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the rating and switches to the EditRatingView
+    /// </summary>
+    /// <param name="ratingId">Rating you are editing</param>
     public void EditRatingView(int ratingId){
         try{
             Rating? rating = __yourRatings.FirstOrDefault(r => r.RatingId == ratingId);   

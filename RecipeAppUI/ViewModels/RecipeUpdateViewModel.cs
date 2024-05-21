@@ -105,10 +105,15 @@ public class RecipeUpdateViewModel : ViewModelBase {
     public ReactiveCommand<Unit, Unit> CreateTagCommand { get; } = null!;
     public ReactiveCommand<Unit, Unit> UpdateRecipeCommand { get; } = null!;
 
-
-
     private readonly RecipeService _recipeService;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="context">DB context</param>
+    /// <param name="mainWindowViewModel">Instance of the MainWindowViewModel</param>
+    /// <param name="recipe">Recipe you are updating</param>
     public RecipeUpdateViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel, Recipe recipe) {
         _recipeService = new RecipeService(context);
         MainWindowViewModel = mainWindowViewModel;
@@ -125,22 +130,38 @@ public class RecipeUpdateViewModel : ViewModelBase {
         UpdateRecipeCommand= ReactiveCommand.Create(UpdateRecipe);
     }
 
+    /// <summary>
+    /// Removes the ingredient from the list of ingredients
+    /// </summary>
+    /// <param name="ingredientToRemove">Ingredient to remove</param>
     private void RemoveIngredient(Ingredient ingredientToRemove)
     {
         Ingredients.Remove(ingredientToRemove);
     }
 
+    /// <summary>
+    /// Removes the step from the list of steps
+    /// </summary>
+    /// <param name="stepToRemove">Step to remove</param>
     private void RemoveStep(Step stepToRemove)
     {
         Steps.Remove(stepToRemove);
     }
 
+    /// <summary>
+    /// Removes the tag from the list of tags
+    /// </summary>
+    /// <param name="tagToRemove">Tag to remove</param>
     private void RemoveTag(Tag tagToRemove)
     {
         Tags.Remove(tagToRemove);
     }
 
 
+    /// <summary>
+    /// Creates an ingredient and adds it to the list
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     public void CreateIngredient() {
         try {
             ChangeUnit();
@@ -159,6 +180,10 @@ public class RecipeUpdateViewModel : ViewModelBase {
         }
     }
 
+    /// <summary>
+    /// Creates a step and adds it to the list of steps
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     public void CreateStep() {
         try {
             Step step = new Step(StepTime, StepInstruction); 
@@ -168,6 +193,10 @@ public class RecipeUpdateViewModel : ViewModelBase {
         }
     }
 
+    /// <summary>
+    /// Creates a tag and adds it to the list of tags
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     public void CreateTag() {
         try {
             Tag tag = new Tag(TagName);
@@ -177,7 +206,9 @@ public class RecipeUpdateViewModel : ViewModelBase {
         }
     }
 
-
+    /// <summary>
+    /// Changes the unit of ingredient depending of the combo box index
+    /// </summary>
     public void ChangeUnit() {
         UnitOfMeasurement unit = UnitOfMeasurement.SPOONS;
         switch (_selectedIndex) {
@@ -200,7 +231,9 @@ public class RecipeUpdateViewModel : ViewModelBase {
         _unitOfMeasurement = unit;   
     }
 
-
+    /// <summary>
+    /// Command that updates the recipe
+    /// </summary>
     public void UpdateRecipe() {
         try {
 

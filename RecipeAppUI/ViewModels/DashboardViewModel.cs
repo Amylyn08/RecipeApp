@@ -76,6 +76,11 @@ namespace RecipeAppUI.ViewModels
 
         public MainWindowViewModel MainWindowViewModel { get; set; }
 
+        /// <summary>
+        /// Constructor for dashboard view model
+        /// </summary>
+        /// <param name="context">DB context</param>
+        /// <param name="mainWindowViewModel">MainWindowViewModel instance</param>
         public DashboardViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel)
         {
             _recipeService = new RecipeService(context);
@@ -92,7 +97,7 @@ namespace RecipeAppUI.ViewModels
             CurrentUser = UserSingleton.GetInstance().Name;
             GetRecipes();
         }
-
+        
         public void ExecuteChangCriteria(string criteria){
             SelectedCriteria = criteria;
             _searchingMessage = "You are now searching by: " + criteria;
@@ -101,7 +106,7 @@ namespace RecipeAppUI.ViewModels
         public void ExecuteClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e){
             _searchingMessage = "You are now searching by: " + SelectedCriteria;
         }
-
+        
         private void SearchRecipes()
         {
             try
@@ -211,6 +216,7 @@ namespace RecipeAppUI.ViewModels
         public double GetRatingAvgForSingleRecipe(int recipeId){
             Recipe recipe = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
             return recipe.GetTotalAverageRating();
+
         }
     }
 }
