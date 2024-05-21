@@ -165,7 +165,10 @@ namespace RecipeAppUI.ViewModels
                 const int NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES = 2;
                 List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES, _excludedIds);
                 AddToRecipesToNotLoadAgain(moreRecipes);
-                Recipes.AddRange(moreRecipes);
+                for (int i = moreRecipes.Count - 1; i >= 0; i--) // add to the front of the list
+                {
+                    Recipes.Insert(0, moreRecipes[i]);
+                }
             } catch (ArgumentException e) {
                 DashboardErrorMessage = e.Message;
             }
@@ -203,7 +206,7 @@ namespace RecipeAppUI.ViewModels
             catch (Exception){
                 ErrorMessage = "Error: Unable to go to specific view.";
             }
-        }
+        }   
 
         public double GetRatingAvgForSingleRecipe(int recipeId){
             Recipe recipe = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
