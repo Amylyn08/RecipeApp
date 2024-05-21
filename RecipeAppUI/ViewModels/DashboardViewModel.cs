@@ -15,6 +15,7 @@ using Avalonia.Media.Imaging;
 using System.IO;
 using System.Threading.Tasks;
 using DynamicData;
+using RecipeAppUI.Utils;
 
 
 namespace RecipeAppUI.ViewModels
@@ -89,10 +90,7 @@ namespace RecipeAppUI.ViewModels
             LogoutCommand = ReactiveCommand.Create(Logout);
             MainWindowViewModel = mainWindowViewModel;
             if (UserSingleton.GetInstance().ProfilePicture != null)
-            {
-                using MemoryStream memoryStream = new(UserSingleton.GetInstance().ProfilePicture!);
-                Bitmap = new Bitmap(memoryStream);
-            }
+                Bitmap = BitMapper.DoBitmap(UserSingleton.GetInstance().ProfilePicture!);
             CurrentUser = UserSingleton.GetInstance().Name;
             GetRecipes();
         }

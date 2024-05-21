@@ -7,6 +7,7 @@ using Avalonia.Media.Imaging;
 using System.IO;
 using System;
 using System.Reactive;
+using RecipeAppUI.Utils;
 
 namespace RecipeAppUI.ViewModels;
 
@@ -75,7 +76,8 @@ public class ProfileViewModel : ViewModelBase {
         Description = UserSingleton.GetInstance().Description;
         ProfilePicture = UserSingleton.GetInstance().ProfilePicture;
         ChooseImageCommand = ReactiveCommand.Create(ChooseImage);
-        SetupBitmapOnViewLoad();
+        if (ProfilePicture is not null)
+            Bitmap = BitMapper.DoBitmap(ProfilePicture);
     }
 
    /// <summary>
@@ -89,24 +91,13 @@ public class ProfileViewModel : ViewModelBase {
             PathToImage = PathToImage.Trim('"'); // remove quotes from ctrl + c, ctrl + v
             byte[] bytes = File.ReadAllBytes(PathToImage);
             UserService.SetProfilePicture(bytes, UserSingleton.GetInstance());
-            using MemoryStream stream = new(bytes);
-            Bitmap = new Bitmap(stream);
+            Bitmap = BitMapper.DoBitmap(bytes);
         } catch (FileNotFoundException) {
             ErrorMessage = "File not found, please check the path again, or try copy pasting";
         } catch (ArgumentException e) {
             ErrorMessage = e.Message;
         } catch (Exception) {
             ErrorMessage = "The image is too large, or too high quality";
-        }
-    }
-
-    /// <summary>
-    /// Set the profile of the user if it is not null
-    /// </summary>
-    private void SetupBitmapOnViewLoad() {
-        if (ProfilePicture is not null) {
-            using MemoryStream stream = new(ProfilePicture);
-            Bitmap = new Bitmap(stream);
         }
     }
 }
