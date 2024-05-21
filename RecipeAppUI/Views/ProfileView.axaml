@@ -5,20 +5,45 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.ProfileView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
-			 x:DataType="vm:ProfileViewModel">
-    <StackPanel>
-		<TextBlock Text="{Binding ErrorMessage}"/>
-        <Button Content="Go Back" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}"/>
+             x:DataType="vm:ProfileViewModel">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-		<TextBlock Text="Username: " FontSize="20" FontWeight="Bold"/>
-		<TextBlock Text="{Binding Username}" FontSize="15" Margin="20 0 0 0"/>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Border  BorderBrush="Black" BorderThickness="2" CornerRadius="4" Padding="50" Margin="30">
+                <StackPanel>
+                    <Image Source="{Binding Bitmap}" Height="200" Width="200" Margin="0,0,0,10"/>
+                    <TextBlock HorizontalAlignment="Center" Text="{Binding ErrorMessage}" Foreground="Red"/>
+                    <TextBlock Text="Username: " 
+                                FontSize="20" 
+                                FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Username}" 
+                                FontSize="19"  
+                                Margin="5,0,0,0"/>
 
-		<TextBlock Text="Description: " FontSize="20" FontWeight="Bold"/>
-		<TextBlock Text="{Binding Description}" FontSize="15" Margin="20 0 0 0"/>
+                    <TextBlock Text="Description: " FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding Description}" FontSize="15" Margin="20 0 0 10"/>
 
-		<TextBlock Text="Add Path to profile picture" FontSize="20" FontWeight="Bold"/>
-		<TextBox Text="{Binding PathToImage}" Watermark="Copy and paste the absolute path"/>
-        <Button Content="Set profile picture" x:CompileBindings="False" Command="{Binding ChooseImageCommand}"/>
-		<Image HorizontalAlignment="Left" Source="{Binding Bitmap}" Height="200" Width="200"/>
-    </StackPanel>
+                    <TextBlock Text="Add Path to profile picture" FontSize="20" FontWeight="Bold"/>
+                    <TextBox Text="{Binding PathToImage}" Watermark="Copy and paste the absolute path"/>
+                    <Button Content="Set profile picture" 
+                        x:CompileBindings="False" 
+                        Command="{Binding ChooseImageCommand}" 
+                        HorizontalAlignment="Stretch" 
+                        Margin="0,0,0,5"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <Button Content="Go Back" 
+                x:CompileBindings="False" 
+                Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" 
+                HorizontalAlignment="Center"
+                Grid.Row="1"
+                />
+
+    </Grid>
 </UserControl>
