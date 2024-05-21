@@ -49,7 +49,6 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel DockPanel.Dock="Right" Margin="10">
                 <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}"/>
                 <TextBlock FontSize="20" Text="{Binding DashboardErrorMessage }"/>
                 <TextBlock Text="{Binding ErrorMessage}" FontSize="32"/>
                 <StackPanel>
@@ -157,6 +156,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                    <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}" Margin="0, 5, 0, 0"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

@@ -25,7 +25,6 @@
                         <Run Text="Description" FontWeight="Bold"/>
                         <Run Text="{Binding Description}"/>
                     </TextBlock>
-                    <TextBlock Text="{Binding Description}" FontSize="15" Margin="20 0 0 10"/>
                     <Button Content="Go Back" 
                             x:CompileBindings="False" 
                             Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" 

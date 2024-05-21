@@ -167,13 +167,10 @@ namespace RecipeAppUI.ViewModels
         private void LoadMoreRecipes() 
         {
             try {
-                const int NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES = 2;
-                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(NUM_DEFAULT_NUM_TO_GET_MORE_RECIPES, _excludedIds);
+                const int NUM_DEFAULT_TO_GET_MORE_RECIPES = 5;
+                List<Recipe> moreRecipes = _recipeService.GetSomeRecipes(NUM_DEFAULT_TO_GET_MORE_RECIPES, _excludedIds);
                 AddToRecipesToNotLoadAgain(moreRecipes);
-                for (int i = moreRecipes.Count - 1; i >= 0; i--) // add to the front of the list
-                {
-                    Recipes.Insert(0, moreRecipes[i]);
-                }
+                Recipes.AddRange(moreRecipes);
             } catch (ArgumentException e) {
                 DashboardErrorMessage = e.Message;
             }
