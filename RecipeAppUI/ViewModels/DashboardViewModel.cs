@@ -25,13 +25,13 @@ namespace RecipeAppUI.ViewModels
         private ObservableCollection<Recipe> _recipes = [];
         private string _selectedCriteria = null!;
         private string _searchText = null!;
-        private string _searchingMessage = null!;
         private string _selectedIndex = "0";
         private UserService _userService = null!;
         private string _errorMessage = null!;
         private readonly List<int> _excludedIds = [];
         public string CurrentUser { get; set; }
         public Bitmap? Bitmap { get; set; }
+        private string _searchingMessage;
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
         public ReactiveCommand<Unit, Unit> SearchCommand { get; } = null!;
@@ -71,7 +71,38 @@ namespace RecipeAppUI.ViewModels
 
         public string SelectedIndex{
             get => _selectedIndex;
-            set => this.RaiseAndSetIfChanged(ref _selectedIndex, value);
+            set {
+                this.RaiseAndSetIfChanged(ref _selectedIndex, value);
+                switch(_selectedIndex){
+                    case "0":
+                        SearchMessage = "Search by keyword...";
+                        break;
+                    case "1":
+                        SearchMessage = "Search by username...";
+                        break;
+                    case "2":
+                        SearchMessage="Search by ingredient...";
+                        break;
+                    case "3":
+                        SearchMessage="Search by budget...";
+                        break;
+                    case "4":
+                        SearchMessage = "Search by rating...";
+                        break;
+                    case "5":
+                        SearchMessage="Search by servings...";
+                        break;
+                    case "6":
+                        SearchMessage="Search by tag..";
+                        break;
+                    case "7":
+                        SearchMessage="Search by time in minutes...";
+                        break;
+                    default:
+                        SearchMessage = "Search";
+                        break;
+                }
+            }
         }
 
         public MainWindowViewModel MainWindowViewModel { get; set; }
@@ -81,7 +112,6 @@ namespace RecipeAppUI.ViewModels
             _recipeService = new RecipeService(context);
             UserService = new UserService(context, new());
             SearchCommand = ReactiveCommand.Create(SearchRecipes);
-            ChangeCriteria = ReactiveCommand.Create<string>(ExecuteChangCriteria);
             AddToFavouritesCommand = ReactiveCommand.Create<int>(AddToFavourites);
             FetchNextFewRecipesCommmand = ReactiveCommand.Create(LoadMoreRecipes);
             SpecificViewCommand = ReactiveCommand.Create<int>(SpecificView);
@@ -91,15 +121,6 @@ namespace RecipeAppUI.ViewModels
                 Bitmap = BitMapper.DoBitmap(UserSingleton.GetInstance().ProfilePicture!);
             CurrentUser = UserSingleton.GetInstance().Name;
             GetRecipes();
-        }
-
-        public void ExecuteChangCriteria(string criteria){
-            SelectedCriteria = criteria;
-            _searchingMessage = "You are now searching by: " + criteria;
-        }
-
-        public void ExecuteClickHandler(object sender, Avalonia.Interactivity.RoutedEventArgs e){
-            _searchingMessage = "You are now searching by: " + SelectedCriteria;
         }
 
         private void SearchRecipes()

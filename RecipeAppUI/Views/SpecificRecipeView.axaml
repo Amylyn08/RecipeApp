@@ -6,7 +6,7 @@
              x:Class="RecipeAppUI.Views.SpecificRecipeView"
              xmlns:vm="using:RecipeAppUI.ViewModels" 
              x:DataType="vm:SpecificRecipeViewModel"
-             Background="#91FEFFF3">
+             Background="#F5F5F5">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
