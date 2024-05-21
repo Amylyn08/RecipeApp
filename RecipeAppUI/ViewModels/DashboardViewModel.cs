@@ -41,17 +41,30 @@ namespace RecipeAppUI.ViewModels
         public ReactiveCommand<Unit, Unit> FetchNextFewRecipesCommmand { get; } = null!;
         public ReactiveCommand<Unit, Unit> LogoutCommand { get; } = null!;
 
+        /// <summary>
+        /// get setter for the user service
+        /// </summary>
         public UserService UserService {
             get => _userService;
             set => _userService = value;
         }
 
+        /// <summary>
+        /// Getter setter for the Error Message
+        /// </summary>
         public string ErrorMessage { get => _errorMessage; set => this.RaiseAndSetIfChanged(ref _errorMessage, value); }
 
+        /// <summary>
+        /// Getter setter for the SearchMessage
+        /// </summary>
         public string SearchMessage{
             get => _searchingMessage;
             set => this.RaiseAndSetIfChanged(ref _searchingMessage, value);
         }
+
+        /// <summary>
+        /// Getter setter 
+        /// </summary>
         public string SelectedCriteria
         {
             get => _selectedCriteria;
