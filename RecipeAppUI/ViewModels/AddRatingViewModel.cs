@@ -15,7 +15,8 @@ public class AddRatingViewModel : ViewModelBase{
     private string  __description = null!;
     private string _errorMessage = null!;
     private bool _editAvailable;
-    private MainWindowViewModel _mainWindowViewModel;
+    private MainWindowViewModel _mainWindowViewModel = null!;
+    
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
     public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
 

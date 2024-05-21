@@ -5,7 +5,7 @@ using RecipeApp.Context;
 using RecipeApp.Models;
 
 /// <summary>
-/// Searches for recipes based on the ratings
+/// Searches recipes based on ratings
 /// </summary>
 public class SearchByRating : SearcherBase{
     private readonly int _criteria;
