@@ -5,7 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RecipeAppUI.Views.DashboardView"
              xmlns:vm="using:RecipeAppUI.ViewModels"
-			 x:DataType="vm:DashboardViewModel">
+             x:DataType="vm:DashboardViewModel">
     <DockPanel>
         <!-- Profile picture -->
         <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="#E0257EDD" Margin="0,0,0,0">
@@ -17,38 +17,91 @@
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Bitmap}" Height="200" Width="200"/>
         </StackPanel>
 
-        <!-- Textbox with search features -->
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
-            <TextBlock x:CompileBindings="False" FontSize="20" />
-            <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="5" VerticalContentAlignment="Center" Watermark="{Binding SearchMessage}" />
-            <Button Content="Search" Margin="5" Command="{Binding SearchCommand}"/>
-            <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" VerticalContentAlignment="Center" VerticalAlignment="Center">
-                <ComboBoxItem>Keyword</ComboBoxItem>
-                <ComboBoxItem>Username</ComboBoxItem>
-                <ComboBoxItem>Ingredient</ComboBoxItem>
-                <ComboBoxItem>Price</ComboBoxItem>
-                <ComboBoxItem>Rating</ComboBoxItem>
-                <ComboBoxItem>Servings</ComboBoxItem>
-                <ComboBoxItem>Tags</ComboBoxItem>
-                <ComboBoxItem>Time</ComboBoxItem>
-            </ComboBox>
-        </StackPanel>
-        
         <!-- Side Navigation -->
-        <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200">
-            <Button Margin="5" Content="Log Out" x:CompileBindings="False" Command="{Binding LogoutCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-            <Button Margin="5" Content="Change Password" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-            <Button Margin="5" Content="Delete account" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-            <Button Margin="5" Content="View Favourites" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToFavouritesViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-            <Button Margin="5" Content="Profile" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToProfileViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-            <Button Margin="5" Content="Create Recipe" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToCreateRecipeViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-            <Button Margin="5" Content="View your recipes"  x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToRecipesViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+        <StackPanel DockPanel.Dock="Left" Orientation="Vertical" Width="200" Background="#F0F0F0">
+            <TextBlock Text="Splank's Recipes" 
+                FontSize="21" 
+                FontWeight="Bold" 
+                Margin="0,0,0,10"
+                HorizontalAlignment="Center"/>
+            <Button Margin="5" 
+                    Content="Log Out" 
+                    x:CompileBindings="False" 
+                    Command="{Binding LogoutCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Background="#D52D00"
+                    Foreground="White"/>
+            <Button Margin="5" 
+                    Content="Change Password" 
+                    x:CompileBindings="False" 
+                    Command="{Binding $parent[Window].DataContext.ChangeToChangePasswordViewCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Background="#FF9A56"
+                    Foreground="White"/>
+            <Button Margin="5" 
+                    Content="Delete account" 
+                    x:CompileBindings="False" 
+                    Command="{Binding $parent[Window].DataContext.ChangeToDeleteAccountViewCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Background="#FFD700"
+                    Foreground="White"/>
+            <Border BorderBrush="Black" BorderThickness="2" CornerRadius="4" Margin="5">
+                <Button 
+                        Content="View Favourites" 
+                        x:CompileBindings="False" 
+                        Command="{Binding $parent[Window].DataContext.ChangeToFavouritesViewCommand}" 
+                        HorizontalAlignment="Stretch" 
+                        HorizontalContentAlignment="Center"
+                        Background="#FFFFFF"/>
+            </Border>
+            <Button Margin="5" 
+                    Content="Profile" 
+                    x:CompileBindings="False" 
+                    Command="{Binding $parent[Window].DataContext.ChangeToProfileViewCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Background="#D362A4"
+                    Foreground="White"/>
+            <Button Margin="5" 
+                    Content="Create Recipe" 
+                    x:CompileBindings="False" 
+                    Command="{Binding $parent[Window].DataContext.ChangeToCreateRecipeViewCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Background="#B85590"
+                    Foreground="White"/>
+            <Button Margin="5" 
+                    Content="View your recipes"  
+                    x:CompileBindings="False" 
+                    Command="{Binding $parent[Window].DataContext.ChangeToRecipesViewCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Background="#A40061"
+                    Foreground="White"/>
         </StackPanel>
-        
+
+        <!-- Textbox with search features -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="10" Background="#F0F0F0" HorizontalAlignment="Center">
+            <TextBox Text="{Binding SearchText}" x:Name="SearchBar" Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center" Watermark="{Binding SearchMessage}" />
+            <ComboBox SelectedIndex="{Binding SelectedIndex}" MaxDropDownHeight="100" VerticalContentAlignment="Center" Margin="0,0,10,0">
+                <ComboBoxItem Content="Keyword"/>
+                <ComboBoxItem Content="Username"/>
+                <ComboBoxItem Content="Ingredient"/>
+                <ComboBoxItem Content="Price"/>
+                <ComboBoxItem Content="Rating"/>
+                <ComboBoxItem Content="Servings"/>
+                <ComboBoxItem Content="Tags"/>
+                <ComboBoxItem Content="Time"/>
+            </ComboBox>
+            <Button Content="Search" Command="{Binding SearchCommand}" Margin="0" Padding="5,0" Background="#00796B" Foreground="White" Width="100" Height="30" VerticalAlignment="Center"/>
+        </StackPanel>
+
         <!-- Main View -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel DockPanel.Dock="Right" Margin="10">
-                <TextBlock Text="Recipes" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
                 <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}"/>
                 <TextBlock FontSize="20" Text="{Binding DashboardErrorMessage }"/>
                 <TextBlock Text="{Binding ErrorMessage}" FontSize="32"/>
@@ -83,11 +136,18 @@
                                         </TextBlock>
                                         <TextBlock>
                                             <Run Text="Total Time Cook: "/>
-                                            <Run Text="{Binding TimeToCook}"/>
+                                            <Run Text="{Binding TimeToCook}" 
+                                                FontWeight="Bold"/>
+                                            <Run Text="Minutes"
+                                                FontWeight="Bold"/>
                                         </TextBlock>
                                         <TextBlock>
+                                            <Run Text=""/>
                                             <Run Text="Total Price: "/>
-                                            <Run Text="{Binding TotalPrice }"/>
+                                            <Run Text="{Binding TotalPrice}"
+                                                    FontWeight="Bold"/>
+                                            <Run Text="$"
+                                                FontWeight="Bold"/>
                                         </TextBlock>
 
                                     </DockPanel>
