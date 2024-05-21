@@ -43,7 +43,6 @@
             <Button Margin="5" Content="Profile" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToProfileViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
             <Button Margin="5" Content="Create Recipe" x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToCreateRecipeViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
             <Button Margin="5" Content="View your recipes"  x:CompileBindings="False" Command="{Binding $parent[Window].DataContext.ChangeToRecipesViewCommand}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
-            <Button Margin="5" Content="View what others like" x:CompileBindings="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
         </StackPanel>
         
         <!-- Main View -->
