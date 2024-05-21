@@ -208,5 +208,10 @@ namespace RecipeAppUI.ViewModels
                 ErrorMessage = "Error: Unable to go to specific view.";
             }
         }
+
+        public double GetRatingAvgForSingleRecipe(int recipeId){
+            Recipe recipe = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
+            return recipe.GetTotalAverageRating();
+        }
     }
 }
