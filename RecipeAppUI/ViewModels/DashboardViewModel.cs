@@ -63,7 +63,7 @@ namespace RecipeAppUI.ViewModels
         }
 
         /// <summary>
-        /// Getter setter 
+        /// Getter setter for the selected criteria
         /// </summary>
         public string SelectedCriteria
         {
@@ -76,12 +76,18 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Getter setter for the search text 
+        /// </summary>
         public string SearchText
         {
             get => _searchText;
             set => this.RaiseAndSetIfChanged(ref _searchText, value);
         }
 
+        /// <summary>
+        /// Getter and setter for the selected index of the searcher dropdown
+        /// </summary>
         public string SelectedIndex{
             get => _selectedIndex;
             set {
@@ -118,8 +124,17 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Getter and setter for the main window view model.
+        /// </summary>
         public MainWindowViewModel MainWindowViewModel { get; set; }
 
+        /// <summary>
+        /// Constructor for the DashboardViewModel, sets the user and the list of recipes when 
+        /// loading.
+        /// </summary>
+        /// <param name="context">The Splank Context of the application</param>
+        /// <param name="mainWindowViewModel">The main window view model.</param>
         public DashboardViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel)
         {
             _recipeService = new RecipeService(context);
@@ -135,7 +150,12 @@ namespace RecipeAppUI.ViewModels
             CurrentUser = UserSingleton.GetInstance().Name;
             GetRecipes();
         }
-
+        
+        /// <summary>
+        /// Method to search through recipes with a certain searcher and sets
+        /// the observable recipe list. Handels recipe loading and clears error message
+        /// if successful.
+        /// </summary>
         private void SearchRecipes()
         {
             try
@@ -179,6 +199,9 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method to get some recipes and also ensures they don't load again.
+        /// </summary>
         private void GetRecipes()
         {
             try
@@ -193,6 +216,9 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method to load more recipes, then adds them to a function to not be loaded again.
+        /// </summary>
         private void LoadMoreRecipes() 
         {
             try {
@@ -205,6 +231,10 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method to add the recipe id of each recipe to the excluded id list.
+        /// </summary>
+        /// <param name="recipes">The list of recipes to be excluded.</param>
         private void AddToRecipesToNotLoadAgain(List<Recipe> recipes) 
         {
             foreach (Recipe recipe in recipes)
@@ -213,11 +243,19 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// To logout a user, it nullifies the user instance when a 
+        /// user logs out and sets them to the home view.
+        /// </summary>
         private void Logout() {
             UserSingleton.NullifyUser();
             MainWindowViewModel.ChangeToHomeView();
         }
 
+        /// <summary>
+        /// Method to add a recipe to a user's favorites list using the recipe id.
+        /// </summary>
+        /// <param name="recipeId">The recipe id of the recipe to be favorited.</param>
         public void AddToFavourites(int recipeId) {
             try {
                 Recipe recipe = this.Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;
@@ -229,6 +267,11 @@ namespace RecipeAppUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Changes the main window view model to be the specific view of a certain recipe
+        /// by using the recipe id of the recipe.
+        /// </summary>
+        /// <param name="recipeId">The recipe id of the recipe to be focused on.</param>
         public void SpecificView(int recipeId){
             try{
                 Recipe recipe = Recipes.FirstOrDefault(r => r.RecipeId == recipeId)!;

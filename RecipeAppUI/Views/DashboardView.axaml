@@ -96,7 +96,15 @@
                 <ComboBoxItem Content="Tags"/>
                 <ComboBoxItem Content="Time"/>
             </ComboBox>
-            <Button Content="Search" Command="{Binding SearchCommand}" Margin="0" Padding="5,0" Background="#00796B" Foreground="White" Width="100" Height="30" VerticalAlignment="Center"/>
+            <Button Content="Search" 
+                    Command="{Binding SearchCommand}" 
+                    Margin="0" Padding="5,0" 
+                    Background="#00796B" 
+                    Foreground="White" 
+                    Width="100" 
+                    Height="30" 
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"/>
         </StackPanel>
 
         <!-- Main View -->
