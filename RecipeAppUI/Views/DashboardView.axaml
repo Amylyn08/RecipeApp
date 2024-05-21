@@ -109,8 +109,7 @@
 
         <!-- Main View -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel DockPanel.Dock="Right" Margin="10">
-                <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}"/>
+            <StackPanel Margin="10">
                 <TextBlock FontSize="20" Text="{Binding DashboardErrorMessage }"/>
                 <TextBlock Text="{Binding ErrorMessage}" FontSize="32"/>
                 <ListBox ItemsSource="{Binding Recipes}">
@@ -136,8 +135,10 @@
 										<Button Content="View Profile"
 												Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ChangeToOtherProfileViewCommand}"
 												CommandParameter="{Binding User}" />
-                                        <TextBlock HorizontalAlignment="Right">
-                                            <Run Text="{Binding AverageRating}"/>
+                                        <TextBlock HorizontalAlignment="Right" DockPanel.Dock="Right">
+                                            <Run Text="{Binding AverageRating}"
+                                                    FontSize="21"
+                                                    FontWeight="Bold"/>
                                             <Run Text="⭐" 
                                                 Foreground="#FFD700" 
                                                 FontSize="30" />
@@ -157,7 +158,6 @@
                                             <Run Text="$"
                                                 FontWeight="Bold"/>
                                         </TextBlock>
-
                                     </DockPanel>
                                     
                                     <!-- Author -->
@@ -235,11 +235,11 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}" Margin="0, 5, 0, 0"/>
-                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Content="Load more recipes" x:CompileBindings="False" Command="{Binding FetchNextFewRecipesCommmand}" Margin="0, 5, 0, 0"/>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>
