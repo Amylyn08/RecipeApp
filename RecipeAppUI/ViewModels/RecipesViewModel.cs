@@ -13,7 +13,7 @@ namespace RecipeAppUI.ViewModels;
 
 public class RecipesViewModel : ViewModelBase {
     private readonly RecipeService _recipeService;
-    private ObservableCollection<Recipe> _recipes = [];
+    private ObservableCollection<Recipe> _recipes = new();
     private MainWindowViewModel _mainWindowViewModel = null!;
     public MainWindowViewModel MainWindowViewModel { get => _mainWindowViewModel; private set => _mainWindowViewModel = value; }
 
