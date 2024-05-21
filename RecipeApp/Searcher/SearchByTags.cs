@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
-public class SearchByTags :SearcherBase{
-
+/// <summary>
+/// Searches a recipe by certain tags
+/// </summary>
+public class SearchByTags : SearcherBase {
     private readonly string _criteria;
 
     /// <summary>

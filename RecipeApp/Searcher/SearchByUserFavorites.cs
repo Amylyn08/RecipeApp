@@ -4,9 +4,11 @@ using RecipeApp.Models;
 
 namespace RecipeApp.Searcher;
 
+/// <summary>
+/// Gets a list of recipes that includes a users favourite
+/// </summary>
 public class SearchByUserFavorite : SearcherBase
 {
-
     private readonly User _user;
 
     /// <summary>
@@ -38,5 +40,4 @@ public class SearchByUserFavorite : SearcherBase
             .ToList()!;
         return filteredRecipes;
     }
-
 }

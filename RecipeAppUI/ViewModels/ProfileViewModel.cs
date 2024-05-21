@@ -7,9 +7,13 @@ using Avalonia.Media.Imaging;
 using System.IO;
 using System;
 using System.Reactive;
+using RecipeAppUI.Utils;
 
 namespace RecipeAppUI.ViewModels;
 
+/// <summary>
+/// ViewModel for the profile view
+/// </summary>
 public class ProfileViewModel : ViewModelBase {
     private MainWindowViewModel _mainWindowViewModel = null!;    
     private string _username = null!;
@@ -62,16 +66,23 @@ public class ProfileViewModel : ViewModelBase {
 
     public ReactiveCommand<Unit, Unit> ChooseImageCommand { get; }
 
-    public ProfileViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
-        MainWindowViewModel = mainWindowViewModel;
+    /// <summary>
+    /// Constructor for ProfileViewModel
+    /// </summary>
+    /// <param name="context">For db calls</param>
+    public ProfileViewModel(SplankContext context) {
         UserService = new(context, new PasswordEncrypter());
         Username = UserSingleton.GetInstance().Name;
         Description = UserSingleton.GetInstance().Description;
         ProfilePicture = UserSingleton.GetInstance().ProfilePicture;
         ChooseImageCommand = ReactiveCommand.Create(ChooseImage);
-        SetupBitmapOnViewLoad();
+        if (ProfilePicture is not null)
+            Bitmap = BitMapper.DoBitmap(ProfilePicture);
     }
 
+   /// <summary>
+   /// Sets a users profile picture both in DB and in UI
+   /// </summary>
    private void ChooseImage(){
        try {
             if (PathToImage == null) {
@@ -80,21 +91,13 @@ public class ProfileViewModel : ViewModelBase {
             PathToImage = PathToImage.Trim('"'); // remove quotes from ctrl + c, ctrl + v
             byte[] bytes = File.ReadAllBytes(PathToImage);
             UserService.SetProfilePicture(bytes, UserSingleton.GetInstance());
-            using MemoryStream stream = new(bytes);
-            Bitmap = new Bitmap(stream);
+            Bitmap = BitMapper.DoBitmap(bytes);
         } catch (FileNotFoundException) {
             ErrorMessage = "File not found, please check the path again, or try copy pasting";
         } catch (ArgumentException e) {
             ErrorMessage = e.Message;
         } catch (Exception) {
             ErrorMessage = "The image is too large, or too high quality";
-        }
-    }
-
-    private void SetupBitmapOnViewLoad() {
-        if (ProfilePicture is not null) {
-            using MemoryStream stream = new(ProfilePicture);
-            Bitmap = new Bitmap(stream);
         }
     }
 }

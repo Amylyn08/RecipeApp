@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
+/// <summary>
+/// Searches for recipes that match a time constraint
+/// </summary>
 public class SearchByTime : SearcherBase{
 
     private readonly int _criteria;

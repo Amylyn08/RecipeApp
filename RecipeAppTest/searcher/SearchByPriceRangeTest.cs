@@ -23,7 +23,7 @@ public class SearchByPriceRangeTests {
     [TestMethod]
     public void PriceRangeSearcherReturnsCorrect(){
     //Arrange
-        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new("Rida2", "I am rida 2", "RidaPassword",  new(), "randomsalt");
         List<Step> steps = new() {
             new Step(10, "eat")
         };
@@ -112,7 +112,7 @@ public class SearchByPriceRangeTests {
     [TestMethod]
     public void PriceRangeSearcherReturnsEmptyList(){
     //Arrange
-        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Step> steps = new() {
             new Step(10, "eat")
         };

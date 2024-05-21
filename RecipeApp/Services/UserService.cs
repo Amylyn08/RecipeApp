@@ -1,10 +1,8 @@
 namespace RecipeApp.Services;
 
-using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Models;
-using RecipeApp.Searcher;
 using RecipeApp.Security;
 
 /// <summary>
@@ -80,7 +78,7 @@ public class UserService : ServiceBase {
         }
         var salt = Encrypter.CreateSalt();
         var hashedPassword = Encrypter.CreateHash(password, salt);
-        var userToAdd = new User(username, description, hashedPassword, new(), new(), salt);
+        var userToAdd = new User(username, description, hashedPassword, new(), salt);
         Context.Add(userToAdd);
         Context.SaveChanges();
     }

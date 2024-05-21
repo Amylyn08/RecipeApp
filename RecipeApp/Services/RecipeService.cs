@@ -5,6 +5,9 @@ using RecipeApp.Searcher;
 
 namespace RecipeApp.Services;
 
+/// <summary>
+/// Performs recipe related actions
+/// </summary>
 public class RecipeService : ServiceBase {
     public RecipeService(SplankContext context) : base(context)
     {

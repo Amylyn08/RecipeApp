@@ -12,6 +12,9 @@ using System.Collections.Generic;
 
 namespace RecipeAppUI.ViewModels;
 
+/// <summary>
+/// ViewModel for the login page
+/// </summary>
 public class LoginViewModel : ViewModelBase {
     private string _username = null!;
     private string _password = null!;
@@ -26,18 +29,25 @@ public class LoginViewModel : ViewModelBase {
 
     public ReactiveCommand<Unit, Unit> LoginCommand { get; }
 
+    /// <summary>
+    /// Constructs a new LoginViewModel
+    /// </summary>
+    /// <param name="context">For passing it in the user service</param>
+    /// <param name="mainWindowViewModel">For navigation within the model</param>
     public LoginViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel) {
         UserService = new(context, new());
         LoginCommand = ReactiveCommand.Create(Login);
         _mainWindowViewModel = mainWindowViewModel;
     }
 
-    public void Login() {
+    /// <summary>
+    /// Calls the library method to login a user
+    /// and redirects to the dashboard
+    /// </summary>
+    private void Login() {
         try {
             User user = UserService.Login(Username, Password);
-            List<Recipe> favouriteRecipes = new SearchByUserFavorite(SplankContext.GetInstance(), user).FilterRecipes();
-            user.Favorites = favouriteRecipes;
-            UserSingleton.InstantiateUserOnce(user); // we now have a global user
+            UserSingleton.InstantiateUserOnce(user); 
             _mainWindowViewModel.ChangeToDashboardView();
         } catch (InvalidCredentialsException e) {
             LoginErrorMessage = e.Message;

@@ -37,7 +37,7 @@ public class SearchByTimeTest {
             new Ingredient("bread", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
 
-        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
 
         List<Rating> ratings0 = new()
         {
@@ -108,7 +108,7 @@ public class SearchByTimeTest {
             new Ingredient("bread", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
 
-        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
 
         List<Rating> ratings0 = new()
         {

@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
+/// <summary>
+/// Search for a recipe based on a keyword within the recipe description
+/// </summary>
 public class SearchKeyWord : SearcherBase {
-    
     private readonly string _criteria;
 
     /// <summary>

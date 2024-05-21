@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
+/// <summary>
+/// Search for a recipe within a price range
+/// </summary>
 public class SearchByPriceRange: SearcherBase {
-
     private readonly double _price;
     
     /// <summary>

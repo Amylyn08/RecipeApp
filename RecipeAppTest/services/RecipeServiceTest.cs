@@ -13,7 +13,7 @@ public class RecipeServiceTest {
     [TestMethod]
     public void InsertRecipeSuccessfull() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword",  new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
@@ -55,7 +55,7 @@ public class RecipeServiceTest {
     [TestMethod]
     public void DeletingRecipeSuccessful() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
@@ -98,7 +98,7 @@ public class RecipeServiceTest {
     [TestMethod]
     public void UpdateRecipeSucceful() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
@@ -126,7 +126,7 @@ public class RecipeServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void UpdateRecipe_OldRecipeNull_ThrowsException() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
@@ -152,7 +152,7 @@ public class RecipeServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void UpdateRecipe_NewRecipeNull_ThrowsException() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };

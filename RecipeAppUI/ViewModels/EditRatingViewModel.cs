@@ -14,10 +14,11 @@ public class EditRatingViewModel : ViewModelBase
     private RatingService _ratingService = null!;
     private Rating _rating;
     private int _stars;
-    private string _description;
+    private string _description = null!;
     private MainWindowViewModel _mainWindowViewModel = null!;
     private SplankContext _context;
     private bool _editAvailable;
+    
     public ReactiveCommand<Unit, Unit> ChangeToSpecificViewCommand {get; }
 
     public EditRatingViewModel(SplankContext context, Rating rating, MainWindowViewModel mainViewModel)

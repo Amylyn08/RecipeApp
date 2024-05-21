@@ -5,6 +5,9 @@ namespace RecipeApp.Exceptions;
 /// have already favourited
 /// </summary>
 public class AlreadyFavouritedException : Exception {
+    /// <summary>
+    /// Empty constructor
+    /// </summary>
     public AlreadyFavouritedException() : base("You cannot favourite the same recipe twice !")
     {}
 }

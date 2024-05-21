@@ -5,9 +5,13 @@ using RecipeApp.Exceptions;
 using ReactiveUI;
 using System;
 using System.Reactive;
+using RecipeAppUI.Session;
 
 
 namespace RecipeAppUI.ViewModels {
+    /// <summary>
+    /// ViewModel for account deletion
+    /// </summary>
     public class DeleteAccountViewModel : ViewModelBase {
         private string _accountDeletionErrorMessage = null!;
         private string _username = null!;
@@ -42,16 +46,25 @@ namespace RecipeAppUI.ViewModels {
 
         public ReactiveCommand<Unit, Unit> DeleteAccountCommand { get; } = null!;
 
+        /// <summary>
+        /// Constructor for delete account view model
+        /// </summary>
+        /// <param name="context">For db calls</param>
+        /// <param name="mainWindowViewModel">For navigation</param>
         public DeleteAccountViewModel(SplankContext context, MainWindowViewModel mainWindowViewModel){
             UserService = new UserService(context, new PasswordEncrypter());
             MainWindowViewModel = mainWindowViewModel;
             DeleteAccountCommand = ReactiveCommand.Create(DeleteAccount);
         }
 
-        public void DeleteAccount() {
+        /// <summary>
+        /// Deletes a user from the db and redirects to homepage
+        /// </summary>
+        private void DeleteAccount() {
             try {
                 var user = UserService.Login(Username, Password);
                 UserService.DeleteAccount(user);
+                UserSingleton.NullifyUser();
                 MainWindowViewModel.ChangeToHomeView();
             } catch (Exception e) {
                 if (e is ArgumentException || e is UserDoesNotExistException || e is InvalidCredentialsException) {

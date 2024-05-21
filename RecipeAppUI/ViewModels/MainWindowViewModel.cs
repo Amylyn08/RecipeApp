@@ -74,7 +74,7 @@ public class MainWindowViewModel : ViewModelBase {
     }
 
     public void ChangeToFavouritesView() {
-        ContentViewModel = new FavouritesViewModel(SplankContext.GetInstance(), this);
+        ContentViewModel = new FavouritesViewModel(SplankContext.GetInstance());
     }
     
     public void ChangeToCreateRecipeView() {
@@ -85,11 +85,11 @@ public class MainWindowViewModel : ViewModelBase {
         ContentViewModel = new RecipesViewModel(SplankContext.GetInstance(), this);
     }
     public void ChangeToProfileView() {
-        ContentViewModel = new ProfileViewModel(SplankContext.GetInstance(), this);
+        ContentViewModel = new ProfileViewModel(SplankContext.GetInstance());
     }
 
     public void ChangeToNutritionFactsView(Recipe recipe) {
-        ContentViewModel = new NutritionFactsViewModel(recipe, this);
+        ContentViewModel = new NutritionFactsViewModel(recipe);
     }
 
     public void ChangeToUpdateRecipeView(Recipe recipe) {
