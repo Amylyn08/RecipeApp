@@ -105,6 +105,9 @@ public class ProfileViewModel : ViewModelBase {
         }
     }
 
+    /// <summary>
+    /// Changes a user description
+    /// </summary>
     private void ChangeDescription() {
         try {
             if (Description == null || string.IsNullOrEmpty(Description)) Description = "Empty for now";
@@ -114,6 +117,9 @@ public class ProfileViewModel : ViewModelBase {
         }
     }
 
+    /// <summary>
+    /// Removes the profile picture
+    /// </summary>
     private void RemoveProfilePicture() {
          try {
             UserService.RemoveProfilePicture(UserSingleton.GetInstance());
