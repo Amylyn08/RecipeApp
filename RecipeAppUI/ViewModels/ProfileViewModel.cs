@@ -65,6 +65,8 @@ public class ProfileViewModel : ViewModelBase {
     }
 
     public ReactiveCommand<Unit, Unit> ChooseImageCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChangeDescriptionCommand { get; } = null!;
+    public ReactiveCommand<Unit, Unit> RemoveProfilePictureCommand { get; } = null!;
 
     /// <summary>
     /// Constructor for ProfileViewModel
@@ -76,6 +78,8 @@ public class ProfileViewModel : ViewModelBase {
         Description = UserSingleton.GetInstance().Description;
         ProfilePicture = UserSingleton.GetInstance().ProfilePicture;
         ChooseImageCommand = ReactiveCommand.Create(ChooseImage);
+        ChangeDescriptionCommand = ReactiveCommand.Create(ChangeDescription);
+        RemoveProfilePictureCommand = ReactiveCommand.Create(RemoveProfilePicture);
         if (ProfilePicture is not null)
             Bitmap = BitMapper.DoBitmap(ProfilePicture);
     }
@@ -98,6 +102,24 @@ public class ProfileViewModel : ViewModelBase {
             ErrorMessage = e.Message;
         } catch (Exception) {
             ErrorMessage = "The image is too large, or too high quality";
+        }
+    }
+
+    private void ChangeDescription() {
+        try {
+            if (Description == null || string.IsNullOrEmpty(Description)) Description = "Empty for now";
+            UserService.SetDescription(Description, UserSingleton.GetInstance());
+        } catch (Exception e) { 
+            ErrorMessage = e.Message;
+        }
+    }
+
+    private void RemoveProfilePicture() {
+         try {
+            UserService.RemoveProfilePicture(UserSingleton.GetInstance());
+            Bitmap = null;
+        } catch (Exception e) { 
+            ErrorMessage = e.Message;
         }
     }
 }

@@ -175,4 +175,23 @@ public class UserService : ServiceBase {
         user.ProfilePicture = profilePicture;
         Context.SaveChanges();
     }
+
+    /// <summary>
+    /// Removes a users profile picture
+    /// </summary>
+    /// <param name="user">User to remove profile pic from</param>
+    public void RemoveProfilePicture(User user) {
+        user.ProfilePicture = null;
+        Context.SaveChanges();
+    }
+
+    /// <summary>
+    ///  Updates a users description
+    /// </summary>
+    /// <param name="description">Description to set</param>
+    /// <param name="user">User to set description of</param>
+    public void SetDescription(string description, User user) {
+        user.Description = description;
+        Context.SaveChanges();
+    }
 }       
