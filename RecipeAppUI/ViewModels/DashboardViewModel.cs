@@ -31,7 +31,7 @@ namespace RecipeAppUI.ViewModels
         private readonly List<int> _excludedIds = new();
         public string CurrentUser { get; set; }
         public Bitmap? Bitmap { get; set; }
-        private string _searchingMessage;
+        private string? _searchingMessage;
         public string DashboardErrorMessage { get => _dashboardErrorMessage; set => this.RaiseAndSetIfChanged(ref _dashboardErrorMessage, value); }
         public ObservableCollection<Recipe> Recipes { get => _recipes; set => this.RaiseAndSetIfChanged(ref _recipes, value); }
         public ReactiveCommand<Unit, Unit> SearchCommand { get; } = null!;
@@ -57,7 +57,7 @@ namespace RecipeAppUI.ViewModels
         /// <summary>
         /// Getter setter for the SearchMessage
         /// </summary>
-        public string SearchMessage{
+        public string? SearchMessage{
             get => _searchingMessage;
             set => this.RaiseAndSetIfChanged(ref _searchingMessage, value);
         }

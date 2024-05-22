@@ -39,13 +39,15 @@ public class RegisterViewModel : ViewModelBase {
     /// <summary>
     /// Register a new user and redirected to login
     /// </summary>
-    private void Register() {
+    public void Register() {
         try {
             UserService.Register(Username, Password, Description);
             _mainWindowViewModel.ChangeToLoginView();
         } catch (UserAlreadyExistsException e) {
             RegisterErrorMessage = e.Message;
         } catch (ArgumentException e) {
+            RegisterErrorMessage = e.Message;
+        } catch (Exception e) {
             RegisterErrorMessage = e.Message;
         }
     }

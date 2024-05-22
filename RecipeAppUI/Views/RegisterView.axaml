@@ -35,7 +35,7 @@
 				 Watermark="Describe yourself briefly"
 				 HorizontalAlignment="Stretch" 
 				 Margin="0,0,0,20"/>
-        <Button Command="{Binding Register}"
+        <Button Command="{Binding RegisterCommand}"
 				HorizontalAlignment="Stretch" 
 				HorizontalContentAlignment="Center" 
 				FontSize="20" 
