@@ -30,7 +30,7 @@ public class SearchByUserFavoritesTest
             new Step(10, "eat")
         };
 
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword",  new(), "randomsalt");
 
         List<Rating> ratings0 = new List<Rating> {
             new(4, "amazing", new()),
@@ -43,9 +43,9 @@ public class SearchByUserFavoritesTest
         Recipe recipe3 = new Recipe("Recipe3", user, "desc", 2, ings1, steps, ratings0, new());
         Recipe recipe4 = new Recipe("Recipe4", user, "desc", 2, ings1, steps, ratings0, new());
 
-        User user1 = new("Amy", "human", "amyhuman123", new(), new(), "meow");
-        User user2 = new("Prabhjot", "human", "amyhuman123", new(), new(), "meow");
-        User user3 = new("Rida", "human", "amyhuman123", new(), new(), "meow");
+        User user1 = new("Amy", "human", "amyhuman123", new(), "meow");
+        User user2 = new("Prabhjot", "human", "amyhuman123", new(),  "meow");
+        User user3 = new("Rida", "human", "amyhuman123", new(), "meow");
         var listData = new List<Favourite>(){
             new(recipe, user1),
             new(recipe1, user1),

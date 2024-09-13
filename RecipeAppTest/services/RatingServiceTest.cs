@@ -12,7 +12,7 @@ public class RatingServiceTest {
     [TestMethod]
     public void AddRatingSuccessful() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
@@ -40,7 +40,7 @@ public class RatingServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void AddRatingNull_ThrowsException() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword",  new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
@@ -65,7 +65,7 @@ public class RatingServiceTest {
     [ExpectedException(typeof(ArgumentException))]
     public void AddRatingNullRecipe_ThrowsException() {
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };

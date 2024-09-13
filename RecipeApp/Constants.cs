@@ -1,5 +1,8 @@
 namespace RecipeApp;
 
+/// <summary>
+/// Defines a list of constanst in the application
+/// </summary>
 public class Constants {
     public const int MAX_DESCRIPTION_LENGTH = 256;
     public const int MAX_TAGS = 3;

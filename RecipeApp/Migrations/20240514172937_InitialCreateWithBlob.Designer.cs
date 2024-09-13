@@ -11,8 +11,8 @@ using RecipeApp.Context;
 namespace RecipeApp.Migrations
 {
     [DbContext(typeof(SplankContext))]
-    [Migration("20240426164850_IdForeignKeys")]
-    partial class IdForeignKeys
+    [Migration("20240514172937_InitialCreateWithBlob")]
+    partial class InitialCreateWithBlob
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,7 +174,7 @@ namespace RecipeApp.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.User", b =>
@@ -196,6 +196,9 @@ namespace RecipeApp.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasColumnType("BLOB");
 
                     b.Property<string>("Salt")
                         .IsRequired()

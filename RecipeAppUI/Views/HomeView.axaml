@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RecipeAppUI.Views.HomeView">
+    <StackPanel HorizontalAlignment="Center" 
+				VerticalAlignment="Center">
+        <TextBlock FontSize="24" 
+				   Text="Welcome To Splank's Recipe App !" 
+				   HorizontalAlignment="Center" 
+				   VerticalAlignment="Center" 
+				   Margin="0 10" />
+        <Button HorizontalAlignment="Stretch" 
+				HorizontalContentAlignment="Center" 
+				Margin="0 10" 
+				FontSize="18"
+				x:CompileBindings="False"
+				Command="{Binding $parent[Window].DataContext.ChangeToLoginViewCommand}">
+			Login</Button>
+        <Button HorizontalAlignment="Stretch" 
+				HorizontalContentAlignment="Center" 
+				Margin="0 10" FontSize="18" 
+				x:CompileBindings="False" 
+				Command="{Binding $parent[Window].DataContext.ChangeToRegisterViewCommand}">
+			Register</Button>
+    </StackPanel>
+</UserControl>

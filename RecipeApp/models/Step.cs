@@ -1,11 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace RecipeApp.Models;
 
 /// <summary>
 /// Step inside a recipe
 /// </summary>
-/// [Ke]
 /// 
 public class Step {
     private int _timeInMinutes;

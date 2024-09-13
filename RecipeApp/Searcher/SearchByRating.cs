@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
+/// <summary>
+/// Searches recipes based on ratings
+/// </summary>
 public class SearchByRating : SearcherBase{
-
     private readonly int _criteria;
 
     /// <summary>
@@ -24,13 +26,18 @@ public class SearchByRating : SearcherBase{
     /// <returns>The filtered list</returns>
     public override List<Recipe> FilterRecipes()
     {
-        List<Recipe> filteredRecipes = Context.Recipes
+        List<Recipe> recipes = Context.Recipes
             .Include(recipe => recipe.Ingredients)
             .Include(recipe => recipe.Steps)
             .Include(recipe => recipe.Tags)
             .Include(recipe => recipe.Ratings)
-            .Where(recipe => recipe.GetTotalAverageRating() >=  _criteria && recipe.GetTotalAverageRating() <= _criteria +1)
             .ToList();
+
+        // Perform filtering on the client side
+        List<Recipe> filteredRecipes = recipes
+            .Where(recipe => recipe.AverageRating >= _criteria - 0.5 && recipe.AverageRating <= _criteria + 0.5)
+            .ToList();
+
         return filteredRecipes;
     }
 }

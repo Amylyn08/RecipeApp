@@ -5,25 +5,18 @@
 namespace RecipeApp.Migrations
 {
     /// <inheritdoc />
-    public partial class UserWithSalt : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Salt",
-                table: "Users",
-                type: "NVARCHAR2(2000)",
-                nullable: false,
-                defaultValue: "");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Salt",
-                table: "Users");
+
         }
     }
 }

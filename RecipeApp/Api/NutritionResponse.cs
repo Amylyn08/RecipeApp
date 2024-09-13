@@ -1,5 +1,8 @@
 namespace RecipeApp.Api;
 
+/// <summary>
+/// JSON representation of the API used to fetch nutrition responses
+/// </summary>
 public class NutritionResponse : ApiResponse {
     public double calories {get; set;} 
     public double fat_total_g {get; set;}

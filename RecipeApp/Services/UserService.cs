@@ -1,10 +1,8 @@
 namespace RecipeApp.Services;
 
-using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Exceptions;
 using RecipeApp.Models;
-using RecipeApp.Searcher;
 using RecipeApp.Security;
 
 /// <summary>
@@ -80,7 +78,7 @@ public class UserService : ServiceBase {
         }
         var salt = Encrypter.CreateSalt();
         var hashedPassword = Encrypter.CreateHash(password, salt);
-        var userToAdd = new User(username, description, hashedPassword, new(), new(), salt);
+        var userToAdd = new User(username, description, hashedPassword, new(), salt);
         Context.Add(userToAdd);
         Context.SaveChanges();
     }
@@ -134,7 +132,7 @@ public class UserService : ServiceBase {
             throw new ArgumentException("User cannot be null !");
         }
         var alreadyFavourited = Context.Favourites
-            .Where(f => f.Recipe.Equals(favourited) && f.User.Equals(user)).FirstOrDefault();
+            .Where(f => f.Recipe!.Equals(favourited) && f.User!.Equals(user)).FirstOrDefault();
         if (alreadyFavourited is not null) {
             throw new AlreadyFavouritedException();
         }
@@ -158,8 +156,42 @@ public class UserService : ServiceBase {
         if (user is null) {
             throw new ArgumentException("User cannot be null");
         }
-        Favourite favouriteToDelete = Context.Favourites.Where(f => f.RecipeId == recipe.RecipeId && f.UserId == user.UserId).FirstOrDefault();
+        Favourite favouriteToDelete = Context.Favourites.Where(f => f.RecipeId == recipe.RecipeId && f.UserId == user.UserId).FirstOrDefault()!;
         Context.Remove(favouriteToDelete);
+        Context.SaveChanges();
+    }
+
+    /// <summary>
+    /// Sets the users profile picture
+    /// </summary>
+    /// <param name="profilePicture"></param>
+    public void SetProfilePicture(byte[] profilePicture, User user) {
+        if (profilePicture == null) {
+            throw new ArgumentException("Profile picture cannot be null");
+        }
+        if (user == null) {
+            throw new ArgumentException("User cannot be null");
+        }
+        user.ProfilePicture = profilePicture;
+        Context.SaveChanges();
+    }
+
+    /// <summary>
+    /// Removes a users profile picture
+    /// </summary>
+    /// <param name="user">User to remove profile pic from</param>
+    public void RemoveProfilePicture(User user) {
+        user.ProfilePicture = null;
+        Context.SaveChanges();
+    }
+
+    /// <summary>
+    ///  Updates a users description
+    /// </summary>
+    /// <param name="description">Description to set</param>
+    /// <param name="user">User to set description of</param>
+    public void SetDescription(string description, User user) {
+        user.Description = description;
         Context.SaveChanges();
     }
 }       

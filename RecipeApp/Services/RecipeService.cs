@@ -1,12 +1,31 @@
+using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 using RecipeApp.Searcher;
 
 namespace RecipeApp.Services;
 
+/// <summary>
+/// Performs recipe related actions
+/// </summary>
 public class RecipeService : ServiceBase {
     public RecipeService(SplankContext context) : base(context)
     {
+    }
+
+    ///
+    /// Gets some recipes from the DB
+    public List<Recipe> GetSomeRecipes(int take, List<int> excludedIds) {
+        return Context.Recipes
+        .Where(r => !excludedIds.Contains(r.RecipeId)) 
+        .Include(r => r.Ingredients)
+        .Include(r => r.Steps)
+        .Include(r => r.Tags)
+        .Include(r => r.Ratings)
+        .Include(r => r.User)
+        .OrderBy(r => Guid.NewGuid()) // sort randomly 
+        .Take(take)
+        .ToList();
     }
 
     /// <summary>

@@ -15,7 +15,7 @@ public class SearchByIngredientsTests{
     public void IngredientNameNull_ThrowsException() {
         //Arrange
         string ingName = null!;
-        SplankContext context = new SplankContext();
+        SplankContext context = SplankContext.GetInstance();
         //Act
         SearcherBase searcher = new SearchByIngredients(context, ingName);
 
@@ -27,13 +27,13 @@ public class SearchByIngredientsTests{
         //Arrange
         string ingName = "";
         //Act
-        SearcherBase searcher = new SearchByIngredients(new SplankContext(), ingName);
+        SearcherBase searcher = new SearchByIngredients(SplankContext.GetInstance(), ingName);
     }
 
     [TestMethod]
     public void IngredientsReturnsCorrect(){
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings0 = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
@@ -86,7 +86,7 @@ public class SearchByIngredientsTests{
     [TestMethod]
     public void IngredientsReturnsEmptyList(){
         //Arrange
-        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
         List<Ingredient> ings0 = new() {
             new Ingredient("potato", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };

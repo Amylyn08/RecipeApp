@@ -14,36 +14,11 @@ public class SearchByTimeTest {
     [ExpectedException(typeof(ArgumentException))]
     public void MinBelowZeroException(){
         //Arrange
-        SplankContext context = new();
-        int min = -1;
-        int max = 10;
+        SplankContext context = SplankContext.GetInstance();
+        int time = -1;
 
         //Act
-        SearchByTime searcher = new(context, min, max);
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void MaxBelowZeroException(){
-        //Arrange
-        SplankContext context = new();
-        int min = 2;
-        int max = -1;
-
-        //Act
-        SearchByTime searcher = new(context, min, max);
-    }
-
-    [TestMethod]
-    [ExpectedException(typeof(ArgumentException))]
-    public void MinMoreThanMax(){
-        //Arrange
-        SplankContext context = new();
-        int min = 100;
-        int max = 10;
-
-        //Act
-        SearchByTime searcher = new(context, min, max);
+        SearchByTime searcher = new(context, time);
     }
 
     [TestMethod]
@@ -62,7 +37,7 @@ public class SearchByTimeTest {
             new Ingredient("bread", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
 
-        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
 
         List<Rating> ratings0 = new()
         {
@@ -74,7 +49,7 @@ public class SearchByTimeTest {
         {
             new(5, "eat") { RecipeId = 1 },
             new(10, "eat") { RecipeId = 2 },
-            new(30, "eat") { RecipeId = 3 },
+            new(20, "eat") { RecipeId = 3 },
             new(25, "eat") { RecipeId = 4 },
             new(75, "eat") { RecipeId = 5 },
         };
@@ -107,7 +82,7 @@ public class SearchByTimeTest {
         var mockContext = new Mock<SplankContext>();
         mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
         mockContext.Setup(m => m.Steps).Returns(stepMockSet.Object);
-        SearchByTime searcher = new(mockContext.Object, 5, 10);
+        SearchByTime searcher = new(mockContext.Object, 10);
 
         //Act
         List<Recipe> filteredList = searcher.FilterRecipes();
@@ -133,7 +108,7 @@ public class SearchByTimeTest {
             new Ingredient("bread", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
 
-        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new("Rida2", "I am rida 2", "RidaPassword", new(), "randomsalt");
 
         List<Rating> ratings0 = new()
         {
@@ -178,7 +153,7 @@ public class SearchByTimeTest {
         var mockContext = new Mock<SplankContext>();
         mockContext.Setup(m => m.Recipes).Returns(mockSet.Object);
         mockContext.Setup(m => m.Steps).Returns(stepMockSet.Object);
-        SearchByTime searcher = new(mockContext.Object, 1, 4);
+        SearchByTime searcher = new(mockContext.Object, 85);
 
         //Act
         List<Recipe> filteredList = searcher.FilterRecipes();

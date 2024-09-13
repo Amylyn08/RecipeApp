@@ -4,10 +4,12 @@ using RecipeApp.Models;
 
 namespace RecipeApp.Searcher;
 
+/// <summary>
+/// Gets a list of recipes that includes a users favourite
+/// </summary>
 public class SearchByUserFavorite : SearcherBase
 {
-
-    private User _user;
+    private readonly User _user;
 
     /// <summary>
     /// Constructor for user, checking if null first.
@@ -29,14 +31,13 @@ public class SearchByUserFavorite : SearcherBase
     /// <returns>The list of recipes from user's favorites.</returns>
     public override List<Recipe> FilterRecipes(){
         List<Recipe> filteredRecipes = Context.Favourites
-            .Where(favorite => favorite.User.Equals(_user))
-            .Include(fav => fav.Recipe.Ingredients)    
-            .Include(fav => fav.Recipe.Steps)
-            .Include(fav => fav.Recipe.Tags)
-            .Include(fav => fav.Recipe.Ratings)
+            .Where(favorite => favorite.User!.Equals(_user))
+            .Include(fav => fav.Recipe!.Ingredients)    
+            .Include(fav => fav.Recipe!.Steps)
+            .Include(fav => fav.Recipe!.Tags)
+            .Include(fav => fav.Recipe!.Ratings)
             .Select(favorite => favorite.Recipe)
-            .ToList();
+            .ToList()!;
         return filteredRecipes;
     }
-
 }

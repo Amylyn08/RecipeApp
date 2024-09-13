@@ -14,7 +14,7 @@ public class SearchByUsernameTest {
     [ExpectedException(typeof(ArgumentException))]
     public void UsernameIsNullException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string username = null!;
 
         //Act
@@ -25,7 +25,7 @@ public class SearchByUsernameTest {
     [ExpectedException(typeof(ArgumentException))]
     public void UserNameLengthIsZeroException(){
         //Arrange
-        SplankContext context = new();
+        SplankContext context = SplankContext.GetInstance();
         string username = "";
 
         //Act
@@ -38,10 +38,10 @@ public class SearchByUsernameTest {
         List<Ingredient> ings1 = new() {
             new Ingredient("caramel", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
-        User user = new User("Rida", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
-        User user1 = new User("Amy", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
-        User user2= new User("Prabhjot", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
-        User user3 = new User("Bianca", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida", "I am rida 2", "RidaPassword",  new(), "randomsalt");
+        User user1 = new User("Amy", "I am rida 2", "RidaPassword",  new(), "randomsalt");
+        User user2= new User("Prabhjot", "I am rida 2", "RidaPassword", new(), "randomsalt");
+        User user3 = new User("Bianca", "I am rida 2", "RidaPassword",  new(), "randomsalt");
 
         List<Rating> ratings0 = new List<Rating> {
             new(4, "amazing", new()),
@@ -88,10 +88,10 @@ public class SearchByUsernameTest {
         List<Ingredient> ings1 = new() {
             new Ingredient("caramel", 5, UnitOfMeasurement.AMOUNT, 20.2)
         };
-        User user = new User("Rida", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
-        User user1 = new User("Amy", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
-        User user2= new User("Prabhjot", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
-        User user3 = new User("Bianca", "I am rida 2", "RidaPassword", new(), new(), "randomsalt");
+        User user = new User("Rida", "I am rida 2", "RidaPassword", new(), "randomsalt");
+        User user1 = new User("Amy", "I am rida 2", "RidaPassword",  new(), "randomsalt");
+        User user2= new User("Prabhjot", "I am rida 2", "RidaPassword",  new(), "randomsalt");
+        User user3 = new User("Bianca", "I am rida 2", "RidaPassword",  new(), "randomsalt");
 
         List<Rating> ratings0 = new List<Rating> {
             new(4, "amazing", new()),

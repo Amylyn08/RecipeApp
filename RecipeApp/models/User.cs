@@ -1,7 +1,3 @@
-
-
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace RecipeApp.Models;
 
 /// <summary>
@@ -12,8 +8,8 @@ public class User {
     private string _name = null!;
     private string _description = null!;
     private string _salt = null!;
-    private List<Recipe> _favourites = null!;
-    private List<Recipe> _madeRecipes; 
+    private List<Recipe>? _madeRecipes; 
+    private byte[]? _profilePicture;
 
     public int UserId {
         get; 
@@ -63,19 +59,7 @@ public class User {
         }
     }
 
-    [NotMapped]
-    public List<Recipe> Favorites {
-        get => _favourites; 
-        set {
-            if (value is null) 
-                throw new ArgumentException("Favourites cannot be null");
-            _favourites = new();
-            foreach (var recipe in value)
-                _favourites.Add(recipe);
-        }
-    }
-
-    public List<Recipe> MadeRecipes {
+    public List<Recipe>? MadeRecipes {
         get => _madeRecipes;
         set {
             if (value is null)
@@ -84,6 +68,11 @@ public class User {
             foreach (var recipe in value)
                 _madeRecipes.Add(recipe);
         }
+    }
+
+    public byte[]? ProfilePicture {
+        get => _profilePicture;
+        set => _profilePicture = value!;
     }
 
     /// <summary>
@@ -95,11 +84,10 @@ public class User {
     /// <param name="favorites">List of recipes that the user favorited</param>
     /// <param name="madeRecipes">List of recipes that the user made</param>
     /// <exception cref="ArgumentException">If any field is null or does not respect the specific constraints, it throws an exception</exception>
-    public User(string name, string description, string pass, List<Recipe> favorites, List<Recipe> madeRecipes, string salt) {
+    public User(string name, string description, string pass, List<Recipe> madeRecipes, string salt) {
         Name = name;
         Description = description;
         Password = pass;
-        Favorites = favorites;
         MadeRecipes = madeRecipes;
         Salt = salt;
     }
@@ -126,5 +114,9 @@ public class User {
     public override int GetHashCode()
     {
         throw new NotImplementedException();
+    }
+
+    public override string ToString() {
+        return Name;
     }
 }

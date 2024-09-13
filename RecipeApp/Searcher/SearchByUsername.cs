@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
-
+/// <summary>
+/// Gets recipes made by a user 
+/// </summary>
 public class SearchByUsername : SearcherBase{
-
     private readonly string _criteria;
 
     /// <summary>

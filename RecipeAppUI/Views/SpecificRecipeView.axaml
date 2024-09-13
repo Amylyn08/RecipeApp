@@ -1,0 +1,198 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RecipeAppUI.Views.SpecificRecipeView"
+             xmlns:vm="using:RecipeAppUI.ViewModels" 
+             x:DataType="vm:SpecificRecipeViewModel"
+             Background="#F5F5F5">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0"  
+                Grid.RowSpan="2" 
+                BorderBrush="Black" 
+                BorderThickness="2" 
+                CornerRadius="3" 
+                Padding="10" 
+                Margin="10"
+                Background="#81FFF3E1" >
+            <!-- Recipe Information -->
+            <StackPanel Margin="7">
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" FontSize="23">
+                    <Run Text="Recipe: "/>
+                    <Run Text="{Binding Recipe.Name}"/>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold" >
+                    <Run Text="Descrpition: "/>
+                    <Run Text="{Binding Recipe.Description}"/>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="8" FontWeight="Bold">
+                    <Run Text="Number of servings: "/>
+                    <Run Text="{Binding Recipe.Servings}"/>
+                </TextBlock>
+
+                <!-- Ingredients -->
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ingredients:" FontWeight="Bold" FontSize="19"/>
+                    <ScrollViewer Height="60">
+                        <ItemsControl ItemsSource="{Binding Recipe.Ingredients}" Margin="20 0 0 0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Center" Margin="8">
+                                        <Run Text="{Binding Quantity}"/>
+                                        <Run Text=" "/>
+                                        <Run Text="{Binding UnitOfMeasurement}"/>
+                                        <Run Text=" of "/>
+                                        <Run Text="{Binding Name}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+
+                <!-- Steps -->
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Steps" FontWeight="Bold" FontSize="19"/>
+                    <ScrollViewer Height="60">
+                        <ItemsControl ItemsSource="{Binding Recipe.Steps}" Margin="20 0 0 0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock HorizontalAlignment="Center" Margin="8">
+                                            <Run Text="{Binding Instruction}"/>
+                                            <Run Text=","/>
+                                            <Run Text="{Binding TimeInMinutes}"/>
+                                            <Run Text=" Minutes"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </StackPanel>
+
+                <!-- Tags -->
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Tags" FontWeight="Bold" FontSize="19"/>
+                    <ScrollViewer Height="60">
+                        <ItemsControl ItemsSource="{Binding Recipe.Tags}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="{Binding TagName}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+
+                <!-- User -->
+                <TextBlock HorizontalAlignment="Center" Margin="8" Text="User" FontWeight="Bold" FontSize="19"/>
+                <TextBlock HorizontalAlignment="Center" Margin="8" Text="{Binding Recipe.User.Name}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Ratings Section -->
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- All Ratings -->
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+                <StackPanel Margin="10">
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="All Ratings" FontWeight="Bold"/>
+                    <ScrollViewer MaxHeight="200">
+                        <ListBox ItemsSource="{Binding Ratings}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Center" Margin="8">
+                                        <Run Text="Number of Stars: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Stars}"/>
+                                        <Run Text="Description: " FontWeight="Bold"/>
+                                        <Run Text="{Binding Description}"/>
+                                        <Run Text="Created by user: " FontWeight="Bold"/>
+                                        <Run Text="{Binding User.Name}"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+
+            <!-- Ratings by You -->
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="3" Padding="10" Margin="10">
+                <StackPanel Margin="10">
+                    <TextBlock HorizontalAlignment="Center" Margin="8" Text="Ratings by You" FontWeight="Bold"/>
+                    <ScrollViewer MaxHeight="200">
+                        <ListBox ItemsSource="{Binding YourRatings}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock HorizontalAlignment="Center" Margin="8">
+                                            <Run Text="Number of Stars: " FontWeight="Bold"/>
+                                            <Run Text="{Binding Stars}"/>
+                                            <Run Text="Description: " FontWeight="Bold"/>
+                                            <Run Text="{Binding Description}"/>
+                                            <Run Text="Created by user: " FontWeight="Bold"/>
+                                            <Run Text="{Binding User.Name}"/>
+                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Content="Delete Rating" 
+                                                    Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).DeleteRatingCommand}" 
+                                                    CommandParameter="{Binding RatingId}" 
+                                                    HorizontalAlignment="Center"
+                                                    HorizontalContentAlignment="Center">
+                                                <Button.Background>
+                                                    <SolidColorBrush Color="#68FF1717"/> 
+                                                </Button.Background>
+                                            </Button>
+                                            <Button Content="Edit Rating" 
+                                                    CommandParameter="{Binding RatingId}" 
+                                                    Command="{Binding $parent[ListBox].((vm:SpecificRecipeViewModel)DataContext).EditRatingViewCommand}" 
+                                                    HorizontalAlignment="Stretch"
+                                                    HorizontalContentAlignment="Center">
+                                                <Button.Background>
+                                                    <SolidColorBrush Color="#FFFFFCBB"/> 
+                                                </Button.Background>
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Buttons at the Bottom -->
+        <StackPanel  Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
+            <Button Content="Add Rating" 
+                    Command="{Binding ChangeToAddRatingViewCommand}" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    Margin="0,0,0,5"
+                    Background="#00796B" Foreground="White"/>
+            <Button x:CompileBindings="False" 
+                    Content="Go Back" 
+                    Command="{Binding $parent[Window].DataContext.ChangeToDashboardViewCommand}" 
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"/>
+            <TextBlock Text="{Binding ErrorMessage}" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

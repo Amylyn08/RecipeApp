@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using RecipeApp.Context;
 using RecipeApp.Models;
 
+/// <summary>
+/// Search for recipes by an ingredient
+/// </summary>
 public class SearchByIngredients : SearcherBase
 {
-
     private readonly string _criteria;
 
     /// <summary>

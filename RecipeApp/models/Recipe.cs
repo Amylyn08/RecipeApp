@@ -1,5 +1,6 @@
 namespace RecipeApp.Models;
 
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 /// <summary>
@@ -18,6 +19,31 @@ public class Recipe {
     public int RecipeId { 
         get; 
         set; 
+    }
+
+    [NotMapped]
+    public double AverageRating {
+        get => GetTotalAverageRating();
+    }
+
+    [NotMapped]
+    public int TimeToCook {
+        get {
+            int timeToCook = 0;
+            foreach (Step step in _steps) 
+                timeToCook += step.TimeInMinutes;
+            return timeToCook;
+        }
+    }
+
+    [NotMapped]
+    public double TotalPrice {
+        get {
+            double price = 0;
+            foreach (Ingredient ingredient in _ingredients) 
+                price += ingredient.Price;
+            return price;
+        }
     }
 
     public string Name { 
@@ -104,10 +130,12 @@ public class Recipe {
     public User User { 
         get => _user;
         set {
-            if (value == null) 
-                throw new ArgumentException("User cannot be null");
-            _user = value;
+            _user = value ?? throw new ArgumentException("User cannot be null");
         }
+    }
+
+    public string GetUserName{
+        get => _user.Name;
     }
 
     public int UserId { get; set; }
@@ -142,28 +170,6 @@ public class Recipe {
     }
 
     /// <summary>
-    /// Gets the total time to cook for a recipe 
-    /// </summary>
-    /// <returns>Total time to complete all steps</returns>
-    public int GetTimeToCook() {
-        int timeToCook = 0;
-        foreach (Step step in _steps) 
-            timeToCook += step.TimeInMinutes;
-        return timeToCook;
-    }
-
-    /// <summary>
-    /// Gets the total price of a recipe
-    /// </summary>
-    /// <returns>Price of the recipe</returns>
-    public double GetTotalPrice() {
-        double price = 0;
-        foreach (Ingredient ingredient in _ingredients) 
-            price += ingredient.Price;
-        return price;
-    }
-
-    /// <summary>
     /// This method gets the avarage of ratings of a recipe.
     /// </summary>
     /// <returns>The ratings.</returns>
@@ -173,8 +179,6 @@ public class Recipe {
             rating += r.Stars;
         return rating/_ratings.Count;
     }
-
-    
 
     /// <summary>
     /// Returns string representation of a recipe

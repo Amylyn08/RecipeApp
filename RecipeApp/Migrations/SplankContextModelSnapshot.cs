@@ -171,7 +171,7 @@ namespace RecipeApp.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("RecipeApp.Models.User", b =>
@@ -193,6 +193,9 @@ namespace RecipeApp.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasColumnType("BLOB");
 
                     b.Property<string>("Salt")
                         .IsRequired()
